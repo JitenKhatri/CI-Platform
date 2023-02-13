@@ -2,8 +2,11 @@
 
 namespace CI_Platform.Controllers
 {
+    [ApiController]
+    [Route("UserAuthentication")]
     public class UserAuthenticationController : Controller
     {
+        [Route("login")]
         public IActionResult login()
         {
             return View();
@@ -12,10 +15,11 @@ namespace CI_Platform.Controllers
         //{
         //    return View();
         //}
-        //public IActionResult lostPassword()
-        //{
-        //    return View();
-        //}
+        [Route("lostPassword")]
+        public IActionResult lostPassword()
+        {
+           return View();
+        }
         //public IActionResult resetPassword()
         //{
         //    return View();
