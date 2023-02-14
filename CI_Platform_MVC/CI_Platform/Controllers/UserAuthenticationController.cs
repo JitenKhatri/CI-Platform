@@ -20,9 +20,10 @@ namespace CI_Platform.Controllers
         {
            return View();
         }
-        //public IActionResult resetPassword()
-        //{
-        //    return View();
-        //}
+        [Route("resetPassword")]
+        public IActionResult resetPassword()
+        {
+            return View();
+        }
     }
 }
