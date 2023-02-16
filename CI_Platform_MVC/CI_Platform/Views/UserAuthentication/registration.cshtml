@@ -1,0 +1,171 @@
+﻿@using CI_Platform.ViewModels
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+@model RegistrationViewModel
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+
+<body>
+    <div class="container-fluid g-0 ">
+        <div class="row login">
+            <div class="col-lg-8">
+                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
+                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"
+                            aria-label="Slide 4"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png"
+                                class="d-block w-100 img-fluid login-img" alt="login-image" />
+                            <div class="carousel-caption d-md-block">
+                                <h5>Sed ut perspiciatis unde omnis iste natus voluptatem.</h5>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                    do eiusmod tempor incididunt ut labore et dolore magna
+                                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                    Duis aute irure dolor in reprehenderit in voluptate velit
+                                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                                    occaecat cupidatat non proident, sunt in culpa qui officia
+                                    deserunt mollit anim id est laborum.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png" class="d-block w-100 login-img img-fluid" alt="login-image" />
+                            <div class="carousel-caption d-md-block">
+                                <h5>Sed ut perspiciatis unde omnis iste natus voluptatem.</h5>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                    do eiusmod tempor incididunt ut labore et dolore magna
+                                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                    Duis aute irure dolor in reprehenderit in voluptate velit
+                                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                                    occaecat cupidatat non proident, sunt in culpa qui officia
+                                    deserunt mollit anim id est laborum.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png" class="d-block w-100 login-img img-fluid" alt="login-img" />
+                            <div class="carousel-caption d-md-block">
+                                <h5>Sed ut perspiciatis unde omnis iste natus voluptatem.</h5>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                    do eiusmod tempor incididunt ut labore et dolore magna
+                                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                    Duis aute irure dolor in reprehenderit in voluptate velit
+                                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                                    occaecat cupidatat non proident, sunt in culpa qui officia
+                                    deserunt mollit anim id est laborum.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png" class="d-block w-100 login-img img-fluid" alt="login-img" />
+                            <div class="carousel-caption d-md-block">
+                                <h5>Sed ut perspiciatis unde omnis iste natus voluptatem.</h5>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                    do eiusmod tempor incididunt ut labore et dolore magna
+                                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                    Duis aute irure dolor in reprehenderit in voluptate velit
+                                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                                    occaecat cupidatat non proident, sunt in culpa qui officia
+                                    deserunt mollit anim id est laborum.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+               
+            </div>
+             <div class="col-lg-4">
+                <div class=" register-form d-flex flex-column">
+               <form  method="post">
+                
+                <div>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                    <label asp-for="FirstName" class="form-label ">First Name</label>
+                    <input asp-for="FirstName" type="text" class="form-control mb-4 " id="firstname" >
+                </div>
+                <div>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                    <label asp-for="LastName" class="form-label ">Last Name</label>
+                    <input asp-for="LastName" type="text" class="form-control mb-4 " id="lastname" >
+                    
+                </div>
+                <div>
+                    <label asp-for="PhoneNumber" class="form-label ">Phone Number</label>
+                    <input asp-for="PhoneNumber" type="number" class="form-control mb-4 " id="phonenumber" >
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div>
+                     <span asp-validation-for="Email" class="text-danger"></span>
+                    <label asp-for="Email" class="form-label ">Email Address</label>
+                    <input asp-for="Email" type="email" class="form-control mb-4 " id="emailaddress" >
+                   
+                </div>
+                <div>
+                     <span asp-validation-for="Password" class="text-danger"></span>
+                    <label asp-for="Password" class="form-label ">Password</label>
+                    <input asp-for="Password" type="password" class="form-control mb-4" id="password">
+                   
+                </div>
+                <div>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    <label asp-for="ConfirmPassword" class="form-label ">Confirm Password</label>
+                    <input asp-for="ConfirmPassword" type="password" class="form-control mb-4" id="passwordInput">
+                    
+                </div>
+                    <button type="submit" class="pill-button rounded-pill mb-4">Register</button>
+                   @* <a class="btn pill-button rounded-pill mb-4 " role="button">Register</a>*@
+                    </form>
+                    <a  class="link" asp-controller="UserAuthentication" asp-action="lostPassword">Lost your password?</a>
+                    <span class="link"> Already registered?<a asp-controller="UserAuthentication" asp-action="login" style="text-decoration:none;" >Login Now</a></span>
+                
+            </div>
+            
+            <div class="privacy-policy-r"><a class="link" href="#" style="text-decoration:none;">Privacy Policy</a></div>
+           
+        </div>
+        </div>
+    </div>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+</body>
+
+</html>

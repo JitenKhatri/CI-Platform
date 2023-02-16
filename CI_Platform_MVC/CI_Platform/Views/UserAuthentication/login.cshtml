@@ -1,10 +1,12 @@
-﻿@*
+﻿@using CI_Platform.ViewModels
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
 @{
     Layout = null;
 }
+@model LoginViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -115,11 +117,19 @@
             </div>
             <div class="col-lg-4 d-flex flex-column">
                 <div class="login-form d-flex flex-column">
-                <div><label for="emailInput" class="form-label">Email Address</label>
-                    <input type="email" class="form-control mb-4" id="emailInput" placeholder="name@example.com" /></div>
-              <div><label for="passwordInput" class="form-label">Password</label>
-                <input type="password" class="form-control mb-4" id="passwordInput" placeholder="**********" /></div>
-                <a class="btn pill-button rounded-pill" href="#" role="button">Login</a>
+                   <form  method="post">
+                       <div asp-validation-summary="All" class="text-danger"></div>
+                <div>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <label asp-for="Email" class="form-label">Email Address</label>
+                    <input asp-for="Email" type="email" class="form-control mb-4" id="emailInput" /></div>
+              <div>
+                  <span asp-validation-for="Password" class="text-danger"></span>
+                  <label asp-for="Password" class="form-label">Password</label>
+                <input  asp-for="Password" type="password" class="form-control mb-4" id="passwordInput" /></div>
+                <button type="submit" class="pill-button rounded-pill mb-4">Login</button>
+                
+                </form>
                 <a  class="link mt-4 mb-4" asp-controller="UserAuthentication" asp-action="lostPassword">Lost your password?</a>
                 <span class="link">
                     Don't have an account?<a  style="text-decoration: none" asp-controller="UserAuthentication" asp-action="registration">Create an account</a></span>
