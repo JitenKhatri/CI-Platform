@@ -1,0 +1,336 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+.header {
+    align-items: center;
+    padding: 10px 9rem;
+    border-bottom: 1px solid rgb(223, 217, 217);
+}
+
+    .header a,
+    .header button,
+    .header span {
+        color: #333333;
+        font-size: 1rem;
+    }
+
+.dropdown {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dropdown-toggle {
+    border: 0 !important;
+    background: transparent;
+}
+
+    .dropdown-toggle::after {
+        border: 0 !important;
+        margin: 0 !important;
+    }
+
+.profile {
+    display: flex;
+    align-items: center !important;
+}
+
+.profileimg {
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.filterrow {
+    padding: 0 8.5rem;
+    border-bottom: 2px solid rgb(223, 217, 217);
+}
+
+.search-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+    .search-bar .form-control {
+        border: 1px solid transparent;
+        color: #757575;
+        font-size: 16px;
+        line-height: 23px;
+        padding: 12px 16px 12px 8px;
+    }
+
+        .search-bar .form-control::-webkit-input-placeholder {
+            color: #757575;
+        }
+
+        .search-bar .form-control:hover,
+        .search-bar .form-control:focus,
+        .search-bar .form-control:active {
+            border: 1px solid #adadad !important;
+            transition: none;
+        }
+
+.filter {
+    border: 0;
+    background: transparent;
+    border-left: 1px solid rgb(223, 217, 217) !important;
+    padding: 25px 2px 25px 10px;
+    color: #414141;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.filterrow div:nth-child(4) {
+    border-right: 1px solid rgb(223, 217, 217) !important;
+}
+
+.filter-bar-row {
+    padding: 0 9rem;
+}
+
+.filter-bar {
+    padding: 4.5px 20px;
+    font-size: 13px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #e8e8e8 !important;
+    border-radius: 14px !important;
+    margin: 20px 10px !important;
+}
+
+    .filter-bar span {
+        margin-right: 0.5rem;
+    }
+
+.btn-close-search {
+    padding: 0 !important;
+    border: 0 !important;
+    transform: translateY(-0.2rem);
+}
+
+.clr-btn {
+    font-size: 13px;
+    line-height: 15.6px;
+    columns: #414141;
+}
+
+.explore {
+    padding: 13px 8.5rem;
+}
+
+.form-check-inline {
+    margin-right: 0 !important;
+    padding: 5px;
+}
+
+.gridbtn {
+    background-image: url(../Assets/grid.png) !important;
+    width: 44px !important;
+    height: 44px !important;
+    border: 7px solid transparent !important;
+}
+
+.listbtn {
+    background-image: url(../Assets/list.png) !important;
+    background-position: center !important;
+    background-size: contain !important;
+    width: 30px !important;
+    height: 30px !important;
+    border: 7px solid transparent !important;
+    transform: translateY(0.3rem);
+}
+
+.form-check-input:checked,
+.form-check-input:active,
+.form-check-input:focus,
+.form-check-input:hover {
+    background-color: #E8E8E8 !important;
+    border-color: #E8E8E8 !important;
+    box-shadow: none !important;
+}
+
+.form-check-inline :nth-child(2) {
+    padding: 5px;
+    background-color: #2b64b1;
+}
+
+.explore .form-check {
+    padding: 0 20px !important;
+    margin: 0 !important;
+}
+
+
+.sortby {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0.97px 0.26px 3px #0000000d;
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
+    padding: 8px 2px 11px 10px;
+    color: #414141;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 11rem;
+}
+
+/* filters css */
+#selected-filters {
+    margin-top: 10px;
+}
+
+.filter-item {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+    .filter-item button {
+        margin-left: 5px;
+    }
+
+
+.add-favorite {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* card css */
+
+.grid-container {
+    padding: 13px 8.5rem !important;
+}
+
+.card {
+    margin-bottom: 1rem;
+}
+
+.card {
+    margin-bottom: 1rem;
+}
+
+.list-view .row > [class*='col-'] {
+    max-width: 100%;
+    flex: 0 0 100%;
+}
+
+.list-view .card {
+    flex-direction: row;
+}
+
+@media (max-width: 575.98px) {
+    .list-view .card {
+        flex-direction: column;
+    }
+}
+
+.list-view .card > .card-img-top {
+    width: auto;
+}
+
+.list-view .card .card-body {
+    display: inline-block;
+}
+
+.star {
+    height: 20px;
+    width: 20px;
+}
+
+.slug {
+    font-size: 20px;
+}
+
+.duration-seats-info {
+    position: relative;
+    width: 100%;
+    border: 1px solid #E8E8E8;
+    border-left: 0px;
+    border-right: 0px;
+    text-align: center;
+}
+
+.duration {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #E8E8E8;
+    border-radius: 18px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: translate(0, -55%);
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.mission-deadline {
+    justify-content: space-around;
+    margin-top: 23px;
+}
+
+.img-event {
+    position: relative;
+}
+
+.location-img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #000000 0% 0% no-repeat padding-box;
+    border-radius: 18px;
+    opacity: 0.5;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 13px;
+    padding-right: 13px;
+    margin: 10px;
+    border: none;
+}
+
+.like-img {
+    position: absolute;
+    top: 122px;
+    right: 0;
+    background: #000000 0% 0% no-repeat padding-box;
+    border-radius: 18px;
+    opacity: 0.5;
+    margin: 10px;
+    padding: 7px;
+}
+
+.stop-img {
+    position: absolute;
+    top: 163px;
+    right: 0;
+    background: #000000 0% 0% no-repeat padding-box;
+    border-radius: 18px;
+    opacity: 0.5;
+    margin: 10px;
+    padding: 7px;
+}
+
+.mission-theme {
+    position: absolute;
+    bottom: -13px;
+    left: 140px;
+    /* / bottom: 1; / */
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border-radius: 18px;
+    opacity: 1;
+}
+
+.apply-btn {
+    border: 2px solid #F88634;
+    ;
+    border-radius: 100px;
+    color: #F88634;
+    padding-left: 20px;
+    padding-right: 20px;
+}
