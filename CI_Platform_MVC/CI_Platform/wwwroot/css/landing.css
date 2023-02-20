@@ -1,9 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-.header {
+﻿.header {
     align-items: center;
     padding: 10px 9rem;
     border-bottom: 1px solid rgb(223, 217, 217);
@@ -15,6 +10,22 @@
         color: #333333;
         font-size: 1rem;
     }
+
+#selected-items-row {
+    display: none;
+    margin-top: 10px;
+}
+
+.filter-box {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #E8E8E8;
+    border-radius: 14px;
+    opacity: 1
+}
+
+.dropdown {
+    border-left: 1px solid lightgray;
+}
 
 .dropdown {
     display: flex;
@@ -121,7 +132,7 @@
 }
 
 .explore {
-    padding: 13px 8.5rem;
+    padding: 13px 2.5rem;
 }
 
 .form-check-inline {
@@ -205,15 +216,11 @@
 /* card css */
 
 .grid-container {
-    padding: 13px 8.5rem !important;
+    padding: 13px 2.5rem;
 }
 
 .card {
-    margin-bottom: 1rem;
-}
-
-.card {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 .list-view .row > [class*='col-'] {
@@ -225,19 +232,17 @@
     flex-direction: row;
 }
 
-@media (max-width: 575.98px) {
-    .list-view .card {
-        flex-direction: column;
+    .list-view .card > .card-img-top {
+        width: auto;
     }
-}
 
-.list-view .card > .card-img-top {
-    width: auto;
-}
+    .list-view .card .card-body {
+        display: inline-block;
+    }
 
-.list-view .card .card-body {
-    display: inline-block;
-}
+    .list-view .card .like-img {
+        top: 40%;
+    }
 
 .star {
     height: 20px;
@@ -245,7 +250,7 @@
 }
 
 .slug {
-    font-size: 20px;
+    font-size: 14px;
 }
 
 .duration-seats-info {
@@ -296,7 +301,7 @@
 
 .like-img {
     position: absolute;
-    top: 122px;
+    top: 34%;
     right: 0;
     background: #000000 0% 0% no-repeat padding-box;
     border-radius: 18px;
@@ -307,7 +312,7 @@
 
 .stop-img {
     position: absolute;
-    top: 163px;
+    top: 53%;
     right: 0;
     background: #000000 0% 0% no-repeat padding-box;
     border-radius: 18px;
@@ -333,4 +338,136 @@
     color: #F88634;
     padding-left: 20px;
     padding-right: 20px;
+}
+
+.progress {
+    width: 40vh;
+}
+
+.progress-bar {
+    background-color: #F88634;
+}
+
+.card-img, .card-img-bottom, .card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 575.98px) {
+    .list-view .card {
+        flex-direction: column;
+    }
+}
+
+@media(max-width: 1024px) {
+    .progress {
+        width: 23vh;
+    }
+
+    html {
+        font-size: 13px;
+    }
+
+    .list-view .like-img {
+        top: 40%;
+    }
+
+    .grid-container .like-img {
+        top: 28%;
+    }
+}
+
+@media (max-width:768px) {
+}
+
+@media (max-width:425px) {
+    .header {
+        padding: 10px 2rem;
+    }
+
+    .list-view .card .like-img {
+        top: 26%;
+    }
+
+    .explore {
+        padding: 13px 1rem;
+    }
+
+    .grid-container {
+        padding: 13px 1rem;
+    }
+}
+
+@media (min-width: 320px) {
+    #selected-items-row {
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    #selected-items-row {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+        #selected-items-row .badge {
+            margin: 5px;
+        }
+}
+
+@media (max-width: 767px) {
+    .navbar-brand {
+        margin-right: auto;
+    }
+
+    .navbar-collapse {
+        margin-top: 10px;
+        background-color: #f8f9fa;
+    }
+
+    .navbar-nav .nav-item {
+        margin-bottom: 10px;
+    }
+
+    .dropdown-menu {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-nav .nav-item {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .dropdown-menu {
+        width: auto;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+    }
+
+    #selected-items-row {
+        position: absolute;
+        left: 2.5rem;
+        width: 100%;
+        z-index: 9999;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+        #selected-items-row .badge {
+            margin: 5px;
+        }
+}
+
+@media(max-width: 991px) {
+    .dropdown {
+        border-left: none;
+    }
 }
