@@ -19,4 +19,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CI_Platform.DataAccess\CI_Platform.DataAccess.csproj" />
+    <ProjectReference Include="..\CI_Platform.Models\CI_Platform.Models.csproj" />
+    <ProjectReference Include="..\CI_Platform.Utility\CI_Platform.Utility.csproj" />
+  </ItemGroup>
+
 </Project>

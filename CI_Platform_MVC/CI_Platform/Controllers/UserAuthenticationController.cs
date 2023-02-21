@@ -8,9 +8,9 @@ namespace CI_Platform.Controllers
     [Route("UserAuthentication")]
     public class UserAuthenticationController : Controller
     {
-        private readonly Data.CiPlatformContext _context;
+        private readonly DataAccess.CiPlatformContext _context;
 
-        public UserAuthenticationController(Data.CiPlatformContext context)
+        public UserAuthenticationController(DataAccess.CiPlatformContext context)
         {
             _context = context;
         }

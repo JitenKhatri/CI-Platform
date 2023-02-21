@@ -106,3 +106,9 @@ C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\ne
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\obj\Debug\net6.0\CI_Platform.csproj.CopyComplete
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\CI_Platform.DataAccess.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\CI_Platform.Models.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\CI_Platform.Utility.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\CI_Platform.DataAccess.pdb
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\CI_Platform.Models.pdb
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\CI_Platform.Utility.pdb

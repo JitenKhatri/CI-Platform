@@ -17,8 +17,16 @@ namespace CI_Platform.Controllers
         {
             return View();
         }
+        public IActionResult landing()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+        public IActionResult Volunteering_mission()
         {
             return View();
         }

@@ -29,8 +29,9 @@
 
 .dropdown {
     display: flex;
-    justify-content: flex-end;
+    margin-left: 10px;
 }
+
 
 .dropdown-toggle {
     border: 0 !important;
@@ -205,7 +206,16 @@
     .filter-item button {
         margin-left: 5px;
     }
-
+#duration-txt {
+    color: #414141;
+    opacity: 1;
+    font-size: 17px;
+    font-weight: lighter;
+}
+#cross-btn {
+    padding-top: 0;
+    padding-bottom: 0;
+}
 
 .add-favorite {
     position: absolute;
@@ -378,8 +388,7 @@
     }
 }
 
-@media (max-width:768px) {
-}
+
 
 @media (max-width:425px) {
     .header {
@@ -405,25 +414,8 @@
     }
 }
 
-@media (min-width: 768px) {
-    #selected-items-row {
-        position: absolute;
-        left: 0;
-        width: 100%;
-        z-index: 9999;
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-        #selected-items-row .badge {
-            margin: 5px;
-        }
-}
-
 @media (max-width: 767px) {
-    .navbar-brand {
-        margin-right: auto;
-    }
+
 
     .navbar-collapse {
         margin-top: 10px;
@@ -432,10 +424,6 @@
 
     .navbar-nav .nav-item {
         margin-bottom: 10px;
-    }
-
-    .dropdown-menu {
-        width: 100%;
     }
 }
 
@@ -453,21 +441,60 @@
     }
 
     #selected-items-row {
-        position: absolute;
-        left: 2.5rem;
         width: 100%;
-        z-index: 9999;
         display: flex;
         flex-wrap: wrap;
     }
 
         #selected-items-row .badge {
-            margin: 5px;
+            display: inline-flex;
+            --bs-badge-font-size: 18px;
         }
+
+    #cross-btn {
+        font-size: 15px;
+    }
 }
 
 @media(max-width: 991px) {
     .dropdown {
         border-left: none;
     }
+
+    .navbar-nav .dropdown-menu {
+        position: absolute;
+    }
+}
+
+/*Volunteering mission page css */
+
+.related_mission_heading {
+    text-align: center;
+    letter-spacing: 0px;
+    color: #414141;
+    opacity: 1;
+}
+.CSR_heading {
+    letter-spacing: 0px;
+    color: #414141;
+    opacity: 1;
+    font-size: 38px;
+    font-weight: lighter;
+    margin-top: 23px;
+}
+
+.lorem {
+    color: #414141;
+    opacity: 1;
+    font-size: 17px;
+    font-weight: lighter;
+    /*margin-top: 23px;*/
+}
+
+.add_favorite{
+    width: 45%;
+}
+.pin1 {
+    height: 21px;
+    width: 17px;
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using CI_Platform.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CI_Platform.Data;
+namespace CI_Platform.DataAccess;
 
 public partial class CiPlatformContext : DbContext
 {

@@ -25,8 +25,11 @@ $('.dropdown-item').on('click', function () {
     const selectedItemsRow = $('#selected-items-row');
 
     // Create a badge element to display the selected item
-    const badge = $('<span class="badge badge-pill filter-box ml-2"></span>').text(value);
-    const cross = $('<span class="badge badge-pill badge-secondary ml-2" id="cross-btn"></span>').html('&times;');
+    const badge = $('<span class="badge text-bg-light ml-2 "></span>').text(value);
+    const cross = $('<span class="badge text-bg-light ml-2 d-inline" id="cross-btn"></span>').html('&times;');
+
+
+    cross.addClass('d-inline');
     badge.append(cross);
     selectedItemsRow.append(badge);
 
@@ -41,3 +44,4 @@ $('.dropdown-item').on('click', function () {
         selectedItemsRow.empty();
     });
 });
+

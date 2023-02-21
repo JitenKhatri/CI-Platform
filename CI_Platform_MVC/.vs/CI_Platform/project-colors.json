@@ -10,7 +10,22 @@
       "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
       "DisplayName": "Miscellaneous Files",
       "ColorIndex": -1
+    },
+    "291e1a83-2d19-4ee0-9782-ed276c5130ac": {
+      "ProjectGuid": "291e1a83-2d19-4ee0-9782-ed276c5130ac",
+      "DisplayName": "CI_Platform.DataAccess",
+      "ColorIndex": 1
+    },
+    "b4007050-6eef-4229-8dfe-12bc3bde9797": {
+      "ProjectGuid": "b4007050-6eef-4229-8dfe-12bc3bde9797",
+      "DisplayName": "CI_Platform.Models",
+      "ColorIndex": 2
+    },
+    "08ac603b-eb66-4376-8fbb-352bcb1891a5": {
+      "ProjectGuid": "08ac603b-eb66-4376-8fbb-352bcb1891a5",
+      "DisplayName": "CI_Platform.Utility",
+      "ColorIndex": 3
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 4
 }

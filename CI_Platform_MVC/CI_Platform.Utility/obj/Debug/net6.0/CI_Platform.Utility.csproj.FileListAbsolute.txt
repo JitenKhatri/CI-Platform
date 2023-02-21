@@ -1,0 +1,12 @@
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Utility\bin\Debug\net6.0\CI_Platform.Utility.deps.json
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Utility\bin\Debug\net6.0\CI_Platform.Utility.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Utility\bin\Debug\net6.0\ref\CI_Platform.Utility.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Utility\bin\Debug\net6.0\CI_Platform.Utility.pdb
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Utility\obj\Debug\net6.0\CI_Platform.Utility.csproj.AssemblyReference.cache
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Utility\obj\Debug\net6.0\CI_Platform.Utility.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Utility\obj\Debug\net6.0\CI_Platform.Utility.AssemblyInfoInputs.cache
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Utility\obj\Debug\net6.0\CI_Platform.Utility.AssemblyInfo.cs
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Utility\obj\Debug\net6.0\CI_Platform.Utility.csproj.CoreCompileInputs.cache
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Utility\obj\Debug\net6.0\CI_Platform.Utility.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Utility\obj\Debug\net6.0\ref\CI_Platform.Utility.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Utility\obj\Debug\net6.0\CI_Platform.Utility.pdb

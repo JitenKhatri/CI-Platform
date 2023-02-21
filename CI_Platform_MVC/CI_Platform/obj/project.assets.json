@@ -947,6 +947,42 @@
             "rid": "win"
           }
         }
+      },
+      "CI_Platform.DataAccess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "CI_Platform.Models": "1.0.0",
+          "CI_Platform.Utility": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "7.0.3",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3"
+        },
+        "compile": {
+          "bin/placeholder/CI_Platform.DataAccess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CI_Platform.DataAccess.dll": {}
+        }
+      },
+      "CI_Platform.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/CI_Platform.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CI_Platform.Models.dll": {}
+        }
+      },
+      "CI_Platform.Utility/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/CI_Platform.Utility.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CI_Platform.Utility.dll": {}
+        }
       }
     }
   },
@@ -3283,10 +3319,28 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "CI_Platform.DataAccess/1.0.0": {
+      "type": "project",
+      "path": "../CI_Platform.DataAccess/CI_Platform.DataAccess.csproj",
+      "msbuildProject": "../CI_Platform.DataAccess/CI_Platform.DataAccess.csproj"
+    },
+    "CI_Platform.Models/1.0.0": {
+      "type": "project",
+      "path": "../CI_Platform.Models/CI_Platform.Models.csproj",
+      "msbuildProject": "../CI_Platform.Models/CI_Platform.Models.csproj"
+    },
+    "CI_Platform.Utility/1.0.0": {
+      "type": "project",
+      "path": "../CI_Platform.Utility/CI_Platform.Utility.csproj",
+      "msbuildProject": "../CI_Platform.Utility/CI_Platform.Utility.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "CI_Platform.DataAccess >= 1.0.0",
+      "CI_Platform.Models >= 1.0.0",
+      "CI_Platform.Utility >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 7.0.3",
       "Microsoft.EntityFrameworkCore.Design >= 7.0.3",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.3",
@@ -3326,7 +3380,17 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\CI_Platform.DataAccess.csproj": {
+              "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\CI_Platform.DataAccess.csproj"
+            },
+            "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj": {
+              "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj"
+            },
+            "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj": {
+              "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
