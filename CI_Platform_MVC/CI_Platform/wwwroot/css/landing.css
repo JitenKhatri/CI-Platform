@@ -343,7 +343,6 @@
 
 .apply-btn {
     border: 2px solid #F88634;
-    ;
     border-radius: 100px;
     color: #F88634;
     padding-left: 20px;
@@ -363,6 +362,140 @@
     height: 100%;
     object-fit: cover;
 }
+
+
+
+/*Volunteering mission page css */
+
+.related_mission_heading {
+    text-align: center;
+    letter-spacing: 0px;
+    color: #414141;
+    opacity: 1;
+}
+.CSR_heading {
+    letter-spacing: 0px;
+    color: #414141;
+    opacity: 1;
+    font-size: 38px;
+    font-weight: lighter;
+    margin-top: 23px;
+}
+
+.lorem {
+    color: #414141;
+    opacity: 1;
+    font-size: 17px;
+    font-weight: lighter;
+    letter-spacing: 0px;
+}
+
+.add_favorite {
+    width: 45%;
+    border: 2px solid #757575;
+    border-radius: 25px;
+    opacity: 1;
+}
+.pin-img {
+    height: 21px;
+    width: 17px;
+}
+
+.star-btn {
+    padding:0 !important;
+    margin-top: 10px;
+}
+.carousel-card {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.mission-badge {
+    border: 1px solid #E8E8E8;
+    border-radius: 3px;
+    opacity: 1;
+    width: 153px;
+    height: 130px;
+    margin-top: 20px;
+    margin-left: 50px;
+}
+.calender-img {
+    height: 21px;
+    width: 21px;
+}
+.web-img {
+    height: 21px;
+    width: 21px;
+}
+.organization-img {
+    height: 21px;
+    width: 28px;
+}
+.apply-btn{
+    width: 30%;
+    border: 2px solid #F88634;
+    border-radius: 30px;
+    color: #F88634;
+    opacity: 1;
+ 
+    margin-top: 3%;
+}
+
+/*tabs*/
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover, .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    border-color: transparent;
+    color: #505050;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    border-bottom: 3px solid #414141;
+    color: #414141;
+    font-weight: 500;
+}
+
+.nav-link {
+    color: #ADADAD;
+    font-size: 15px;
+    line-height: 18px;
+    padding: 14px 18px;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #ADADAD;
+}
+
+.tab-content {
+    margin-top: 25px;
+}
+
+.tab-pane {
+    font-size: 15px;
+    line-height: 24px;
+    color: #3E3E3E;
+}
+
+
+
+volunteers #img {
+    width: 70px;
+    height: 70px;
+}
+
+.volunteers button {
+    background: none;
+    border: none;
+}
+
+#recent-volunteer-page-2 {
+    display: none;
+}
+
+#recent-volunteer-page-3 {
+    display: none;
+}
+
+
+
+
 
 @media (max-width: 575.98px) {
     .list-view .card {
@@ -405,6 +538,16 @@
 
     .grid-container {
         padding: 13px 1rem;
+    }
+
+    #duration-txt {
+        font-size: 13px;
+    }
+
+    .apply-btn {
+        margin-left: 0px;
+        margin-right: 0px;
+        width:52%;
     }
 }
 
@@ -454,6 +597,12 @@
     #cross-btn {
         font-size: 15px;
     }
+    #duration-text {
+        font-size:13px;
+    }
+    #html{
+        font-size: 12px;
+    }
 }
 
 @media(max-width: 991px) {
@@ -464,37 +613,4 @@
     .navbar-nav .dropdown-menu {
         position: absolute;
     }
-}
-
-/*Volunteering mission page css */
-
-.related_mission_heading {
-    text-align: center;
-    letter-spacing: 0px;
-    color: #414141;
-    opacity: 1;
-}
-.CSR_heading {
-    letter-spacing: 0px;
-    color: #414141;
-    opacity: 1;
-    font-size: 38px;
-    font-weight: lighter;
-    margin-top: 23px;
-}
-
-.lorem {
-    color: #414141;
-    opacity: 1;
-    font-size: 17px;
-    font-weight: lighter;
-    /*margin-top: 23px;*/
-}
-
-.add_favorite{
-    width: 45%;
-}
-.pin1 {
-    height: 21px;
-    width: 17px;
 }
