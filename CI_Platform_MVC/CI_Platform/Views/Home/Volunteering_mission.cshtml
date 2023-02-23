@@ -70,7 +70,7 @@
                 placeholder="Search mission ..."
                 aria-label="Search"
                 style="border:none;"
-              />
+-ms-flex-wrap         />
             </form>
           </li>
         </ul>
@@ -135,77 +135,50 @@
 
     <div class="container-fluid grid-container">
         <div class="row">
-            <div class="col-md-6">
-                    <img class="img-fluid" src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png" alt="">
-                    @*carousel*@
-                    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" >
-<div class="carousel-inner">
-  <div class="carousel-item active" data-bs-interval="20000">
-    <div class="row">
-      <div class="col-md-3 carousel-card">
-        <div class="card">
-          <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png" class="card-img-top" alt="...">
-        </div>
-      </div>
-      <div class="col-md-3 carousel-card">
-        <div class="card">
-          <img src="~/images/img1.png" class="card-img-top" alt="...">
-        </div>
-      </div>
-      <div class="col-md-3 carousel-card">
-        <div class="card">
-          <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png" class="card-img-top" alt="...">
-          
-        </div>
-      </div>
-        <div class="col-md-3 carousel-card">
-        <div class="card">
-          <img src="~/images/img11.png" class="card-img-top" alt="...">
-          
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="carousel-item" data-bs-interval="20000">
-    <div class="row">
-      <div class="col-md-3 carousel-card">
-        <div class="card">
-          <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png" class="card-img-top" alt="...">
-        </div>
-      </div>
-      <div class="col-md-3 carousel-card">
-        <div class="card">
-          <img src="~/images/img1.png" class="card-img-top" alt="...">
-        </div>
-      </div>
-      <div class="col-md-3 carousel-card">
-        <div class="card">
-          <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png" class="card-img-top" alt="...">
-         
-        </div>
-      </div>
-     <div class="col-md-3 carousel-card">
-        <div class="card">
-          <img src="~/images/img11.png" class="card-img-top" alt="...">
-          
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-  <span class="visually-hidden">Previous</span>
-</button>
-<button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-  <span class="visually-hidden">Next</span>
-</button>
-</div>
-@*carousel ends*@
-            
+           @* carousel starts*@
+            <div class="col-lg-6">
+           <div class="images">
+        <div class="carousel slide" data-bs-interval="false" id="sub-images">
+            <div class="carousel-inner">
+        <img class="w-100 carousel-item active main-image" src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png" alt=""/>
+        <img src="~/images/img1.png" class="w-100 carousel-item main-image" alt=""/>
+         <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-2.png" class="w-100 main-image carousel-item" alt=""/>
+            <img src="~/images/img11.png" class="w-100 carousel-item main-image" alt="" />
+             <img class="w-100 carousel-item main-image" src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png" alt=""/>
+             <img src="~/images/img1.png" class="w-100 carousel-item main-image" alt=""/>
+          </div>
+        <div class="mt-1 w-100 position-relative" >  
+            <div class="carousel slide" data-bs-interval="false" id="other-images">
+            <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="d-flex">
+            <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-6.png" data-bs-target="#sub-images" data-bs-slide-to="0"  class="other-image" alt=""/>
+            <img src="~/images/img3.png" class="other-image" data-bs-target="#sub-images" data-bs-slide-to="1"  alt=""/>
+            <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-3.png" data-bs-target="#sub-images" data-bs-slide-to="2"  class="other-image" alt=""/>
+            <img src="~/images/img22.png" class="other-image" data-bs-target="#sub-images" data-bs-slide-to="3"  alt="" />
             </div>
-            <div class="col-md-6">
+            </div>
+            <div class="carousel-item">
+                <div class="d-flex">
+            <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-6.png" data-bs-target="#sub-images" data-bs-slide-to="4"  class="other-image" alt=""/>
+            <img src="~/images/img3.png" class="other-image" data-bs-target="#sub-images" data-bs-slide-to="5"  alt=""/>
+            </div>
+            </div>
+            </div>
+             <div class="bg-black d-flex align-items-center justify-content-center position-absolute left h-100 carousel-control-prev" data-bs-target="#other-images" data-bs-slide="prev">
+            <img src="~/images/left1.png" class="w-50" alt="not load" />
+        </div>
+
+        <div class="bg-black d-flex align-items-center justify-content-center position-absolute left h-100 carousel-control-next" style="left:98%;" data-bs-target="#other-images"  data-bs-slide="next">
+            <img src="~/images/right-arrow2.png" class="w-50" alt="not load" />
+        </div>
+        </div>
+         </div>
+          </div>
+    </div>
+
+            </div>
+            <div class="col-lg-6">
                 <p class="CSR_heading">CSR initiative stands for Coffee & Farmer Equity</>
                 <p class="lorem"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                <div class="duration-seats-info mt-4">
@@ -269,7 +242,8 @@
                 
                     
                 </div> @*mission-badge-row completes*@
-                  <button class="btn apply-btn"> Apply Now <span> <img src=~/images/right-arrow.png /></span></button>  
+                <div class="d-flex justify-content-center mt-2">  <button class="btn apply-btn"> Apply Now <span> <img src=~/images/right-arrow.png /></span></button> </div>
+                  
                 </div>
             </div>
 
@@ -277,13 +251,13 @@
         </div>
 
               
-      <!-- related missions -->
+     
 
       <div class="container-fluid grid-container">
                  @* tabs *@
 
        <div class="row">
-           <div class="col-8">
+           <div class="col-lg-8">
        <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation">
                       <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-1" type="button"
@@ -321,7 +295,7 @@
                             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
                          <p style="font-size:25px;text-align: left;letter-spacing: 0px;color: #414141;opacity: 1;">Documents</p>
-                          <div class="d-flex flex-row">
+                          <div class="d-flex flex-row" style="flex-wrap : wrap">
                             <button class="btn"> 
                                   <img src="~/images/pdf.png"> 
                                   <span> lorem-ipsum.pdf</span>
@@ -359,7 +333,7 @@
 
 
                <div class="col-lg-4">
-        <div class="information-tbl border p-3">
+        <div class="information-tbl border p-3 mt-4">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-1" type="button" role="tab"
@@ -409,48 +383,48 @@
 
             <div class=" text-muted row p-3" style="row-gap: 20px; ">
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class="rounded-circle" src="~/images/volunteer1.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class="rounded-circle img-fluid" src="~/images/volunteer1.png" alt="" />
                 <span style="font-size: 15px;">Andrew Jhonson</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class="rounded-circle" src="~/images/volunteer2.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class="rounded-circle img-fluid" src="~/images/volunteer2.png" alt="" />
                 <span style="font-size: 15px;">Charles Vigue</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class=" rounded-circle" src="~/images/volunteer3.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class=" rounded-circle img-fluid" src="~/images/volunteer3.png" alt="" />
                 <span style="font-size: 15px;">Kathryn Roberts</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class="rounded-circle" src="~/images/volunteer4.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class="rounded-circle img-fluid" src="~/images/volunteer4.png" alt="" />
                 <span style="font-size: 15px;">Estella Fowles</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class="rounded-circle" src="~/images/volunteer5.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class="rounded-circle img-fluid" src="~/images/volunteer5.png" alt="" />
                 <span style="font-size: 15px;">Rose Lewis</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class=" rounded-circle" src="~/images/volunteer6.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class=" rounded-circle img-fluid" src="~/images/volunteer6.png" alt="" />
                 <span style="font-size: 15px;">Raymond Pabon</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class=" rounded-circle" src="~/images/volunteer7.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class=" rounded-circle img-fluid" src="~/images/volunteer7.png" alt="" />
                 <span style="font-size: 15px;">Travis Steen</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class=" rounded-circle" src="~/images/volunteer8.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class=" rounded-circle img-fluid" src="~/images/volunteer8.png" alt="" />
                 <span style="font-size: 15px;">Sarah Santillan</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class=" rounded-circle" src="~/images/volunteer9.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class=" rounded-circle img-fluid" src="~/images/volunteer9.png" alt="" />
                 <span style="font-size: 15px;">Linda Richards</span>
               </div>
             </div>
@@ -458,7 +432,7 @@
           <div class="d-flex border-top">
             <div class="border-end d-flex justify-content-center align-items-center"
               style="width:10%; cursor:pointer">
-              <button ><img class="h-70" src="~/images/left.png" alt="" /></button>
+              <button onclick="PreviousPage()" ><img class="h-70" src="~/images/left.png" alt="" /></button>
             </div>
             <div id="recent-volunteer-footer-txt" class="d-flex justify-content-center align-items-center"
               style="width:80%;"><span class="text-muted">1-9 of recent 25 volunteers</span></div>
@@ -481,48 +455,48 @@
 
             <div class=" text-muted row p-3" style="row-gap: 20px; ">
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class="rounded-circle" src="~/images/volunteer5.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class="rounded-circle img-fluid" src="~/images/volunteer5.png" alt="" />
                 <span style="font-size: 15px;">Andrew Jhonson</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class="rounded-circle" src="~/images/volunteer4.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class="rounded-circle img-fluid" src="~/images/volunteer4.png" alt="" />
                 <span style="font-size: 15px;">Charles Vigue</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class=" rounded-circle" src="~/images/volunteer1.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class=" rounded-circle img-fluid" src="~/images/volunteer1.png" alt="" />
                 <span style="font-size: 15px;">Kathryn Roberts</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class="rounded-circle" src="~/images/volunteer2.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class="rounded-circle img-fluid" src="~/images/volunteer2.png" alt="" />
                 <span style="font-size: 15px;">Estella Fowles</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class="rounded-circle" src="~/images/volunteer3.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class="rounded-circle img-fluid" src="~/images/volunteer3.png" alt="" />
                 <span style="font-size: 15px;">Rose Lewis</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class=" rounded-circle" src="~/images/volunteer8.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class=" rounded-circle img-fluid" src="~/images/volunteer8.png" alt="" />
                 <span style="font-size: 15px;">Raymond Pabon</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class=" rounded-circle" src="~/images/volunteer6.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class=" rounded-circle img-fluid" src="~/images/volunteer6.png" alt="" />
                 <span style="font-size: 15px;">Travis Steen</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class=" rounded-circle" src="~/images/volunteer9.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class=" rounded-circle img-fluid" src="~/images/volunteer9.png" alt="" />
                 <span style="font-size: 15px;">Sarah Santillan</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class=" rounded-circle" src="~/images/volunteer7.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class=" rounded-circle img-fluid" src="~/images/volunteer7.png" alt="" />
                 <span style="font-size: 15px;">Linda Richards</span>
               </div>
             </div>
@@ -553,38 +527,38 @@
 
             <div class=" text-muted row p-3" style="row-gap: 20px; ">
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class="rounded-circle" src="~/images/volunteer1.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img"  class="img-fluid rounded-circle" src="~/images/volunteer1.png" alt="" />
                 <span style="font-size: 15px;">Andrew Jhonson</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class="rounded-circle" src="~/images/volunteer2.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class="img-fluid rounded-circle" src="~/images/volunteer2.png" alt="" />
                 <span style="font-size: 15px;">Charles Vigue</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class=" rounded-circle" src="~/images/volunteer3.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class=" img-fluid rounded-circle" src="~/images/volunteer3.png" alt="" />
                 <span style="font-size: 15px;">Kathryn Roberts</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class="rounded-circle" src="~/images/volunteer4.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class="img-fluid rounded-circle" src="~/images/volunteer4.png" alt="" />
                 <span style="font-size: 15px;">Estella Fowles</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class="rounded-circle" src="~/images/volunteer5.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class="img-fluid rounded-circle" src="~/images/volunteer5.png" alt="" />
                 <span style="font-size: 15px;">Rose Lewis</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class=" rounded-circle" src="~/images/volunteer6.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class="img-fluid rounded-circle" src="~/images/volunteer6.png" alt="" />
                 <span style="font-size: 15px;">Raymond Pabon</span>
               </div>
               <div
-                class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column align-items-center justify-content-center">
-                <img id="img" class=" rounded-circle" src="~/images/volunteer7.png" alt="" />
+                class="col-4 d-flex flex-column align-items-center justify-content-center">
+                <img id="img" class=" img-fluid rounded-circle" src="~/images/volunteer7.png" alt="" />
                 <span style="font-size: 15px;">Travis Steen</span>
               </div>
               
@@ -607,8 +581,9 @@
              
 
               </div>
+               <!-- related missions -->
           <h1 class="related_mission_heading mt-4"> Related Missions</h1>
-        <div class="row">
+        <div class="row mt-4">
       
           <div class="col-12 col-md-6 col-lg-4">
             <!-- 4th card -->
@@ -647,7 +622,7 @@
                     <p id="duration-txt" style="margin-bottom: 0;">Ongoing Opportunity</p>
                   </div> 
                   <div class="d-flex flex-row">
-                    <div class="d-flex flex-row mission-deadline">
+                    <div class="d-flex flex-row mission-deadline mb-2">
                       <div><img src="~/images/Already-volunteered.png" alt=""> </div>
                       <div ms-4><span>250</br> Already-volunteered</span></div>
                     </div>

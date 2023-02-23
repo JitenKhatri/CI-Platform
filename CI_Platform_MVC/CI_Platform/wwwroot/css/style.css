@@ -36,7 +36,7 @@ html,body{
     border-width: 2px;
     border-color: rgba(248, 134, 52, 1);
     color:rgba(248, 134, 52, 1);
-    
+    width: 100%;
 }
 
 .link {
