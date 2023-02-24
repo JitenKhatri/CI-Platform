@@ -80,41 +80,6 @@ function NextPage() {
     }
 };
 
-
-//function previousPage() {
-//    var x = document.getElementById("recent-volunteer-page-1");
-//    var y = document.getElementById("recent-volunteer-page-2");
-//    var z = document.getElementById("recent-volunteer-page-3");
-//    var p = document.getElementById("recent-volunteer-footer-txt");
-
-//    if (y.style.display == "block") {
-//        x.style.display = "block";
-//        y.style.display = "none";
-//        z.style.display = "none";
-//        p.innerHTML = "1-9  of 25 Recent Volunteer";
-
-
-//    }
-
-//    else if (z.style.display == "block") {
-//        x.style.display = "none";
-//        y.style.display = "block";
-//        z.style.display = "none";
-//        p.innerHTML = "10-18  of 25 Recent Volunteer";
-
-//    }
-//    else {
-//        x.style.display = "none";
-//        y.style.display = "none";
-//        z.style.display = "block";
-//        p.innerHTML = "18-25";
-
-//    }
-
-//};
-
-
-
 function PreviousPage() {
     var x = document.getElementById("recent-volunteer-page-1");
     var y = document.getElementById("recent-volunteer-page-2");
@@ -140,3 +105,6 @@ function PreviousPage() {
         p.innerHTML = "18 - 25  of recent 25 volunteers"
     }
 };
+
+
+

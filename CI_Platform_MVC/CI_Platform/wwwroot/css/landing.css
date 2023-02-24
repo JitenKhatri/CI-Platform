@@ -334,7 +334,7 @@
 .mission-theme {
     position: absolute;
     bottom: -13px;
-    left: 140px;
+    left: 25%;
     /* / bottom: 1; / */
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border-radius: 18px;
@@ -493,22 +493,7 @@ volunteers #img {
     display: none;
 }
 
-/*.carousel-inner .carousel-item img {
-    width: 100%;
-}
 
-.carousel-indicators button {
-    height: auto;
-    width: 100%;
-    opacity: 0.5;
-    border: none;
-    padding: 0;
-}
-
-.carousel-indicators .active {
-    opacity: 1;
-}
-*/
 .other-image {
     margin-right: 1.15%;
     width: 24.1%;
@@ -518,6 +503,82 @@ volunteers #img {
     width: 2%;
     opacity: 50%;
     cursor: pointer;
+}
+
+/*story listing page css starts*/
+
+.story-header-img {
+    width: 100vw;
+    height: 42vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('/images/Grow-Trees-On-the-path-to-environment-sustainability-login-story.png');
+    background-size: cover;
+    background-position: top left;
+   
+}
+.story-lorem {
+    color: white;
+    width: 60vw;
+
+}
+.story-button {
+    border: 2px solid #FFFFFF;
+    border-radius: 100px;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.volunteer-image {
+    width: 60px;
+    border-radius: 60px;
+    height: 60px;
+}
+.vol-name{
+    padding-top:16px;
+    padding-left:9px;
+}
+.mission-title {
+   color: #414141;
+}
+.story-container {
+    padding: 13px 8.5rem;
+}
+
+#view-details-button {
+    background: transparent;
+    color: white;
+    border: 2px solid white !important;
+    border-radius: 24px;
+    background: none;
+    align-items: center;
+    display: flex;
+    padding-left:10px;
+    padding-right: 22px;
+}
+
+.middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.card:hover .img-event .card-img-top {
+    filter: brightness(40%);
+}
+
+.card:hover .middle {
+    opacity: 1;
+}
+
+.page-link {
+    color: #F88634;
+    border: solid 1px #e1e1e1;
+    --bs-pagination-active-bg: #F88634;
+    --bs-pagination-active-border-color: #F88634;
 }
 
 @media (max-width: 575.98px) {
@@ -662,6 +723,10 @@ volunteers #img {
 
     .CSR_heading {
         font-size: 25px;
+    }
+
+    .story-container {
+        padding: 13px 1rem;
     }
 }
 
