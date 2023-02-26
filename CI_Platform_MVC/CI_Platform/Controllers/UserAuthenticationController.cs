@@ -1,4 +1,5 @@
-﻿using CI_Platform.Models;
+﻿using CI_Platform.DataAccess.Repository.IRepository;
+using CI_Platform.Models;
 using CI_Platform.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,11 +9,11 @@ namespace CI_Platform.Controllers
     [Route("UserAuthentication")]
     public class UserAuthenticationController : Controller
     {
-        private readonly DataAccess.CiPlatformContext _context;
+        private readonly IUserRepository _userRepository;
 
-        public UserAuthenticationController(DataAccess.CiPlatformContext context)
+        public UserAuthenticationController(IUserRepository userRepository)
         {
-            _context = context;
+            _userRepository = userRepository;
         }
         [Route("login")]
         public IActionResult login()
@@ -22,12 +23,12 @@ namespace CI_Platform.Controllers
 
         [HttpPost]
         [Route("login")]
-        public IActionResult login(LoginViewModel model)
+        public async Task<IActionResult>  login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
                 // Check if a user with the provided email and password exists in the database
-                var userExists = _context.Users.Any(u => u.Email == model.Email && u.Password == model.Password);
+                var userExists = await _userRepository.UserExistsAsync(model.Email, model.Password);
 
                 if (userExists)
                 {
@@ -63,8 +64,8 @@ namespace CI_Platform.Controllers
                     Password = model.Password
                 };
 
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
+                await _userRepository.AddUserAsync(user);
+                await _userRepository.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Registration successful. Please login to continue.";
                 return RedirectToAction("login");
             }

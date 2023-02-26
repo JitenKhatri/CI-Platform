@@ -17,3 +17,22 @@ C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\o
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\ref\CI_Platform.DataAccess.dll
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\CI_Platform.DataAccess.pdb
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\CI_Platform.DataAccess.genruntimeconfig.cache
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\bin\Debug\net6.0\CI_Platform.DataAccess.deps.json
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\bin\Debug\net6.0\CI_Platform.DataAccess.runtimeconfig.json
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\bin\Debug\net6.0\CI_Platform.DataAccess.dll
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\bin\Debug\net6.0\CI_Platform.DataAccess.pdb
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\bin\Debug\net6.0\CI_Platform.Models.dll
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\bin\Debug\net6.0\CI_Platform.Utility.dll
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\bin\Debug\net6.0\CI_Platform.Models.pdb
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\bin\Debug\net6.0\CI_Platform.Utility.pdb
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\CI_Platform.DataAccess.csproj.AssemblyReference.cache
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\CI_Platform.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\CI_Platform.DataAccess.AssemblyInfoInputs.cache
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\CI_Platform.DataAccess.AssemblyInfo.cs
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\CI_Platform.DataAccess.csproj.CoreCompileInputs.cache
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\CI_Platform.DataAccess.csproj.CopyComplete
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\CI_Platform.DataAccess.dll
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\refint\CI_Platform.DataAccess.dll
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\CI_Platform.DataAccess.pdb
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\CI_Platform.DataAccess.genruntimeconfig.cache
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\ref\CI_Platform.DataAccess.dll

@@ -10,3 +10,15 @@ C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Models\obj\D
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Models\obj\Debug\net6.0\CI_Platform.Models.dll
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Models\obj\Debug\net6.0\ref\CI_Platform.Models.dll
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.Models\obj\Debug\net6.0\CI_Platform.Models.pdb
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.Models\bin\Debug\net6.0\CI_Platform.Models.deps.json
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.Models\bin\Debug\net6.0\CI_Platform.Models.dll
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.Models\bin\Debug\net6.0\CI_Platform.Models.pdb
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.Models\obj\Debug\net6.0\CI_Platform.Models.csproj.AssemblyReference.cache
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.Models\obj\Debug\net6.0\CI_Platform.Models.GeneratedMSBuildEditorConfig.editorconfig
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.Models\obj\Debug\net6.0\CI_Platform.Models.AssemblyInfoInputs.cache
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.Models\obj\Debug\net6.0\CI_Platform.Models.AssemblyInfo.cs
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.Models\obj\Debug\net6.0\CI_Platform.Models.csproj.CoreCompileInputs.cache
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.Models\obj\Debug\net6.0\CI_Platform.Models.dll
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.Models\obj\Debug\net6.0\refint\CI_Platform.Models.dll
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.Models\obj\Debug\net6.0\CI_Platform.Models.pdb
+E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform.Models\obj\Debug\net6.0\ref\CI_Platform.Models.dll

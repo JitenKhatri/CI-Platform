@@ -4,6 +4,7 @@
     "\\CI_Platform",
     "\\CI_Platform\\Controllers",
     "\\CI_Platform\\Views",
+    "\\CI_Platform\\Views\\Home",
     "\\CI_Platform\\Views\\Shared",
     "\\CI_Platform\\Views\\UserAuthentication"
   ],
