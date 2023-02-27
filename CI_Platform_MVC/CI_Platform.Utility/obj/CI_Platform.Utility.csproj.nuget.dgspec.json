@@ -1,20 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj": {}
+    "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj": {}
   },
   "projects": {
-    "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj": {
+    "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj",
+        "projectUniqueName": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj",
         "projectName": "CI_Platform.Utility",
-        "projectPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj",
-        "packagesPath": "C:\\Users\\Jiten\\.nuget\\packages\\",
-        "outputPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\obj\\",
+        "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj",
+        "packagesPath": "C:\\Users\\pca19\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Jiten\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pca19\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -54,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.309\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

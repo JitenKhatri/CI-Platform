@@ -200,3 +200,11 @@ E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform\obj\Debug\net6.0\r
 E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform\obj\Debug\net6.0\CI_Platform.pdb
 E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform\obj\Debug\net6.0\CI_Platform.genruntimeconfig.cache
 E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform\obj\Debug\net6.0\ref\CI_Platform.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\obj\Debug\net6.0\CI_Platform.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll

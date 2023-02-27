@@ -1,20 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\CI_Platform.csproj": {}
+    "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\CI_Platform.csproj": {}
   },
   "projects": {
-    "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\CI_Platform.DataAccess.csproj": {
+    "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\CI_Platform.DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\CI_Platform.DataAccess.csproj",
+        "projectUniqueName": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\CI_Platform.DataAccess.csproj",
         "projectName": "CI_Platform.DataAccess",
-        "projectPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\CI_Platform.DataAccess.csproj",
-        "packagesPath": "C:\\Users\\Jiten\\.nuget\\packages\\",
-        "outputPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\obj\\",
+        "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\CI_Platform.DataAccess.csproj",
+        "packagesPath": "C:\\Users\\pca19\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Jiten\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pca19\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,11 +33,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj": {
-                "projectPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj"
+              "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj": {
+                "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj"
               },
-              "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj": {
-                "projectPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj"
+              "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj": {
+                "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj"
               }
             }
           }
@@ -47,6 +52,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.14, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.3, )"
@@ -60,6 +73,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.3, )"
+            },
+            "Microsoft.Extensions.Identity.Core": {
+              "target": "Package",
+              "version": "[6.0.14, )"
             }
           },
           "imports": [
@@ -77,21 +94,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.309\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj": {
+    "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj",
+        "projectUniqueName": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj",
         "projectName": "CI_Platform.Models",
-        "projectPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj",
-        "packagesPath": "C:\\Users\\Jiten\\.nuget\\packages\\",
-        "outputPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\obj\\",
+        "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj",
+        "packagesPath": "C:\\Users\\pca19\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Jiten\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pca19\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -131,21 +153,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.309\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj": {
+    "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj",
+        "projectUniqueName": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj",
         "projectName": "CI_Platform.Utility",
-        "projectPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj",
-        "packagesPath": "C:\\Users\\Jiten\\.nuget\\packages\\",
-        "outputPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\obj\\",
+        "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj",
+        "packagesPath": "C:\\Users\\pca19\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Jiten\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pca19\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -185,21 +212,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.309\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\CI_Platform.csproj": {
+    "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\CI_Platform.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\CI_Platform.csproj",
+        "projectUniqueName": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\CI_Platform.csproj",
         "projectName": "CI_Platform",
-        "projectPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\CI_Platform.csproj",
-        "packagesPath": "C:\\Users\\Jiten\\.nuget\\packages\\",
-        "outputPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\obj\\",
+        "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\CI_Platform.csproj",
+        "packagesPath": "C:\\Users\\pca19\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Jiten\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pca19\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -213,14 +245,14 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\CI_Platform.DataAccess.csproj": {
-                "projectPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\CI_Platform.DataAccess.csproj"
+              "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\CI_Platform.DataAccess.csproj": {
+                "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\CI_Platform.DataAccess.csproj"
               },
-              "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj": {
-                "projectPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj"
+              "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj": {
+                "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj"
               },
-              "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj": {
-                "projectPath": "E:\\Tatvasoft Training\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj"
+              "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj": {
+                "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj"
               }
             }
           }
@@ -235,6 +267,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.14, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[6.0.14, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.3, )"
@@ -274,7 +314,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.309\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

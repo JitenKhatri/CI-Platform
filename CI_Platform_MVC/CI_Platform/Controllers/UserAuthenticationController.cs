@@ -1,7 +1,11 @@
 ﻿using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
+using CI_Platform.Models.ViewModels;
 using CI_Platform.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Encodings.Web;
 
 namespace CI_Platform.Controllers
 {
@@ -9,12 +13,14 @@ namespace CI_Platform.Controllers
     [Route("UserAuthentication")]
     public class UserAuthenticationController : Controller
     {
-        private readonly IUserRepository _userRepository;
+         private readonly IUserRepository _userRepository;
 
         public UserAuthenticationController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
+
+
         [Route("login")]
         public IActionResult login()
         {
@@ -55,6 +61,14 @@ namespace CI_Platform.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userExists = await _userRepository.UserExistsAsync(model.Email);
+
+                if (userExists)
+                {
+                    // User exists
+                    return BadRequest("Use with specified email already exists");
+                }
+
                 var user = new User
                 {
                     FirstName = model.FirstName,
@@ -79,6 +93,26 @@ namespace CI_Platform.Controllers
         {
            return View();
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> lostPassword(ForgotPasswordViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // code here
+        //        var user = await _accountRepository.GetUserByEmailAsync(model.Email);
+        //        if (user != null)
+        //        {
+        //            await _accountRepository.GenerateForgotPasswordTokenAsync(user);
+        //        }
+
+        //        ModelState.Clear();
+        //        model.EmailSent = true;
+        //    }
+        //    return View(model);
+        //}
+
+
         [Route("resetPassword")]
         public IActionResult resetPassword()
         {
