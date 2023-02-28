@@ -9,14 +9,12 @@ namespace CI_Platform.DataAccess.Repository.IRepository
 {
     public interface IRepository<T> where T : class
     {
-        Task<T> GetByIdAsync(int id);
-        Task<IEnumerable<T>> GetAllAsync();
-        Task AddAsync(T entity);
-        Task DeleteAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task<bool> ExistsAsync(int id);
-        Task<int> CountAsync();
-        Task SaveChangesAsync();
+        T GetFirstOrDefault(Expression<Func<T, bool>> filter);
+        IEnumerable<T> GetAll();
+        T Get(int id);
+        void Add(T entity);
+
+
     }
 
 }

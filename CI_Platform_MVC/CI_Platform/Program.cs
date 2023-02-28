@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CiPlatformContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAllRepository, AllRepository>();
 
 var app = builder.Build();
 
@@ -31,7 +31,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
 name: "default",
 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+app.MapControllerRoute(
+    name: "UserAuthentication",
+    pattern: "{controller=UserAuthentication}/{action=ResetPassword}/{id?}");
 //app.MapControllerRoute(
 //    name: "UserAuthentication",
 //    pattern: "{controller=UserAuthentication}/{action=login}");

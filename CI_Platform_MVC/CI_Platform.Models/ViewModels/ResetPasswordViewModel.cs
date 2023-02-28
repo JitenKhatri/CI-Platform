@@ -9,9 +9,7 @@ namespace CI_Platform.Models.ViewModels
 {
     public  class ResetPasswordViewModel
     {
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Invalid email address")]
-        public string Email { get; set; } = null!;
+        
 
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
@@ -22,6 +20,6 @@ namespace CI_Platform.Models.ViewModels
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
-        public string Token { get; set; }
+       
     }
 }

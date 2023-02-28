@@ -23,4 +23,8 @@
     <ProjectReference Include="..\CI_Platform.Utility\CI_Platform.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
