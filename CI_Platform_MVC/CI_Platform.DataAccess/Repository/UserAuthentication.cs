@@ -15,7 +15,14 @@ namespace CI_Platform.DataAccess.Repository
         {
             _db = db;
         }
-
+        void IUserAuthentication.Add(PasswordReset resetPasswordInfo)
+        {
+            _db.Add(resetPasswordInfo);
+        }
+        //void IUserAuthentication.Update(PasswordReset resetPasswordInfo)
+        //{
+        //    _db.Update(resetPasswordInfo);
+        //}
         public User ResetPassword(string password, long id)
         {
             User user = _db.Users.Find(id);

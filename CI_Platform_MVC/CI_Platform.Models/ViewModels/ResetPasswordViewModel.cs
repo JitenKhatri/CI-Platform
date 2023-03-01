@@ -20,6 +20,8 @@ namespace CI_Platform.Models.ViewModels
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
-       
+        public string Email { get; set; } = null!;
+
+        public string token { get; set; } = null!;
     }
 }

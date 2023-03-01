@@ -6,6 +6,7 @@
 @{
     Layout = null;
 }
+
 @model LoginViewModel
 
 <!DOCTYPE html>
@@ -118,15 +119,26 @@
             <div class="col-lg-4 d-flex flex-column">
                 <div class="login-form d-flex flex-column">
                    <form  method="post">
-                       <div asp-validation-summary="All" class="text-danger"></div>
+                     @if (ViewBag.LoginErrorMessage != null)
+{
+                    <div class="alert alert-danger" role="alert">
+                     @ViewBag.LoginErrorMessage
+                    </div>
+}
+                      @* <div asp-validation-summary="All" class="text-danger"></div>*@
+                       <span asp-validation-for="Email" class="form-text text-danger"></span>
                 <div>
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                   
                     <label asp-for="Email" class="form-label">Email Address</label>
-                    <input asp-for="Email" type="email" class="form-control mb-4" id="emailInput" /></div>
+                    <input asp-for="Email" type="email" class="form-control mb-4" id="emailInput" />
+                    
+                </div>
+                <span asp-validation-for="Password" class="form-text text-danger"></span>
               <div>
-                  <span asp-validation-for="Password" class="text-danger"></span>
+                    
                   <label asp-for="Password" class="form-label">Password</label>
                 <input  asp-for="Password" type="password" class="form-control mb-4" id="passwordInput" /></div>
+              
                 <button type="submit" class="pill-button rounded-pill mb-4">Login</button>
                 
                 </form>

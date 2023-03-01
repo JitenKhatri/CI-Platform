@@ -8,8 +8,10 @@ namespace CI_Platform.DataAccess.Repository.IRepository
 {
    public interface IAllRepository
     {
+
         void save();
         public IUserAuthentication UserAuthentication { get; }
+        public IPasswordResetRepository PasswordResetRepository { get; }
         public IMission Mission { get; }
     }
 }

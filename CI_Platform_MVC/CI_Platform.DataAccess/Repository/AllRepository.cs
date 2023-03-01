@@ -1,4 +1,5 @@
 ﻿using CI_Platform.DataAccess.Repository.IRepository;
+using CI_Platform.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,13 @@ namespace CI_Platform.DataAccess.Repository
             _db = db;
             UserAuthentication = new UserAuthentication(_db);
             Mission = new Mission(_db);
+            PasswordResetRepository = new PasswordResetRepository(_db);
         }
         public IUserAuthentication UserAuthentication { get; private set; }
 
         public IMission Mission { get; private set; }
+
+        public IPasswordResetRepository PasswordResetRepository { get; private set; }
 
         public void save()
         {

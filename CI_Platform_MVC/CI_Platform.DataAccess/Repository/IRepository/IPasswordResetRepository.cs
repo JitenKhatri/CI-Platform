@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace CI_Platform.DataAccess.Repository.IRepository
 {
-    public interface IUserAuthentication : IRepository<User>
+    public interface IPasswordResetRepository : IRepository<PasswordReset>
     {
-        User ResetPassword(string password, long id);
-        void Add(PasswordReset resetPasswordInfo);
-
+        void Add(PasswordReset passwordReset);
+        void Remove(PasswordReset passwordReset);
     }
 }

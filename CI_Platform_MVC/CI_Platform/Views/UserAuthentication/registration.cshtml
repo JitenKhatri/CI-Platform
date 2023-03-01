@@ -117,37 +117,43 @@
              <div class="col-lg-4">
                 <div class=" register-form d-flex flex-column">
                <form  method="post">
-                
+                <span asp-validation-for="FirstName" class="text-danger"></span>
                 <div>
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                   
                     <label asp-for="FirstName" class="form-label ">First Name</label>
                     <input asp-for="FirstName" type="text" class="form-control mb-4 " id="firstname" >
+                     
                 </div>
+                <span asp-validation-for="LastName" class="text-danger"></span>
                 <div>
-                    <span asp-validation-for="LastName" class="text-danger"></span>
+                    
                     <label asp-for="LastName" class="form-label ">Last Name</label>
                     <input asp-for="LastName" type="text" class="form-control mb-4 " id="lastname" >
                     
                 </div>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 <div>
                     <label asp-for="PhoneNumber" class="form-label ">Phone Number</label>
                     <input asp-for="PhoneNumber" type="number" class="form-control mb-4 " id="phonenumber" >
-                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    
                 </div>
+                <span asp-validation-for="Email" class="text-danger"></span>
                 <div>
-                     <span asp-validation-for="Email" class="text-danger"></span>
+                     
                     <label asp-for="Email" class="form-label ">Email Address</label>
                     <input asp-for="Email" type="email" class="form-control mb-4 " id="emailaddress" >
                    
                 </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
                 <div>
-                     <span asp-validation-for="Password" class="text-danger"></span>
+                     
                     <label asp-for="Password" class="form-label ">Password</label>
                     <input asp-for="Password" type="password" class="form-control mb-4" id="password">
                    
                 </div>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 <div>
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    
                     <label asp-for="ConfirmPassword" class="form-label ">Confirm Password</label>
                     <input asp-for="ConfirmPassword" type="password" class="form-control mb-4" id="passwordInput">
                     

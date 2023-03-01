@@ -1,4 +1,5 @@
 ﻿using CI_Platform.DataAccess.Repository.IRepository;
+using CI_Platform.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

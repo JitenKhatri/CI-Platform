@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using CI_Platform.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CI_Platform.DataAccess;
+namespace CI_Platform.Models;
 
 public partial class CiPlatformContext : DbContext
 {
@@ -66,7 +65,7 @@ public partial class CiPlatformContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=PCA19\\SQL2017;Database=CI_Platform;Trusted_Connection=True;MultipleActiveResultSets=true;User ID=sa;Password=tatva123;Integrated Security=False;Encrypt=False;");
+        => optionsBuilder.UseSqlServer("Server=PCA19\\SQL2017; Database=CI_Platform;Trusted_Connection=True;MultipleActiveResultSets=true;User ID=sa;Password=tatva123;Integrated Security=False;Encrypt=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -632,10 +631,11 @@ public partial class CiPlatformContext : DbContext
 
         modelBuilder.Entity<PasswordReset>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("password_reset");
+            entity.HasKey(e => e.Id).HasName("PK__password__3213E83F468D5C2C");
 
+            entity.ToTable("password_reset");
+
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")

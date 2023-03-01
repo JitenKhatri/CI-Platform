@@ -1,3 +1,4 @@
+using CI_Platform;
 using CI_Platform.DataAccess;
 using CI_Platform.DataAccess.Repository;
 using CI_Platform.DataAccess.Repository.IRepository;
