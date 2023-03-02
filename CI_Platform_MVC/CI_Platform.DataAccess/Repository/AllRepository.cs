@@ -15,12 +15,12 @@ namespace CI_Platform.DataAccess.Repository
         {
             _db = db;
             UserAuthentication = new UserAuthentication(_db);
-            Mission = new Mission(_db);
+            //Mission = new Mission(_db);
             PasswordResetRepository = new PasswordResetRepository(_db);
         }
         public IUserAuthentication UserAuthentication { get; private set; }
 
-        public IMission Mission { get; private set; }
+        //public IMission Mission { get; private set; }
 
         public IPasswordResetRepository PasswordResetRepository { get; private set; }
 
