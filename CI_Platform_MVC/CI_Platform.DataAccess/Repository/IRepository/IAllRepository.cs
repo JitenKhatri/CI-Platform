@@ -12,6 +12,7 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         void save();
         public IUserAuthentication UserAuthentication { get; }
         public IPasswordResetRepository PasswordResetRepository { get; }
-        //public IMission Mission { get; }
+
+        public IMissionRepository MissionRepository { get; }
     }
 }

@@ -332,6 +332,9 @@ public partial class CiPlatformContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
+            entity.Property(e => e.Deadline)
+                .HasColumnType("date")
+                .HasColumnName("deadline");
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
@@ -341,6 +344,11 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.EndDate)
                 .HasColumnType("datetime")
                 .HasColumnName("end_date");
+            entity.Property(e => e.GoalAcheived).HasColumnName("goal_acheived");
+            entity.Property(e => e.GoalMotto)
+                .HasMaxLength(128)
+                .IsUnicode(false)
+                .HasColumnName("goal_motto");
             entity.Property(e => e.MissionType)
                 .HasMaxLength(4)
                 .IsUnicode(false)
@@ -352,6 +360,7 @@ public partial class CiPlatformContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("organization_name");
+            entity.Property(e => e.SeatsLeft).HasColumnName("seats_left");
             entity.Property(e => e.ShortDescription)
                 .HasColumnType("text")
                 .HasColumnName("short_description");
