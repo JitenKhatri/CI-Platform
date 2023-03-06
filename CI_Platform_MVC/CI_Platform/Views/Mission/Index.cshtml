@@ -68,8 +68,8 @@
                 <button type="button" class="btn">
                   <img src="~/images/search.png" alt="search" />
                 </button>
-                <input
-                  class="form-control"
+                <input onkeyup="search()" id="search-input"
+                  class="form-control" 
                   type="text"
                   placeholder="Search mission ..."
                   aria-label="Search"
@@ -86,7 +86,7 @@
               <div class="dropdown-menu" aria-labelledby="countryDropdown">
                             @foreach(var country in ViewBag.CountryList)
              {
-            <a class="dropdown-item" href="#" data-value="@country.Text">@country.Text</a>
+            <a id ="country" class="dropdown-item" href="#" data-value="@country.Text">@country.Text</a>
              }
               </div>
             </li>
@@ -96,12 +96,14 @@
               </button>
               <div class="dropdown-menu" aria-labelledby="cityDropdown">
                  @foreach(var city in ViewBag.CityList)
-        {
-            <a class="dropdown-item" href="#" data-value="@city.Text">@city.Text</a>
-        }
-                @*<a class="dropdown-item" href="#" data-value="Tiranna">Tiranna</a>
-                <a class="dropdown-item" href="#" data-value="Durres">Durres</a>
-                <a class="dropdown-item" href="#" data-value="Viore">Viore</a>*@
+                {
+                                            <div>
+        <input type="checkbox" id="@city.Text" class="dropdown-item checkbox-item" onchange="addcities('@city.Text')" data-value="@city.Text">
+        <label for="@city.Text">@city.Text</label>
+    </div>
+           @* <a id='@city.Text' class="dropdown-item" href="#" onchange='addcities()' data-value="@city.Text">@city.Text</a>*@
+                }
+               
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -109,16 +111,10 @@
                 Theme <img src="~/images/drop-down.png" class="mx-2">
               </button>
               <div class="dropdown-menu" aria-labelledby="themeDropdown">
-          @*            @foreach(var theme in ViewBag.ThemeList)
+                      @foreach(var theme in ViewBag.ThemeList)
         {
             <a class="dropdown-item" href="#" data-value="@theme.Text">@theme.Text</a>
-        }*@
-                @*<a class="dropdown-item" href="#" data-value="Education">Education</a>
-                <a class="dropdown-item" href="#" data-value="Children">Children</a>
-                <a class="dropdown-item" href="#" data-value="Health">Health</a>
-                <a class="dropdown-item" href="#" data-value="Animals">Animals</a>
-                <a class="dropdown-item" href="#" data-value="Nutritions">Nutritions</a>
-                <a class="dropdown-item" href="#" data-value="Environment">Environment</a>*@
+        }
 
               </div>
             </li>
@@ -180,8 +176,8 @@
        <div class="row">
 
            @foreach(var mission in Model)
-                {
-                    <div class="col-12 col-md-6 col-lg-4">              
+          {
+                    <div class="col-12 col-md-6 col-lg-4 mission-card">              
               <div class="card">
                 <div class="img-event">
                   <img class="card-img-top" src=@mission.image?.MediaPath alt="Card image cap">
@@ -279,522 +275,26 @@
                 </div>
               </div>
             </div> 
-                }
+        }
 
-                <!-- 1st card -->           
-            @*<div class="col-12 col-md-6 col-lg-4">              
-              <div class="card">
-                <div class="img-event">
-                  <img class="card-img-top" src="~/images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="Card image cap">
-                  <div class="location-img">
-                    <img class="text-light" src="~/images/pin.png" alt="">
-                        <span class="text-light">Toronto</span>
-                    </div>
-                    <button class="like-img border-0">
-                        <img class="text-light" src="~/images/heart.png" alt="">
-                    </button>
-                    <button class="stop-img border-0">
-                        <img class="text-light" src="~/images/add1.png" alt="">
-                    </button>
-                    <button class="mission-theme border-0">
-                    <span class="p-2">Environment</span>
-                    </button>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Grow Trees On the path to environment sustainability</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
-                  <div class="d-flex justify-content-between">
-                    <div><p class="slug">Tree Canada</p></div>
-                    <div class="d-flex flex-row">
-                      <img class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                    </div>
-                  </div>
-                  <div class="duration-seats-info mt-4">
-                    <div class="duration">
-                      <p id="duration-txt" style="margin-bottom: 0;">From 10/01/2019 until 25/02/2019</p>
-                    </div> 
-                    <div class="d-flex flex-row mission-deadline">
-                      <div class="d-flex flex-row">
-                        <div><img src="~/images/Seats-left.png" alt=""> </div>
-                        <div><span>10 </br> Seats left</span></div>
-                      </div>
-                      <div class="d-flex flex-row">
-                        <div><img src="~/images/deadline.png" alt=""></div>
-                        <div class="ms-2"> <span>09/01/2019 <br> Deadline</span> </div>
-                      </div>
-                      
-                    </div>
-                    
-                  </div> 
-                  <div class="d-flex justify-content-center mt-4">
-                    <button class="apply-btn">
-                      Apply <span><img src="~/images/right-arrow.png" alt=""></span>
-                    </button>
-                  </div>  
-                </div>
-              </div>
-            </div>*@
-              <!-- 2nd card       -->
-            @*<div class="col-12 col-md-6 col-lg-4">    
-            
-              <div class="card">
-                <div class="img-event">
-                  <img class="card-img-top" src="~/images/Education-Supplies-for-Every--Pair-of-Shoes-Sold.png" alt="Card image cap">
-                  <div class="location-img">
-                    <img class="text-light" src="~/images/pin.png" alt="">
-                    <span class="text-light">Melbourne</span>
-                </div>
-                <button class="like-img border-0">
-                    <img class="text-light" src="~/images/heart.png" alt="">
-                </button>
-                <button class="stop-img border-0">
-                    <img class="text-light" src="~/images/add1.png" alt="">
-                </button>
-                <button class="mission-theme border-0">
-                    <span class="p-2">Children</span>
-                </button>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Education Supplies for Every Pair of Shoes Sold</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
-                  <div class="d-flex justify-content-between">
-                    <div><p class="slug">Australian Paradise</p></div>
-                    <div class="d-flex flex-row">
-                      <img class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                       </div>
-                  </div>
-                  <div class="duration-seats-info mt-4">
-                    <div class="duration">
-                      <p id="duration-txt" style="margin-bottom: 0;">From 10/01/2019 until 25/02/2019</p>
-                    </div> 
-                    <div class="d-flex flex-row mission-deadline">
-                      <div class="d-flex flex-row">
-                        <div><img src="~/images/Already-volunteered.png" alt=""> </div>
-                        <div><span>250</br> Seats left</span></div>
-                      </div>
-                      <div class="d-flex flex-row">
-                        <div><img src="~/images/deadline.png" alt=""></div>
-                        <div class="ms-2"> <span>09/01/2019 <br> Deadline</span> </div>
-                      </div>
-                      
-                    </div>
-                    
-                  </div> 
-                  <div class="d-flex justify-content-center mt-4">
-                    <button class="apply-btn">
-                      Apply <span><img src="~/images/right-arrow.png" alt=""></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>*@
-            <!-- 3rd card -->
-          @*  <div class="col-12 col-md-6 col-lg-4">
-              
-              <div class="card">
-                <div class="img-event">
-                  <img class="card-img-top" src="~/images/Nourish-the-Children-in--African-country.png" alt="Card image cap">
-                  <div class="location-img">
-                    <img class="text-light" src="~/images/pin.png" alt="">
-                    <span class="text-light">Barcelona</span>
-                </div>
-                <button class="like-img border-0">
-                    <img class="text-light" src="~/images/heart.png" alt="">
-                </button>
-                <button class="stop-img border-0">
-                    <img class="text-light" src="~/images/add1.png" alt="">
-                </button>
-                <button class="mission-theme border-0">
-                    <span class="p-2">Nutrition</span>
-                </button>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Nourish the Children in African country help the poor</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
-                  <div class="d-flex justify-content-between">
-                    <div><p class="slug">The Hunger</p></div>
-                    <div class="d-flex flex-row">
-                      <img class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                       </div>
-                  </div>
-                  <div class="duration-seats-info mt-4">
-                    <div class="duration">
-                      <p id="duration-txt" style="margin-bottom: 0;">Ongoing Opportunity</p>
-                    </div> 
-                    <div class="d-flex flex-row mission-deadline">
-                      <div class="d-flex flex-row">
-                        <div><img src="~/images/Already-volunteered.png" alt=""> </div>
-                        <div><span>10</br> Seats left</span></div>
-                      </div>
-                      <div class="d-flex flex-row">
-                        <div><img src="~/images/deadline.png" alt=""></div>
-                        <div class="ms-2"> <span>09/01/2019 <br> Deadline</span> </div>
-                      </div>
-                      
-                    </div>
-                    
-                  </div> 
-                  <div class="d-flex justify-content-center mt-4">
-                    <button class="apply-btn">
-                      Apply <span><img src="~/images/right-arrow.png" alt=""></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>*@
-            <!-- 4th card -->
-           @* <div class="col-12 col-md-6 col-lg-4">
-              
-              <div class="card">
-                <div class="img-event">
-                  <img class="card-img-top" src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png" alt="Card image cap">
-                  <div class="location-img">
-                    <img class="text-light" src="~/images/pin.png" alt="">
-                    <span class="text-light">London</span>
-                </div>
-                <button class="like-img border-0">
-                    <img class="text-light" src="~/images/heart.png" alt="">
-                </button>
-                <button class="stop-img border-0">
-                    <img class="text-light" src="~/images/add1.png" alt="">
-                </button>
-                <button class="mission-theme border-0">
-                    <span class="p-2">Environment</span>
-                </button>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">CSR initiative stands for Coffee and Farmer Equity</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
-                  <div class="d-flex justify-content-between">
-                    <div><p class="slug">CSE Network</p></div>
-                    <div class="d-flex flex-row">
-                      <img class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                       </div>
-                  </div>
-                  <div class="duration-seats-info mt-4">
-                    <div class="duration">
-                      <p id="duration-txt" style="margin-bottom: 0;">Ongoing Opportunity</p>
-                    </div> 
-                    <div class="d-flex flex-row">
-                      <div class="d-flex flex-row mission-deadline">
-                        <div><img src="~/images/Already-volunteered.png" alt=""> </div>
-                        <div ms-4><span>250</br> Already-volunteered</span></div>
-                      </div>
-                      
-                    </div>
-                    
-                  </div> 
-                  <div class="d-flex justify-content-center mt-4">
-                    <button class="apply-btn">
-                      Apply <span><img src="~/images/right-arrow.png" alt=""></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>*@
-             <!-- 5th card -->
-          @*  <div class="col-12 col-md-6 col-lg-4">
-             
-              <div class="card">
-                <div class="img-event">
-                  <img class="card-img-top" src="~/images/Animal-welfare-&-save-birds-campaign.png" alt="Card image cap">
-                  <div class="location-img">
-                    <img class="text-light" src="~/images/pin.png" alt="">
-                    <span class="text-light">Cape Town</span>
-                </div>
-                <button class="like-img border-0">
-                    <img class="text-light" src="~/images/heart.png" alt="">
-                </button>
-                <button class="stop-img border-0">
-                    <img class="text-light" src="~/images/add1.png" alt="">
-                </button>
-                <button class="mission-theme border-0">
-                    <span class="p-2">Animals</span>
-                </button>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Animal welfare & save birds campaign Go vegan</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
-                  <div class="d-flex justify-content-between">
-                    <div><p class="slug">JR Foundation</p></div>
-                    <div class="d-flex flex-row">
-                      <img class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                       </div>
-                  </div>
-                  <div class="duration-seats-info mt-4">
-                    <div class="duration">
-                      <p id="duration-txt" style="margin-bottom: 0;">Ongoing Opportunity</p>
-                    </div> 
-                    <div class="d-flex flex-row mission-deadline">
-                        <div class="d-flex flex-row ">
-                        <div><img src="~/images/Seats-left.png" alt=""> </div>
-                        <div><span>10 </br> Seats left</span></div>
-                      </div>
-                      <div class="d-flex flex-column">
-                        <div class="d-flex flex-row"><img class="align-self-center ms-3" src="~/images/mission.png" alt="" style="height:25px; width:25px;">
-                          <div class="progress align-self-center ms-3">
-                            <div class="progress-bar w-75" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                         </div></div>
-                        <div><p>8000 achieved</p></div>                    
-                      </div>
-                    </div>
-                    
-                  </div> 
-                  <div class="d-flex justify-content-center mt-4">
-                    <button class="apply-btn">
-                      Apply <span><img src="~/images/right-arrow.png" alt=""></span>
-                    </button>
-                  </div>
-
-                </div>
-              </div>
-            </div>*@
-            <!-- 6th card -->
-           @* <div class="col-12 col-md-6 col-lg-4">
-              
-              <div class="card">
-                <div class="img-event">
-                  <img class="card-img-top" src="~/images/Plantation-and-Afforestation-programme.png" alt="Card image cap">
-                  <div class="location-img">
-                    <img class="text-light" src="~/images/pin.png" alt="">
-                    <span class="text-light">Paris</span>
-                </div>
-                <button class="like-img border-0">
-                    <img class="text-light" src="~/images/heart.png" alt="">
-                </button>
-                <button class="stop-img border-0">
-                    <img class="text-light" src="~/images/add1.png" alt="">
-                </button>
-                <button class="mission-theme border-0">
-                    <span class="p-2">Health</span>
-                </button>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Plantation and Afforestation programme Go green</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
-                  <div class="d-flex justify-content-between">
-                    <div><p class="slug">Amaze doctors</p></div>
-                    <div class="d-flex flex-row">
-                      <img class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                       </div>
-                  </div>
-                  <div class="duration-seats-info mt-4">
-                    <div class="duration">
-                      <p id="duration-txt" style="margin-bottom: 0;">Plant 10000 trees</p>
-                    </div> 
-                    <div class="d-flex flex-row mt-4">
-                       <div class="d-flex flex-row align-self-start">
-                        <div class="d-flex flex-column">
-                          <div class="d-flex flex-row"><img class="align-self-center ms-3" src="~/images/mission.png" alt="" style="height:25px; width:25px;">
-                            <div class="progress align-self-start ms-3">
-                              <div class="progress-bar w-75" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                           </div></div>
-                          <div><p>8000 achieved</p></div>                    
-                        </div>
-                      </div>
-                      
-                    </div>
-                    
-                  </div> 
-                  <div class="d-flex justify-content-center mt-4">
-                    <button class="apply-btn">
-                      Apply <span><img src="~/images/right-arrow.png" alt=""></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>*@
-               <!-- 7th card -->
-           @* <div class="col-12 col-md-6 col-lg-4">
-           
-              <div class="card">
-                <div class="img-event">
-                  <img class="card-img-top" src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-2.png" alt="Card image cap">
-                  <div class="location-img">
-                    <img class="text-light" src="~/images/pin.png" alt="">
-                    <span class="text-light">New York</span>
-                </div>
-                <button class="like-img border-0">
-                    <img class="text-light" src="~/images/heart.png" alt="">
-                </button>
-                <button class="stop-img border-0">
-                    <img class="text-light" src="~/images/add1.png" alt="">
-                </button>
-                <button class="mission-theme border-0">
-                    <span class="p-2">Education</span>
-                </button>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Grow Trees On the path to environment sustainability</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
-                  <div class="d-flex justify-content-between">
-                    <div><p class="slug">Tree Canada</p></div>
-                    <div class="d-flex flex-row">
-                      <img class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                       </div>
-                  </div>
-                  
-                  <div class="d-flex justify-content-center mt-4">
-                    <button class="apply-btn">
-                      View details <span><img src="~/images/right-arrow.png" alt=""></span>
-                    </button>
-                  </div>
-
-
-                </div>
-              </div>
-            </div>*@
-             <!-- 8th card -->
-           @* <div class="col-12 col-md-6 col-lg-4">
-             
-              <div class="card">
-                <div class="img-event">
-                  <img class="card-img-top" src="~/images/Education-Supplies-for-Every--Pair-of-Shoes-Sold.png" alt="Card image cap">
-                  <div class="location-img">
-                    <img class="text-light" src="~/images/pin.png" alt="">
-                    <span class="text-light">Sydney</span>
-                </div>
-                <button class="like-img border-0">
-                    <img class="text-light" src="~/images/heart.png" alt="">
-                </button>
-                <button class="stop-img border-0">
-                    <img class="text-light" src="~/images/add1.png" alt="">
-                </button>
-                <button class="mission-theme border-0">
-                    <span class="p-2">Children</span>
-                </button>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Education Supplies for Every Pair of Shoes Sold</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
-                  <div class="d-flex justify-content-between">
-                    <div><p class="slug">Australian Paradise</p></div>
-                    <div class="d-flex flex-row">
-                      <img class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                       </div>
-                  </div>
-                  <div class="duration-seats-info mt-4">
-                    <div class="duration">
-                      <p id="duration-txt" style="margin-bottom: 0;">From 10/01/2019 until 25/02/2019</p>
-                    </div> 
-                    <div class="d-flex flex-row mission-deadline">
-                      <div class="d-flex flex-row">
-                        <div><img src="~/images/Already-volunteered.png" alt=""> </div>
-                        <div><span>250</br> Seats left</span></div>
-                      </div>
-                      <div class="d-flex flex-row">
-                        <div><img src="~/images/deadline.png" alt=""></div>
-                        <div class="ms-2"> <span>09/01/2019 <br> Deadline</span> </div>
-                      </div>
-                      
-                    </div>
-                    
-                  </div> 
-                  <div class="d-flex justify-content-center mt-4">
-                    <button class="apply-btn">
-                      Apply <span><img src="~/images/right-arrow.png" alt=""></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>*@
-
-              <!-- 9th card -->
-           @* <div class="col-12 col-md-6 col-lg-4">
-            
-              <div class="card">
-                <div class="img-event">
-                  <img class="card-img-top" src="~/images/Nourish-the-Children-in--African-country.png" alt="Card image cap">
-                  <div class="location-img">
-                    <img class="text-light" src="~/images/pin.png" alt="">
-                    <span class="text-light">Berlin</span>
-                </div>
-                <button class="like-img border-0">
-                    <img class="text-light" src="~/images/heart.png" alt="">
-                </button>
-                <button class="stop-img border-0">
-                    <img class="text-light" src="~/images/add1.png" alt="">
-                </button>
-                <button class="mission-theme border-0">
-                    <span class="p-2">Nutrition</span>
-                </button>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Nourish the Children in African country help the poor</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
-                  <div class="d-flex justify-content-between">
-                    <div><p class="slug">Junior charity</p></div>
-                    <div class="d-flex flex-row">
-                      <img class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                       </div>
-                  </div>
-                  <div class="duration-seats-info mt-4">
-                    <div class="duration">
-                      <p id="duration-txt" style="margin-bottom: 0;">Ongoing Opportunity</p>
-                    </div> 
-                    <div class="d-flex flex-row mission-deadline">
-                      <div class="d-flex flex-row">
-                        <div><img src="~/images/Already-volunteered.png" alt=""> </div>
-                        <div><span>10<br>*Seats left</span></div>
-                      </div>
-                      <div class="d-flex flex-row">
-                        <div><img src="~/images/deadline.png" alt=""></div>
-                        <div class="ms-2"> <span>09/01/2019 <br> Deadline</span> </div>
-                      </div>
-                      
-                    </div>
-                    
-                  </div> 
-                  <div class="d-flex justify-content-center mt-4">
-                    <button class="apply-btn">
-                      Apply <span><img src="~/images/right-arrow.png" alt=""></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>*@
+                
             
 
           </div> @*row ends*@
           
         </div>
       </div>
+     @* no mission found*@
+          <div class="page-not-found text-center" style="display:none;">
+        <!-- <img src="images/404-Page-image.png" alt="" class="w-25"> -->
+        <h4 class="pt-2">No mission found</h4>
+        <!-- <p class="description" style="font-size: 2rem !important;"><strong>Oops! </strong> The page you were looking for doesn't exist.</p>
+        <p style="font-size: 1.2rem;">you may have misstyped the address or the page have moved.</p>-->
+        <div class="d-flex justify-content-center mt-4">
+            <button class="applyButton btn">Go to Homepage <img src="images/right-arrow.png" alt="">
+            </button>
+        </div>
+    </div>
   @*Pagination*@
          <nav aria-label="Page navigation">
       <ul class="pagination justify-content-center">
@@ -818,16 +318,7 @@
       
       </div>
       @*mission not found*@
-          <div class="page-not-found d-none text-center">
-        <!-- <img src="images/404-Page-image.png" alt="" class="w-25"> -->
-        <h4 class="pt-2">No mission found</h4>
-        <!-- <p class="description" style="font-size: 2rem !important;"><strong>Oops! </strong> The page you were looking for doesn't exist.</p>
-        <p style="font-size: 1.2rem;">you may have misstyped the address or the page have moved.</p>-->
-        <div class="d-flex justify-content-center mt-4">
-            <button class="applyButton btn">Go to Homepage <img src="images/right-arrow.png" alt="">
-            </button>
-        </div>
-    </div>
+      
     
    
     <footer> <a class="text-muted" style="    margin-left: 10%;

@@ -32,7 +32,7 @@ namespace CI_Platform.Controllers
             }
             ViewBag.CityList = new SelectList(cities, "CityId", "Name");
             ViewBag.CountryList = new SelectList(countries, "CountryId", "Name");
-            ViewBag.ThemeList = new SelectList(themes, "MissionThemeId", "title");
+            ViewBag.ThemeList = new SelectList(themes, "MissionThemeId", "Title");
             ViewBag.SkillList = new  SelectList(skills, "SkillId", "SkillName");
             
 
@@ -40,10 +40,9 @@ namespace CI_Platform.Controllers
             return View(missions);
         }
         [HttpPost]
-        [Route("Home")]
-        public JsonResult home(List<string> countries)
+        public JsonResult Index(List<string> countries, List<string> cities, List<string> themes, List<string> skills)
         {
-            List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries);
+            List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries, cities, themes, skills);
             return Json(new { missions, success = true });
         }
     }

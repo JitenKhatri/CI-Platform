@@ -11,7 +11,7 @@ namespace CI_Platform.DataAccess.Repository.IRepository
    public interface IMissionRepository : IRepository<Mission>
     {
         List<MissionViewModel> GetAllMission();
-        List<MissionViewModel> GetFilteredMissions(List<string> countries);
+        List<MissionViewModel> GetFilteredMissions(List<string> countriesList,List<string> cities, List<string> themes, List<string> skiils);
 
     }
 }

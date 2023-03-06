@@ -17,6 +17,7 @@ namespace CI_Platform.Models.ViewModels
         public List<MissionTheme>? themes { get; set; }
         public List<Skill>? skills { get; set; }
 
-
+        public string? Mission_city { get; set; }
+        public string? Mission_theme { get; set; }
     }
 }
