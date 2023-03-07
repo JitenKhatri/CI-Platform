@@ -2,6 +2,10 @@
 let countries = []
 let themes = []
 let skills = []
+let country_count = 0
+let city_count = 0;
+let theme_count = 0;
+let skill_count = 0;
 
 // for grid view list view
 function showList(e) {
@@ -21,31 +25,41 @@ $(document).on('click', '.btn-list', showList);
 
 
 // Dropdown item click event listener
-$('.dropdown-item').on('click', function () {
-    const dropdown = $(this).closest('.dropdown');
-    const dropdownTitle = dropdown.find('.dropdown-toggle').text();
-    const value = $(this).data('value');
-    const selectedItemsRow = $('#selected-items-row');
+$('.checkbox-item').on('change', function () {
+    if ($(this).is(':checked')) {
+        const dropdown = $(this).closest('.dropdown');
+        const dropdownTitle = dropdown.find('.dropdown-toggle').text();
+        const value = $(this).data('value');
+        const selectedItemsRow = $('#selected-items-row');
 
-    // Create a badge element to display the selected item
-    const badge = $('<span class="badge text-bg-light ml-2 "></span>').text(value);
-    const cross = $('<span class="badge text-bg-light ml-2 d-inline" id="cross-btn"></span>').html('&times;');
+        // Create a badge element to display the selected item
+        const badge = $('<span class="badge text-bg-light ml-2 "></span>').text(value);
+        const cross = $('<span class="badge text-bg-light ml-2 d-inline" id="cross-btn"></span>').html('&times;');
 
 
-    cross.addClass('d-inline');
-    badge.append(cross);
-    selectedItemsRow.append(badge);
-
-    // Cross button click event listener
-    cross.on('click', function () {
-        //    $(this).closest('.badge').remove();
+        cross.addClass('d-inline');
+        badge.append(cross);
+        selectedItemsRow.append(badge);
+        // Cross button click event listener
+        cross.on('click', function () {
+            //    $(this).closest('.badge').remove();
+            badge.remove();
+        });
+        // Clear all button click event listener
+        $('#clear-all-btn').on('click', function () {
+            selectedItemsRow.empty();
+        });
+    } else {
+        // Checkbox is unchecked, remove its corresponding badge
+        // If checkbox is unchecked, remove its corresponding badge
+        const badge = selectedItemsRow.find(`span:contains(${value})`);
         badge.remove();
-    });
+    }
+    
 
-    // Clear all button click event listener
-    $('#clear-all-btn').on('click', function () {
-        selectedItemsRow.empty();
-    });
+ 
+
+    
 });
 
 function search() {
@@ -108,39 +122,132 @@ function addcities(name) {
     });
 }
 
+const addcountries = (name) => {
+    /*var selected = $('#sort').find(':selected').text();*/
+    const country = document.getElementById(name)
+    if (country.checked) {
+        if (!countries.includes(name)) {
+            countries.push(name)
+            country_count++;
+        }
+    }
+    else {
+        if (countries.includes(name)) {
+            countries.splice(countries.indexOf(name), 1)
+            country_count--;
+
+        }
+    }
+    $.ajax({
+        url: '/Mission',
+        type: 'POST',
+        data: { countries: countries, cities: cities, themes: themes, skills: skills},
+        success: function (result) {
+            if (result.missions.length > 0) {
+                loadcities(result.missions[0].cities);
+                loadmissions(result.missions)
+            }
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    });
+}
+const loadcities = (cities) => {
+    $('.city').empty()
+    $.each(cities, function (i, item) {
+        var data = "<span>" +
+            "<input type='checkbox'  class='checkbox-item'> " + 
+               " <label for= item.name> " + item.name + "</label>" + "</span>";
+        $('.city').append(data)
+        $('.city span').each(function () {
+            $('.city span').eq(i).find('input').attr('id', item.name)
+            $('.city span').eq(i).find('input').attr('onchange', `addcities('${item.name}')`)
+        })
+    })
+}
+
+const addthemes = (name) => {
+    /*var selected = $('#sort').find(':selected').text();*/
+    if (document.getElementById(name).checked) {
+        if (!themes.includes(name)) {
+            themes.push(name)
+        }
+    }
+    else {
+        if (themes.includes(name)) {
+            themes.splice(themes.indexOf(name), 1)
+        }
+    }
+    $.ajax({
+        url: '/Mission',
+        type: 'POST',
+        data: { countries: countries, cities: cities, themes: themes, skills: skills },
+        success: function (result) {
+            loadmissions(result.missions)
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+}
+
+const addskills = (name) => {
+    if (document.getElementById(name).checked) {
+        if (!skills.includes(name)) {
+            skills.push(name)
+        }
+    }
+    else {
+        if (skills.includes(name)) {
+            skills.splice(skills.indexOf(name), 1)
+        }
+    }
+    $.ajax({
+        url: '/Mission',
+        type: 'POST',
+        data: { countries: countries, cities: cities, themes: themes, skills: skills},
+        success: function (result) {
+            loadmissions(result.missions)
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+}
 const loadmissions = (missions) => {
     $('.missions').empty()
     console.log(missions)
     $.each(missions, function (i, item) {
-        var data = "<div class='col-12 col-md-6 col-lg-4 mission-card'>" +
-            "<div class='card'>" +
-                "<div class='img-event'>" +
+        var data = "<div class='col-12 col-md-6 col-lg-4 mission-card'>" +       /* mission-card-div*/
+            "<div class='card'>" +  /*card-div*/
+                "<div class='img-event'>" + /* img-event-div */
                     "<img class='card-img-top' src= mission.image?.MediaPath alt='Card image cap'>" +
-                    "<div class='location-img'>" +
-                        + "<img class='text-light' src='~/images/pin.png' alt=''>" +
+                    "<div class='location-img'>" + /*location-img-div*/
+                        + "<img class='text-light' src='images/pin.png' alt=''>" +
                             "<span class='text-light'>"+ item.missions.city.name + "</span>" +
-                    "</div>" +
+                    "</div>" + /*location-img-div-ends*/
                         "<button class='like-img border-0'>" +
-                            "<img class='text-light' src='~/images/heart.png' alt=''> " +
+                            "<img class='text-light' src='images/heart.png' alt=''> " +
                     "</button>" +
-                         "<button class='stop - img border - 0'>" +
-                       "<img class='text - light' src='~/images/add1.png' alt=''>" +
+                         "<button class='stop-img border-0'>" +
+                       "<img class='text-light' src='images/add1.png' alt=''>" +
                    "</button>" +
-                            " <button class='mission - theme border - 0'>" +
-                             "<span class='p - 2'>" + item.missions.theme.title +  "</span>" +
+                            " <button class='mission-theme border-0'>" +
+                             "<span class='p-2'>" + item.missions.theme.title +  "</span>" +
                                "</button>" +
-                                 "</div>" +
-                              "<div class='card - body'>" +
+                                 "</div>" + /*img-event-div-ends*/
+                              "<div class='card-body'>" +  /*card-body-div*/
             "<h5 class='card-title'>" + item.missions.title + "</h5>" +
                                 "<p class='card-text'>" + "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore..." + "</p>" +
                                " <div class='d-flex justify-content-between'> " +
-            " <div> " + "<p class='slug'>" + item.missions.organizationName + "</p>" + "</div>" +
-                                   " <div class='d-flex flex-row'> "
-                                        "<img class='star' src='~/images/selected-star.png' alt=''> " +
-                                           " <img class='star' src='~/images/selected-star.png' alt=''> " +
-                                                "<img class='star' src='~/images/selected-star.png' alt=''> " +
-                                                    "<img class='star' src='~/images/star-empty.png' alt=''>" +
-                                                        "<img class='star' src='~/images/star-empty.png' alt=''> "+
+            " <div> " + "<p class='slug'>" + item.missions.organizationName + "</p>" + "</div>" + 
+                                   " <div class='d-flex flex-row'> "+
+                                        "<img class='star' src='images/selected-star.png' alt=''> " +
+                                           " <img class='star' src='images/selected-star.png' alt=''> " +
+                                                "<img class='star' src='images/selected-star.png' alt=''> " +
+                                                    "<img class='star' src='images/star-empty.png' alt=''>" +
+                                                        "<img class='star' src='images/star-empty.png' alt=''> "+
                    " </div>" +
                                             " </div>" +
                                                    " <div class='duration-seats-info mt-4'> " +
@@ -148,20 +255,22 @@ const loadmissions = (missions) => {
                                                            
 
                                                        " </div> " + 
-                                                        "<div class='d-flex flex-row mission-deadline'>" +
+                                            "<div class='d-flex flex-row mission-deadline'>" +
+                                            "<div class='d-flex flex-row deadline'>" + 
                                                           
-                                                                    "<div class='ms-2'>  " + 
+            "<div class='ms-2 p-bar'>  " +
+            "</div>" +
                        " </div>" + 
                       "</div> " + 
                       
                     "</div> " +
-                    
+            "<div class='d-flex justify-content-center mt-4'> " +
+            " <button class='apply-btn'> " +
+            "Apply" + "<span>" + "<img src='images/right-arrow.png' alt=''> " + "</span>" +
+            "</button>" +
+            "</div> " +
                   "</div> " + 
-                  "<div class='d-flex justify-content-center mt-4'> " + 
-                   " <button class='apply-btn'> " +
-                      "Apply" +  "<span>" + "<img src='~/images/right-arrow.png' alt=''> " + "</span>" +
-                    "</button>" + 
-                                "</div> " +
+                  
                                 "</div> " +
                                 "</div> " +
             "</div> "
@@ -173,58 +282,64 @@ const loadmissions = (missions) => {
         {
           var a =  "<p id='duration-txt' style='margin-bottom: 0;'>" +
 
-              "From" + item.missions.startDate.slice(0, 10) + " until" + item.missions.endDate.slice(0, 10) +
+              "From" + " " + item.missions.startDate.slice(0, 10) + " until" + " " + item.missions.endDate.slice(0, 10) +
                 "</p>"
             $('.duration').eq(i).append(a)
           }
-        else {
+        if (item.missions.startDate = null)
+         {
             var b =  "<p id='duration-txt' style='margin-bottom: 0;'> " +
                 item.missions.GoalMotto +
                 "</p>"
             $('.duration').eq(i).append(b)
         }
 
-        if (item.missions.SeatsLeft != null) {
-            var c = "<div class='d-flex flex-row'> " +
-                "<div> " + "<img src='~/images/Seats-left.png' alt=''>" + " </div>" +
-                "<div>" + "<span>" + item.missions.seatsLeft + "<br>" + "Seats left" + "</span>" + "</div>" +
-                "</div>"
-            $('.mission-deadline').eq(i).append(c)
-        }
-           
-        if (item.missions.missionType == "TIME")
-        {
-             var d = "<div> " + "<img src='~/images/deadline.png' alt=''>" + "</div >"
-             $('.flex-row').eq(i).append(d)
-       } 
-        if (item.missions.deadline != null) {
-
-            var e = "<span> " + item.missions.deadline.slice(0, 10) + "<br>" + " Deadline" + "</span>"
-            $('.mission-deadline').eq(i).append(e)
-
-        }
-        else {
-            if (item.missions.missionType == "GO") {
-                var f = "<div class='d-flex flex-column'> " +
-                    " <div class='d - flex flex - row'>" +
-                    "<img class='align-self-center ms-3' src='~/images/mission.png' alt='' style='height:25px; width:25px;'> " +
-                    " <div class='progress align-self-center ms-3'> " +
-                    "<div class='progress-bar w-75' role='progressbar' aria-label='Basic example' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'>" + "</div>" +
-                    " </div>" + "</div>" +
-                    "<div>" + "<p>" + "8000 achieved" + "</p>" + "</div>" +
-                    "</div>"
-                $('.mission-deadline').eq(i).append(f)
+        
+            if(item.missions?.seatsLeft != null)
+            {
+                var c = "<div class='d-flex flex-row deadline'>" + 
+                    "<div> " + "<img src='images/Seats-left.png' alt=''>" + "</div>" +
+                        "<div> " + "<span> " + item.missions.seatsLeft + "<br>" + "Seats left" + "</span>" + "</div>"+
+                        "</div> "
+                    $('.mission-deadline').eq(i).append(c)
             }
-            else {
-                var g =
-                    "<span> " + item.missions.goalMotto + "</span>"
-                $('.mission-deadline').eq(i).append(g)
 
-            }
-        }
-            
 
-           
+                        
+                            if(item.missions?.missionType == "TIME")
+                            {
+                                var d = "<div>" + "<img src='images/deadline.png' alt=''>" + "</div>"
+                                 $('.deadline').eq(i).append(d)
+                             }
+
+                           
+                           if(item.missions?.deadline != null)
+                            {
+                               var e = "<span>" + item.missions?.deadline.slice(0, 10) + " <br>" + " Deadline " + "</span>"
+                               $('.p-bar').eq(i).append(e)
+                               
+                             }
+                          else if(item.missions?.missionType == "GO")
+                           {
+                             var f = "<div class='d-flex flex-column'>" + 
+                                       "<div class='' d-flex flex-row'>"+
+                                       "<img class='align-self-center ms-3' src='images/mission.png' alt='' style='height:25px; width:25px;'>" + 
+                                                            "<div class='progress align-self-center ms-3'>" +
+                                               " <div class='progress-bar w-75' role='progressbar' aria-label='Basic example' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'> " +
+                                               "</div>" + 
+                                                            "</div>" +
+                                                          "</div> " +
+                                                           " <div> " + "<p>"+ "8000 achieved" + "</p>" + "</div>" +
+                                   "</div>"
+                               $('.p-bar').eq(i).append(f)
+                            }
+                           else if(item.missions?.missionType == "TIME")
+                             {
+                               var g = "<span> " + item.missions?.goalMotto + "</span>"
+                               $('.p-bar').eq(i).append(g)
+                             }
+                                                   
+
 
     })
 }

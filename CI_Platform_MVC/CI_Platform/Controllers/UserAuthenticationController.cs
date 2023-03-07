@@ -45,8 +45,13 @@ namespace CI_Platform.Controllers
                 }
                 else
                 {
+                    var sessionUser = db.UserAuthentication.GetFirstOrDefault(a => a.Email == model.Email);
+                    HttpContext.Session.SetString("UserName", sessionUser.FirstName + " " + sessionUser.LastName);
+
+                    //bool IsLoggedIn = true;
+                    //HttpContext.Session.SetString("IsLoggedIn", IsLoggedIn.ToString());
                     // User exists
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Mission");
                 }
             }
 

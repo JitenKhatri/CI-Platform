@@ -1,6 +1,7 @@
 ﻿@using CI_Platform.Models.ViewModels
 @{
     Layout = null;
+    var UserName = ViewBag.UserName;
 }
 @model List<MissionViewModel>
 
@@ -41,7 +42,7 @@
               type="button"
               data-bs-toggle="dropdown" >
               <img src="~/images/user-img.png" class="profileimg" />
-              <span class="mx-2 d-none d-sm-block">Evan Donohue</span>
+              <span class="mx-2 d-none d-sm-block">@ViewBag.UserName</span>
               <img
                 src="~/images/drop-down.png"
                 class="mx-1 drop-down d-none d-sm-block"
@@ -86,7 +87,10 @@
               <div class="dropdown-menu" aria-labelledby="countryDropdown">
                             @foreach(var country in ViewBag.CountryList)
              {
-            <a id ="country" class="dropdown-item" href="#" data-value="@country.Text">@country.Text</a>
+                   <div id="country">
+        <input type="checkbox" id="@country.Text" class="checkbox-item" onchange="addcountries('@country.Text')" data-value="@country.Text">
+        <label for="@country.Text">@country.Text</label>
+                  </div>
              }
               </div>
             </li>
@@ -94,11 +98,11 @@
               <button class="dropdown-toggle" type="button" id="cityDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 City <img src="~/images/drop-down.png" class="mx-2">
               </button>
-              <div class="dropdown-menu" aria-labelledby="cityDropdown">
+              <div class="dropdown-menu city" aria-labelledby="cityDropdown">
                  @foreach(var city in ViewBag.CityList)
                 {
                                             <div>
-        <input type="checkbox" id="@city.Text" class="dropdown-item checkbox-item" onchange="addcities('@city.Text')" data-value="@city.Text">
+        <input type="checkbox" id="@city.Text" class="checkbox-item" onchange="addcities('@city.Text')" data-value="@city.Text">
         <label for="@city.Text">@city.Text</label>
     </div>
            @* <a id='@city.Text' class="dropdown-item" href="#" onchange='addcities()' data-value="@city.Text">@city.Text</a>*@
@@ -112,11 +116,14 @@
               </button>
               <div class="dropdown-menu" aria-labelledby="themeDropdown">
                       @foreach(var theme in ViewBag.ThemeList)
-        {
-            <a class="dropdown-item" href="#" data-value="@theme.Text">@theme.Text</a>
-        }
+                     {
+                       <div class = "theme">
+                  <input type="checkbox" id="@theme.Text" class="checkbox-item" onchange="addthemes('@theme.Text')" data-value="@theme.Text">
+                  <label for="@theme.Text">@theme.Text</label>
+                   </div>
+                   }
 
-              </div>
+             
             </li>
             <li class="nav-item dropdown">
               <button class="dropdown-toggle" type="button" id="skillDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -125,7 +132,10 @@
               <div class="dropdown-menu" aria-labelledby="skillDropdown">
                  @foreach(var skill in ViewBag.SkillList)
         {
-            <a class="dropdown-item" href="#" data-value="@skill.Text">@skill.Text</a>
+                  <div class = "skill">
+                  <input type="checkbox" id="@skill.Text" class="checkbox-item" onchange="addskills('@skill.Text')" data-value="@skill.Text">
+                  <label for="@skill.Text">@skill.Text</label>
+                   </div>
         }
               </div>
             </li>
@@ -149,15 +159,27 @@
         
         <div class="col d-flex flex-row justify-content-end ">
             <div class="p-0 d-flex flex-row me-2">
-                <button class="sortby" type="button" data-bs-toggle="dropdown">
+                <div class="dropdown">
+             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             Dropdown link
+               </a>
+
+             <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+             <li><a class="dropdown-item" href="#">Another action</a></li>
+               <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+              </div>
+              @*  <button class="sortby" type="button" data-bs-toggle="dropdown">
                   <span class="">Sort by</span>
                   <img src="~/images/drop-down.png" class="mx-0 mx-sm-2" />
-                </button>
-                <ul class="dropdown-menu">
+                  <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="#">USA</a></li>
                   <li><a class="dropdown-item" href="#">INDIA</a></li>
                   <li><a class="dropdown-item" href="#">Canada</a></li>
                 </ul>
+                </button>*@
+                
             </div>
            
               <button class="btn btn-grid "><img src="~/images/grid.png"  /></button>
@@ -173,7 +195,7 @@
         <div class="container-fluid grid-container">
 
 
-       <div class="row">
+       <div class="row missions">
 
            @foreach(var mission in Model)
           {
@@ -196,10 +218,10 @@
                     </button>
                 </div>
                 <div class="card-body">
-                  <h5 class="card-title">@mission.Missions.Title</h5>
+                  <h5 class="card-title">@mission.Missions?.Title</h5>
                   <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
                   <div class="d-flex justify-content-between">
-                    <div><p class="slug">@mission.Missions.OrganizationName</p></div>
+                    <div><p class="slug">@mission.Missions?.OrganizationName</p></div>
                     <div class="d-flex flex-row">
                       <img class="star" src="~/images/selected-star.png" alt="">
                       <img  class="star" src="~/images/selected-star.png" alt="">
@@ -239,7 +261,7 @@
                                         <div><img src="~/images/deadline.png" alt=""></div >
                           }
                        
-                        <div class="ms-2"> 
+                        <div class="ms-2 p-bar"> 
                             
                             @if (mission.Missions?.Deadline != null)
                             {

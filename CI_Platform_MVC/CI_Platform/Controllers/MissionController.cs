@@ -18,6 +18,14 @@ namespace CI_Platform.Controllers
      
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetString("UserName") != null)
+            {
+                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+            }
+            else
+            {
+                ViewBag.UserName = "Evan Donohue";
+            }
             List<City> cities = new List<City>();
             List<Skill> skills = new List<Skill>();
             List<Country> countries = new List<Country>();
