@@ -19,6 +19,7 @@ namespace CI_Platform.DataAccess.Repository
         public List<MissionViewModel> GetAllMission()
         {
             List<Mission> mission = _db.Missions.ToList();
+           
             List<MissionMedium> image = _db.MissionMedia.ToList();
             List<MissionTheme> theme = _db.MissionThemes.ToList();
             List<Country> countries = _db.Countries.ToList();
@@ -31,10 +32,33 @@ namespace CI_Platform.DataAccess.Repository
             return Missions;
         }
 
-        public List<MissionViewModel> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills)
+        public List<MissionViewModel> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills , string? sortOrder)
             
         {
             List<Mission> missions = _db.Missions.ToList();
+            switch (sortOrder)
+            {
+                case null:
+                case "Oldest":
+                    sortOrder = "Oldest";
+                    missions = _db.Missions.OrderBy(m => m.CreatedAt).ToList();
+                    break;
+                case "Newest":
+                    missions = _db.Missions.OrderByDescending(m => m.CreatedAt).ToList();
+                    break;
+                case "Seats_ascending":
+                    missions = _db.Missions.OrderBy(m => m.SeatsLeft).ToList();
+                    break;
+                case "Seats_descending":
+                    missions = _db.Missions.OrderByDescending(m => m.SeatsLeft).ToList();
+                    break;
+                case "deadline":
+                    missions = _db.Missions.OrderBy(m => m.Deadline).ToList();
+                    break;
+                default:
+                    missions = _db.Missions.OrderBy(m => m.CreatedAt).ToList();
+                    break;
+            }
             List<MissionMedium> image = _db.MissionMedia.ToList();
             List<MissionTheme> theme = _db.MissionThemes.ToList();
             List<Country> countries = _db.Countries.ToList();

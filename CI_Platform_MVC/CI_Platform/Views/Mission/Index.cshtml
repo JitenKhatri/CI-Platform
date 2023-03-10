@@ -88,7 +88,7 @@
                             @foreach(var country in ViewBag.CountryList)
              {
                    <div id="country">
-        <input type="checkbox" id="@country.Text" class="checkbox-item" onchange="addcountries('@country.Text')" data-value="@country.Text">
+        <input type="checkbox" id="@country.Text" class="form-check-input" onchange="addcountries('@country.Text')" data-value="@country.Text">
         <label for="@country.Text">@country.Text</label>
                   </div>
              }
@@ -102,7 +102,7 @@
                  @foreach(var city in ViewBag.CityList)
                 {
                                             <div>
-        <input type="checkbox" id="@city.Text" class="checkbox-item" onchange="addcities('@city.Text')" data-value="@city.Text">
+        <input type="checkbox" id="@city.Text" class="form-check-input" onchange="addcities('@city.Text')" data-value="@city.Text">
         <label for="@city.Text">@city.Text</label>
     </div>
            @* <a id='@city.Text' class="dropdown-item" href="#" onchange='addcities()' data-value="@city.Text">@city.Text</a>*@
@@ -118,7 +118,7 @@
                       @foreach(var theme in ViewBag.ThemeList)
                      {
                        <div class = "theme">
-                  <input type="checkbox" id="@theme.Text" class="checkbox-item" onchange="addthemes('@theme.Text')" data-value="@theme.Text">
+                  <input type="checkbox" id="@theme.Text" class="form-check-input" onchange="addthemes('@theme.Text')" data-value="@theme.Text">
                   <label for="@theme.Text">@theme.Text</label>
                    </div>
                    }
@@ -133,7 +133,7 @@
                  @foreach(var skill in ViewBag.SkillList)
         {
                   <div class = "skill">
-                  <input type="checkbox" id="@skill.Text" class="checkbox-item" onchange="addskills('@skill.Text')" data-value="@skill.Text">
+                  <input type="checkbox" id="@skill.Text" class="form-check-input" onchange="addskills('@skill.Text')" data-value="@skill.Text">
                   <label for="@skill.Text">@skill.Text</label>
                    </div>
         }
@@ -154,31 +154,26 @@
 <!-- Explore mission row -->
       <div class="row explore">
          <div class="col">
-          <h2>Explore <strong>72 Missions</strong></h2>
+          <h2>Explore <strong>@Model.Count Missions</strong></h2>
           </div>
         
         <div class="col d-flex flex-row justify-content-end ">
             <div class="p-0 d-flex flex-row me-2">
                 <div class="dropdown">
-             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-             Dropdown link
-               </a>
-
-             <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-             <li><a class="dropdown-item" href="#">Another action</a></li>
-               <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-              </div>
-              @*  <button class="sortby" type="button" data-bs-toggle="dropdown">
+             <button class="sortby" type="button" data-bs-toggle="dropdown">
+                 
                   <span class="">Sort by</span>
                   <img src="~/images/drop-down.png" class="mx-0 mx-sm-2" />
-                  <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">USA</a></li>
-                  <li><a class="dropdown-item" href="#">INDIA</a></li>
-                  <li><a class="dropdown-item" href="#">Canada</a></li>
-                </ul>
-                </button>*@
+
+             <ul class="dropdown-menu">
+            <li> <a id="sort-by-start-date" onclick="sortby('Newest')" class="dropdown-item" href="#">Newest</a></li>
+             <li> <a class="dropdown-item" onclick = "sortby('Oldest')" href="#">Oldest</a></li>
+               <li> <a class="dropdown-item" onclick="sortby('Seats_ascending')" href="#">Lowest available seats</a></li>
+               <li> <a class="dropdown-item" onclick="sortby('Seats_descending')" href="#">Highest available seats</a></li>
+               <li> <a class="dropdown-item" onclick="sortby('deadline')" href="#">Registration deadline</a></li>
+              </ul>
+              </button>
+              </div>
                 
             </div>
            

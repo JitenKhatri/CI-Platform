@@ -25,17 +25,18 @@ $(document).on('click', '.btn-list', showList);
 
 
 // Dropdown item click event listener
-$('.checkbox-item').on('change', function () {
+$('.form-check-input').on('change', function () {
+    const dropdown = $(this).closest('.dropdown');
+    const dropdownTitle = dropdown.find('.dropdown-toggle').text();
+    const value = $(this).data('value');
+    const selectedItemsRow = $('#selected-items-row');
+
+    // Create a badge element to display the selected item
+    const badge = $('<span class="badge text-bg-light ml-2 "></span>').text(value);
+    const cross = $('<span class="badge text-bg-light ml-2 d-inline" id="cross-btn"></span>').html('&times;');
+
     if ($(this).is(':checked')) {
-        const dropdown = $(this).closest('.dropdown');
-        const dropdownTitle = dropdown.find('.dropdown-toggle').text();
-        const value = $(this).data('value');
-        const selectedItemsRow = $('#selected-items-row');
-
-        // Create a badge element to display the selected item
-        const badge = $('<span class="badge text-bg-light ml-2 "></span>').text(value);
-        const cross = $('<span class="badge text-bg-light ml-2 d-inline" id="cross-btn"></span>').html('&times;');
-
+        
 
         cross.addClass('d-inline');
         badge.append(cross);
@@ -43,6 +44,7 @@ $('.checkbox-item').on('change', function () {
         // Cross button click event listener
         cross.on('click', function () {
             //    $(this).closest('.badge').remove();
+            dropdown.find(`input[data-value="${value}"]`).prop('checked', false);
             badge.remove();
         });
         // Clear all button click event listener
@@ -97,7 +99,19 @@ function search() {
         }
     }
 }
-
+function sortby(order) {
+    $.ajax({
+        url: '/Mission',
+        type: 'Post',
+        data: { sortOrder: order},
+        success: function (result) {
+            loadmissions(result.missions)
+        },
+        error: function () {
+            console.log("Error getting missions")
+        }
+    });
+}
 function addcities(name) {
     if (document.getElementById(name).checked) {
         if (!cities.includes(name)) {
@@ -114,6 +128,7 @@ function addcities(name) {
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills },
         success: function (result) {
+           
             loadmissions(result.missions)
         },
         error: function () {
@@ -123,18 +138,18 @@ function addcities(name) {
 }
 
 const addcountries = (name) => {
-    /*var selected = $('#sort').find(':selected').text();*/
+    
     const country = document.getElementById(name)
     if (country.checked) {
         if (!countries.includes(name)) {
             countries.push(name)
-            country_count++;
+            
         }
     }
     else {
         if (countries.includes(name)) {
             countries.splice(countries.indexOf(name), 1)
-            country_count--;
+           
 
         }
     }
@@ -157,8 +172,8 @@ const loadcities = (cities) => {
     $('.city').empty()
     $.each(cities, function (i, item) {
         var data = "<span>" +
-            "<input type='checkbox'  class='checkbox-item'> " + 
-               " <label for= item.name> " + item.name + "</label>" + "</span>";
+            "<input type='checkbox'  class='form-check-input'> " + 
+            " <label for= item.name> " + item.name + "</label>" + "</span>" +"<br>";
         $('.city').append(data)
         $('.city span').each(function () {
             $('.city span').eq(i).find('input').attr('id', item.name)
@@ -216,16 +231,17 @@ const addskills = (name) => {
     })
 }
 const loadmissions = (missions) => {
+    console.log(missions)
     $('.missions').empty()
     console.log(missions)
     $.each(missions, function (i, item) {
         var data = "<div class='col-12 col-md-6 col-lg-4 mission-card'>" +       /* mission-card-div*/
             "<div class='card'>" +  /*card-div*/
                 "<div class='img-event'>" + /* img-event-div */
-                    "<img class='card-img-top' src= mission.image?.MediaPath alt='Card image cap'>" +
+                    "<img class='card-img-top' src='' alt='Card image cap'>" +
                     "<div class='location-img'>" + /*location-img-div*/
-                        + "<img class='text-light' src='images/pin.png' alt=''>" +
-                            "<span class='text-light'>"+ item.missions.city.name + "</span>" +
+                        "<img class='text-light' src='images/pin.png' alt=''>" +
+                            "<span class='text-light'>" + item.missions.city.name + "</span>" +
                     "</div>" + /*location-img-div-ends*/
                         "<button class='like-img border-0'>" +
                             "<img class='text-light' src='images/heart.png' alt=''> " +
@@ -277,7 +293,7 @@ const loadmissions = (missions) => {
 
         // some operations.
         $('.missions').append(data)
-        $('.img-event').eq(i).find('img').eq(0).attr('src', item.image.mediaPath)
+        $('.img-event').eq(i).find('img').eq(0).attr('src',item.image.mediaPath)
         if (item.missions.startDate != null && item.missions.endDate != null)
         {
           var a =  "<p id='duration-txt' style='margin-bottom: 0;'>" +
@@ -339,9 +355,22 @@ const loadmissions = (missions) => {
                                $('.p-bar').eq(i).append(g)
                              }
                                                    
-
+        
 
     })
+    if (missions.length === 0) {
+        var pageNotFound = "<div class='page-not-found text-center'> " +
+            
+                "<h4 class='pt-2'>" + "No mission found" + "</h4>" + 
+                
+                
+                "<div class='d-flex justify-content-center mt-4'>" +
+                    "<button class='applyButton btn'>"+  "Go to Homepage"+ "<img src='images/right-arrow.png' alt=''>" +
+            "</button>" + 
+        "</div>" + 
+            "</div>"
+        $('.missions').append(pageNotFound)
+    }
 }
 
 

@@ -48,9 +48,9 @@ namespace CI_Platform.Controllers
             return View(missions);
         }
         [HttpPost]
-        public JsonResult Index(List<string> countries, List<string> cities, List<string> themes, List<string> skills)
+        public JsonResult Index(List<string> countries, List<string> cities, List<string> themes, List<string> skills,string? sortOrder)
         {
-            List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries, cities, themes, skills);
+            List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries, cities, themes, skills,sortOrder);
             return Json(new { missions, success = true });
         }
     }
