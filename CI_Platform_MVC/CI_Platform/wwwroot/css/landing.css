@@ -1,4 +1,18 @@
-﻿.header {
+﻿footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f5f5f5;
+    padding: 20px;
+    text-align: center;
+}
+
+body {
+    margin-bottom: 100px; /* Height of the footer */
+}
+
+.header {
     align-items: center;
     padding: 10px 9rem;
     border-bottom: 1px solid rgb(223, 217, 217);

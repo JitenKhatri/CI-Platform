@@ -30,6 +30,7 @@ $('.form-check-input').on('change', function () {
     const dropdownTitle = dropdown.find('.dropdown-toggle').text();
     const value = $(this).data('value');
     const selectedItemsRow = $('#selected-items-row');
+    const itemId = $(this).attr('id');
 
     // Create a badge element to display the selected item
     const badge = $('<span class="badge text-bg-light ml-2 "></span>').text(value);
@@ -46,10 +47,14 @@ $('.form-check-input').on('change', function () {
             //    $(this).closest('.badge').remove();
             dropdown.find(`input[data-value="${value}"]`).prop('checked', false);
             badge.remove();
+            remove_badges(dropdown.find(`input[id="${itemId}"]`));
+            
         });
         // Clear all button click event listener
         $('#clear-all-btn').on('click', function () {
+            $('.form-check-input').prop('checked', false);
             selectedItemsRow.empty();
+            clear_all();
         });
     } else {
         // Checkbox is unchecked, remove its corresponding badge
@@ -83,8 +88,11 @@ function search() {
     }
 
     var pageNotFound = document.getElementsByClassName("page-not-found")[0];
+    var pagination = document.getElementsByClassName("pagination-link")[0];
     if (!found) {
         pageNotFound.style.display = "block";
+        pagination.style.display = "none";
+
     } else {
         var hiddenCount = 0;
         for (var i = 0; i < missionCards.length; i++) {
@@ -112,6 +120,66 @@ function sortby(order) {
         }
     });
 }
+
+function clear_all(){
+    countries = []
+    cities = []
+    themes = []
+    skills = []
+    $.ajax({
+        url: '/Mission',
+        type: 'POST',
+        data: { countries: countries, cities: cities, themes: themes, skills: skills},
+        success: function (result) {
+            loadmissions(result.missions)
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+}
+
+function remove_badges(input) {
+    const id = input.attr('id');
+    console.log(id)
+    /*$(`#${id.slice}`).prop('checked', false);*/
+  /* *//* $('.all-choices').find(`#${id.replace(/\s/g, '')}`).remove(*//*)*/
+   
+        if (cities.includes(id)) {
+            cities.splice(cities.indexOf(id), 1)
+            
+        }
+    
+  
+        if (countries.includes(id)) {
+            countries.splice(countries.indexOf(id), 1)
+            
+        }
+    
+   
+        if (themes.includes(id)) {
+            themes.splice(themes.indexOf(id), 1)
+           
+        }
+    
+   
+        if (skills.includes(id.slice(6))) {
+            skills.splice(skills.indexOf(id), 1)
+           
+        }
+    
+    $.ajax({
+        url: '/Mission',
+        type: 'POST',
+        data: { countries: countries, cities: cities, themes: themes, skills: skills},
+        success: function (result) {
+            loadmissions(result.missions)
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+}
 function addcities(name) {
     if (document.getElementById(name).checked) {
         if (!cities.includes(name)) {
@@ -137,7 +205,7 @@ function addcities(name) {
     });
 }
 
-const addcountries = (name) => {
+function addcountries(name) {
     
     const country = document.getElementById(name)
     if (country.checked) {
@@ -162,6 +230,10 @@ const addcountries = (name) => {
                 loadcities(result.missions[0].cities);
                 loadmissions(result.missions)
             }
+            else {
+                loadcities(result.missions.cities)
+                loadmissions(result.missions)
+            }
         },
         error: function () {
             console.log("Error updating variable");
@@ -172,12 +244,16 @@ const loadcities = (cities) => {
     $('.city').empty()
     $.each(cities, function (i, item) {
         var data = "<span>" +
-            "<input type='checkbox'  class='form-check-input'> " + 
-            " <label for= item.name> " + item.name + "</label>" + "</span>" +"<br>";
+            "<input type='checkbox' id='' data-value='' class='form-check-input'> " +
+            " <label for=''> " + item.name + "</label>" + "</span>" +"<br>";
         $('.city').append(data)
         $('.city span').each(function () {
             $('.city span').eq(i).find('input').attr('id', item.name)
+            $('.city span').eq(i).find('label').attr('for', item.name)
+            $('.city span').eq(i).find('input').attr('data-value', item.name)
             $('.city span').eq(i).find('input').attr('onchange', `addcities('${item.name}')`)
+            
+           
         })
     })
 }
@@ -365,11 +441,15 @@ const loadmissions = (missions) => {
                 
                 
                 "<div class='d-flex justify-content-center mt-4'>" +
-                    "<button class='applyButton btn'>"+  "Go to Homepage"+ "<img src='images/right-arrow.png' alt=''>" +
+            "<button class='apply-btn btn' style='width: 12%'> "+  "Submit new mission"+ "<img src='images/right-arrow.png' alt=''>" +
             "</button>" + 
         "</div>" + 
             "</div>"
         $('.missions').append(pageNotFound)
+        var pagination = document.getElementsByClassName("pagination-link")[0];
+        pagination.style.display = "none";
+
+
     }
 }
 
