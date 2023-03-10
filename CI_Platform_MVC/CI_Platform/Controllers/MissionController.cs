@@ -53,5 +53,10 @@ namespace CI_Platform.Controllers
             List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries, cities, themes, skills,sortOrder);
             return Json(new { missions, success = true });
         }
+
+        public IActionResult Volunteering_mission()
+        {
+            return View();
+        }
     }
 }

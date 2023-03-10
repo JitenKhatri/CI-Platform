@@ -120,6 +120,13 @@ namespace CI_Platform.DataAccess.Repository
             return Missions;
         }
 
+        //public List<MissionViewModel> GetAllComments()
+        //{
+        //    List<Comment> comment = _db.Comments.ToList();
+        //    var comments = (from c in comment select new VolunteeringMissionVM { comme }).ToList();
+        //    return comments;
+            
+        //}
         public void Save()
         {
             _db.SaveChanges();

@@ -378,10 +378,10 @@ const loadmissions = (missions) => {
                 "</p>"
             $('.duration').eq(i).append(a)
           }
-        if (item.missions.startDate = null)
+        if (item.missions.startDate == null)
          {
             var b =  "<p id='duration-txt' style='margin-bottom: 0;'> " +
-                item.missions.GoalMotto +
+                item.missions?.goalMotto +
                 "</p>"
             $('.duration').eq(i).append(b)
         }
@@ -401,7 +401,7 @@ const loadmissions = (missions) => {
                             if(item.missions?.missionType == "TIME")
                             {
                                 var d = "<div>" + "<img src='images/deadline.png' alt=''>" + "</div>"
-                                 $('.deadline').eq(i).append(d)
+                                $('.deadline').eq(i).append(d)
                              }
 
                            
@@ -410,7 +410,7 @@ const loadmissions = (missions) => {
                                var e = "<span>" + item.missions?.deadline.slice(0, 10) + " <br>" + " Deadline " + "</span>"
                                $('.p-bar').eq(i).append(e)
                                
-                             }
+                           }
                           else if(item.missions?.missionType == "GO")
                            {
                              var f = "<div class='d-flex flex-column'>" + 
