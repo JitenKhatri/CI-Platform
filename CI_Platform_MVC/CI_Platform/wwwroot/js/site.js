@@ -108,12 +108,13 @@ function search() {
     }
 }
 function sortby(order) {
+    $('.missions').empty()
     $.ajax({
         url: '/Mission',
         type: 'Post',
         data: { sortOrder: order},
         success: function (result) {
-            loadmissions(result.missions)
+            $('.missions').html(result);
         },
         error: function () {
             console.log("Error getting missions")
@@ -121,17 +122,19 @@ function sortby(order) {
     });
 }
 
-function clear_all(){
+function clear_all() {
+
     countries = []
     cities = []
     themes = []
     skills = []
+    $('.missions').empty()
     $.ajax({
         url: '/Mission',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills},
         success: function (result) {
-            loadmissions(result.missions)
+            $('.missions').html(result);
         },
         error: function () {
             console.log("Error updating variable");
@@ -142,38 +145,32 @@ function clear_all(){
 function remove_badges(input) {
     const id = input.attr('id');
     console.log(id)
-    /*$(`#${id.slice}`).prop('checked', false);*/
-  /* *//* $('.all-choices').find(`#${id.replace(/\s/g, '')}`).remove(*//*)*/
-   
         if (cities.includes(id)) {
             cities.splice(cities.indexOf(id), 1)
             
         }
-    
-  
+
         if (countries.includes(id)) {
             countries.splice(countries.indexOf(id), 1)
             
         }
-    
-   
+
         if (themes.includes(id)) {
             themes.splice(themes.indexOf(id), 1)
            
         }
-    
-   
-        if (skills.includes(id.slice(6))) {
+
+        if (skills.includes(id)) {
             skills.splice(skills.indexOf(id), 1)
            
         }
-    
+    $('.missions').empty()
     $.ajax({
         url: '/Mission',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills},
         success: function (result) {
-            loadmissions(result.missions)
+            $('.missions').html(result);
         },
         error: function () {
             console.log("Error updating variable");
@@ -181,6 +178,7 @@ function remove_badges(input) {
     })
 }
 function addcities(name) {
+    $('.missions').empty()
     if (document.getElementById(name).checked) {
         if (!cities.includes(name)) {
             cities.push(name)
@@ -196,8 +194,7 @@ function addcities(name) {
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills },
         success: function (result) {
-           
-            loadmissions(result.missions)
+            $('.missions').html(result);
         },
         error: function () {
             console.log("Error updating variable");
@@ -205,8 +202,8 @@ function addcities(name) {
     });
 }
 
-function addcountries(name) {
-    
+function addcountries(name,dataid) {
+    $('.missions').empty()
     const country = document.getElementById(name)
     if (country.checked) {
         if (!countries.includes(name)) {
@@ -222,23 +219,36 @@ function addcountries(name) {
         }
     }
     $.ajax({
-        url: '/Mission',
-        type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills},
+        url: 'Mission/GetCitiesForCountry',
+        type: 'Post',
+        data: { countryid: dataid },
         success: function (result) {
-            if (result.missions.length > 0) {
-                loadcities(result.missions[0].cities);
-                loadmissions(result.missions)
+            console.log(result);
+             if (result.cities.length > 0) {
+                loadcities(result.cities);
             }
             else {
-                loadcities(result.missions.cities)
-                loadmissions(result.missions)
+                loadcities(result.cities)
+
             }
+            $.ajax({
+                url: '/Mission',
+                type: 'POST',
+                data: { countries: countries, cities: cities, themes: themes, skills: skills},
+                success: function (result) {
+                    $('.missions').html(result);
+                },
+                error: function () {
+                    console.log("Error updating variable");
+                }
+               });
         },
         error: function () {
             console.log("Error updating variable");
         }
+ 
     });
+    
 }
 const loadcities = (cities) => {
     $('.city').empty()
@@ -259,7 +269,7 @@ const loadcities = (cities) => {
 }
 
 const addthemes = (name) => {
-    /*var selected = $('#sort').find(':selected').text();*/
+    $('.missions').empty()
     if (document.getElementById(name).checked) {
         if (!themes.includes(name)) {
             themes.push(name)
@@ -275,7 +285,7 @@ const addthemes = (name) => {
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills },
         success: function (result) {
-            loadmissions(result.missions)
+            $('.missions').html(result);
         },
         error: function () {
             console.log("Error updating variable");
@@ -284,6 +294,7 @@ const addthemes = (name) => {
 }
 
 const addskills = (name) => {
+    $('.missions').empty()
     if (document.getElementById(name).checked) {
         if (!skills.includes(name)) {
             skills.push(name)
@@ -299,163 +310,13 @@ const addskills = (name) => {
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills},
         success: function (result) {
-            loadmissions(result.missions)
+            $('.missions').html(result);
         },
         error: function () {
             console.log("Error updating variable");
         }
     })
 }
-const loadmissions = (missions) => {
-    console.log(missions)
-    $('.missions').empty()
-    console.log(missions)
-    $.each(missions, function (i, item) {
-        var data = "<div class='col-12 col-md-6 col-lg-4 mission-card'>" +       /* mission-card-div*/
-            "<div class='card'>" +  /*card-div*/
-                "<div class='img-event'>" + /* img-event-div */
-                    "<img class='card-img-top' src='' alt='Card image cap'>" +
-                    "<div class='location-img'>" + /*location-img-div*/
-                        "<img class='text-light' src='images/pin.png' alt=''>" +
-                            "<span class='text-light'>" + item.missions.city.name + "</span>" +
-                    "</div>" + /*location-img-div-ends*/
-                        "<button class='like-img border-0'>" +
-                            "<img class='text-light' src='images/heart.png' alt=''> " +
-                    "</button>" +
-                         "<button class='stop-img border-0'>" +
-                       "<img class='text-light' src='images/add1.png' alt=''>" +
-                   "</button>" +
-                            " <button class='mission-theme border-0'>" +
-                             "<span class='p-2'>" + item.missions.theme.title +  "</span>" +
-                               "</button>" +
-                                 "</div>" + /*img-event-div-ends*/
-                              "<div class='card-body'>" +  /*card-body-div*/
-            "<h5 class='card-title'>" + item.missions.title + "</h5>" +
-                                "<p class='card-text'>" + "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore..." + "</p>" +
-                               " <div class='d-flex justify-content-between'> " +
-            " <div> " + "<p class='slug'>" + item.missions.organizationName + "</p>" + "</div>" + 
-                                   " <div class='d-flex flex-row'> "+
-                                        "<img class='star' src='images/selected-star.png' alt=''> " +
-                                           " <img class='star' src='images/selected-star.png' alt=''> " +
-                                                "<img class='star' src='images/selected-star.png' alt=''> " +
-                                                    "<img class='star' src='images/star-empty.png' alt=''>" +
-                                                        "<img class='star' src='images/star-empty.png' alt=''> "+
-                   " </div>" +
-                                            " </div>" +
-                                                   " <div class='duration-seats-info mt-4'> " +
-                                                        "<div class='duration'> " +
-                                                           
-
-                                                       " </div> " + 
-                                            "<div class='d-flex flex-row mission-deadline'>" +
-                                            "<div class='d-flex flex-row deadline'>" + 
-                                                          
-            "<div class='ms-2 p-bar'>  " +
-            "</div>" +
-                       " </div>" + 
-                      "</div> " + 
-                      
-                    "</div> " +
-            "<div class='d-flex justify-content-center mt-4'> " +
-            " <button class='apply-btn'> " +
-            "Apply" + "<span>" + "<img src='images/right-arrow.png' alt=''> " + "</span>" +
-            "</button>" +
-            "</div> " +
-                  "</div> " + 
-                  
-                                "</div> " +
-                                "</div> " +
-            "</div> "
-
-        // some operations.
-        $('.missions').append(data)
-        $('.img-event').eq(i).find('img').eq(0).attr('src',item.image.mediaPath)
-        if (item.missions.startDate != null && item.missions.endDate != null)
-        {
-          var a =  "<p id='duration-txt' style='margin-bottom: 0;'>" +
-
-              "From" + " " + item.missions.startDate.slice(0, 10) + " until" + " " + item.missions.endDate.slice(0, 10) +
-                "</p>"
-            $('.duration').eq(i).append(a)
-          }
-        if (item.missions.startDate == null)
-         {
-            var b =  "<p id='duration-txt' style='margin-bottom: 0;'> " +
-                item.missions?.goalMotto +
-                "</p>"
-            $('.duration').eq(i).append(b)
-        }
-
-        
-            if(item.missions?.seatsLeft != null)
-            {
-                var c = "<div class='d-flex flex-row deadline'>" + 
-                    "<div> " + "<img src='images/Seats-left.png' alt=''>" + "</div>" +
-                        "<div> " + "<span> " + item.missions.seatsLeft + "<br>" + "Seats left" + "</span>" + "</div>"+
-                        "</div> "
-                    $('.mission-deadline').eq(i).append(c)
-            }
-
-
-                        
-                            if(item.missions?.missionType == "TIME")
-                            {
-                                var d = "<div>" + "<img src='images/deadline.png' alt=''>" + "</div>"
-                                $('.deadline').eq(i).append(d)
-                             }
-
-                           
-                           if(item.missions?.deadline != null)
-                            {
-                               var e = "<span>" + item.missions?.deadline.slice(0, 10) + " <br>" + " Deadline " + "</span>"
-                               $('.p-bar').eq(i).append(e)
-                               
-                           }
-                          else if(item.missions?.missionType == "GO")
-                           {
-                             var f = "<div class='d-flex flex-column'>" + 
-                                       "<div class='' d-flex flex-row'>"+
-                                       "<img class='align-self-center ms-3' src='images/mission.png' alt='' style='height:25px; width:25px;'>" + 
-                                                            "<div class='progress align-self-center ms-3'>" +
-                                               " <div class='progress-bar w-75' role='progressbar' aria-label='Basic example' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'> " +
-                                               "</div>" + 
-                                                            "</div>" +
-                                                          "</div> " +
-                                                           " <div> " + "<p>"+ "8000 achieved" + "</p>" + "</div>" +
-                                   "</div>"
-                               $('.p-bar').eq(i).append(f)
-                            }
-                           else if(item.missions?.missionType == "TIME")
-                             {
-                               var g = "<span> " + item.missions?.goalMotto + "</span>"
-                               $('.p-bar').eq(i).append(g)
-                             }
-                                                   
-        
-
-    })
-    if (missions.length === 0) {
-        var pageNotFound = "<div class='page-not-found text-center'> " +
-            
-                "<h4 class='pt-2'>" + "No mission found" + "</h4>" + 
-                
-                
-                "<div class='d-flex justify-content-center mt-4'>" +
-            "<button class='apply-btn btn' style='width: 12%'> "+  "Submit new mission"+ "<img src='images/right-arrow.png' alt=''>" +
-            "</button>" + 
-        "</div>" + 
-            "</div>"
-        $('.missions').append(pageNotFound)
-        var pagination = document.getElementsByClassName("pagination-link")[0];
-        pagination.style.display = "none";
-
-
-    }
-}
-
-
-
-
 
 /*recent volunteers*/
 

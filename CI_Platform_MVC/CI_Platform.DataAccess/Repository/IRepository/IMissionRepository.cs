@@ -12,6 +12,9 @@ namespace CI_Platform.DataAccess.Repository.IRepository
     {
         List<MissionViewModel> GetAllMission();
         List<MissionViewModel> GetFilteredMissions(List<string> countriesList,List<string> cities, List<string> themes, List<string> skiils, string? sortOrder);
+        List<City> GetCitiesForCountry(long countryid);
 
+        List<Mission> MissionDetail(int id);
+        List<MissionSkill> MissionSkillList(int id);
     }
 }

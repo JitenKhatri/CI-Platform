@@ -1,6 +1,7 @@
 ﻿using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
 using CI_Platform.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,12 +121,37 @@ namespace CI_Platform.DataAccess.Repository
             return Missions;
         }
 
+        public List<City> GetCitiesForCountry(long countryid)
+        {
+            var cities = _db.Cities
+                .Where(c => c.CountryId == countryid)
+                .ToList();
+
+            return cities;
+        }
+
+        public List<Mission> MissionDetail(int id)
+        {
+            return _db.Missions.Where(m => m.MissionId == id)
+            .Include(m => m.City)
+            .Include(m => m.Country)
+            .Include(m => m.Theme)
+            .Include(m => m.MissionMedia)
+            .Include(m => m.MissionSkills).ThenInclude(ms => ms.Skill)
+            .Include(m => m.GoalMissions)
+            .Include(m => m.MissionRatings).ToList();
+        }
+
+        public List<MissionSkill> MissionSkillList(int id)
+        {
+            return _db.MissionSkills.Where(m => m.MissionId == id).ToList();
+        }
         //public List<MissionViewModel> GetAllComments()
         //{
         //    List<Comment> comment = _db.Comments.ToList();
         //    var comments = (from c in comment select new VolunteeringMissionVM { comme }).ToList();
         //    return comments;
-            
+
         //}
         public void Save()
         {

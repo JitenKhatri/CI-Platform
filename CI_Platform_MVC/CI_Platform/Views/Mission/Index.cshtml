@@ -88,7 +88,7 @@
                             @foreach(var country in ViewBag.CountryList)
              {
                    <div id="country">
-        <input type="checkbox" id="@country.Text" class="form-check-input" onchange="addcountries('@country.Text')" data-value="@country.Text">
+        <input type="checkbox" id="@country.Text" data-id="@country.Value" class="form-check-input" onchange="addcountries('@country.Text','@country.Value')" data-value="@country.Text">
         <label for="@country.Text">@country.Text</label>
                   </div>
              }
@@ -191,112 +191,8 @@
 
 
        <div class="row missions">
-
-           @foreach(var mission in Model)
-          {
-                    <div class="col-12 col-md-6 col-lg-4 mission-card">              
-              <div class="card">
-                <div class="img-event">
-                  <img class="card-img-top" src=@mission.image?.MediaPath alt="Card image cap">
-                  <div class="location-img">
-                    <img class="text-light" src="~/images/pin.png" alt="">
-                        <span class="text-light"> @mission.Missions?.City.Name</span>
-                    </div>
-                    <button class="like-img border-0">
-                        <img class="text-light" src="~/images/heart.png" alt="">
-                    </button>
-                    <button class="stop-img border-0">
-                        <img class="text-light" src="~/images/add1.png" alt="">
-                    </button>
-                    <button class="mission-theme border-0">
-                    <span class="p-2">@mission.Missions?.Theme.Title</span>
-                    </button>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">@mission.Missions?.Title</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
-                  <div class="d-flex justify-content-between">
-                    <div><p class="slug">@mission.Missions?.OrganizationName</p></div>
-                    <div class="d-flex flex-row">
-                      <img class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/selected-star.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
-                    </div>
-                  </div>
-                  <div class="duration-seats-info mt-4">
-                    <div class="duration">
-                        @if(@mission.Missions?.StartDate !=null && @mission.Missions?.EndDate !=null)
-                        {
-                                    <p id="duration-txt" style="margin-bottom: 0;">
-                          
-                          From @mission.Missions?.StartDate?.ToString().Substring(0,10)  until @mission.Missions?.EndDate?.ToString().Substring(0,10)
-                          </p>
-                        }
-                        else {
-                            <p id="duration-txt" style="margin-bottom: 0;">
-                                @mission.Missions?.GoalMotto
-                                </p>
-                        }
-                      
-                    </div> 
-                    <div class="d-flex flex-row mission-deadline">
-                                        @if(@mission.Missions?.SeatsLeft != null)
-                                        {
-                                         <div class="d-flex flex-row">
-                        <div><img src="~/images/Seats-left.png" alt=""> </div>
-                        <div><span>@mission.Missions?.SeatsLeft<br> Seats left</span></div>
-                      </div> 
-                                        }
-                         
-                      <div class="d-flex flex-row">
-                          @if(mission.Missions?.MissionType == "TIME")
-                          {
-                                        <div><img src="~/images/deadline.png" alt=""></div >
-                          }
-                       
-                        <div class="ms-2 p-bar"> 
-                            
-                            @if (mission.Missions?.Deadline != null)
-                            {
-                                 <span>@mission.Missions?.Deadline.ToString().Substring(0,10) <br> Deadline </span>
-                            } else
-                            {
-                                   @if (mission.Missions?.MissionType =="GO")
-                                   {
-                                                         <div class="d-flex flex-column">
-                                                     <div class="d-flex flex-row"><img class="align-self-center ms-3" src="~/images/mission.png" alt="" style="height:25px; width:25px;">
-                                               <div class="progress align-self-center ms-3">
-                                             <div class="progress-bar w-75" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div></div>
-                                     <div><p>8000 achieved</p></div>                    
-                                                        </div>
-                                    }else
-                                    {
-                                        <span>@mission.Missions?.GoalMotto</span>
-                                     }
-                                                    
-                            }
-                        </div>
-                      </div>
-                      
-                    </div>
-                    
-                  </div> 
-                  <div class="d-flex justify-content-center mt-4">
-                    <button class="apply-btn">
-                      Apply <span><img src="~/images/right-arrow.png" alt=""></span>
-                    </button>
-                  </div>  
-                </div>
-              </div>
-            </div> 
-        }
-
-                
-            
-
+           <partial name="~/Views/Shared/_Mission.cshtml" />
+           
           </div> @*row ends*@
           
         </div>

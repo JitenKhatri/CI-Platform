@@ -18,5 +18,7 @@ namespace CI_Platform.Models.ViewModels
         public List<Comment>? comments { get; set; }
         public string? Mission_city { get; set; }
         public string? Mission_theme { get; set; }
+        public List<MissionSkill>? MissionSkill { get; set; }
+        public List<Mission>? MissionList { get; set; }
     }
 }

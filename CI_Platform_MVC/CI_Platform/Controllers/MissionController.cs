@@ -47,16 +47,55 @@ namespace CI_Platform.Controllers
             List<MissionViewModel> missions = db.MissionRepository.GetAllMission();
             return View(missions);
         }
+        //[HttpPost]
+        //public JsonResult Index(List<string> countries, List<string> cities, List<string> themes, List<string> skills,string? sortOrder)
+        //{
+        //    List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries, cities, themes, skills,sortOrder);
+        //    return Json(new { missions, success = true });
+        //}
+
         [HttpPost]
-        public JsonResult Index(List<string> countries, List<string> cities, List<string> themes, List<string> skills,string? sortOrder)
+        public IActionResult Index(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string? sortOrder)
         {
-            List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries, cities, themes, skills,sortOrder);
-            return Json(new { missions, success = true });
+            List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries, cities, themes, skills, sortOrder);
+            return PartialView("_Mission", missions);
         }
 
-        public IActionResult Volunteering_mission()
+        
+        [HttpPost]
+        public JsonResult GetCitiesForCountry(long countryid)
         {
-            return View();
+            List<City> cities = db.MissionRepository.GetCitiesForCountry(countryid);
+            return Json(new { cities, success = true });
         }
+
+        public IActionResult Volunteering_mission(int id)
+        {
+
+            if (HttpContext.Session.GetString("UserName") != null)
+            {
+                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+
+                ViewBag.IsLoggedIn = HttpContext.Session.GetString("IsLoggedIn");
+            }
+            else
+            {
+                ViewBag.UserName = "Evan Donohue";
+            }
+            ViewBag.Userid = HttpContext.Session.GetString("UserId");
+
+            var vm = new VolunteeringMissionVM();
+            vm.MissionSkill = db.MissionRepository.MissionSkillList(id)
+;
+            vm.MissionList = db.MissionRepository.MissionDetail(id)
+;
+            return View(vm);
+
+        }
+
+        //public IActionResult Volunteering_mission()
+        //{
+        //    return View();
+        //}
     }
 }

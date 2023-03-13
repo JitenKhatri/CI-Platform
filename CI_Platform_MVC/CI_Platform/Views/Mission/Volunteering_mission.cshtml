@@ -2,7 +2,7 @@
 @{
   Layout = null;
 }
-@model List<VolunteeringMissionVM>
+@model VolunteeringMissionVM
 <!DOCTYPE html>
 
 <html lang="en">
@@ -181,24 +181,66 @@
 
             </div>
             <div class="col-lg-6">
-                <p class="CSR_heading">CSR initiative stands for Coffee & Farmer Equity</>
+                    @foreach(var item in Model.MissionList)
+                    {
+                        
+                    
+                    <p class="CSR_heading">@item.Title</p>
                 <p class="lorem"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                <div class="duration-seats-info mt-4">
                   <div class="duration">
-                    <p id="duration-txt" style="margin-bottom: 0;">Plant 10,000 Trees</p>
+                   @if(@item.StartDate !=null && @item.EndDate !=null)
+                        {
+                                    <p id="duration-txt" style="margin-bottom: 0;">
+                          
+                          From @item.StartDate?.ToString().Substring(0,10)  until @item.EndDate?.ToString().Substring(0,10)
+                          </p>
+                        }
+                        else {
+                            <p id="duration-txt" style="margin-bottom: 0;">
+                                @item?.GoalMotto
+                                </p>
+                        }
                   </div> 
                   <div class="d-flex flex-row mission-deadline">
-                      <div class="d-flex flex-row ">
-                      <div><img src="~/images/Seats-left.png" alt=""> </div>
-                      <div><span>10 <br> Seats left</span></div>
-                    </div>
-                    <div class="d-flex flex-column">
-                      <div class="d-flex flex-row"><img class="align-self-center ms-3" src="~/images/mission.png" alt="" style="height:25px; width:25px;">
-                        <div class="progress align-self-center ms-3">
-                          <div class="progress-bar w-75" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                       </div></div>
-                      <div><p>8000 achieved</p></div>                    
-                    </div>
+                                   @if(@item?.SeatsLeft != null)
+                                        {
+                                         <div class="d-flex flex-row">
+                        <div><img src="~/images/Seats-left.png" alt=""> </div>
+                        <div><span>@item?.SeatsLeft<br> Seats left</span></div>
+                      </div> 
+                                        }
+                         
+                      <div class="d-flex flex-row">
+                          @if(@item?.MissionType == "TIME")
+                          {
+                                        <div><img src="~/images/deadline.png" alt=""></div >
+                          }
+                       
+                        <div class="ms-2 p-bar"> 
+                            
+                            @if (@item?.Deadline != null)
+                            {
+                                 <span>@item?.Deadline?.ToString().Substring(0,10) <br> Deadline </span>
+                            } else
+                            {
+                                   @if (@item?.MissionType =="GO")
+                                   {
+                                                         <div class="d-flex flex-column">
+                                                     <div class="d-flex flex-row"><img class="align-self-center ms-3" src="~/images/mission.png" alt="" style="height:25px; width:25px;">
+                                               <div class="progress align-self-center ms-3">
+                                             <div class="progress-bar w-75" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div></div>
+                                     <div><p>8000 achieved</p></div>                    
+                                                        </div>
+                                    }else
+                                    {
+                                        <span>@item?.GoalMotto</span>
+                                     }
+                                                    
+                            }
+                        </div>
+                      </div>
                   </div>
                   
                 </div> 
@@ -217,14 +259,14 @@
                     <img src="~/images/pin1.png" class="pin-img mt-2 ms-2" />
                    <div class="d-flex flex-column mt-4 ms-2">
                     <p style="margin-bottom: 7px; font-weight: lighter;"> City</p>
-                    <p style="color:#414141"> London</p>
+                    <p style="color:#414141"> @item?.City.Name </p>
                     </div>
                      </div>
 
                      <div class="d-flex flex-column mission-badge "> <img src="~/images/web.png"  class="web-img mt-2 ms-2"/>
                          <div class="d-flex flex-column mt-4 ms-2">
                     <p style="margin-bottom: 7px; font-weight: lighter;"> Theme</p>
-                    <p style="color:#414141"> Environment</p>
+                    <p style="color:#414141"> @item?.Theme.Title</p>
                     </div> 
                    </div>
                      <div class="d-flex flex-column mission-badge "> <img src="~/images/calender.png" class="calender-img mt-2 ms-2" />
@@ -236,16 +278,13 @@
                      <div class="d-flex flex-column mission-badge"> <img src="~/images/organization.png" class="organization-img mt-2 ms-2" />
                      <div class="d-flex flex-column mt-4 ms-2">
                     <p style="margin-bottom: 7px; font-weight: lighter;"> Organization</p>
-                    <p style="color:#414141"> CSE Network</p>
+                    <p style="color:#414141"> @item?.OrganizationName</p>
                     </div> 
                     </div> 
-               
-                    
-                
-                    
+              
                 </div> @*mission-badge-row completes*@
                 <div class="d-flex justify-content-center mt-2">  <button class="btn apply-btn"> Apply Now <span> <img src=~/images/right-arrow.png /></span></button> </div>
-                  
+                  }
                 </div>
             </div>
 
@@ -349,12 +388,25 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row">Skills</th>
-                    <td>Cool, Easy going, Math, Computer</td>
+                      <th scope="row">Skills</th>
+ 
+                     <td>
+                         @foreach(var item in Model.MissionSkill){
+                         @item.Skill.SkillName; @if(item != Model.MissionSkill.Last()){
+                          @Html.Raw(",");
+                           }
+                        @Html.Raw(" ");
+                     } </td>
+                      
+                                        
                   </tr>
                   <tr>
                     <th scope="row">Days</th>
-                    <td>Weekend Only</td>
+                    <td>
+                        @foreach(var item in Model.MissionList)
+                        {
+                            @item.Availability
+                        }  </td>
                   </tr>
                   <tr style="border:white;">
                     <th scope="row">Rating</th>
