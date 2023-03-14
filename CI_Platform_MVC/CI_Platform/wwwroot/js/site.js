@@ -318,8 +318,46 @@ const addskills = (name) => {
     })
 }
 
-/*recent volunteers*/
 
+/*volunteering mission js starts*/
+/*recent volunteers*/
+function add_comments (user_id, mission_id) {
+   /* $('#comments').empty()*/
+    var commentText = document.getElementById('comment-text').value
+    console.log(commentText)
+ /*   var length = $('.user-comments').find('.usercomment-image').length*/
+    if (commentText.length > 3) {
+        $.ajax({
+            url: `/volunteering_mission/${mission_id}`,
+            type: 'POST',
+            data: { user_id: user_id, mission_id: mission_id, comment: commentText/*, length: length*/ },
+            success: function (result) {
+               /* $('#comments').html(result);*/
+                load_comments(result.comments)
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+}
+const load_comments = (comments) => {
+    $.each(comments, function (i, item) {
+        var comment =  "<div class='d-flex'>" + 
+        "<img id='img' class='rounded-circle img-fluid' src='/images/volunteer1.png' alt='' />" +
+        "<div>" + 
+            "<p style='font-size: 15px; margin-bottom:0;margin-left:15px;margin-top:15px;'> " + '${item.user.firstName} ${item.user.lastName}' + "</p> " +
+            "<p style='font-size: 15px;margin-left: 15px;'>" +
+            item.createdAt.slice(0, 10) + "</p>" +
+        "</div> " + 
+     
+    "</div>" +
+            "<div class='comment-text' style='margin-top:10px;'>" +
+            item.commentText +
+            "</div>"
+         $('#comments').append(comment);
+    })
+}
 
 function NextPage() {
 

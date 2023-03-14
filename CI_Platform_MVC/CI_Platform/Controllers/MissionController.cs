@@ -47,12 +47,6 @@ namespace CI_Platform.Controllers
             List<MissionViewModel> missions = db.MissionRepository.GetAllMission();
             return View(missions);
         }
-        //[HttpPost]
-        //public JsonResult Index(List<string> countries, List<string> cities, List<string> themes, List<string> skills,string? sortOrder)
-        //{
-        //    List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries, cities, themes, skills,sortOrder);
-        //    return Json(new { missions, success = true });
-        //}
 
         [HttpPost]
         public IActionResult Index(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string? sortOrder)
@@ -69,28 +63,20 @@ namespace CI_Platform.Controllers
             return Json(new { cities, success = true });
         }
 
-        public IActionResult Volunteering_mission(int id)
+        [Route("volunteering_mission/{id}")]
+        public IActionResult volunteering_mission(int id)
         {
+            VolunteeringMissionVM mission = db.MissionRepository.GetMissionById(id);
+            return View(mission);
+        }
+    
 
-            if (HttpContext.Session.GetString("UserName") != null)
-            {
-                ViewBag.UserName = HttpContext.Session.GetString("UserName");
-
-                ViewBag.IsLoggedIn = HttpContext.Session.GetString("IsLoggedIn");
-            }
-            else
-            {
-                ViewBag.UserName = "Evan Donohue";
-            }
-            ViewBag.Userid = HttpContext.Session.GetString("UserId");
-
-            var vm = new VolunteeringMissionVM();
-            vm.MissionSkill = db.MissionRepository.MissionSkillList(id)
-;
-            vm.MissionList = db.MissionRepository.MissionDetail(id)
-;
-            return View(vm);
-
+        [HttpPost]
+        [Route("volunteering_mission/{id}")]
+        public IActionResult volunteering_mission(long User_id, long Mission_id, string comment/*, int length*/)
+        {
+            IEnumerable<CommentViewModel> comments = db.MissionRepository.comment(User_id, Mission_id, comment/*, length*/);
+            return Json(new { comments, success = true });
         }
 
         //public IActionResult Volunteering_mission()

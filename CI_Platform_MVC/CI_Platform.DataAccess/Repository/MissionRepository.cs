@@ -17,6 +17,8 @@ namespace CI_Platform.DataAccess.Repository
         {
             _db = db;
         }
+
+        
         public List<MissionViewModel> GetAllMission()
         {
             List<Mission> mission = _db.Missions.ToList();
@@ -130,29 +132,57 @@ namespace CI_Platform.DataAccess.Repository
             return cities;
         }
 
-        public List<Mission> MissionDetail(int id)
-        {
-            return _db.Missions.Where(m => m.MissionId == id)
-            .Include(m => m.City)
-            .Include(m => m.Country)
-            .Include(m => m.Theme)
-            .Include(m => m.MissionMedia)
-            .Include(m => m.MissionSkills).ThenInclude(ms => ms.Skill)
-            .Include(m => m.GoalMissions)
-            .Include(m => m.MissionRatings).ToList();
-        }
 
         public List<MissionSkill> MissionSkillList(int id)
         {
             return _db.MissionSkills.Where(m => m.MissionId == id).ToList();
         }
-        //public List<MissionViewModel> GetAllComments()
-        //{
-        //    List<Comment> comment = _db.Comments.ToList();
-        //    var comments = (from c in comment select new VolunteeringMissionVM { comme }).ToList();
-        //    return comments;
+        public IEnumerable<CommentViewModel> comment(long user_id, long mission_id, string comment/*, int length*/)
+        {
+          
+            List<Comment> comments = new List<Comment>();
+            Comment mycomment = new Comment()
+            {
+                UserId = user_id,
+                MissionId = mission_id,
+                CommentText = comment
+            };
+            _db.Comments.Add(mycomment);
+            Save();
+            comments = _db.Comments.ToList();
+            IEnumerable<CommentViewModel> mission_comments = (from c in comments
+                                                              where c.MissionId.Equals(mission_id)
+                                                              select new CommentViewModel { CommentText = c.CommentText, user = c.User })/*.Skip(length)*/;
+            return mission_comments;
+        }
 
-        //}
+        public VolunteeringMissionVM GetMissionById(int id)
+        {
+            List<User> users = _db.Users.ToList();
+            Mission mission = _db.Missions.SingleOrDefault(m => m.MissionId == id);
+            if (mission == null)
+            {
+                return null; // or throw an exception if desired
+            }
+
+            MissionMedium image = _db.MissionMedia.SingleOrDefault(i => i.MissionId == id);
+            MissionTheme theme = _db.MissionThemes.SingleOrDefault(t => t.MissionThemeId == id);
+            List<Skill> skills = _db.MissionSkills.Where(s => s.MissionSkillId == id).Select(s => s.Skill).ToList();
+            List<Comment> comments = _db.Comments.Where(s => s.MissionId == id).ToList();
+            Country country = _db.Countries.SingleOrDefault(c => c.CountryId == mission.CountryId);
+            City city = _db.Cities.SingleOrDefault(c => c.CityId == mission.CityId);
+
+            return new VolunteeringMissionVM
+            {
+                Missions = mission,
+                image = image,
+                theme = theme,
+                skills = skills,
+                Country = country,
+                Cities = city,
+                comments = comments
+            };
+        }
         public void Save()
         {
             _db.SaveChanges();

@@ -2,11 +2,13 @@
 using CI_Platform.Models;
 using CI_Platform.Models.ViewModels;
 using CI_Platform.ViewModels;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 
 namespace CI_Platform.Controllers
@@ -45,8 +47,18 @@ namespace CI_Platform.Controllers
                 }
                 else
                 {
-                    var sessionUser = db.UserAuthentication.GetFirstOrDefault(a => a.Email == model.Email);
-                    HttpContext.Session.SetString("UserName", sessionUser.FirstName + " " + sessionUser.LastName);
+                    var claims = new List<Claim>
+                            {
+                                  new Claim(ClaimTypes.Name, $"{userExists.FirstName} {userExists.LastName}"),
+                                  new Claim(ClaimTypes.Email, userExists.Email),
+                                  new Claim(ClaimTypes.Sid, userExists.UserId.ToString()),
+                               };
+                    var identity = new ClaimsIdentity(claims, "AuthCookie");
+                    var Principle = new ClaimsPrincipal(identity);
+
+                    await HttpContext.SignInAsync("AuthCookie", Principle);
+                    //var sessionUser = db.UserAuthentication.GetFirstOrDefault(a => a.Email == model.Email);
+                    //HttpContext.Session.SetString("UserName", sessionUser.FirstName + " " + sessionUser.LastName);
 
                     //bool IsLoggedIn = true;
                     //HttpContext.Session.SetString("IsLoggedIn", IsLoggedIn.ToString());

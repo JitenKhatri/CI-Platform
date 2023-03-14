@@ -13,6 +13,13 @@ builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 ); ;
+builder.Services.AddAuthentication("AuthCookie").AddCookie("AuthCookie", options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromDays(2);
+    options.Cookie.Name = "AuthCookie";
+    options.LoginPath = "/Auth/Login";
+    options.LogoutPath = "/Auth/LogOut";
+});
 builder.Services.AddDbContext<CiPlatformContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IAllRepository, AllRepository>();
 builder.Services.AddSession();
@@ -32,7 +39,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 app.MapControllerRoute(

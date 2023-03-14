@@ -1,6 +1,8 @@
 ﻿@using CI_Platform.Models.ViewModels
+@using System.Security.Claims
 @{
-  Layout = null;
+    Layout = null;
+    var userName = Context.User.Identity.Name;
 }
 @model VolunteeringMissionVM
 <!DOCTYPE html>
@@ -39,7 +41,7 @@
             type="button"
             data-bs-toggle="dropdown" >
             <img src="~/images/user-img.png" class="profileimg" />
-            <span class="mx-2 d-none d-sm-block">Evan Donohue</span>
+            <span class="mx-2 d-none d-sm-block">@userName</span>
             <img
               src="~/images/drop-down.png"
               class="mx-1 drop-down d-none d-sm-block"
@@ -181,50 +183,50 @@
 
             </div>
             <div class="col-lg-6">
-                    @foreach(var item in Model.MissionList)
-                    {
+                   @* @foreach(var item in Model.MissionList)
+                    {*@
                         
                     
-                    <p class="CSR_heading">@item.Title</p>
+                    <p class="CSR_heading">@Model?.Missions?.Title</p>
                 <p class="lorem"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                <div class="duration-seats-info mt-4">
                   <div class="duration">
-                   @if(@item.StartDate !=null && @item.EndDate !=null)
+                   @if(@Model?.Missions?.StartDate !=null && @Model?.Missions?.EndDate !=null)
                         {
                                     <p id="duration-txt" style="margin-bottom: 0;">
                           
-                          From @item.StartDate?.ToString().Substring(0,10)  until @item.EndDate?.ToString().Substring(0,10)
+                          From @Model?.Missions?.StartDate?.ToString().Substring(0,10)  until @Model?.Missions?.EndDate?.ToString().Substring(0,10)
                           </p>
                         }
                         else {
                             <p id="duration-txt" style="margin-bottom: 0;">
-                                @item?.GoalMotto
+                                @Model?.Missions?.GoalMotto
                                 </p>
                         }
                   </div> 
                   <div class="d-flex flex-row mission-deadline">
-                                   @if(@item?.SeatsLeft != null)
+                                   @if(@Model?.Missions?.SeatsLeft != null)
                                         {
                                          <div class="d-flex flex-row">
                         <div><img src="~/images/Seats-left.png" alt=""> </div>
-                        <div><span>@item?.SeatsLeft<br> Seats left</span></div>
+                        <div><span>@Model?.Missions?.SeatsLeft<br> Seats left</span></div>
                       </div> 
                                         }
                          
                       <div class="d-flex flex-row">
-                          @if(@item?.MissionType == "TIME")
+                          @if(@Model?.Missions?.MissionType == "TIME")
                           {
                                         <div><img src="~/images/deadline.png" alt=""></div >
                           }
                        
                         <div class="ms-2 p-bar"> 
                             
-                            @if (@item?.Deadline != null)
+                            @if (@Model?.Missions?.Deadline != null)
                             {
-                                 <span>@item?.Deadline?.ToString().Substring(0,10) <br> Deadline </span>
+                                 <span>@Model?.Missions?.Deadline?.ToString().Substring(0,10) <br> Deadline </span>
                             } else
                             {
-                                   @if (@item?.MissionType =="GO")
+                                   @if (@Model?.Missions?.MissionType =="GO")
                                    {
                                                          <div class="d-flex flex-column">
                                                      <div class="d-flex flex-row"><img class="align-self-center ms-3" src="~/images/mission.png" alt="" style="height:25px; width:25px;">
@@ -235,7 +237,7 @@
                                                         </div>
                                     }else
                                     {
-                                        <span>@item?.GoalMotto</span>
+                                        <span>@Model?.Missions?.GoalMotto</span>
                                      }
                                                     
                             }
@@ -259,14 +261,14 @@
                     <img src="~/images/pin1.png" class="pin-img mt-2 ms-2" />
                    <div class="d-flex flex-column mt-4 ms-2">
                     <p style="margin-bottom: 7px; font-weight: lighter;"> City</p>
-                    <p style="color:#414141"> @item?.City.Name </p>
+                    <p style="color:#414141"> @Model?.Cities.Name </p>
                     </div>
                      </div>
 
                      <div class="d-flex flex-column mission-badge "> <img src="~/images/web.png"  class="web-img mt-2 ms-2"/>
                          <div class="d-flex flex-column mt-4 ms-2">
                     <p style="margin-bottom: 7px; font-weight: lighter;"> Theme</p>
-                    <p style="color:#414141"> @item?.Theme.Title</p>
+                    <p style="color:#414141"> @Model?.theme.Title</p>
                     </div> 
                    </div>
                      <div class="d-flex flex-column mission-badge "> <img src="~/images/calender.png" class="calender-img mt-2 ms-2" />
@@ -278,7 +280,7 @@
                      <div class="d-flex flex-column mission-badge"> <img src="~/images/organization.png" class="organization-img mt-2 ms-2" />
                      <div class="d-flex flex-column mt-4 ms-2">
                     <p style="margin-bottom: 7px; font-weight: lighter;"> Organization</p>
-                    <p style="color:#414141"> @item?.OrganizationName</p>
+                    <p style="color:#414141"> @Model?.Missions?.OrganizationName</p>
                     </div> 
                     </div> 
               
@@ -363,13 +365,35 @@
                       containing
                   </div>
                   <div class="tab-pane fade" id="tab-3" role="tabpanel">
-                         <div class="input-group">
-                            <textarea class="form-control vh-20"aria-label="With textarea" placeholder="Enter your comments.."></textarea>
+                     
+                            <textarea id="comment-text"  type="text-area" rows="5" cols="80" class="form-control vh-20"aria-label="With textarea" placeholder="Enter your comments.."></textarea>
+                            <span  class="text-danger"></span>
+                       
+                        
+                            <button onclick="add_comments(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" class="btn apply-btn"> Post comment</button>
+                        
+                        <div id="comments" >
+                            @foreach(var item in Model?.comments)
+                            {
+                                    <div class="d-flex"> 
+                           <img id="img" class="rounded-circle img-fluid" src="~/images/volunteer1.png" alt="" />
+                        <div>
+                            <p style="font-size: 15px; margin-bottom:0;margin-left: 15px;
+                              margin-top: 15px;"> @item.User.FirstName @item.User.LastName</p> 
+                            <p style="font-size: 15px;margin-left: 15px;">
+                                @item.CreatedAt.ToString().Substring(0,10)</p>
+                        </div>
+     
+                        </div>
+                         <div class="comment-text" style="margin-top:10px;">
+                             @item.CommentText
                          </div>
-                         <button class="btn apply-btn"> Post comment</button>
-
-                  </div>
-              </div>
+                            }
+                        
+                          </div>
+                        
+                      </div>
+                       </div>
               </div>
 
 
@@ -391,8 +415,8 @@
                       <th scope="row">Skills</th>
  
                      <td>
-                         @foreach(var item in Model.MissionSkill){
-                         @item.Skill.SkillName; @if(item != Model.MissionSkill.Last()){
+                         @foreach(var item in Model?.skills){
+                         @item.SkillName; @if(item != Model.skills.Last()){
                           @Html.Raw(",");
                            }
                         @Html.Raw(" ");
@@ -403,10 +427,9 @@
                   <tr>
                     <th scope="row">Days</th>
                     <td>
-                        @foreach(var item in Model.MissionList)
-                        {
-                            @item.Availability
-                        }  </td>
+                       
+                            @Model?.Missions?.Availability
+                        } </td>
                   </tr>
                   <tr style="border:white;">
                     <th scope="row">Rating</th>

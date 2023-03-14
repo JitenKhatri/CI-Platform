@@ -1,7 +1,10 @@
 ﻿@using CI_Platform.Models.ViewModels
+@using Microsoft.AspNetCore.Mvc.RazorPages
 @{
     Layout = null;
-    var UserName = ViewBag.UserName;
+    //var UserName = ViewBag.UserName;
+    var userName = Context.User.Identity.Name;
+    //var viewContext = (Microsoft.AspNetCore.Mvc.Rendering.ViewContext)PageContext;
 }
 @model List<MissionViewModel>
 
@@ -42,7 +45,7 @@
               type="button"
               data-bs-toggle="dropdown" >
               <img src="~/images/user-img.png" class="profileimg" />
-              <span class="mx-2 d-none d-sm-block">@ViewBag.UserName</span>
+              <span class="mx-2 d-none d-sm-block">@userName</span>
               <img
                 src="~/images/drop-down.png"
                 class="mx-1 drop-down d-none d-sm-block"
