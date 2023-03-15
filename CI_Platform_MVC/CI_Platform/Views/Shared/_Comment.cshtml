@@ -1,27 +1,22 @@
 ﻿@using CI_Platform.Models.ViewModels
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 
-<p> comments here </p>
-<div id="comments" >
-    
-   
-         <div class="d-flex"> 
-        <img id="img" class="rounded-circle img-fluid" src="~/images/volunteer1.png" alt="" />
-        <div>
-            <p style="font-size: 15px; margin-bottom:0;margin-left: 15px;
-              margin-top: 15px;">Andrew Jhonson</p> 
-            <p style="font-size: 15px;margin-left: 15px;">
-                Monday, june 15 2019</p>
-        </div>
-     
-    </div>
-     <div class="comment-text" style="margin-top:10px;">
-         lorem ipsum ....
-     </div>
-    
-   
-     
 
-</div>
+@foreach(var item in Model?.comments)
+                            {
+                                <div style="max-height:380px; overflow:auto;" >
+                                    <div class="d-flex"> 
+                           <img id="img" class="rounded-circle img-fluid" src="~/images/volunteer1.png" alt="" />
+                        <div>
+                            <p style="font-size: 15px; margin-bottom:0;margin-left: 15px;
+                              margin-top: 15px;"> @item.User.FirstName @item.User.LastName</p> 
+                            <p style="font-size: 15px;margin-left: 15px;">
+                                @item.CreatedAt.ToString().Substring(0,10)</p>
+                        </div>
+     
+                        </div>
+                         <div class="comment-text" style="margin-top:10px;">
+                             @item.CommentText
+                         </div>
+                                </div>
+                                    
+                            }

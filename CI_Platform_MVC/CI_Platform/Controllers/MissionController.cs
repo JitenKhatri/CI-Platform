@@ -4,6 +4,7 @@ using CI_Platform.Models;
 using CI_Platform.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace CI_Platform.Controllers
 {
@@ -66,17 +67,32 @@ namespace CI_Platform.Controllers
         [Route("volunteering_mission/{id}")]
         public IActionResult volunteering_mission(int id)
         {
-            VolunteeringMissionVM mission = db.MissionRepository.GetMissionById(id);
+            VolunteeringMissionVM mission = db.MissionRepository.GetMissionById(id, long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value));
             return View(mission);
         }
     
 
         [HttpPost]
         [Route("volunteering_mission/{id}")]
-        public IActionResult volunteering_mission(long User_id, long Mission_id, string comment/*, int length*/)
+        public IActionResult volunteering_mission(long User_id, long Mission_id, string comment, string request_for,int rating)
         {
-            IEnumerable<CommentViewModel> comments = db.MissionRepository.comment(User_id, Mission_id, comment/*, length*/);
-            return Json(new { comments, success = true });
+            if (request_for == "add_to_favourite")
+            {
+                bool success = db.MissionRepository.add_to_favourite(User_id, Mission_id);
+                return Json(new { success = success });
+            }
+            else if (request_for == "rating")
+            {
+                bool success = db.MissionRepository.Rate_mission(User_id, Mission_id, rating);
+                return Json(new { success = success });
+            }
+            else
+            {
+                IEnumerable<CommentViewModel> comments = db.MissionRepository.comment(User_id, Mission_id, comment);
+                return PartialView("_Comment", comments);
+            }
+           
+            //return Json(new { comments, success = true });
         }
 
         //public IActionResult Volunteering_mission()

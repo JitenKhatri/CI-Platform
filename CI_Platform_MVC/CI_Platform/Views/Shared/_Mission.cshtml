@@ -1,4 +1,5 @@
 ﻿@using CI_Platform.Models.ViewModels
+@using System.Security.Claims
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -13,7 +14,7 @@
                 <div class="img-event">
                   <img class="card-img-top" src=@mission.image?.MediaPath alt="Card image cap">
                   <div class="middle">
-                                            <a asp-action = "Volunteering_mission" asp-route-id="@mission.Missions?.MissionId" class="btn" id="view-details-button">View Details <span>
+                                            <a asp-action = "Volunteering_mission" asp-route-id="@mission.Missions?.MissionId" asp-route-user_id="@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value" class="btn" id="view-details-button">View Details <span>
                                                 <img src="~/images/right-arrow.png" />
                                             </span></a>
                                 </div>
@@ -104,7 +105,7 @@
                     
                   </div> 
                   <div class="d-flex justify-content-center mt-4">
-                    <a  asp-action = "Volunteering_mission" asp-route-id="@mission.Missions?.MissionId"class="apply-btn" style="text-decoration:none; text-align:center;">
+                    <a  asp-action = "Volunteering_mission" asp-route-id="@mission.Missions?.MissionId" asp-route-user_id="@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value"class="apply-btn" style="text-decoration:none; text-align:center;">
                       Apply <span><img src="~/images/right-arrow.png" alt=""></span>
                     </a>
                   </div>  

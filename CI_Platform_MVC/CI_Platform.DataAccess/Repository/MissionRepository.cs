@@ -137,10 +137,11 @@ namespace CI_Platform.DataAccess.Repository
         {
             return _db.MissionSkills.Where(m => m.MissionId == id).ToList();
         }
-        public IEnumerable<CommentViewModel> comment(long user_id, long mission_id, string comment/*, int length*/)
+        public IEnumerable<CommentViewModel> comment(long user_id, long mission_id, string comment)
         {
-          
-            List<Comment> comments = new List<Comment>();
+
+            List<Comment> comments = _db.Comments.ToList();
+            List<User> users = _db.Users.ToList();
             Comment mycomment = new Comment()
             {
                 UserId = user_id,
@@ -152,12 +153,82 @@ namespace CI_Platform.DataAccess.Repository
             comments = _db.Comments.ToList();
             IEnumerable<CommentViewModel> mission_comments = (from c in comments
                                                               where c.MissionId.Equals(mission_id)
-                                                              select new CommentViewModel { CommentText = c.CommentText, user = c.User })/*.Skip(length)*/;
+                                                              select new CommentViewModel { User_Comment = c, user = c.User });
             return mission_comments;
         }
 
-        public VolunteeringMissionVM GetMissionById(int id)
+        public bool add_to_favourite(long user_id, long mission_id)
         {
+            List<FavoriteMission> favoriteMissions = _db.FavoriteMissions.ToList(); 
+            if (user_id != 0 && mission_id != 0)
+            {
+                var favouritemission = (from fm in favoriteMissions
+                                        where fm.UserId.Equals(user_id) && fm.MissionId.Equals(mission_id)
+                                        select fm).ToList();
+                if (favouritemission.Count == 0)
+                {
+                    _db.FavoriteMissions.Add(new FavoriteMission
+                    {
+                        UserId = user_id,
+                        MissionId = mission_id
+                    });
+                    Save();
+                    return true;
+                }
+                else
+                {
+                    _db.Remove(favouritemission.ElementAt(0));
+                    Save();
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool Rate_mission(long user_id, long mission_id, int rating)
+        {
+            List<MissionRating> ratings = _db.MissionRatings.ToList();
+
+            var Rating = (from r in ratings
+                          where r.UserId.Equals(user_id) && r.MissionId.Equals(mission_id)
+                          select r).ToList();
+            if (Rating.Count == 0)
+            {
+                _db.MissionRatings.Add(new MissionRating
+                {
+                    UserId = user_id,
+                    MissionId = mission_id,
+                    Rating = rating.ToString()
+                });
+                Save();
+                return true;
+            }
+            else
+            {
+                Rating.ElementAt(0).Rating = rating.ToString();
+                Save();
+                return true;
+            }
+
+        }
+        public VolunteeringMissionVM GetMissionById(int id, long user_id)
+        {
+            List<MissionRating> ratings = _db.MissionRatings.ToList();
+            List<FavoriteMission> favoriteMissions = _db.FavoriteMissions.ToList();
+            int rating = 0;
+            var Rating = (from r in ratings
+                          where r.UserId.Equals(user_id) && r.MissionId.Equals(id)
+                          select r).ToList();
+            if (Rating.Count > 0)
+            {
+                rating = int.Parse(Rating.ElementAt(0).Rating);
+            }
+            var favouritemission = (from fm in favoriteMissions
+                                    where fm.UserId.Equals(user_id) && fm.MissionId.Equals(id)
+                                    select fm).ToList();
             List<User> users = _db.Users.ToList();
             Mission mission = _db.Missions.SingleOrDefault(m => m.MissionId == id);
             if (mission == null)
@@ -180,7 +251,9 @@ namespace CI_Platform.DataAccess.Repository
                 skills = skills,
                 Country = country,
                 Cities = city,
-                comments = comments
+                comments = comments,
+                Rating = rating,
+                Favorite_mission = favouritemission.Count
             };
         }
         public void Save()

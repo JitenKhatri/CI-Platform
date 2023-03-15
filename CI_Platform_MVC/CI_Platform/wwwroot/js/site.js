@@ -322,7 +322,7 @@ const addskills = (name) => {
 /*volunteering mission js starts*/
 /*recent volunteers*/
 function add_comments (user_id, mission_id) {
-   /* $('#comments').empty()*/
+    $('#comments').empty()
     var commentText = document.getElementById('comment-text').value
     console.log(commentText)
  /*   var length = $('.user-comments').find('.usercomment-image').length*/
@@ -330,10 +330,10 @@ function add_comments (user_id, mission_id) {
         $.ajax({
             url: `/volunteering_mission/${mission_id}`,
             type: 'POST',
-            data: { user_id: user_id, mission_id: mission_id, comment: commentText/*, length: length*/ },
+            data: { user_id: user_id, mission_id: mission_id, comment: commentText},
             success: function (result) {
-               /* $('#comments').html(result);*/
-                load_comments(result.comments)
+                $('#comments').html(result);
+               /* load_comments(result.comments)*/
             },
             error: function () {
                 console.log("Error updating variable");
@@ -341,23 +341,121 @@ function add_comments (user_id, mission_id) {
         })
     }
 }
-const load_comments = (comments) => {
-    $.each(comments, function (i, item) {
-        var comment =  "<div class='d-flex'>" + 
-        "<img id='img' class='rounded-circle img-fluid' src='/images/volunteer1.png' alt='' />" +
-        "<div>" + 
-            "<p style='font-size: 15px; margin-bottom:0;margin-left:15px;margin-top:15px;'> " + '${item.user.firstName} ${item.user.lastName}' + "</p> " +
-            "<p style='font-size: 15px;margin-left: 15px;'>" +
-            item.createdAt.slice(0, 10) + "</p>" +
-        "</div> " + 
-     
-    "</div>" +
-            "<div class='comment-text' style='margin-top:10px;'>" +
-            item.commentText +
-            "</div>"
-         $('#comments').append(comment);
+
+function add_to_favourite (user_id, mission_id) {
+    $.ajax({
+        url: `/volunteering_mission/${mission_id}`,
+        type: 'POST',
+        data: { request_for: "add_to_favourite", mission_id: mission_id, user_id: user_id },
+        success: function (result) {
+            if (result.success) {
+                $('.heart-image').removeAttr('src').attr('src', '/images/red-heart-png.png')
+                $('.favorite-text').html('Added to favorite')
+                Swal.fire({
+                    title: 'Mission added to favorites!',
+                    icon: 'success'
+                });
+            }
+            else {
+                $('.heart-image').removeAttr('src').attr('src', '/images/heart1.png')
+                $('.favorite-text').html('Add to favorite')
+                Swal.fire({
+                    title: 'Mission removed from favorites!',
+                    icon: 'success'
+                });
+            }
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
     })
 }
+const rating = (rating, user_id, mission_id) => {
+    if (rating == 1) {
+        $('.rating').find('img').each(function (i, item) {
+            if (i == (rating - 1)) {
+                if (item.id == `${i + 1}-star-empty`) {
+                    item.src = '/images/selected-star.png'
+                    item.id = `${i + 1}-star`
+                    $.ajax({
+                        url: `/volunteering_mission/${mission_id}`,
+                        type: 'POST',
+                        data: { request_for: "rating", mission_id: mission_id, user_id: user_id, rating: rating },
+                        success: function (result) {
+                        },
+                        error: function () {
+                            console.log("Error updating variable");
+                        }
+                    })
+                }
+                else {
+                    item.src = '/images/star-empty.png'
+                    item.id = `${i + 1}-star-empty`
+                    $.ajax({
+                        url: `/volunteering_mission/${mission_id}`,
+                        type: 'POST',
+                        data: { request_for: "rating", mission_id: mission_id, user_id: user_id, rating: 0 },
+                        success: function (result) {
+                        },
+                        error: function () {
+                            console.log("Error updating variable");
+                        }
+                    })
+                }
+            }
+            else {
+                item.src = '/images/star-empty.png'
+                item.id = `${i + 1}-star-empty`
+            }
+        })
+    }
+    else {
+        $('.rating').find('img').each(function (i, item) {
+            if (i <= (rating - 1)) {
+                if (item.id == `${i + 1}-star-empty` || i <= (rating - 1)) {
+                    item.src = '/images/selected-star.png'
+                    item.id = `${i + 1}-star`
+                }
+                else {
+                    item.src = '/images/star-empty.png'
+                    item.id = `${i + 1}-star-empty`
+                }
+            }
+            else {
+                item.src = '/images/star-empty.png'
+                item.id = `${i + 1}-star-empty`
+            }
+        })
+        $.ajax({
+            url: `/volunteering_mission/${mission_id}`,
+            type: 'POST',
+            data: { request_for: "rating", mission_id: mission_id, user_id: user_id, rating: rating },
+            success: function (result) {
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+
+}
+//const load_comments = (comments) => {
+//    $.each(comments, function (i, item) {
+//        var comment =  "<div class='d-flex'>" + 
+//        "<img id='img' class='rounded-circle img-fluid' src='/images/volunteer1.png' alt='' />" +
+//        "<div>" + 
+//            "<p style='font-size: 15px; margin-bottom:0;margin-left:15px;margin-top:15px;'> " + '${item.user.firstName} ${item.user.lastName}' + "</p> " +
+//            "<p style='font-size: 15px;margin-left: 15px;'>" +
+//            item.createdAt.slice(0, 10) + "</p>" +
+//        "</div> " + 
+     
+//    "</div>" +
+//            "<div class='comment-text' style='margin-top:10px;'>" +
+//            item.commentText +
+//            "</div>"
+//         $('#comments').append(comment);
+//    })
+//}
 
 function NextPage() {
 

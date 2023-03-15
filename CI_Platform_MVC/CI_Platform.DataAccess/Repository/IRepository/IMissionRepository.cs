@@ -16,7 +16,10 @@ namespace CI_Platform.DataAccess.Repository.IRepository
 
       
         List<MissionSkill> MissionSkillList(int id);
-        VolunteeringMissionVM GetMissionById(int id);
-        IEnumerable<CommentViewModel> comment(long user_id, long mission_id, string comment/*, int length*/);
+        VolunteeringMissionVM GetMissionById(int id, long user_id);
+        IEnumerable<CommentViewModel> comment(long user_id, long mission_id, string comment);
+        bool add_to_favourite(long user_id, long mission_id);
+
+        bool Rate_mission(long user_id, long mission_id, int rating);
     }
 }
