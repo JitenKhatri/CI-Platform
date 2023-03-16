@@ -24,5 +24,12 @@ namespace CI_Platform.Models.ViewModels
         public List<Mission>? MissionList { get; set; }
         public int? Rating { get; set; }
         public List<CommentViewModel>? Comment { get; set; }
+        public decimal? Avg_ratings { get; set; }
+        public int? Rating_count { get; set; }
+        public List<Mission>? relatedMissions { get; set; }
+        public bool Applied_or_not { get; set; }
+        public List<User>? Recent_volunteers { get; set; }
+        public List<User>? All_volunteers { get; set; }
+        public int? Total_volunteers { get; set; }
     }
 }

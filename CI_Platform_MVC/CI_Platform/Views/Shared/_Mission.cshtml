@@ -22,9 +22,10 @@
                     <img class="text-light" src="~/images/pin.png" alt="">
                         <span class="text-light"> @mission.Missions?.City.Name</span>
                     </div>
-                    <button class="like-img border-0">
-                        <img class="text-light" src="~/images/heart.png" alt="">
+                    <button class="like-img border-0" onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@mission?.Missions?.MissionId)">
+                        <i class="bi bi-heart text-danger @mission?.Missions?.MissionId"></i>
                     </button>
+                    
                     <button class="stop-img border-0">
                         <img class="text-light" src="~/images/add1.png" alt="">
                     </button>

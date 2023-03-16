@@ -21,5 +21,8 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         bool add_to_favourite(long user_id, long mission_id);
 
         bool Rate_mission(long user_id, long mission_id, int rating);
+        bool apply_for_mission(long user_id, long mission_id);
+
+        VolunteeringMissionVM Next_Volunteers(int count, long user_id, long mission_id);
     }
 }

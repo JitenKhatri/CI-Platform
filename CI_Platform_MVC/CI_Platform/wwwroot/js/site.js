@@ -439,6 +439,62 @@ const rating = (rating, user_id, mission_id) => {
     }
 
 }
+
+function apply_for_mission (user_id, mission_id)  {
+    $.ajax({
+        url: `/volunteering_mission/${mission_id}`,
+        type: 'POST',
+        data: { user_id: user_id, mission_id: mission_id, request_for: "mission" },
+        success: function (result) {
+            if (result.success) {
+                $('.applyButton').empty().append('<button class="apply-btn btn" disabled>Applied<img src="images/right-arrow.png" alt="">' + '</button >')
+                Swal.fire({
+                    title: 'Congratulations You have applied successfully',
+                    icon: 'success'
+                });
+            }
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+}
+function prev_volunteers (user_id, mission_id)  {
+    var one_page_volunteers = 9
+    if (count > 1) {
+        count--;
+        $.ajax({
+            url: `/volunteering_mission/${mission_id}`,
+            type: 'POST',
+            data: { count: count - 1, request_for: "next_volunteers", user_id: user_id, mission_id: mission_id },
+            success: function (result) {
+                $('.volunteers').empty().append(result.recent_volunteers.result)
+                $('.current_volunteers').html(`${one_page_volunteers * (count - 1) == 0 ? 1 : one_page_volunteers * (count - 1)}-${one_page_volunteers * count} of recent ${result.total_volunteers} volunteers`)
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+}
+function next_volunteers (max_page, user_id, mission_id) {
+    var one_page_volunteers = 9
+    if (count < max_page) {
+        count++;
+        $.ajax({
+            url: `/volunteering_mission/${mission_id}`,
+            type: 'POST',
+            data: { count: count - 1, request_for: "next_volunteers", mission_id: mission_id, user_id: user_id },
+            success: function (result) {
+                $('.volunteers').empty().append(result.recent_volunteers.result)
+                $('.current_volunteers').html(`${one_page_volunteers * (count - 1) + 1}-${one_page_volunteers * count >= result.total_volunteers ? result.total_volunteers : one_page_volunteers * count} of recent ${result.total_volunteers} volunteers`)
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+}
 //const load_comments = (comments) => {
 //    $.each(comments, function (i, item) {
 //        var comment =  "<div class='d-flex'>" + 

@@ -214,22 +214,73 @@ namespace CI_Platform.DataAccess.Repository
             }
 
         }
+        public bool apply_for_mission(long user_id, long mission_id)
+        {
+            List<MissionApplication> missionApplications = _db.MissionApplications.ToList();
+            DateTime current = DateTime.Now;
+            if (user_id != 0 && mission_id != 0)
+            {
+                var missionapplication = (from ma in missionApplications
+                                          where ma.UserId.Equals(user_id) && ma.MissionId.Equals(mission_id)
+                                          select ma).ToList();
+                if (missionapplication.Count == 0)
+                {
+                    _db.MissionApplications.Add(new MissionApplication
+                    {
+                        AppliedAt = current,
+                        UserId = user_id,
+                        MissionId = mission_id
+                    });
+                    Save();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public VolunteeringMissionVM Next_Volunteers(int count, long user_id, long mission_id)
+        {
+            List<MissionApplication> missionApplications = _db.MissionApplications.ToList();
+            Mission? mission = _db.Missions.Find(mission_id);
+            List<User> users = (from ma in missionApplications
+                                where ma.MissionId.Equals(mission?.MissionId) && !ma.UserId.Equals(user_id)
+                                select ma.User).ToList();
+            return new VolunteeringMissionVM { Missions = mission, Recent_volunteers = users.Skip(9 * count).Take(9).ToList(), Total_volunteers = users.Count };
+        }
         public VolunteeringMissionVM GetMissionById(int id, long user_id)
         {
+           
             List<MissionRating> ratings = _db.MissionRatings.ToList();
             List<FavoriteMission> favoriteMissions = _db.FavoriteMissions.ToList();
+            List<Mission> missions = _db.Missions.ToList();
+            List<MissionTheme> themes = _db.MissionThemes.ToList();
+            List<Country> countries = _db.Countries.ToList();
+            List<City> cities = _db.Cities.ToList();
+            List<MissionMedium> images = _db.MissionMedia.ToList();
+            List<User> users = _db.Users.ToList();
+            List<Mission> related_mission = _db.Missions.ToList();
+            List<MissionApplication> missionApplications = _db.MissionApplications.ToList();
+            List<User> all_volunteers = _db.Users.ToList();
+            decimal avg_ratings = 0;
+            int rating_count = 0;
             int rating = 0;
             var Rating = (from r in ratings
                           where r.UserId.Equals(user_id) && r.MissionId.Equals(id)
                           select r).ToList();
+            bool applied_or_not = false;
             if (Rating.Count > 0)
             {
                 rating = int.Parse(Rating.ElementAt(0).Rating);
             }
-            var favouritemission = (from fm in favoriteMissions
-                                    where fm.UserId.Equals(user_id) && fm.MissionId.Equals(id)
-                                    select fm).ToList();
-            List<User> users = _db.Users.ToList();
+           
+
+
             Mission mission = _db.Missions.SingleOrDefault(m => m.MissionId == id);
             if (mission == null)
             {
@@ -243,6 +294,49 @@ namespace CI_Platform.DataAccess.Repository
             Country country = _db.Countries.SingleOrDefault(c => c.CountryId == mission.CountryId);
             City city = _db.Cities.SingleOrDefault(c => c.CityId == mission.CityId);
 
+            if (mission.MissionRatings.Count > 0)
+            {
+                avg_ratings = (from m in mission.MissionRatings
+                               select decimal.Parse(m.Rating)).Average();
+                rating_count = (from m in mission.MissionRatings
+                                select m).ToList().Count;
+            }
+            List<User> volunteers = (from ma in missionApplications
+                                     where ma.MissionId.Equals(mission?.MissionId) && !ma.UserId.Equals(user_id)
+                                     select ma.User).ToList();
+
+
+
+            related_mission = (from m in missions
+                                   where !m.MissionId.Equals(mission.MissionId) && m.City?.Name != null && m.City.Name.Equals(mission.City.Name)
+                                   select m).Take(3).ToList();
+                if (related_mission.Count == 0)
+                {
+                    related_mission = (from m in missions
+                                       where !m.MissionId.Equals(mission.MissionId) && m.Country?.Name !=null && m.Country.Name.Equals(mission.Country.Name) 
+                                       select m).Take(3).ToList();
+                    if (related_mission.Count == 0)
+                    {
+                        related_mission = (from m in missions
+                                           where !m.MissionId.Equals(mission.MissionId) && m.Theme?.Title !=null && m.Theme.Title.Equals(mission.Theme.Title)
+                                           select m).Take(3).ToList();
+                            
+                    }
+                    else
+                    {
+                        related_mission = null;
+                    }
+                }
+            List<MissionApplication> applied = (from ma in missionApplications
+                                                where ma.MissionId.Equals(mission?.MissionId) && ma.UserId.Equals(user_id)
+                                                select ma).ToList();
+            if (applied.Count > 0)
+            {
+                applied_or_not = true;
+            }
+            var favouritemission = (from fm in favoriteMissions
+                                    where fm.UserId.Equals(user_id) && fm.MissionId.Equals(id)
+                                    select fm).ToList();
             return new VolunteeringMissionVM
             {
                 Missions = mission,
@@ -253,7 +347,13 @@ namespace CI_Platform.DataAccess.Repository
                 Cities = city,
                 comments = comments,
                 Rating = rating,
-                Favorite_mission = favouritemission.Count
+                Favorite_mission = favouritemission.Count,
+                Avg_ratings = avg_ratings,
+                Rating_count = rating_count,
+                relatedMissions = related_mission,
+                Applied_or_not = applied_or_not,
+                Recent_volunteers = volunteers.Take(9).ToList(),
+                Total_volunteers = volunteers.Count
             };
         }
         public void Save()

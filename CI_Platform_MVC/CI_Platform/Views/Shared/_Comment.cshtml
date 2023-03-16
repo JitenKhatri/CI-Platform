@@ -1,11 +1,11 @@
 ﻿@using CI_Platform.Models.ViewModels
-
+@model VolunteeringMissionVM
 
 @foreach(var item in Model?.comments)
                             {
                                 <div style="max-height:380px; overflow:auto;" >
                                     <div class="d-flex"> 
-                           <img id="img" class="rounded-circle img-fluid" src="~/images/volunteer1.png" alt="" />
+                           <img id="img" class="rounded-circle img-fluid" src=@item.User.Avatar alt="" />
                         <div>
                             <p style="font-size: 15px; margin-bottom:0;margin-left: 15px;
                               margin-top: 15px;"> @item.User.FirstName @item.User.LastName</p> 

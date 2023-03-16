@@ -2,6 +2,7 @@
 using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
 using CI_Platform.Models.ViewModels;
+using Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
@@ -74,7 +75,7 @@ namespace CI_Platform.Controllers
 
         [HttpPost]
         [Route("volunteering_mission/{id}")]
-        public IActionResult volunteering_mission(long User_id, long Mission_id, string comment, string request_for,int rating)
+        public IActionResult volunteering_mission(long User_id, long Mission_id, string comment, string request_for,int rating,int count)
         {
             if (request_for == "add_to_favourite")
             {
@@ -85,6 +86,17 @@ namespace CI_Platform.Controllers
             {
                 bool success = db.MissionRepository.Rate_mission(User_id, Mission_id, rating);
                 return Json(new { success = success });
+            }
+            else if (request_for == "mission")
+            {
+                bool success = db.MissionRepository.apply_for_mission(User_id, Mission_id);
+                return Json(new { success = success });
+            }
+            else if (request_for == "next_volunteers")
+            {
+              VolunteeringMissionVM mission = db.MissionRepository.Next_Volunteers(count, User_id, Mission_id);
+                var recent_volunteers = this.RenderViewAsync("_recent_volunteers", mission, true);
+                return Json(new { recent_volunteers = recent_volunteers, Total_volunteers = mission.Total_volunteers });
             }
             else
             {
