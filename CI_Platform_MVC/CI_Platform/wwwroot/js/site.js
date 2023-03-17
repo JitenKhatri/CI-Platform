@@ -6,6 +6,8 @@ let country_count = 0
 let city_count = 0;
 let theme_count = 0;
 let skill_count = 0;
+var count = 1
+var co_workers = []
 
 // for grid view list view
 function showList(e) {
@@ -147,19 +149,13 @@ function remove_badges(input) {
     console.log(id)
         if (cities.includes(id)) {
             cities.splice(cities.indexOf(id), 1)
-            
         }
-
         if (countries.includes(id)) {
-            countries.splice(countries.indexOf(id), 1)
-            
+            countries.splice(countries.indexOf(id), 1)  
         }
-
         if (themes.includes(id)) {
-            themes.splice(themes.indexOf(id), 1)
-           
+            themes.splice(themes.indexOf(id), 1)  
         }
-
         if (skills.includes(id)) {
             skills.splice(skills.indexOf(id), 1)
            
@@ -325,21 +321,22 @@ function add_comments (user_id, mission_id) {
     $('#comments').empty()
     var commentText = document.getElementById('comment-text').value
     console.log(commentText)
- /*   var length = $('.user-comments').find('.usercomment-image').length*/
     if (commentText.length > 3) {
         $.ajax({
             url: `/volunteering_mission/${mission_id}`,
             type: 'POST',
             data: { user_id: user_id, mission_id: mission_id, comment: commentText},
             success: function (result) {
-                $('#comments').html(result);
-               /* load_comments(result.comments)*/
+                load_comments(result.comments.result)
             },
             error: function () {
                 console.log("Error updating variable");
             }
         })
     }
+}
+const load_comments = (comments) => {
+    $('#comments').append(comments);
 }
 
 function add_to_favourite (user_id, mission_id) {
@@ -370,74 +367,38 @@ function add_to_favourite (user_id, mission_id) {
         }
     })
 }
+
 const rating = (rating, user_id, mission_id) => {
-    if (rating == 1) {
-        $('.rating').find('img').each(function (i, item) {
-            if (i == (rating - 1)) {
-                if (item.id == `${i + 1}-star-empty`) {
-                    item.src = '/images/selected-star.png'
-                    item.id = `${i + 1}-star`
-                    $.ajax({
-                        url: `/volunteering_mission/${mission_id}`,
-                        type: 'POST',
-                        data: { request_for: "rating", mission_id: mission_id, user_id: user_id, rating: rating },
-                        success: function (result) {
-                        },
-                        error: function () {
-                            console.log("Error updating variable");
-                        }
-                    })
-                }
-                else {
-                    item.src = '/images/star-empty.png'
-                    item.id = `${i + 1}-star-empty`
-                    $.ajax({
-                        url: `/volunteering_mission/${mission_id}`,
-                        type: 'POST',
-                        data: { request_for: "rating", mission_id: mission_id, user_id: user_id, rating: 0 },
-                        success: function (result) {
-                        },
-                        error: function () {
-                            console.log("Error updating variable");
-                        }
-                    })
-                }
-            }
-            else {
-                item.src = '/images/star-empty.png'
-                item.id = `${i + 1}-star-empty`
-            }
-        })
-    }
-    else {
-        $('.rating').find('img').each(function (i, item) {
-            if (i <= (rating - 1)) {
-                if (item.id == `${i + 1}-star-empty` || i <= (rating - 1)) {
-                    item.src = '/images/selected-star.png'
-                    item.id = `${i + 1}-star`
-                }
-                else {
-                    item.src = '/images/star-empty.png'
-                    item.id = `${i + 1}-star-empty`
-                }
-            }
-            else {
-                item.src = '/images/star-empty.png'
-                item.id = `${i + 1}-star-empty`
-            }
-        })
+    const starImages = $('.rating').find('img');
+
+    starImages.each((i, item) => {
+        const isSelectedStar = i < rating;
+        const isEmptyStar = !isSelectedStar && i < starImages.length;
+        const imageSrc = isSelectedStar ? '/images/selected-star.png' : '/images/star-empty.png';
+        const imageId = isSelectedStar ? `${i + 1}-star` : `${i + 1}-star-empty`;
+
+        item.src = imageSrc;
+        item.id = imageId;
+
+        if (isEmptyStar) {
+            $.ajax({
+                url: `/volunteering_mission/${mission_id}`,
+                type: 'POST',
+                data: { request_for: "rating", mission_id, user_id, rating: 0 },
+                success: () => Swal.fire({ title: 'Thank you we will do better', icon: 'success' }),
+                error: () => console.log("Error updating variable")
+            });
+        }
+    });
+
+    if (rating > 0) {
         $.ajax({
             url: `/volunteering_mission/${mission_id}`,
             type: 'POST',
-            data: { request_for: "rating", mission_id: mission_id, user_id: user_id, rating: rating },
-            success: function (result) {
-            },
-            error: function () {
-                console.log("Error updating variable");
-            }
-        })
+            data: { request_for: "rating", mission_id, user_id, rating },
+            error: () => console.log("Error updating variable")
+        });
     }
-
 }
 
 function apply_for_mission (user_id, mission_id)  {
@@ -495,81 +456,39 @@ function next_volunteers (max_page, user_id, mission_id) {
         })
     }
 }
-//const load_comments = (comments) => {
-//    $.each(comments, function (i, item) {
-//        var comment =  "<div class='d-flex'>" + 
-//        "<img id='img' class='rounded-circle img-fluid' src='/images/volunteer1.png' alt='' />" +
-//        "<div>" + 
-//            "<p style='font-size: 15px; margin-bottom:0;margin-left:15px;margin-top:15px;'> " + '${item.user.firstName} ${item.user.lastName}' + "</p> " +
-//            "<p style='font-size: 15px;margin-left: 15px;'>" +
-//            item.createdAt.slice(0, 10) + "</p>" +
-//        "</div> " + 
-     
-//    "</div>" +
-//            "<div class='comment-text' style='margin-top:10px;'>" +
-//            item.commentText +
-//            "</div>"
-//         $('#comments').append(comment);
-//    })
-//}
-
-function NextPage() {
-
-    var page1 = document.getElementById("recent-volunteer-page-1");
-    var page2 = document.getElementById("recent-volunteer-page-2");
-    var page3 = document.getElementById("recent-volunteer-page-3");
-    var footer_txt = document.getElementById("recent-volunteer-footer-txt");
-
-    if (y.style.display == "block") {
-        page1.style.display = "none";
-        page2.style.display = "none";
-        page3.style.display = "block";
-        footer_txt.innerHTML = "19-25  of 25 Recent Volunteer";
-
-
-    }
-
-    else if (z.style.display == "block") {
-        page1.style.display = "block";
-        page2.style.display = "none";
-        page3.style.display = "none";
-        footer_txt.innerHTML = "1-9  of 25 Recent Volunteer";
-
+const add_coworkers = (id) => {
+    id = parseInt(id.slice(9))
+    if (!co_workers.includes(id)) {
+        co_workers.push(id)
     }
     else {
-        page1.style.display = "none";
-        page2.style.display = "block";
-        page3.style.display = "none";
-        footer_txt.innerHTML = "10-18  of 25 Recent Volunteer";
+        co_workers.splice(co_workers.indexOf(id), 1)
+    }
+}
+const recommend = (user_id, mission_id,email,to_user_id) => {
+    if (co_workers.length > 0) {
+        $.ajax({
+            url: `/volunteering_mission/${mission_id}`,
+            type: 'POST',
+            data: { co_workers: co_workers, user_id: user_id, mission_id: mission_id, request_for: "recommend",email: email },
+            success: function (result) {
+                console.log(result)
+               
+                    var recommend = $('#recommend-'+to_user_id)
 
-    }
-};
+                recommend.prop('disabled',true)
 
-function PreviousPage() {
-    var page1 = document.getElementById("recent-volunteer-page-1");
-    var page2 = document.getElementById("recent-volunteer-page-2");
-    var page3 = document.getElementById("recent-volunteer-page-3");
-    var footer_txt = document.getElementById("recent-volunteer-footer-txt");
-
-    if (page2.style.display == "block") {
-        page1.style.display = "block";
-        page2.style.display = "none";
-        page3.style.display = "none";
-        footer_txt.innerHTML = "1 - 9  of recent 25 volunteers"
+                Swal.fire({
+                    title: 'Invitation sent!!',
+                    icon: 'success'
+                });
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
     }
-    else if (page3.style.display == "flex") {
-        page1.style.display = "none";
-        page2.style.display = "block";
-        page3.style.display = "none";
-        footer_txt.innerHTML = "9 - 18  of recent 25 volunteers"
-    }
-    else {
-        page1.style.display = "none";
-        page2.style.display = "none";
-        page3.style.display = "block";
-        page4.innerHTML = "18 - 25  of recent 25 volunteers"
-    }
-};
+}
 
 
 

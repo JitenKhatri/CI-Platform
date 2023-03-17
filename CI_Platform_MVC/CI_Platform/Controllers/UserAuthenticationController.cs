@@ -57,12 +57,6 @@ namespace CI_Platform.Controllers
                     var Principle = new ClaimsPrincipal(identity);
 
                     await HttpContext.SignInAsync("AuthCookie", Principle);
-                    //var sessionUser = db.UserAuthentication.GetFirstOrDefault(a => a.Email == model.Email);
-                    //HttpContext.Session.SetString("UserName", sessionUser.FirstName + " " + sessionUser.LastName);
-
-                    //bool IsLoggedIn = true;
-                    //HttpContext.Session.SetString("IsLoggedIn", IsLoggedIn.ToString());
-                    // User exists
                     return RedirectToAction("Index", "Mission");
                 }
             }
@@ -146,10 +140,6 @@ namespace CI_Platform.Controllers
 
                     var PasswordResetLink = Url.Action("resetpassword", "UserAuthentication", new { Email = user.Email, Token = token }, Request.Scheme);
 
-                    // Save the token and expiration date to the PasswordReset table
-                    //DateTime createdAt = DateTime.Now; // Set the token expiration to 24 hours from now
-                    //PasswordReset passwordReset = new PasswordReset { Email = user.Email, Token = token,CreatedAt = createdAt};
-
                     var ResetPasswordInfo = new PasswordReset
                     {
                         Email = user.Email,
@@ -190,104 +180,6 @@ namespace CI_Platform.Controllers
             }
             return View(user);
         }
-
-        //[Route("resetPassword")]
-        //public IActionResult resetPassword()
-        //{
-        //    return View();
-        //}
-
-        //[Route("resetPassword/{id}")]
-        //public IActionResult resetPassword()
-        //{
-        //    return View();
-        //}
-        //[HttpGet]
-        //[Route("resetPassword")]
-        //public IActionResult ResetPassword(string token)
-        //{
-        //    // Retrieve the PasswordReset record for the given token
-        //    PasswordReset passwordReset = db.PasswordResetRepository.GetFirstOrDefault(pr => pr.Token == token);
-
-        //    if (passwordReset == null)
-        //    {
-        //        // Invalid token
-        //        return BadRequest("Invalid token");
-        //    }
-        //    else
-        //    {
-        //        // Valid token, display the reset password form
-        //        return View();
-        //    }
-        //}
-
-        //[HttpPost]
-        //[Route("resetPassword/{id}")]
-        //public IActionResult resetPassword(ResetPasswordViewModel pass, long id)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        User myuser = db.UserAuthentication.ResetPassword(pass.Password, id);
-        //        if (TempData["email"] != null)
-        //        {
-        //            if (myuser == null)
-        //            {
-        //                ViewData["ResetPassword"] = "false";
-        //                return View();
-        //            }
-        //            else if (TempData["email"].Equals(myuser.Email))
-        //            {
-        //                db.save();
-        //                ViewData["ResetPassword"] = "true";
-        //                return RedirectToAction("Login");
-        //            }
-        //            else
-        //            {
-        //                ViewData["ResetPassword"] = "false";
-        //                return View();
-        //            }
-        //        }
-        //        else
-        //        {
-        //            ViewData["ResetPassword"] = "false";
-        //            return View();
-        //        }
-        //    }
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //[Route("resetPassword")]
-        //public IActionResult resetPassword(ResetPasswordViewModel pass, long id, string token)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // Verify the token and email from the database
-        //        PasswordReset passwordReset = db.PasswordResetRepository.GetFirstOrDefault(pr => pr.Token == token);
-        //        if (passwordReset == null || !passwordReset.Email.Equals(pass.Email.ToLower()))
-        //        {
-        //            ViewData["ResetPassword"] = "false";
-        //            return View();
-        //        }
-
-        //        // Reset the password for the user
-        //        User myuser = db.UserAuthentication.ResetPassword(pass.Password, id);
-        //        if (myuser == null)
-        //        {
-        //            ViewData["ResetPassword"] = "false";
-        //            return View();
-        //        }
-
-        //        // Delete the password reset token from the database
-        //        db.PasswordResetRepository.Remove(passwordReset);
-        //        db.save();
-
-        //        ViewData["ResetPassword"] = "true";
-        //        return RedirectToAction("login");
-        //    }
-
-        //    return View();
-        //}
 
         [Route("resetPassword", Name = "UserResetPassword")]
         public IActionResult resetPassword(string email, string token)

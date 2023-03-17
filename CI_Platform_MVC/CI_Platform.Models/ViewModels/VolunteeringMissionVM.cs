@@ -31,5 +31,6 @@ namespace CI_Platform.Models.ViewModels
         public List<User>? Recent_volunteers { get; set; }
         public List<User>? All_volunteers { get; set; }
         public int? Total_volunteers { get; set; }
+        public List<MissionDocument>? documents { get; set; }
     }
 }

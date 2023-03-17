@@ -253,6 +253,20 @@ namespace CI_Platform.DataAccess.Repository
                                 select ma.User).ToList();
             return new VolunteeringMissionVM { Missions = mission, Recent_volunteers = users.Skip(9 * count).Take(9).ToList(), Total_volunteers = users.Count };
         }
+        public bool Recommend(long user_id, long mission_id, List<long> co_workers)
+        {
+            foreach (var user in co_workers)
+            {
+                _db.MissionInvites.Add(new MissionInvite
+                {
+                    FromUserId = user_id,
+                    ToUserId = user,
+                    MissionId = mission_id
+                });
+            }
+            Save();
+            return true;
+        }
         public VolunteeringMissionVM GetMissionById(int id, long user_id)
         {
            
@@ -263,10 +277,14 @@ namespace CI_Platform.DataAccess.Repository
             List<Country> countries = _db.Countries.ToList();
             List<City> cities = _db.Cities.ToList();
             List<MissionMedium> images = _db.MissionMedia.ToList();
+            List<MissionDocument> documents = _db.MissionDocuments.ToList();
             List<User> users = _db.Users.ToList();
             List<Mission> related_mission = _db.Missions.ToList();
             List<MissionApplication> missionApplications = _db.MissionApplications.ToList();
             List<User> all_volunteers = _db.Users.ToList();
+            List<User> already_recommended = new List<User>();
+            List<MissionInvite> already_recommended_users = new List<MissionInvite>();
+
             decimal avg_ratings = 0;
             int rating_count = 0;
             int rating = 0;
@@ -291,6 +309,7 @@ namespace CI_Platform.DataAccess.Repository
             MissionTheme theme = _db.MissionThemes.SingleOrDefault(t => t.MissionThemeId == id);
             List<Skill> skills = _db.MissionSkills.Where(s => s.MissionSkillId == id).Select(s => s.Skill).ToList();
             List<Comment> comments = _db.Comments.Where(s => s.MissionId == id).ToList();
+            List<MissionDocument> missiondocuments = _db.MissionDocuments.Where(ms => ms.MissionId == id).ToList();
             Country country = _db.Countries.SingleOrDefault(c => c.CountryId == mission.CountryId);
             City city = _db.Cities.SingleOrDefault(c => c.CityId == mission.CityId);
 
@@ -337,6 +356,25 @@ namespace CI_Platform.DataAccess.Repository
             var favouritemission = (from fm in favoriteMissions
                                     where fm.UserId.Equals(user_id) && fm.MissionId.Equals(id)
                                     select fm).ToList();
+
+            //if (already_recommended_users.Count > 0)
+            //{
+            //    foreach (var item in already_recommended_users)
+            //    {
+            //        already_recommended.Add(item.ToUser);
+
+            //    }
+            //}
+            if (volunteers.Count > 0)
+            {
+                foreach (var item in volunteers)
+                {
+                    if (!already_recommended.Contains(item))
+                    {
+                        all_volunteers.Add(item);
+                    }
+                }
+            }
             return new VolunteeringMissionVM
             {
                 Missions = mission,
@@ -353,7 +391,9 @@ namespace CI_Platform.DataAccess.Repository
                 relatedMissions = related_mission,
                 Applied_or_not = applied_or_not,
                 Recent_volunteers = volunteers.Take(9).ToList(),
-                Total_volunteers = volunteers.Count
+                Total_volunteers = volunteers.Count,
+                documents = missiondocuments,
+                All_volunteers = all_volunteers
             };
         }
         public void Save()
