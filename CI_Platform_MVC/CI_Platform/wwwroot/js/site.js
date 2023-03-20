@@ -137,6 +137,8 @@ function clear_all() {
         data: { countries: countries, cities: cities, themes: themes, skills: skills},
         success: function (result) {
             $('.missions').html(result);
+            $('.page-not-found').css('display', 'none');
+            $('.pagination-link').css('display', 'block');
         },
         error: function () {
             console.log("Error updating variable");
@@ -166,6 +168,14 @@ function remove_badges(input) {
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills},
         success: function (result) {
+            if (result == "") {
+                $('.page-not-found').css('display', 'block');
+                $('.pagination-link').css('display', 'none');
+            }
+            else {
+                $('.page-not-found').css('display', 'none');
+                $('.pagination-link').css('display', 'block');
+            }
             $('.missions').html(result);
         },
         error: function () {
@@ -190,7 +200,11 @@ function addcities(name) {
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills },
         success: function (result) {
+            if (result == "") {
+                $('.page-not-found').css('display', 'block');
+            }
             $('.missions').html(result);
+            $('.pagination-link').css('display', 'none');
         },
         error: function () {
             console.log("Error updating variable");
@@ -232,7 +246,11 @@ function addcountries(name,dataid) {
                 type: 'POST',
                 data: { countries: countries, cities: cities, themes: themes, skills: skills},
                 success: function (result) {
+                    if (result == "") {
+                        $('.page-not-found').css('display', 'block'); 
+                    }
                     $('.missions').html(result);
+                    $('.pagination-link').css('display', 'none');
                 },
                 error: function () {
                     console.log("Error updating variable");
@@ -281,7 +299,11 @@ const addthemes = (name) => {
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills },
         success: function (result) {
+            if (result == "") {
+                $('.page-not-found').css('display', 'block');
+            }
             $('.missions').html(result);
+            $('.pagination-link').css('display', 'none');
         },
         error: function () {
             console.log("Error updating variable");
@@ -306,7 +328,11 @@ const addskills = (name) => {
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills},
         success: function (result) {
+            if (result == "") {
+                $('.page-not-found').css('display', 'block');
+            }
             $('.missions').html(result);
+            $('.pagination-link').css('display', 'none');
         },
         error: function () {
             console.log("Error updating variable");
@@ -339,14 +365,16 @@ const load_comments = (comments) => {
     $('#comments').append(comments);
 }
 
-function add_to_favourite (user_id, mission_id) {
+function add_to_favourite(user_id, mission_id) {
+    var icon = $("img." + mission_id);
     $.ajax({
         url: `/volunteering_mission/${mission_id}`,
         type: 'POST',
         data: { request_for: "add_to_favourite", mission_id: mission_id, user_id: user_id },
         success: function (result) {
             if (result.success) {
-                $('.heart-image').removeAttr('src').attr('src', '/images/red-heart-png.png')
+            /*    $('.heart-image').removeAttr('src').attr('src', '/images/red-heart-png.png')*/
+               icon.removeAttr('src').attr('src', '/images/red-heart-png.png')
                 $('.favorite-text').html('Added to favorite')
                 Swal.fire({
                     title: 'Mission added to favorites!',
@@ -354,7 +382,8 @@ function add_to_favourite (user_id, mission_id) {
                 });
             }
             else {
-                $('.heart-image').removeAttr('src').attr('src', '/images/heart1.png')
+               /* $('.heart-image').removeAttr('src').attr('src', '/images/heart1.png')*/
+                icon.removeAttr('src').attr('src', '/images/heart1.png')
                 $('.favorite-text').html('Add to favorite')
                 Swal.fire({
                     title: 'Mission removed from favorites!',

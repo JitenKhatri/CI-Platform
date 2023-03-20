@@ -17,49 +17,59 @@ namespace CI_Platform.DataAccess.Repository
         {
             _db = db;
         }
-
-        
-        public List<MissionViewModel> GetAllMission()
+  
+        public List<MissionViewModel> GetAllMission(int page = 1, int pageSize = 6)
         {
-            List<Mission> mission = _db.Missions.ToList();
+            int skipCount = (page - 1) * pageSize;
+            List<Mission> mission = _db.Missions.Skip(skipCount)
+                                          .Take(pageSize).ToList();
            
             List<MissionMedium> image = _db.MissionMedia.ToList();
             List<MissionTheme> theme = _db.MissionThemes.ToList();
             List<Country> countries = _db.Countries.ToList();
             List<City> city = _db.Cities.ToList();
             List<Skill> skills = _db.Skills.ToList();
+            List<FavoriteMission> favoriteMissions = _db.FavoriteMissions.ToList();
+            List<MissionRating> missionRatings = _db.MissionRatings.ToList();
             var Missions = (from m in mission
                             join i in image on m.MissionId equals i.MissionId into data
                             from i in data.DefaultIfEmpty().Take(1)
-                            select new MissionViewModel { image = i, Missions = m, Country = countries, themes = theme, skills = skills }).ToList();
+                            select new MissionViewModel { image = i, Missions = m, Country = countries, themes = theme, skills = skills,favoriteMissions=favoriteMissions,missionRatings=missionRatings }).ToList();
             return Missions;
         }
 
-        public List<MissionViewModel> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills , string? sortOrder)
+        public List<MissionViewModel> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills , string? sortOrder, int page=1 , int pageSize = 6)
             
         {
+            int skipCount = (page - 1) * pageSize;
             List<Mission> missions = _db.Missions.ToList();
             switch (sortOrder)
             {
                 case null:
                 case "Oldest":
                     sortOrder = "Oldest";
-                    missions = _db.Missions.OrderBy(m => m.CreatedAt).ToList();
+                    missions = _db.Missions.OrderBy(m => m.CreatedAt).Skip(skipCount)
+                                          .Take(pageSize).ToList();
                     break;
                 case "Newest":
-                    missions = _db.Missions.OrderByDescending(m => m.CreatedAt).ToList();
+                    missions = _db.Missions.OrderByDescending(m => m.CreatedAt).Skip(skipCount)
+                                          .Take(pageSize).ToList();
                     break;
                 case "Seats_ascending":
-                    missions = _db.Missions.OrderBy(m => m.SeatsLeft).ToList();
+                    missions = _db.Missions.OrderBy(m => m.SeatsLeft).Skip(skipCount)
+                                          .Take(pageSize).ToList();
                     break;
                 case "Seats_descending":
-                    missions = _db.Missions.OrderByDescending(m => m.SeatsLeft).ToList();
+                    missions = _db.Missions.OrderByDescending(m => m.SeatsLeft).Skip(skipCount)
+                                          .Take(pageSize).ToList();
                     break;
                 case "deadline":
-                    missions = _db.Missions.OrderBy(m => m.Deadline).ToList();
+                    missions = _db.Missions.OrderBy(m => m.Deadline).Skip(skipCount)
+                                          .Take(pageSize).ToList();
                     break;
                 default:
-                    missions = _db.Missions.OrderBy(m => m.CreatedAt).ToList();
+                    missions = _db.Missions.OrderBy(m => m.CreatedAt).Skip(skipCount)
+                                          .Take(pageSize).ToList();
                     break;
             }
             List<MissionMedium> image = _db.MissionMedia.ToList();
@@ -306,8 +316,8 @@ namespace CI_Platform.DataAccess.Repository
             }
 
             MissionMedium image = _db.MissionMedia.SingleOrDefault(i => i.MissionId == id);
-            MissionTheme theme = _db.MissionThemes.SingleOrDefault(t => t.MissionThemeId == id);
-            List<Skill> skills = _db.MissionSkills.Where(s => s.MissionSkillId == id).Select(s => s.Skill).ToList();
+            MissionTheme theme = _db.MissionThemes.SingleOrDefault(t => t.MissionThemeId == mission.ThemeId);
+            List<Skill> skills = _db.MissionSkills.Where(s => s.MissionId == id).Select(s => s.Skill).ToList();
             List<Comment> comments = _db.Comments.Where(s => s.MissionId == id).ToList();
             List<MissionDocument> missiondocuments = _db.MissionDocuments.Where(ms => ms.MissionId == id).ToList();
             Country country = _db.Countries.SingleOrDefault(c => c.CountryId == mission.CountryId);

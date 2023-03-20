@@ -71,6 +71,14 @@ namespace CI_Platform.Controllers
         }
 
 
+        [Route("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync("AuthCookie");
+
+            // Redirect to the home page or login page
+            return RedirectToAction("login", "UserAuthentication");
+        }
 
         [HttpPost]
         [Route("registration")]

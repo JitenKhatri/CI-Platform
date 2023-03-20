@@ -9,6 +9,12 @@
  @model List<MissionViewModel>
   @foreach(var mission in Model)
           {
+              double avgRating = 0;
+
+                    @if (mission.missionRatings.Any())
+                    {
+                         avgRating = mission.missionRatings.Average(r => Double.Parse(r.Rating));
+                    } 
                     <div class="col-12 col-md-6 col-lg-4 mission-card">              
               <div class="card">
                 <div class="img-event">
@@ -23,27 +29,44 @@
                         <span class="text-light"> @mission.Missions?.City.Name</span>
                     </div>
                     <button class="like-img border-0" onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@mission?.Missions?.MissionId)">
-                        <i class="bi bi-heart text-danger @mission?.Missions?.MissionId"></i>
+                       @if(mission.favoriteMissions.Any(fm => fm.UserId == long.Parse(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value)&& fm.MissionId == @mission?.Missions?.MissionId))
+                    {
+                        <img class="heart-image @mission?.Missions?.MissionId" src="~/images/red-heart-png.png" alt=""/>
+                    }
+                    else
+                    {
+                        <img class="heart-image @mission?.Missions?.MissionId" src="~/images/heart1.png" alt=""/>
+                    }
+                    @* <i class="bi bi-heart text-danger @mission?.Missions?.MissionId"></i>*@
                     </button>
                     
                     <button class="stop-img border-0">
                         <img class="text-light" src="~/images/add1.png" alt="">
                     </button>
                     <button class="mission-theme border-0">
-                    <span class="p-2">@mission.Missions?.Theme.Title</span>
+                    <span class="p-2">@mission?.Missions?.Theme.Title</span>
                     </button>
                 </div>
                 <div class="card-body">
-                  <h5 class="card-title">@mission.Missions?.Title</h5>
+                  <h5 class="card-title">@mission?.Missions?.Title</h5>
                   <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
                   <div class="d-flex justify-content-between">
-                    <div><p class="slug">@mission.Missions?.OrganizationName</p></div>
+                    <div><p class="slug">@mission?.Missions?.OrganizationName</p></div>
                     <div class="d-flex flex-row">
-                      <img class="star" src="~/images/selected-star.png" alt="">
+                        @for(var i = 1; i <= @avgRating; i++)
+                                {
+                                    <img class="star" src="~/images/selected-star.png" alt="">
+
+                                }
+                                @for(var i = 5; i > @avgRating; i--)
+                             {
+                                   <img  class="star" src="~/images/star-empty.png" alt="">
+                             }
+                     @* <img class="star" src="~/images/selected-star.png" alt="">
                       <img  class="star" src="~/images/selected-star.png" alt="">
                       <img  class="star" src="~/images/selected-star.png" alt="">
                       <img  class="star" src="~/images/star-empty.png" alt="">
-                      <img  class="star" src="~/images/star-empty.png" alt="">
+                      <img  class="star" src="~/images/star-empty.png" alt="">*@
                     </div>
                   </div>
                   <div class="duration-seats-info mt-4">

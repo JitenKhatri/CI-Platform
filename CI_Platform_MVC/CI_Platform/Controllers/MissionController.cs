@@ -21,16 +21,8 @@ namespace CI_Platform.Controllers
         }
 
      
-        public IActionResult Index()
+        public IActionResult Index(int page = 1, int pageSize = 6)
         {
-            if (HttpContext.Session.GetString("UserName") != null)
-            {
-                ViewBag.UserName = HttpContext.Session.GetString("UserName");
-            }
-            else
-            {
-                ViewBag.UserName = "Evan Donohue";
-            }
             List<City> cities = new List<City>();
             List<Skill> skills = new List<Skill>();
             List<Country> countries = new List<Country>();
@@ -47,16 +39,23 @@ namespace CI_Platform.Controllers
             ViewBag.CountryList = new SelectList(countries, "CountryId", "Name");
             ViewBag.ThemeList = new SelectList(themes, "MissionThemeId", "Title");
             ViewBag.SkillList = new  SelectList(skills, "SkillId", "SkillName");
-            
 
-            List<MissionViewModel> missions = db.MissionRepository.GetAllMission();
-            return View(missions);
+
+            if (User.Identity.IsAuthenticated)
+            {
+                List<MissionViewModel> missions = db.MissionRepository.GetAllMission(page,pageSize);
+                return View(missions);
+            }
+            else
+            {
+                return RedirectToAction("login", "UserAuthentication");
+            }
         }
 
         [HttpPost]
-        public IActionResult Index(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string? sortOrder)
+        public IActionResult Index(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string? sortOrder, int page=1,int pageSize=6)
         {
-            List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries, cities, themes, skills, sortOrder);
+            List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries, cities, themes, skills, sortOrder,page, pageSize);
             return PartialView("_Mission", missions);
         }
 
@@ -145,12 +144,9 @@ namespace CI_Platform.Controllers
                 return Json(new { comments = new_comment, success = true });
             }
            
-            //return Json(new { comments, success = true });
+            
         }
 
-        //public IActionResult Volunteering_mission()
-        //{
-        //    return View();
-        //}
+        
     }
 }

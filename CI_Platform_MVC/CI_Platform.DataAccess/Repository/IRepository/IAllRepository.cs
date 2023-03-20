@@ -14,5 +14,6 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         public IPasswordResetRepository PasswordResetRepository { get; }
 
         public IMissionRepository MissionRepository { get; }
+        public IStoryRepository StoryRepository { get; }
     }
 }

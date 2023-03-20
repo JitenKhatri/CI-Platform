@@ -39,8 +39,13 @@ body {
 
 .dropdown {
     border-left: 1px solid lightgray;
+    
 }
-
+.dropdown-menu {
+    max-height: 200px;
+    overflow: scroll;
+    padding-left: 8px;
+}
 .dropdown {
     display: flex;
     margin-left: 10px;

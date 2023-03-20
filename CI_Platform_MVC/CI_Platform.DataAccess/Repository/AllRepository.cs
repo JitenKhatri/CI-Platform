@@ -17,12 +17,14 @@ namespace CI_Platform.DataAccess.Repository
             UserAuthentication = new UserAuthentication(_db);
             MissionRepository = new MissionRepository(_db);
             PasswordResetRepository = new PasswordResetRepository(_db);
+            StoryRepository = new StoryRepository(_db);
         }
         public IUserAuthentication UserAuthentication { get; private set; }
 
         public IMissionRepository MissionRepository { get; private set; }
 
         public IPasswordResetRepository PasswordResetRepository { get; private set; }
+        public IStoryRepository StoryRepository { get; private set; }
 
         public void save()
         {

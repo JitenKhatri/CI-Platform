@@ -13,7 +13,7 @@
 
             <div class=" text-muted row p-3" style="row-gap: 20px; ">
                 @{
-                            int page_count=(int)Math.Ceiling((double)@Model?.Total_volunteers/9);
+                            int page_count=(int)Math.Ceiling((double)@Model?.Total_volunteers);
                            @foreach (var item in @Model?.Recent_volunteers)
                            {
                                <div
