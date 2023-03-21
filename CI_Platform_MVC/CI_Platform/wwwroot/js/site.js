@@ -6,7 +6,7 @@ let country_count = 0
 let city_count = 0;
 let theme_count = 0;
 let skill_count = 0;
-var count = 1
+var count = 1;
 var co_workers = []
 
 // for grid view list view
@@ -183,6 +183,7 @@ function remove_badges(input) {
         }
     })
 }
+
 function addcities(name) {
     $('.missions').empty()
     if (document.getElementById(name).checked) {
@@ -354,6 +355,7 @@ function add_comments (user_id, mission_id) {
             data: { user_id: user_id, mission_id: mission_id, comment: commentText},
             success: function (result) {
                 load_comments(result.comments.result)
+                $("#comment-text").val("");
             },
             error: function () {
                 console.log("Error updating variable");
@@ -398,38 +400,74 @@ function add_to_favourite(user_id, mission_id) {
 }
 
 const rating = (rating, user_id, mission_id) => {
-    const starImages = $('.rating').find('img');
-
-    starImages.each((i, item) => {
-        const isSelectedStar = i < rating;
-        const isEmptyStar = !isSelectedStar && i < starImages.length;
-        const imageSrc = isSelectedStar ? '/images/selected-star.png' : '/images/star-empty.png';
-        const imageId = isSelectedStar ? `${i + 1}-star` : `${i + 1}-star-empty`;
-
-        item.src = imageSrc;
-        item.id = imageId;
-
-        if (isEmptyStar) {
-            $.ajax({
-                url: `/volunteering_mission/${mission_id}`,
-                type: 'POST',
-                data: { request_for: "rating", mission_id, user_id, rating: 0 },
-                success: () => Swal.fire({ title: 'Thank you we will do better', icon: 'success' }),
-                error: () => console.log("Error updating variable")
-            });
-        }
-    });
-
-    if (rating > 0) {
+    if (rating == 1) {
+        $('.rating').find('img').each(function (i, item) {
+            if (i == (rating - 1)) {
+                if (item.id == `${i + 1}-star-empty`) {
+                    item.src = '/images/selected-star.png'
+                    item.id = `${i + 1}-star`
+                    $.ajax({
+                        url: `/volunteering_mission/${mission_id}`,
+                        type: 'POST',
+                        data: { request_for: "rating", mission_id: mission_id, user_id: user_id, rating: rating },
+                        success: function (result) {
+                        },
+                        error: function () {
+                            console.log("Error updating variable");
+                        }
+                    })
+                }
+                else {
+                    item.src = '/images/star-empty.png'
+                    item.id = `${i + 1}-star-empty`
+                    $.ajax({
+                        url: `/volunteering_mission/${mission_id}`,
+                        type: 'POST',
+                        data: { request_for: "rating", mission_id: mission_id, user_id: user_id, rating: 0 },
+                        success: function (result) {
+                        },
+                        error: function () {
+                            console.log("Error updating variable");
+                        }
+                    })
+                }
+            }
+            else {
+                item.src = '/images/star-empty.png'
+                item.id = `${i + 1}-star-empty`
+            }
+        })
+    }
+    else {
+        $('.rating').find('img').each(function (i, item) {
+            if (i <= (rating - 1)) {
+                if (item.id == `${i + 1}-star-empty` || i <= (rating - 1)) {
+                    item.src = '/images/selected-star.png'
+                    item.id = `${i + 1}-star`
+                }
+                else {
+                    item.src = '/images/star-empty.png'
+                    item.id = `${i + 1}-star-empty`
+                }
+            }
+            else {
+                item.src = '/images/star-empty.png'
+                item.id = `${i + 1}-star-empty`
+            }
+        })
         $.ajax({
             url: `/volunteering_mission/${mission_id}`,
             type: 'POST',
-            data: { request_for: "rating", mission_id, user_id, rating },
-            error: () => console.log("Error updating variable")
-        });
+            data: { request_for: "rating", mission_id: mission_id, user_id: user_id, rating: rating },
+            success: function (result) {
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
     }
-}
 
+}
 function apply_for_mission (user_id, mission_id)  {
     $.ajax({
         url: `/volunteering_mission/${mission_id}`,
@@ -450,8 +488,8 @@ function apply_for_mission (user_id, mission_id)  {
     })
 }
 function prev_volunteers (user_id, mission_id)  {
-    var one_page_volunteers = 9
-    if (count > 1) {
+    var one_page_volunteers = 1
+    if (count >1) {
         count--;
         $.ajax({
             url: `/volunteering_mission/${mission_id}`,
@@ -468,7 +506,7 @@ function prev_volunteers (user_id, mission_id)  {
     }
 }
 function next_volunteers (max_page, user_id, mission_id) {
-    var one_page_volunteers = 9
+    var one_page_volunteers = 1
     if (count < max_page) {
         count++;
         $.ajax({

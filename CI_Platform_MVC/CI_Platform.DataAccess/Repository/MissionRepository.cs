@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,8 +40,7 @@ namespace CI_Platform.DataAccess.Repository
         }
 
         public List<MissionViewModel> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills , string? sortOrder, int page=1 , int pageSize = 6)
-            
-        {
+            {
             int skipCount = (page - 1) * pageSize;
             List<Mission> missions = _db.Missions.ToList();
             switch (sortOrder)
@@ -257,11 +257,12 @@ namespace CI_Platform.DataAccess.Repository
         public VolunteeringMissionVM Next_Volunteers(int count, long user_id, long mission_id)
         {
             List<MissionApplication> missionApplications = _db.MissionApplications.ToList();
+            List<User> Users = _db.Users.ToList();
             Mission? mission = _db.Missions.Find(mission_id);
             List<User> users = (from ma in missionApplications
                                 where ma.MissionId.Equals(mission?.MissionId) && !ma.UserId.Equals(user_id)
                                 select ma.User).ToList();
-            return new VolunteeringMissionVM { Missions = mission, Recent_volunteers = users.Skip(9 * count).Take(9).ToList(), Total_volunteers = users.Count };
+            return new VolunteeringMissionVM { Missions = mission, Recent_volunteers = users.Skip(1 * count).Take(1).ToList(), Total_volunteers = users.Count };
         }
         public bool Recommend(long user_id, long mission_id, List<long> co_workers)
         {
@@ -279,8 +280,7 @@ namespace CI_Platform.DataAccess.Repository
         }
         public VolunteeringMissionVM GetMissionById(int id, long user_id)
         {
-           
-            List<MissionRating> ratings = _db.MissionRatings.ToList();
+            List <MissionRating> ratings = _db.MissionRatings.ToList();
             List<FavoriteMission> favoriteMissions = _db.FavoriteMissions.ToList();
             List<Mission> missions = _db.Missions.ToList();
             List<MissionTheme> themes = _db.MissionThemes.ToList();
@@ -400,7 +400,7 @@ namespace CI_Platform.DataAccess.Repository
                 Rating_count = rating_count,
                 relatedMissions = related_mission,
                 Applied_or_not = applied_or_not,
-                Recent_volunteers = volunteers.Take(9).ToList(),
+                Recent_volunteers = volunteers.Take(1).ToList(),
                 Total_volunteers = volunteers.Count,
                 documents = missiondocuments,
                 All_volunteers = all_volunteers

@@ -1,4 +1,5 @@
 ﻿@using CI_Platform.Models.ViewModels
+@using System.Security.Claims
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -14,7 +15,7 @@
             <div class=" text-muted row p-3" style="row-gap: 20px; ">
                 @{
                             int page_count=(int)Math.Ceiling((double)@Model?.Total_volunteers);
-                           @foreach (var item in @Model?.Recent_volunteers)
+                           @foreach (var item in @Model.Recent_volunteers)
                            {
                                <div
                 class="col-4 d-flex flex-column align-items-center justify-content-center">
@@ -25,17 +26,17 @@
             </div>
           </div>
           @{
-          @if(@Model?.Total_volunteers>9){
+          @if(@Model?.Total_volunteers>1){
           <div class="d-flex border-top">
             <div class="border-end d-flex justify-content-center align-items-center"
               style="width:10%; cursor:pointer">
-              <button onclick="onclick="prev_volunteers(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model.Missions.MissionId)"" ><img class="h-70" src="~/images/left.png" alt="" /></button>
+              <button onclick="prev_volunteers(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model.Missions.MissionId)"><img class="h-70" src="~/images/left.png" alt="" /></button>
             </div>
             <div id="recent-volunteer-footer-txt" class="d-flex justify-content-center align-items-center"
-              style="width:80%;"><span class="text-muted">1-9 of recent @Model.Total_volunteers volunteers</span></div>
+              style="width:80%;"><span class="text-muted">1 of recent @Model.Total_volunteers volunteers</span></div>
             <div class="border-start d-flex justify-content-center align-items-center"
               style="width:10%;cursor:pointer">
-              <button onclick="onclick="next_volunteers(@page_count,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model.Missions.MissionId)""><img class="h-70" src="~/images/right-arrow1.png" alt="" /></button>
+              <button onclick="next_volunteers(@page_count,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model.Missions.MissionId)"><img class="h-70" src="~/images/right-arrow1.png" alt="" /></button>
             </div>
           </div>
           }}

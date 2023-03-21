@@ -12,5 +12,12 @@ namespace CI_Platform.Models.ViewModels
 
         public StoryMedium image { get; set; }
 
+        public List<City> Cities { get; set; }
+        public List<Country> Countries { get; set; }
+
+        public string? Story_city { get; set; }
+      
+        public string? Story_theme { get; set; }
+
     }
 }

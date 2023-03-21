@@ -59,19 +59,26 @@ namespace CI_Platform.Controllers
             return PartialView("_Mission", missions);
         }
 
-        
+
         [HttpPost]
         public JsonResult GetCitiesForCountry(long countryid)
         {
             List<City> cities = db.MissionRepository.GetCitiesForCountry(countryid);
             return Json(new { cities, success = true });
         }
-
         [Route("volunteering_mission/{id}")]
         public IActionResult volunteering_mission(int id)
         {
-            VolunteeringMissionVM mission = db.MissionRepository.GetMissionById(id, long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value));
-            return View(mission);
+            if (User.Identity.IsAuthenticated)
+            {
+                VolunteeringMissionVM mission = db.MissionRepository.GetMissionById(id, long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value));
+                return View(mission);
+            }
+            else
+            {
+                return RedirectToAction("login", "UserAuthentication");
+            }
+            
         }
     
 
@@ -103,7 +110,7 @@ namespace CI_Platform.Controllers
             else if (request_for == "recommend")
             {
                 bool success = db.MissionRepository.Recommend(User_id, Mission_id, co_workers);
-               var InvitedMissionLink = Url.Action("volunteering_mission", "Mission", new { id = Mission_id }, Request.Scheme);
+               var InvitedMissionLink = Url.Action("volunteering_mission", "Mission", new { id = Mission_id}, Request.Scheme);
 
                 var senderEmail = new MailAddress("jitenkhatri81@gmail.com", "Jiten Khatri");
                 Console.WriteLine(email);
