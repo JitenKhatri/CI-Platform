@@ -39,7 +39,7 @@ namespace CI_Platform.DataAccess.Repository
             return Missions;
         }
 
-        public List<MissionViewModel> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills , string? sortOrder, int page=1 , int pageSize = 6)
+        public List<MissionViewModel> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills , string? sortOrder, string searchtext = null, int page=1 , int pageSize = 6)
             {
             int skipCount = (page - 1) * pageSize;
             List<Mission> missions = _db.Missions.ToList();
@@ -80,6 +80,7 @@ namespace CI_Platform.DataAccess.Repository
             List<Mission> mission = new List<Mission>();
             List<MissionSkill> missionskills = _db.MissionSkills.ToList();
             List<Skill> skills = _db.Skills.ToList();
+          
             if (Countries.Count > 0)
             {
                 city = (from c in cities
@@ -90,41 +91,16 @@ namespace CI_Platform.DataAccess.Repository
             {
                 city = cities;
             }
-            if (Cities.Count > 0)
+            mission = (from m in missions
+                     where ((Cities.Count == 0 || Cities.Contains(m.City.Name)) &&
+                            (Countries.Count == 0 || Countries.Contains(m.Country.Name)) &&
+                            (Themes.Count == 0 || Themes.Contains(m.Theme.Title)) && (Skills.Count == 0 || Skills.All(sm => m.MissionSkills.Any(k => k.Skill.SkillName == sm))))
+                     select m).ToList();
+            if (!String.IsNullOrEmpty(searchtext))
             {
                 mission = (from m in missions
-                           where Cities.Contains(m.City.Name) || Themes.Contains(m.Theme.Title)
-                           select m).ToList();
-                var skill_missions = (from s in missionskills
-                                      where Skills.Contains(s.Skill.SkillName)
-                                      select s.Mission).ToList();
-                foreach (var skill_mission in skill_missions)
-                {
-                    if (!mission.Contains(skill_mission))
-                    {
-                        mission.Add(skill_mission);
-                    }
-                }
-            }
-            else if (Countries.Count > 0 || Themes.Count > 0 || Skills.Count > 0)
-            {
-                mission = (from m in missions
-                           where Countries.Contains(m.Country.Name) || Cities.Contains(m.City.Name) || Themes.Contains(m.Theme.Title)
-                           select m).ToList();
-                var skill_missions = (from s in missionskills
-                                      where Skills.Contains(s.Skill.SkillName)
-                                      select s.Mission).ToList();
-                foreach (var skill_mission in skill_missions)
-                {
-                    if (!mission.Contains(skill_mission))
-                    {
-                        mission.Add(skill_mission);
-                    }
-                }
-            }
-            else
-            {
-                mission = missions;
+                           select m).Where(m => m.Title.ToLower().Replace(" ", "").Contains(searchtext.ToLower().Replace(" ", ""))
+                           || m.Description.ToLower().Replace(" ", "").Contains(searchtext.ToLower().Replace(" ", ""))).ToList();
             }
             var Missions = (from m in mission
                             join i in image on m.MissionId equals i.MissionId into data
@@ -318,7 +294,7 @@ namespace CI_Platform.DataAccess.Repository
             MissionMedium image = _db.MissionMedia.SingleOrDefault(i => i.MissionId == id);
             MissionTheme theme = _db.MissionThemes.SingleOrDefault(t => t.MissionThemeId == mission.ThemeId);
             List<Skill> skills = _db.MissionSkills.Where(s => s.MissionId == id).Select(s => s.Skill).ToList();
-            List<Comment> comments = _db.Comments.Where(s => s.MissionId == id).ToList();
+            List<Comment> comments = _db.Comments.Where(s => s.MissionId == id).Take(5).ToList();
             List<MissionDocument> missiondocuments = _db.MissionDocuments.Where(ms => ms.MissionId == id).ToList();
             Country country = _db.Countries.SingleOrDefault(c => c.CountryId == mission.CountryId);
             City city = _db.Cities.SingleOrDefault(c => c.CityId == mission.CityId);

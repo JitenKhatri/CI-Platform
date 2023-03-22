@@ -73,41 +73,23 @@ $('.form-check-input').on('change', function () {
 
 function search() {
     var input = document.getElementById("search-input").value.toLowerCase();
-    var missionCards = document.getElementsByClassName("mission-card");
-    var cardTitles = document.getElementsByClassName("card-title");
-
-    var found = false;
-    for (var i = 0; i < cardTitles.length; i++) {
-        var title = cardTitles[i].innerHTML.toLowerCase();
-        var missionCard = missionCards[i];
-
-        if (title.indexOf(input) !== -1) {
-            missionCard.style.display = "block";
-            found = true;
-        } else {
-            missionCard.style.display = "none";
-        }
-    }
-
-    var pageNotFound = document.getElementsByClassName("page-not-found")[0];
-    var pagination = document.getElementsByClassName("pagination-link")[0];
-    if (!found) {
-        pageNotFound.style.display = "block";
-        pagination.style.display = "none";
-
-    } else {
-        var hiddenCount = 0;
-        for (var i = 0; i < missionCards.length; i++) {
-            if (missionCards[i].style.display === "none") {
-                hiddenCount++;
+    $('.missions').empty()
+    $.ajax(
+        {
+            url: '/Mission',
+            type: 'POST',
+            data: { searchtext: input, cities: cities, themes: themes, skills: skills },
+            success: function (result) {
+                if (result == "") {
+                    $('.page-not-found').css('display', 'block');
+                }
+                $('.missions').html(result);
+                $('.pagination-link').css('display', 'none');
+            },
+            error: function () {
+                console.log("Error updating variable");
             }
-        }
-        if (hiddenCount === missionCards.length) {
-            pageNotFound.style.display = "block";
-        } else {
-            pageNotFound.style.display = "none";
-        }
-    }
+        })
 }
 function sortby(order) {
     $('.missions').empty()

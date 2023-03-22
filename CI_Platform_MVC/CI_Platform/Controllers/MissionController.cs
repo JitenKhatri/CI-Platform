@@ -53,9 +53,9 @@ namespace CI_Platform.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string? sortOrder, int page=1,int pageSize=6)
+        public IActionResult Index(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string? sortOrder, string searchtext = null, int page=1,int pageSize=6)
         {
-            List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries, cities, themes, skills, sortOrder,page, pageSize);
+            List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries, cities, themes, skills, sortOrder,searchtext,page, pageSize);
             return PartialView("_Mission", missions);
         }
 

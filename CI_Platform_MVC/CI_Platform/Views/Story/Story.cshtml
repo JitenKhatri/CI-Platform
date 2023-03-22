@@ -73,7 +73,7 @@
                 <button type="button" class="btn">
                   <img src="~/images/search.png" alt="search" />
                 </button>
-                <input id="search-input"
+                <input id="search-input" onkeyup="search()"
                   class="form-control" 
                   type="text"
                   placeholder="Search mission ..."
@@ -150,7 +150,7 @@
       </nav>
     
     <!-- Selected items row -->
-    <div class="container">
+    <div class="container mb-2">
         <div id="selected-items-row">
         </div>
       </div>
@@ -158,7 +158,7 @@
         <p class=story-lorem>Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor
             incididunt ut labore et dolore magna
             aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
-            <div class="mt-2"> <button class="btn story-button" > Share your Story <img src="~/images/right-arrow.png"/></button></div>
+            <div class="mt-2"> <a asp-controller="Story" asp-action="ShareStory"  class="btn story-button" > Share your Story <img src="~/images/right-arrow.png"/></a></div>
     </div>
 
    @* stories*@

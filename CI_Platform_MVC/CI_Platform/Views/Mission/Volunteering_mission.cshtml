@@ -380,6 +380,7 @@
                             <button onclick="add_comments(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" class="btn apply-btn mb-5"> Post comment</button>
                         
                         <div id="comments"style="max-height: 380px; overflow: auto;" >
+                            @*@await Html.PartialAsync("_Comment",Model.Comment)*@
                             @foreach(var item in Model?.comments)
                 {
                     <div style="max-height:380px; overflow:auto;" class="mb-4" >
