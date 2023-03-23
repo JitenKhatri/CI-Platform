@@ -14,7 +14,6 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         List<MissionViewModel> GetFilteredMissions(List<string> countriesList,List<string> cities, List<string> themes, List<string> skiils, string? sortOrder,string searchtext,int page, int pageSize);
         List<City> GetCitiesForCountry(long countryid);
 
-      
         List<MissionSkill> MissionSkillList(int id);
         VolunteeringMissionVM GetMissionById(int id, long user_id);
         IEnumerable<CommentViewModel> comment(long user_id, long mission_id, string comment);

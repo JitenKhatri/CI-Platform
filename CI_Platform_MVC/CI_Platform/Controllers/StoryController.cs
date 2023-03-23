@@ -3,6 +3,7 @@ using CI_Platform.Models;
 using CI_Platform.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace CI_Platform.Controllers
 {
@@ -57,7 +58,9 @@ namespace CI_Platform.Controllers
 
         public IActionResult ShareStory()
         {
-            return View();
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            List<Mission> missions = db.StoryRepository.GetMissionApplications(user_id);
+            return View(missions);
         }
     }
 }

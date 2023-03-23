@@ -1,5 +1,4 @@
 ﻿footer {
-    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -666,7 +665,7 @@ volunteers #img {
 #drag {
     border: 1px solid black;
     height: 105px;
-    background-image: url("/CI-image/Assets/drag-and-drop.png");
+    background-image: url("/images/drag-and-drop.png");
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -676,6 +675,13 @@ volunteers #img {
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border: 2px solid #757575;
     border-radius: 24px;
+}
+.submitbtn {
+    padding: 0.4rem 1rem;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 2px solid #F88634;
+    border-radius: 24px;
+    color: #F88634;
 }
 
 @media (max-width: 575.98px) {

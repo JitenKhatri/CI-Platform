@@ -136,7 +136,7 @@ namespace CI_Platform.DataAccess.Repository
             };
             _db.Comments.Add(mycomment);
             Save();
-            comments = _db.Comments.ToList();
+            comments = _db.Comments.OrderByDescending(m => m.CreatedAt).Take(5).ToList();
             IEnumerable<CommentViewModel> mission_comments = (from c in comments
                                                               where c.MissionId.Equals(mission_id)
                                                               select new CommentViewModel { User_Comment = c, user = c.User });
@@ -294,7 +294,7 @@ namespace CI_Platform.DataAccess.Repository
             MissionMedium image = _db.MissionMedia.SingleOrDefault(i => i.MissionId == id);
             MissionTheme theme = _db.MissionThemes.SingleOrDefault(t => t.MissionThemeId == mission.ThemeId);
             List<Skill> skills = _db.MissionSkills.Where(s => s.MissionId == id).Select(s => s.Skill).ToList();
-            List<Comment> comments = _db.Comments.Where(s => s.MissionId == id).Take(5).ToList();
+            List<Comment> comments = _db.Comments.Where(s => s.MissionId == id).OrderByDescending(m => m.CreatedAt).Take(5).ToList();
             List<MissionDocument> missiondocuments = _db.MissionDocuments.Where(ms => ms.MissionId == id).ToList();
             Country country = _db.Countries.SingleOrDefault(c => c.CountryId == mission.CountryId);
             City city = _db.Cities.SingleOrDefault(c => c.CityId == mission.CityId);

@@ -276,21 +276,11 @@ function remove_badges(input) {
     })
 }
 
-
-/*share story page js */
-$(document).ready(function () {
-    $('#editor').summernote({
-        height: 200, // set the height of the editor
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']], // add formatting options to the toolbar
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']]
-        ]
-    });
-});
+CKEDITOR.replace('editor1', {
+    height: 200,
+    removeButtons: ['About','Cut','Copy','Paste','Link','Unlink','Anchor','Indent','Outdent','NumberedList','BulletedList']
+}
+    );
 
 const imageUpload = document.getElementById('imageUpload');
 const imagePreview = document.getElementById('imagePreview');

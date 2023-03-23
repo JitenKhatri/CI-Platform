@@ -89,5 +89,14 @@ namespace CI_Platform.DataAccess.Repository
 
             return cities;
         }
+        public List<Mission> GetMissionApplications(long user_id)
+        {
+
+            List<Mission> missions = _db.MissionApplications
+                                        .Where(ma => ma.UserId == user_id)
+                                        .Select(ma => ma.Mission)
+                                                           .ToList();
+            return missions;
+        }
     }
 }
