@@ -24,7 +24,7 @@
                 </div>
                 <div class="card-body">
                   <h4 class="mission-title">@story.Stories?.Title</h4>
-                  <p class="card-text">@story.Stories?.Description</p>
+                  <p class="card-text">@Html.Raw(@story.Stories?.Description)</p>
                   <div class="d-flex"> 
                       <img class="volunteer-image" src=@story.Stories?.User.Avatar />
                       <p class="vol-name">@story.Stories?.User.FirstName @story.Stories?.User.LastName </p>

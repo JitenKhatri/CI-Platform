@@ -62,5 +62,29 @@ namespace CI_Platform.Controllers
             List<Mission> missions = db.StoryRepository.GetMissionApplications(user_id);
             return View(missions);
         }
+
+        [HttpPost]
+        public IActionResult ShareStory(long story_id, long Mission_id, string title, string published_date, string story_description, string type)
+        {
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            var files = Request.Form.Files;
+            var media = new List<IFormFile>();
+            foreach (var file in files)
+            {
+                media.Add(file);
+            }
+            if(type == "PUBLISHED")
+            {
+                bool success = db.StoryRepository.ShareStory(user_id,story_id, Mission_id, title, published_date, story_description, media, type);
+                return Json(new { success = true });
+
+            }
+            else
+            {
+                bool success = db.StoryRepository.ShareStory(user_id, 0, Mission_id, title, published_date, story_description, media, type);
+                return Json(new { success = true });
+            }
+           
+        }
     }
 }

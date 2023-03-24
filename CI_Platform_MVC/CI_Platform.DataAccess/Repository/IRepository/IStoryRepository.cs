@@ -1,5 +1,6 @@
 ﻿using CI_Platform.Models;
 using CI_Platform.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         List<City> CityCascade(long countryid);
 
         List<Mission> GetMissionApplications(long user_id);
+
+        bool ShareStory(long User_id, long id, long Mission_id, string title, string published_date, string story_description, List<IFormFile> storymedia, string type);
     }
 }

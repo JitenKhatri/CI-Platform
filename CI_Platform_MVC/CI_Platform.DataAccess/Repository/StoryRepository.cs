@@ -1,6 +1,7 @@
 ﻿using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
 using CI_Platform.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace CI_Platform.DataAccess.Repository
         public List<StoryViewModel> GetAllStories(int page = 1, int pageSize = 6)
         {
             int skipCount = (page - 1) * pageSize;
-            List<Story> stories = _db.Stories.Skip(skipCount)
+            List<Story> stories = _db.Stories.Where(s=> s.Status == "PUBLISHED").Skip(skipCount)
                                           .Take(pageSize).ToList();
             List<StoryMedium> image = _db.StoryMedia.ToList();
             List<User> users = _db.Users.ToList();
@@ -97,6 +98,104 @@ namespace CI_Platform.DataAccess.Repository
                                         .Select(ma => ma.Mission)
                                                            .ToList();
             return missions;
+        }
+
+        public bool ShareStory(long User_id,long id,long Mission_id,string title,string published_date,string story_description, List<IFormFile> storymedia,string type )
+        {
+            List<Story> stories = _db.Stories.ToList();
+            List<StoryMedium> Storymedia = _db.StoryMedia.ToList();
+
+            if(type == "PUBLISHED")
+            {
+                Story story = new Story();
+                story.UserId = User_id;
+                story.Title = title;
+                story.Description = story_description;
+                story.PublishedAt = DateTime.Parse(published_date);
+                story.MissionId = Mission_id;
+                _db.Stories.Add(story);
+                _db.SaveChanges();
+
+
+                long story_id = story.StoryId;
+                foreach (var item in storymedia)
+                {
+                    string uniqueFileName = null;
+                    if (item != null)
+                    {
+                        // Get the uploaded file name
+                        string fileName = Path.GetFileName(item.FileName);
+
+                        // Create a unique file name to avoid overwriting existing files
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
+                        // Set the file path where the uploaded file will be saved
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
+
+                        // Save the uploaded file to the specified directory
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            item.CopyTo(fileStream);
+                        }
+                    }
+
+                    _db.StoryMedia.Add(new StoryMedium
+                    {
+                        StoryId = story_id,
+                        Type = "imag",
+                        Path = uniqueFileName // Save the unique file name in the database
+                    });
+                }
+                _db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                //save story as draft
+                Story story = new Story();
+                story.UserId = User_id;
+                story.Title = title;
+                story.Description = story_description;
+                story.Status = "PUBLISHED";
+                story.PublishedAt = DateTime.Parse(published_date);
+                story.MissionId = Mission_id;
+                _db.Stories.Add(story);
+                _db.SaveChanges();
+
+
+                long story_id = story.StoryId;
+                foreach (var item in storymedia)
+                {
+                    string uniqueFileName = null;
+                    if (item != null)
+                    {
+                        // Get the uploaded file name
+                        string fileName = Path.GetFileName(item.FileName);
+
+                        // Create a unique file name to avoid overwriting existing files
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
+                        // Set the file path where the uploaded file will be saved
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
+
+                        // Save the uploaded file to the specified directory
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            item.CopyTo(fileStream);
+                        }
+                    }
+
+                    _db.StoryMedia.Add(new StoryMedium
+                    {
+                        StoryId = story_id,
+                        Type = "imag",
+                        Path = uniqueFileName // Save the unique file name in the database
+                    });
+                }
+                _db.SaveChanges();
+                return true;
+            }
+           
         }
     }
 }

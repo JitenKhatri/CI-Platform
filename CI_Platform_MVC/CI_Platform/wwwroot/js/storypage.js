@@ -280,53 +280,171 @@ CKEDITOR.replace('editor1', {
     height: 200,
     removeButtons: ['About','Cut','Copy','Paste','Link','Unlink','Anchor','Indent','Outdent','NumberedList','BulletedList']
 }
-    );
-
-const imageUpload = document.getElementById('imageUpload');
-const imagePreview = document.getElementById('imagePreview');
-
-imageUpload.addEventListener('change', () => {
-    // Clear the imagePreview div
-    imagePreview.innerHTML = '';
-
-    // Loop through each uploaded file, up to a maximum of 20 files
-    for (let i = 0; i < Math.min(imageUpload.files.length, 20); i++) {
-        const file = imageUpload.files[i];
-
-        // Check if the file is a valid image
-        if (file.type.startsWith('image/')) {
-            // Create a new image element and set its attributes
-            const img = document.createElement('img');
-            img.classList.add('img-thumbnail');
-            img.width = 100;
-            img.height = 100;
-
-            // Create a URL for the uploaded image
-            const url = URL.createObjectURL(file);
-
-            // Set the src attribute of the image element
-            img.src = url;
-
-            // Create a new button element for the close button
-            const closeButton = document.createElement('button');
-            closeButton.textContent = 'x';
-            closeButton.addEventListener('click', () => {
-                container.remove();
-            });
-
-            // Create a new container element and append the image and close button to it
-            const container = document.createElement('div');
-            container.classList.add('photo-container');
-            container.appendChild(img);
-            container.appendChild(closeButton);
-
-            // Append the container element to the imagePreview div
-            imagePreview.appendChild(container);
-        }
-
-        // Check if the loop has reached the limit of 20 files
-        if (i >= 19) {
-            break;
-        }
-    }
+);
+var mission
+var title
+var date
+var current_date
+var comparedate
+var mystory
+var video_url
+var media = []
+var count = 0
+$(function () {
+    $("#datepicker").datepicker();
 });
+let alertId = 0;
+
+function showAlert(message) {
+    const alert = document.createElement("div");
+    alert.classList.add("alert");
+    alert.setAttribute("id", "alert-" + alertId);
+    alert.innerText = message;
+    document.body.appendChild(alert);
+
+    // Add CSS to position the alert at the top right and give it a reddish background color
+    alert.style.position = "fixed";
+    alert.style.top = (10 + alertId * 50) + "px";
+    alert.style.right = "10px";
+    alert.style.backgroundColor = "#ffcccc";
+
+    // Increment the alert ID for the next call to showAlert
+    alertId++;
+
+    // Remove the alert after 5 seconds
+    setTimeout(() => {
+        alert.remove();
+        alertId = 0;
+    }, 5000);
+}
+//function loadimages() {
+//  var images = document.getElementById('images').files;
+//  var images_count = $('.gallary').find('.preview-image').length;
+
+//  if (images_count + images.length <= 20 && images.length <= 20) {
+//    for (var i = 0; i < images.length; i++) {
+//      var img = document.createElement('img');
+//      img.className = 'preview-image';
+//      img.src = URL.createObjectURL(images[i]);
+
+//      var div = document.createElement('div');
+//      div.className = 'preview-image-div';
+//      div.id = 'image-' + count;
+//      div.appendChild(img);
+
+//      var close_div = document.createElement('div');
+//      close_div.className = 'bg-black close d-flex justify-content-center align-items-center';
+//      close_div.onclick = function() {
+//        this.parentNode.remove();
+//      };
+
+//      var close_img = document.createElement('img');
+//      close_img.src = '/images/cancel.png';
+//      close_div.appendChild(close_img);
+
+//      div.appendChild(close_div);
+//      $('.gallary').append(div);
+//      count++;
+//    }
+//  }
+//}
+Dropzone.autoDiscover = false;
+$(function () {
+    var myDropzone = new Dropzone("#myDropzone", {
+        url: "/Story/ShareStory",
+        maxFiles: 20,
+        maxFilesize: 4,
+        acceptedFiles: ".jpeg,.jpg,.png",
+        addRemoveLinks: true,
+        dictRemoveFile: "Remove",
+        dictDefaultMessage: "Drop files here or click to upload",
+        dictInvalidFileType: "Invalid file type. Only JPEG, JPG and PNG are allowed.",
+        dictFileTooBig: "File size is too big. Maximum file size allowed is 4MB.",
+        dictMaxFilesExceeded: "You can only upload a maximum of 20 files.",
+        previewTemplate: $("#imagePreview").html()
+    });
+
+    //// Remove the default preview container
+    //myDropzone.on("addedfile", function (file) {
+    //    file.previewElement.remove();
+    //});
+
+    //// Display the uploaded image in the preview container
+    //myDropzone.on("success", function (file, response) {
+    //    var previewElement = $(myDropzone.options.previewTemplate);
+    //    $(previewElement).find(".dz-image").attr("src", response.imageUrl);
+    //    $(previewElement).appendTo("#imagePreview");
+    //});
+});;
+function sharestory(type) {
+    validate()
+    var formData = new FormData();
+    formData.append('Mission_id', mission);
+    formData.append('title', title);
+    formData.append('published_date', date.toString());
+    formData.append('story_description', mystory);
+    formData.append('type', type);
+/*    formData.append('VideoUrl', videoUrl);*/
+
+    // Add image files to the FormData object
+    //var imgFiles = $('#images')[0].files;
+    //for (var i = 0; i < imgFiles.length; i++) {
+    //    formData.append('Images', imgFiles[i]);
+    //}
+
+    if (mission != 0 && title.trim().length > 20 && title.trim().length < 255 && $('#datepicker').datepicker().val().length != 0
+        && Date.parse(current_date) >= Date.parse(comparedate) && mystory.trim().length > 20 && mystory.trim().length < 40000 /*&& $('.gallary').find('.preview-image').length != 0*/) {
+        $.ajax({
+            url: '/Story/ShareStory',
+            type: 'POST',
+            data: formData ,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                showAlert("Story added as a draft")
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+
+    }
+}
+function validate() {
+    mission = parseInt($('.form-select').find(':selected').val())
+    title = $('.story_title').val()
+    date = convertDate($('#datepicker').datepicker().val())
+    current_date = new Date()
+    comparedate = new Date($('#datepicker').datepicker().val())
+    mystory = CKEDITOR.instances.editor1.getData();
+    video_url = $('.videourl').val()
+    if (video_url.trim().length > 3) {
+        media.push(video_url)
+    }
+    //$('.gallary').find('.preview-image').each(function (i, item) {
+    //    media.push(item.src)
+    //}
+/*    )*/
+    // Define validation conditions
+    const conditions = [
+        { message: "Please select a mission", test: mission === 0 },
+        { message: "Title should be at least 20 characters long", test: title.trim().length < 20 },
+        { message: "Title can have maximum 255 characters", test: title.trim().length > 255 },
+        { message: "Please enter a valid date", test: $('#datepicker').datepicker().val().length == 0 || Date.parse(current_date) <= Date.parse(comparedate) },
+        { message: "Story description should be at least have 70 character", test: mystory.trim().length < 70 },
+        { message: "Story description is too big", test: mystory.trim().length > 40000 }
+        /*{ message: "Please upload at least one image", test: $('.gallary').find('.preview-image').length == 0 }*/
+    ];
+
+    // Loop through validation conditions and display alert if test fails
+    conditions.forEach(condition => {
+        if (condition.test) {
+            showAlert(condition.message);
+        }
+    });
+}
+function convertDate(inputFormat) {
+    function pad(s) { return (s < 10) ? '0' + s : s; }
+    var d = new Date(inputFormat)
+    return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/')
+}
