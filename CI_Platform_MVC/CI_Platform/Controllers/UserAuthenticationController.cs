@@ -207,28 +207,30 @@ namespace CI_Platform.Controllers
         public IActionResult resetPassword(ResetPasswordViewModel model)
         {
             CiPlatformContext context = new CiPlatformContext();
-
-            //var ResetPasswordData = context.PasswordResets.Any(e => e.Email == model.Email && e.Token == model.token);
-            var ResetPasswordData = db.PasswordResetRepository.GetFirstOrDefault(c => c.Email.Equals(model.Email.ToLower()) && c.Token == model.token);
-
-
-            if (ResetPasswordData!=null)
+            if (ModelState.IsValid)
             {
-                var x = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(model.Email.ToLower()));
-                
+                //var ResetPasswordData = context.PasswordResets.Any(e => e.Email == model.Email && e.Token == model.token);
+                var ResetPasswordData = db.PasswordResetRepository.GetFirstOrDefault(c => c.Email.Equals(model.Email.ToLower()) && c.Token == model.token);
 
 
-                x.Password = model.Password;
+                if (ResetPasswordData != null)
+                {
+                    var x = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(model.Email.ToLower()));
 
-                Console.WriteLine(x.Password);
 
-                context.Users.Update(x);
-                context.SaveChanges();
-                ViewBag.PassChange = "Password Changed Successfully!";
-            }
-            else
-            {
-                ModelState.AddModelError("Token", "Reset Passwordword Link is Invalid");
+
+                    x.Password = model.Password;
+
+                    Console.WriteLine(x.Password);
+
+                    context.Users.Update(x);
+                    context.SaveChanges();
+                    ViewBag.PassChange = "Password Changed Successfully!";
+                }
+                else
+                {
+                    ModelState.AddModelError("Token", "Reset Passwordword Link is Invalid");
+                }
             }
             return View(model);
         }

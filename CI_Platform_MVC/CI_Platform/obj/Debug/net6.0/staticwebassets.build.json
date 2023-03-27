@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ZIx1ZMI4gE6/GXJjXv4QsF3D5gvDI+Z39qBIQCYFByw=",
+  "Hash": "3Hc8Stq5XWOf68fdF/nhRTb2zgzuyqZcwCqNohXvigA=",
   "Source": "CI_Platform",
   "BasePath": "_content/CI_Platform",
   "Mode": "Default",
@@ -2482,6 +2482,23 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\00420b2e-ccba-4392-a17e-db9026f16989_Animal-welfare-&-save-birds-campaign.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/00420b2e-ccba-4392-a17e-db9026f16989_Animal-welfare-&-save-birds-campaign.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\00420b2e-ccba-4392-a17e-db9026f16989_Animal-welfare-&-save-birds-campaign.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\404-Page-image.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -2497,6 +2514,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\404-Page-image.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\7b46bf0a-a467-4139-9096-1ef32cea81ef_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/7b46bf0a-a467-4139-9096-1ef32cea81ef_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\7b46bf0a-a467-4139-9096-1ef32cea81ef_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\84aef5a9-8663-4eae-86df-fbfd8af5a604_Animal-welfare-&-save-birds-campaign.png",
@@ -2973,6 +3007,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\drop-down.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\e8c282d4-b798-4ba4-9126-071226c44b30_Grow-Trees-On-the-path-to-environment-sustainability-1.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/e8c282d4-b798-4ba4-9126-071226c44b30_Grow-Trees-On-the-path-to-environment-sustainability-1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\e8c282d4-b798-4ba4-9126-071226c44b30_Grow-Trees-On-the-path-to-environment-sustainability-1.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\Education-Supplies-for-Every--Pair-of-Shoes-Sold.png",

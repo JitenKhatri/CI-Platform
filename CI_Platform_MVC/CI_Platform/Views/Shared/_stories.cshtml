@@ -1,4 +1,5 @@
 ﻿@using CI_Platform.Models.ViewModels
+@using System.Security.Claims
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -14,7 +15,7 @@
                 
                  <div class="middle">
                     <button class="btn" id="view-details-button">View Details <span>
-                        <img src="~/images/right-arrow.png" />
+                        <img src="/images/right-arrow.png" />
                     </span></button>
                 </div>
                 
@@ -23,11 +24,20 @@
                 </button>
                 </div>
                 <div class="card-body">
-                  <h4 class="mission-title">@story.Stories?.Title</h4>
+                  <h4 class="mission-title">@story.Stories?.Title?.ToString().Substring(0,40)</h4>
                   <p class="card-text">@Html.Raw(@story.Stories?.Description)</p>
-                  <div class="d-flex"> 
-                      <img class="volunteer-image" src=@story.Stories?.User.Avatar />
-                      <p class="vol-name">@story.Stories?.User.FirstName @story.Stories?.User.LastName </p>
+                  <div class="d-flex justify-content-between"> 
+                      <div>
+                          <img class="volunteer-image" src=@story.Stories?.User.Avatar />
+                      <span class="vol-name">@story.Stories?.User.FirstName @story.Stories?.User.LastName </span>
+                      </div>
+                      
+                    @{
+                        if(@story?.Stories?.Status=="DRAFT"&&@story.Stories.UserId==long.Parse(User.Claims.FirstOrDefault(c=>c.Type == ClaimTypes.Sid).Value))
+                        {
+                            <button data-bs-toggle="modal" id="edit-story" onclick="editor(@story.Stories.StoryId,@story.Stories.PublishedAt.ToString().Substring(0,10))" data-bs-target="#edit-@story.Stories.StoryId" class="applyButton btn">Edit</button>
+                        }   
+                }
                   </div>
                 </div>
               </div>

@@ -275,7 +275,12 @@ function remove_badges(input) {
         }
     })
 }
-
+const editor = (StoryId) => {
+    CKEDITOR.replace(`editor-${StoryId}`, {
+        maxLength: 40000,
+        removeButtons: ['About', 'Cut', 'Copy', 'Paste', 'Link', 'Unlink', 'Anchor', 'Indent', 'Outdent', 'NumberedList', 'BulletedList']
+    });
+}
 CKEDITOR.replace('editor1', {
     height: 200,
     removeButtons: ['About','Cut','Copy','Paste','Link','Unlink','Anchor','Indent','Outdent','NumberedList','BulletedList']
@@ -317,37 +322,6 @@ function showAlert(message) {
         alertId = 0;
     }, 5000);
 }
-//function loadimages() {
-//  var images = document.getElementById('images').files;
-//  var images_count = $('.gallary').find('.preview-image').length;
-
-//  if (images_count + images.length <= 20 && images.length <= 20) {
-//    for (var i = 0; i < images.length; i++) {
-//      var img = document.createElement('img');
-//      img.className = 'preview-image';
-//      img.src = URL.createObjectURL(images[i]);
-
-//      var div = document.createElement('div');
-//      div.className = 'preview-image-div';
-//      div.id = 'image-' + count;
-//      div.appendChild(img);
-
-//      var close_div = document.createElement('div');
-//      close_div.className = 'bg-black close d-flex justify-content-center align-items-center';
-//      close_div.onclick = function() {
-//        this.parentNode.remove();
-//      };
-
-//      var close_img = document.createElement('img');
-//      close_img.src = '/images/cancel.png';
-//      close_div.appendChild(close_img);
-
-//      div.appendChild(close_div);
-//      $('.gallary').append(div);
-//      count++;
-//    }
-//  }
-//}
 Dropzone.autoDiscover = false;
 $(function () {
     var myDropzone = new Dropzone("#myDropzone", {
@@ -355,59 +329,53 @@ $(function () {
         maxFiles: 20,
         maxFilesize: 4,
         acceptedFiles: ".jpeg,.jpg,.png",
-        addRemoveLinks: true,
+        addRemoveLinks: false,
         dictRemoveFile: "Remove",
+        parallelupload: 20,
+        autoProcessQueue: false,
         dictDefaultMessage: "Drop files here or click to upload",
         dictInvalidFileType: "Invalid file type. Only JPEG, JPG and PNG are allowed.",
         dictFileTooBig: "File size is too big. Maximum file size allowed is 4MB.",
         dictMaxFilesExceeded: "You can only upload a maximum of 20 files.",
-        previewTemplate: $("#imagePreview").html()
+        previewTemplate: $("#imagePreview").html(),
+        init: function () {
+            this.on("addedfile", function (file) {
+                // Show the remove button when a file is added
+                file.previewElement.querySelector(".btn-remove").style.display = "block";
+            });
+        }
     });
-
-    //// Remove the default preview container
-    //myDropzone.on("addedfile", function (file) {
-    //    file.previewElement.remove();
-    //});
-
-    //// Display the uploaded image in the preview container
-    //myDropzone.on("success", function (file, response) {
-    //    var previewElement = $(myDropzone.options.previewTemplate);
-    //    $(previewElement).find(".dz-image").attr("src", response.imageUrl);
-    //    $(previewElement).appendTo("#imagePreview");
-    //});
+    
 });;
-function sharestory(type) {
-    validate()
-    var formData = new FormData();
-    formData.append('Mission_id', mission);
-    formData.append('title', title);
-    formData.append('published_date', date.toString());
-    formData.append('story_description', mystory);
-    formData.append('type', type);
-/*    formData.append('VideoUrl', videoUrl);*/
 
-    // Add image files to the FormData object
-    //var imgFiles = $('#images')[0].files;
-    //for (var i = 0; i < imgFiles.length; i++) {
-    //    formData.append('Images', imgFiles[i]);
-    //}
+
+function sharestory(type) {
+    validate();
 
     if (mission != 0 && title.trim().length > 20 && title.trim().length < 255 && $('#datepicker').datepicker().val().length != 0
-        && Date.parse(current_date) >= Date.parse(comparedate) && mystory.trim().length > 20 && mystory.trim().length < 40000 /*&& $('.gallary').find('.preview-image').length != 0*/) {
-        $.ajax({
-            url: '/Story/ShareStory',
-            type: 'POST',
-            data: formData ,
-            processData: false,
-            contentType: false,
-            success: function (result) {
-                showAlert("Story added as a draft")
-            },
-            error: function () {
-                console.log("Error updating variable");
-            }
-        })
+        && Date.parse(current_date) >= Date.parse(comparedate) && mystory.trim().length > 20 && mystory.trim().length < 40000) {
 
+        var formData = new FormData();
+
+        var myDropzone = Dropzone.getElement("#myDropzone").dropzone;
+
+        // Append the file(s) to the formData object
+        myDropzone.on("sending", function (file, xhr, formData) {
+            formData.append('media', file);
+            formData.append('Mission_id', mission);
+            formData.append('title', title);
+            formData.append('published_date', date.toString());
+            formData.append('story_description', mystory);
+            formData.append('type', type);
+        });
+
+        // Send the AJAX request with the FormData object after the files have been uploaded
+        myDropzone.on("success", function (file, response) {
+            showAlert("Story added as a draft")
+        });
+
+        // Manually process queue to upload files
+        myDropzone.processQueue();
     }
 }
 function validate() {
@@ -421,10 +389,6 @@ function validate() {
     if (video_url.trim().length > 3) {
         media.push(video_url)
     }
-    //$('.gallary').find('.preview-image').each(function (i, item) {
-    //    media.push(item.src)
-    //}
-/*    )*/
     // Define validation conditions
     const conditions = [
         { message: "Please select a mission", test: mission === 0 },

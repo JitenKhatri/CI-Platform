@@ -34,7 +34,8 @@ namespace CI_Platform.Controllers
             ViewBag.SkillList = new SelectList(skills, "SkillId", "SkillName");
             if (User.Identity.IsAuthenticated)
             {
-                List<StoryViewModel> stories = db.StoryRepository.GetAllStories(page, pageSize);
+                long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+                List<StoryViewModel> stories = db.StoryRepository.GetAllStories(user_id,page,pageSize);
                 return View(stories);
             }
             else
@@ -50,9 +51,10 @@ namespace CI_Platform.Controllers
             return Json(new { cities, success = true });
         }
         [HttpPost]
-        public IActionResult Story(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string searchtext=null, int page = 1, int pageSize = 6)
+        public IActionResult Story(List<string> countries, List<string> cities, List<string> themes, List<string> skills,string searchtext=null, int page = 1, int pageSize = 6)
         {
-            List<StoryViewModel> stories = db.StoryRepository.GetFilteredStories(countries, cities, themes, skills,searchtext, page, pageSize);
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            List<StoryViewModel> stories = db.StoryRepository.GetFilteredStories(countries, cities, themes, skills,user_id,searchtext, page, pageSize);
             return PartialView("_stories", stories);
         }
 
@@ -64,27 +66,12 @@ namespace CI_Platform.Controllers
         }
 
         [HttpPost]
-        public IActionResult ShareStory(long story_id, long Mission_id, string title, string published_date, string story_description, string type)
+        public IActionResult ShareStory(long story_id, long Mission_id, string title, string published_date, string story_description, List<IFormFile> media, string type)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-            var files = Request.Form.Files;
-            var media = new List<IFormFile>();
-            foreach (var file in files)
-            {
-                media.Add(file);
-            }
-            if(type == "PUBLISHED")
-            {
-                bool success = db.StoryRepository.ShareStory(user_id,story_id, Mission_id, title, published_date, story_description, media, type);
-                return Json(new { success = true });
-
-            }
-            else
-            {
-                bool success = db.StoryRepository.ShareStory(user_id, 0, Mission_id, title, published_date, story_description, media, type);
-                return Json(new { success = true });
-            }
-           
+            
+            bool success = db.StoryRepository.ShareStory(user_id, story_id, Mission_id, title, published_date, story_description, media, type);
+            return Json(new { success = true });
         }
     }
 }
