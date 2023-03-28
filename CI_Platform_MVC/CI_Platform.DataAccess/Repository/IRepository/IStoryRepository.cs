@@ -18,5 +18,7 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         List<Mission> GetMissionApplications(long user_id);
 
         bool ShareStory(long User_id, long storyId, long Mission_id, string title, string published_date, string story_description, List<IFormFile> storymedia, string type);
+        StoryViewModel GetStoryDetail(long user_id, long id);
+        void Add_View(long user_id, long story_id);
     }
 }

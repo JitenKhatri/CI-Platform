@@ -1,0 +1,159 @@
+﻿@{
+    Layout = null;
+    var userName = Context.User.Identity.Name;
+}
+@using CI_Platform.Models.ViewModels
+@using System.Security.Claims
+@model StoryViewModel
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mission-Detail</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+  <link href="~/css/landing.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+</head>
+
+<body>
+  <div class="container-fluid p-0">
+    <div class="row header">
+      <div class="col d-flex flex-row justify-content-center">
+        <a href="#" class="mx-1 mx-sm-4">Stories</a>
+        <div class="dropdown">
+          <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            Policy <img src="~/images/drop-down.png" class="mx-2" />
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col p-0">
+        <div class="dropdown">
+          <button
+            class="dropdown-toggle profile"
+            type="button"
+            data-bs-toggle="dropdown" >
+            <img src="~/images/user-img.png" class="profileimg" />
+            <span class="mx-2 d-none d-sm-block">@userName</span>
+            <img
+              src="~/images/drop-down.png"
+              class="mx-1 drop-down d-none d-sm-block"
+            />
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">My Profile</a></li>
+            <li><a class="dropdown-item" href="#">Help</a></li>
+            <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="Logout">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid grid-container">
+    <div class="row">
+           @* carousel starts*@
+            <div class="col-lg-6">
+           <div class="images">
+        <div class="carousel slide" data-bs-interval="false" id="sub-images">
+            <div class="carousel-inner">
+        <img class="w-100 carousel-item active main-image" src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png" alt=""/>
+        <img src="~/images/img1.png" class="w-100 carousel-item main-image" alt=""/>
+         <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-2.png" class="w-100 main-image carousel-item" alt=""/>
+            <img src="~/images/img11.png" class="w-100 carousel-item main-image" alt="" />
+             <img class="w-100 carousel-item main-image" src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png" alt=""/>
+             <img src="~/images/img1.png" class="w-100 carousel-item main-image" alt=""/>
+          </div>
+        <div class="mt-1 w-100 position-relative" >  
+            <div class="carousel slide" data-bs-interval="false" id="other-images">
+            <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="d-flex">
+            <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-6.png" data-bs-target="#sub-images" data-bs-slide-to="0"  class="other-image" alt=""/>
+            <img src="~/images/img3.png" class="other-image" data-bs-target="#sub-images" data-bs-slide-to="1"  alt=""/>
+            <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-3.png" data-bs-target="#sub-images" data-bs-slide-to="2"  class="other-image" alt=""/>
+            <img src="~/images/img22.png" class="other-image" data-bs-target="#sub-images" data-bs-slide-to="3"  alt="" />
+            </div>
+            </div>
+            <div class="carousel-item">
+                <div class="d-flex">
+            <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-6.png" data-bs-target="#sub-images" data-bs-slide-to="4"  class="other-image" alt=""/>
+            <img src="~/images/img3.png" class="other-image" data-bs-target="#sub-images" data-bs-slide-to="5"  alt=""/>
+            </div>
+            </div>
+            </div>
+             <div class="bg-black d-flex align-items-center justify-content-center position-absolute left h-100 carousel-control-prev" data-bs-target="#other-images" data-bs-slide="prev">
+            <img src="~/images/left1.png" class="w-50" alt="not load" />
+        </div>
+
+        <div class="bg-black d-flex align-items-center justify-content-center position-absolute left h-100 carousel-control-next" style="left:98%;" data-bs-target="#other-images"  data-bs-slide="next">
+            <img src="~/images/right-arrow2.png" class="w-50" alt="not load" />
+        </div>
+        </div>
+         </div>
+          </div>
+    </div>
+
+            </div>
+           
+          <div class="description col-lg-6">
+       <div class="px-3 mt-5 ms-3 d-flex justify-content-between">
+           <span class="d-flex flex-column align-items-center">
+               <img class="rounded-circle" src="~/images/volunteer1.png"/>
+               <span class="mt-2 lorem ps-3">@Model.Stories.User.FirstName @Model.Stories.User.LastName</span>
+           </span>
+           <div class="views border rounded-pill mt-5 h-25 w-25 d-flex justify-content-center align-items-center border-1">
+               <img src="~/images/eye.png" />
+               <span class="ms-1">@Model.Stories.StoryViews.Count views</span>
+           </div>
+       </div>
+      <div class="ms-3 mt-5 lorem px-3">
+          @foreach (var line in Model.Stories.User.WhyIVolunteer.Split('.'))
+               {
+        <p class="lorem" >@line.Trim() </p><br /> 
+             }
+        </div>
+       <div class="row justify-content-between  px-3">
+        <div data-bs-toggle="modal" data-bs-target="#recommend"  style="cursor:pointer;" class="btn btn-outline-secondary rounded-pill add_favorite ms-4 mt-3">
+                                <img src="~/images/add1.png" class="p-1" alt="" />
+                                <span class="p-1" style="white-space:nowrap;">Recommend To a Co-Worker</span>
+        </div>
+        <a href="/volunteering_mission/@Model.Stories.MissionId" class="openmission mt-3 btn col-lg-5 col-md-12 col-sm-5">Open Mission<img class="ms-2" src="~/images/right-arrow.png" alt=""/></a>
+        </div>
+       
+    </div>
+            </div>
+          <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                      <button class="nav-link active " data-bs-toggle="tab" data-bs-target="#tab-1" type="button"
+                          role="tab" aria-controls="home" aria-selected="true"><span class="storytitle">@Model.Stories.Title</span></button>
+                  </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="tab-1" role="tabpanel">
+                      @Model.Stories.Description
+                      </div>
+                      
+                  </div>
+
+    </div> @*container-fluid*@
+            </div>
+
+
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
+  <script src="~/js/site.js"></script>
+    </body>
+    </html>

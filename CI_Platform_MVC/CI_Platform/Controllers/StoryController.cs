@@ -73,5 +73,14 @@ namespace CI_Platform.Controllers
             bool success = db.StoryRepository.ShareStory(user_id, story_id, Mission_id, title, published_date, story_description, media, type);
             return Json(new { success = true });
         }
+        public IActionResult StoryDetail(long id)
+        {
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            StoryViewModel story = db.StoryRepository.GetStoryDetail(user_id, id);
+            db.StoryRepository.Add_View(user_id, id);
+            return View(story);
+         
+        }
+
     }
 }

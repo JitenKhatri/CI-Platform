@@ -59,7 +59,7 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">My Profile</a></li>
             <li><a class="dropdown-item" href="#">Help</a></li>
-            <li><a class="dropdown-item" href="login.html">Logout</a></li>
+            <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="Logout">Logout</a></li>
           </ul>
         </div>
       </div>
@@ -213,12 +213,15 @@
                         </div>
                         <div class="modal-body">
                         <div class="page-1">
+                            <select class="form-select" aria-label="Select mission">
+                                       <option value=@item.Stories.MissionId selected>@item.Stories.Mission.Title</option>
+                               </select>
                             <div class=" mt-2"><label  class="form-label">My Story Title</label>
-                                <input class="form-control title" value="@item.Stories.Title" type="text" placeholder="Enter Story Title"/>
+                                <input class="form-control story_title" value="@item.Stories.Title" type="text" placeholder="Enter Story Title"/>
                             </div>
                             <div class="mt-2 w-100">
                                 <label  class="form-label">Select Date</label>
-                                <input type="date" class="form-control"  id="datepicker" placeholder="Select Date" />
+                                <input class="form-control"  type="date" id="publish_date" placeholder="Select Date">
                             </div>
 
                             @*ckeditor*@
@@ -228,13 +231,13 @@
                             </div>
                             </div>
                             <div>
-                             <div class="video-url w-100 mt-4">
+                             <div class=" w-100 mt-4">
                      <label  class="form-label">Enter Video URL</label>
-                     <input class="form-control video" type="url" placeholder="Enter Your URL"/>
+                     <input class="form-control video-url" type="url" placeholder="Enter Your URL"/>
     </div>
 
     <div class="row mt-3">
-          <div class="dropzone" id="myDropzone">
+          <div class="dropzone" id="myDropzone-@item.Stories.StoryId">
    <div id="imagePreview" class="dz-preview">
                <div id="previewTemplate" class="preview-container">
                    <button type="button" class="btn-remove" style="display:none" data-dz-remove>
@@ -250,8 +253,8 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn applyButton" data-bs-dismiss="modal">Close</button>
-                             <button onclick="sharestory('DRAFT',@item.Stories.StoryId,@item.Stories.MissionId)"  class="submitbtn me-2">Save</button>
-                            <button onclick="sharestory('PUBLISHED',@item.Stories.StoryId,@item.Stories.MissionId)"  class="submitbtn">Submit</button>
+                             <button onclick="editstory('DRAFT',@item.Stories.StoryId,@item.Stories.MissionId)"  class="submitbtn me-2">Save</button>
+                            <button onclick="editstory('PUBLISHED',@item.Stories.StoryId,@item.Stories.MissionId)"  class="submitbtn">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -263,7 +266,6 @@
 
     <footer> <a class="text-muted" style="    margin-left: 10%;
     text-decoration: none;" asp-controller"Home" asp-action="Privacy"> Privacy policy</a></footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

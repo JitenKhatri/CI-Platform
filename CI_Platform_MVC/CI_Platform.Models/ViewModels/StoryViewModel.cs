@@ -19,5 +19,7 @@ namespace CI_Platform.Models.ViewModels
       
         public string? Story_theme { get; set; }
 
+        public List<StoryMedium> images { get; set; }
+
     }
 }

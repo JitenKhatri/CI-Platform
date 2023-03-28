@@ -53,7 +53,7 @@ var userName = Context.User.Identity.Name;
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">My Profile</a></li>
             <li><a class="dropdown-item" href="#">Help</a></li>
-            <li><a class="dropdown-item" href="login.html">Logout</a></li>
+            <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="Logout">Logout</a></li>
           </ul>
         </div>
       </div>

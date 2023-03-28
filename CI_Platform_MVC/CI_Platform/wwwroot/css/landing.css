@@ -717,20 +717,21 @@ volunteers #img {
     max-width: 98%; /* Change to the desired max width */
     margin: 0 auto;
 }
-/*.alert {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    background-color: #fff;
-    color: #333;
-    border: 2px solid #333;
-    border-radius: 4px;
-    padding: 1rem;
-    font-size: 1.2rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    z-index: 9999;
+.openmission {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 2px solid #F88634;
+    border-radius: 30px;
+    opacity: 1;
+    color: #F88634;
 }
-*/
+
+.storytitle {
+    text-align: left;
+    letter-spacing: 0px;
+    color: #414141;
+    opacity: 1;
+    font-size: 22px;
+}
 @media (max-width: 575.98px) {
     .list-view .card {
         flex-direction: column;

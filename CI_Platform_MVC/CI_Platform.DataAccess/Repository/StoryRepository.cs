@@ -145,7 +145,7 @@ namespace CI_Platform.DataAccess.Repository
                         {
                             StoryId = story_id,
                             Type = "imag",
-                            Path = uniqueFileName // Save the unique file name in the database
+                            Path = "/images/" + uniqueFileName // Save the unique file name in the database
                         });
                     }
                     _db.SaveChanges();
@@ -206,8 +206,26 @@ namespace CI_Platform.DataAccess.Repository
 
             }
         }
-           
-           
-        
+
+        public StoryViewModel GetStoryDetail(long user_id, long id)
+        {
+            List<Story> stories = _db.Stories.ToList();
+            List<StoryMedium> Storymedia = _db.StoryMedia.ToList();
+            List<User> users = _db.Users.ToList();
+            var story = _db.Stories.FirstOrDefault(c => c.StoryId == id);
+            return new StoryViewModel { Stories = story };
+        }
+
+        public void Add_View(long user_id, long story_id)
+        {
+            List<StoryView> storyviews = _db.StoryViews.ToList();
+            var view_exist = _db.StoryViews.FirstOrDefault(c => c.UserId.Equals(user_id) && c.StoryId.Equals(story_id));
+            if (view_exist is null)
+            {
+                _db.StoryViews.Add(new StoryView { StoryId = story_id, UserId = user_id });
+                _db.SaveChanges();
+            }
+        }
+
     }
 }
