@@ -76,6 +76,8 @@ namespace CI_Platform.Controllers
             }
             else
             {
+                string missionid = id.ToString();
+                HttpContext.Session.SetString("Missionid", missionid);
                 return RedirectToAction("login", "UserAuthentication");
             }
             

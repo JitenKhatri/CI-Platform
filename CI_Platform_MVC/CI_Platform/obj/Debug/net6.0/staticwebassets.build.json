@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Sv7mFPYVr1yM6x1m6HmAyi3S0IlvyBBK3X75s+/9fb4=",
+  "Hash": "EJCkYV3ee7bCpycjDXEJIMJRQhgynYenjxYnZJbJVXs=",
   "Source": "CI_Platform",
   "BasePath": "_content/CI_Platform",
   "Mode": "Default",
@@ -2550,6 +2550,23 @@
       "OriginalItemSpec": "wwwroot\\images\\404-Page-image.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\40d70507-6ef9-483f-a9bc-77b2070e54c3_Animal-welfare-&-save-birds-campaign.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/40d70507-6ef9-483f-a9bc-77b2070e54c3_Animal-welfare-&-save-birds-campaign.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\40d70507-6ef9-483f-a9bc-77b2070e54c3_Animal-welfare-&-save-birds-campaign.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\77322c59-03b1-4b8c-acfb-a7bd6c471d6a_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -2718,6 +2735,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\add1.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\ae3bd67a-ea78-4287-8fb1-e92d3af5fcdc_Education-Supplies-for-Every--Pair-of-Shoes-Sold.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/ae3bd67a-ea78-4287-8fb1-e92d3af5fcdc_Education-Supplies-for-Every--Pair-of-Shoes-Sold.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\ae3bd67a-ea78-4287-8fb1-e92d3af5fcdc_Education-Supplies-for-Every--Pair-of-Shoes-Sold.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\Already-volunteered.png",

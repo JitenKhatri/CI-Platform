@@ -100,7 +100,7 @@ namespace CI_Platform.DataAccess.Repository
             return missions;
         }
 
-        public bool ShareStory(long User_id,long storyId,long Mission_id,string title,string published_date,string story_description, List<IFormFile> storymedia,string type )
+        public bool ShareStory(long User_id,long storyId,long Mission_id,string title,string published_date,string story_description, List<IFormFile> storymedia,string type,List<String> videourl )
         {
             List<Story> stories = _db.Stories.ToList();
             List<StoryMedium> Storymedia = _db.StoryMedia.ToList();
@@ -148,7 +148,21 @@ namespace CI_Platform.DataAccess.Repository
                             Path = "/images/" + uniqueFileName // Save the unique file name in the database
                         });
                     }
-                    _db.SaveChanges();
+                foreach (var item in videourl)
+                {
+                    if (item == null)
+                    {
+                        continue;
+                    }
+
+                    _db.StoryMedia.Add(new StoryMedium
+                    {
+                        StoryId = story.StoryId,
+                        Type = "vid",
+                        Path = item
+                    });
+                }
+                _db.SaveChanges();
                     return true;
                 }
                
@@ -197,9 +211,23 @@ namespace CI_Platform.DataAccess.Repository
                     _db.StoryMedia.Add(new StoryMedium
                     {
                         StoryId = story_id,
-                        Type = "imag",
+                        Type = "img",
                         Path = "/images/" + uniqueFileName // Save the unique file name in the database
                     });
+                    foreach (var url in videourl)
+                    {
+                        if (url == null)
+                        {
+                            continue;
+                        }
+
+                        _db.StoryMedia.Add(new StoryMedium
+                        {
+                            StoryId = existingstory.StoryId,
+                            Type = "vid",
+                            Path = url
+                        });
+                    }
                 }
                 _db.SaveChanges();
                 return true;
@@ -213,7 +241,7 @@ namespace CI_Platform.DataAccess.Repository
             List<StoryMedium> Storymedia = _db.StoryMedia.ToList();
             List<User> users = _db.Users.ToList();
             var story = _db.Stories.FirstOrDefault(c => c.StoryId == id);
-            return new StoryViewModel { Stories = story };
+            return new StoryViewModel { Stories = story, All_volunteers = users };
         }
 
         public void Add_View(long user_id, long story_id)
@@ -225,6 +253,19 @@ namespace CI_Platform.DataAccess.Repository
                 _db.StoryViews.Add(new StoryView { StoryId = story_id, UserId = user_id });
                 _db.SaveChanges();
             }
+        }
+
+        public bool Recommend(long user_id, long story_id,long to_user_id)
+        {
+                _db.StoryInvites.Add(new StoryInvite
+                {
+                    FromUserId = user_id,
+                    ToUserId = to_user_id,
+                    StoryId = story_id
+                });
+            
+            _db.SaveChanges();
+            return true;
         }
 
     }

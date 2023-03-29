@@ -305,17 +305,20 @@ const DRopzone = (StoryId) => {
         }
     });
 }
-function validateYouTubeUrl(url) {
-    var regExp = /^https?:\/\/(?:www\.)?youtube\.com\/watch\?v=[\w-]{11}$/;
-    var match = url.match(regExp);
-    if (match && match[2].length == 11) {
-        // Valid YouTube URL
-        return true;
-    } else {
-        // Invalid YouTube URL
-        return false;
-    }
-}
+//function validateYouTubeUrls(urls) {
+//    var regExp = /^((?:https?:)?\/\/)?((?:www|m)\.)?(youtube(?:-nocookie)?\.com|youtu.be)(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S*)$/;
+//    var isValid = true;
+//    for (var i = 0; i < urls.length; i++) {
+//        var url = urls[i];
+//        var match = url.match(regExp);
+//        if (!match || match[2].length !== 11) {
+//            // Invalid YouTube URL
+//            isValid = false;
+//            break;
+//        }
+//    }
+//    return isValid;
+//}
 var edit_mission
 var edit_title
 var edit_date
@@ -328,7 +331,7 @@ function editstory(type,storyId,missionId) {
     validateEdit(storyId);
 
     if (edit_title.trim().length > 50 && edit_title.trim().length < 80 && edit_date.length != 0
-        && Date.parse(Current_date) >= Date.parse(Comparedate) && edit_mystory.trim().length > 70 && edit_mystory.trim().length < 40000 && validateYouTubeUrl(Video_url)) {
+        && Date.parse(Current_date) >= Date.parse(Comparedate) && edit_mystory.trim().length > 70 && edit_mystory.trim().length < 40000 && Video_url.length > 1) {
 
         var formData = new FormData();
 
@@ -343,6 +346,9 @@ function editstory(type,storyId,missionId) {
             formData.append('published_date', edit_date);
             formData.append('story_description', edit_mystory);
             formData.append('type', type);
+            for (var j = 0; j < Video_url.length; j++) {
+                formData.append('videourl', Video_url[j])
+            }
         });
 
         // Send the AJAX request with the FormData object after the files have been uploaded
@@ -364,7 +370,7 @@ function validateEdit(storyId) {
     Current_date = new Date()
     Comparedate = new Date($(`#edit-${storyId}`).find('#publish_date').val())
     edit_mystory = CKEDITOR.instances[`editor-${storyId}`].getData();
-    Video_url = $(`#edit-${storyId}`).find('.video-url').val()
+    Video_url = $(`#edit-${storyId}`).find('.video-url').val().split("\n");
     // Define validation conditions
     const conditions = [
         { message: "Title should be at least 50 characters long", test: edit_title.trim().length < 50 },
@@ -372,7 +378,7 @@ function validateEdit(storyId) {
         { message: "Please enter a valid date", test: edit_date.length == 0 || Date.parse(Current_date) <= Date.parse(Comparedate) },
         { message: "Story description should be at least have 70 character", test: edit_mystory.trim().length < 70 },
         { message: "Story description is too big", test: edit_mystory.trim().length > 40000 },
-        { message: "Please enter youtube video urls only", test: !validateYouTubeUrl(Video_url)}
+        { message: "Please enter youtube video urls only", test: Video_url.length < 1}
     ];
 
     // Loop through validation conditions and display alert if test fails
@@ -458,7 +464,7 @@ function sharestory(type) {
     validate();
 
     if (mission != 0 && title.trim().length > 50 && title.trim().length < 255 && $('#datepicker').datepicker().val().length != 0
-        && Date.parse(current_date) >= Date.parse(comparedate) && mystory.trim().length > 70 && mystory.trim().length < 40000 && validateYouTubeUrl(video_url) ) {
+        && Date.parse(current_date) >= Date.parse(comparedate) && mystory.trim().length > 70 && mystory.trim().length < 40000 && video_url.length > 1 ) {
 
         var formData = new FormData();
 
@@ -472,11 +478,14 @@ function sharestory(type) {
             formData.append('published_date', date.toString());
             formData.append('story_description', mystory);
             formData.append('type', type);
+            for (var j = 0; j < video_url.length; j++) {
+                formData.append('videourl', video_url[j])
+            }
         });
 
         // Send the AJAX request with the FormData object after the files have been uploaded
         myDropzone.on("success", function (file, response) {
-            showAlert("Story added as a draft")
+            showAlert("Story added !!")
             setTimeout(function () {
                 window.location.href = "https://localhost:7064/Story/Story";
             }, 5000);
@@ -493,7 +502,7 @@ function validate() {
     current_date = new Date()
     comparedate = new Date($('#datepicker').datepicker().val())
     mystory = CKEDITOR.instances.editor1.getData();
-    video_url = $('.videourl').val()
+    video_url = $('.videourl').val().split("\n");
     // Define validation conditions
     const conditions = [
         { message: "Please select a mission", test: mission === 0 },
@@ -502,7 +511,7 @@ function validate() {
         { message: "Please enter a valid date", test: $('#datepicker').datepicker().val().length == 0 || Date.parse(current_date) <= Date.parse(comparedate) },
         { message: "Story description should be at least have 70 character", test: mystory.trim().length < 70 },
         { message: "Story description is too big", test: mystory.trim().length > 40000 },
-        { message: "Please enter youtube URLs only", test: !validateYouTubeUrl(video_url) }
+        { message: "Please enter youtube URLs only", test: video_url.length < 1 }
     ];
 
     // Loop through validation conditions and display alert if test fails
@@ -516,4 +525,33 @@ function convertDate(inputFormat) {
     function pad(s) { return (s < 10) ? '0' + s : s; }
     var d = new Date(inputFormat)
     return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/')
+}
+
+function recommend(story_id, email, to_user_id) {
+        $.ajax({
+            url: `/Story/StoryDetail/${story_id}`,
+            type: 'POST',
+            data: { story_id: story_id, email: email,to_user_id : to_user_id},
+            success: function (result) {
+                console.log(result)
+
+                var recommend = $('#recommend-' + to_user_id)
+
+                recommend.prop('disabled', true)
+
+               showAlert("Invitation sent successfully!")
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    
+}
+
+function searchcoworker() {
+    var searchValue = $('#search-input').val().toLowerCase();
+    $('#volunteers-list li').filter(function () {
+        var fullName = $(this).find('span').text().toLowerCase();
+        $(this).toggle(fullName.indexOf(searchValue) > -1);
+    });
 }

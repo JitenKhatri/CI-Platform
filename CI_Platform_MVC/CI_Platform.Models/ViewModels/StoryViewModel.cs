@@ -21,5 +21,7 @@ namespace CI_Platform.Models.ViewModels
 
         public List<StoryMedium> images { get; set; }
 
+        public List<User> All_volunteers { get; set; }
+
     }
 }

@@ -57,7 +57,28 @@ namespace CI_Platform.Controllers
                     var Principle = new ClaimsPrincipal(identity);
 
                     await HttpContext.SignInAsync("AuthCookie", Principle);
-                    return RedirectToAction("Index", "Mission");
+
+                    var storyid = HttpContext.Session.GetString("Storyid");
+                    var missionid = HttpContext.Session.GetString("Missionid");
+                    if (!string.IsNullOrEmpty(missionid))
+                    {
+                        // Clear the session so the story ID doesn't get used again
+                        HttpContext.Session.Remove("Missionid");
+                        // Redirect to the storydetail page
+                        return RedirectToAction("Volunteering_mission", "Mission", new { id = long.Parse(missionid) });
+                    }
+                    else if (!string.IsNullOrEmpty(storyid))
+                    {
+                        // Clear the session so the story ID doesn't get used again
+                        HttpContext.Session.Remove("Storyid");
+                        // Redirect to the storydetail page
+                        return RedirectToAction("StoryDetail", "Story", new { id = long.Parse(storyid) });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Mission");
+                    }
+                    
                 }
             }
 
