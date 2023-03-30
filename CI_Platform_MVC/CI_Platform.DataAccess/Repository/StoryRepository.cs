@@ -28,18 +28,20 @@ namespace CI_Platform.DataAccess.Repository
             List<Mission> mission = _db.Missions.ToList();
             List<City> cities = _db.Cities.ToList();
             List<Country> countries = _db.Countries.ToList();
+            List<StoryMedium> images = _db.StoryMedia.ToList();
             var Stories = (from s in stories
                            join i in image on s.StoryId equals i.StoryId into data
                            from i in data.DefaultIfEmpty().Take(1)
-                           select new StoryViewModel { image=i,Stories=s,Countries=countries,Cities=cities }).ToList();
+                           select new StoryViewModel { image=i,Stories=s,Countries=countries,Cities=cities,images=s.StoryMedia.Where(sm=> sm.Type == "img").ToList()
+                           }).ToList();
             return Stories;
         }
 
         public List<StoryViewModel> GetFilteredStories(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, long user_id, string searchtext=null ,int page = 1, int pageSize = 6)
         {
             int skipCount = (page - 1) * pageSize;
-            List<Story> stories = _db.Stories.Where(s => s.Status == "PUBLISHED" || s.UserId == user_id).Skip(skipCount).OrderBy(s => s.Status)
-                                         .Take(pageSize).ToList();
+            List<Story> stories = _db.Stories.Where(s => s.Status == "PUBLISHED" || s.UserId == user_id).OrderBy(s => s.Status).
+                                         ToList();
             List<StoryMedium> image = _db.StoryMedia.ToList();
             List<MissionTheme> theme = _db.MissionThemes.ToList();
             List<Country> countries = _db.Countries.ToList();
@@ -73,7 +75,10 @@ namespace CI_Platform.DataAccess.Repository
                             (Countries.Count == 0 || Countries.Contains(s.Mission.Country.Name)) &&
                             (Themes.Count == 0 || Themes.Contains(s.Mission.Theme.Title)) && (Skills.Count == 0 || Skills.All(sm => s.Mission.MissionSkills.Any(k => k.Skill.SkillName == sm))))
                      select s).ToList();
-           
+
+            stories = stories.Skip(skipCount).Take(pageSize).ToList();
+
+
             var Stories = (from s in story
                             join i in image on s.StoryId equals i.StoryId into data
                             from i in data.DefaultIfEmpty().Take(1)
@@ -144,16 +149,12 @@ namespace CI_Platform.DataAccess.Repository
                         _db.StoryMedia.Add(new StoryMedium
                         {
                             StoryId = story_id,
-                            Type = "imag",
+                            Type = "img",
                             Path = "/images/" + uniqueFileName // Save the unique file name in the database
                         });
                     }
                 foreach (var item in videourl)
                 {
-                    if (item == null)
-                    {
-                        continue;
-                    }
 
                     _db.StoryMedia.Add(new StoryMedium
                     {

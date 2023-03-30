@@ -69,7 +69,7 @@
                     @{ int count = 0;
                         foreach (var item in Model?.Stories?.StoryMedia)
                         {
-                            if (count == 0)
+                                if (count == 0)
                             {
                                 if (@item.Type == "img")
                                 {
@@ -120,7 +120,7 @@
                                            }
                                        else
                                         {
-                                         <img src="https://img.youtube.com/vi/@Model?.Stories?.StoryMedia.ElementAt(j).Path.Split(" v=").ElementAt(1)/0.jpg"
+                                         <img src='https://img.youtube.com/vi/@Model?.Stories?.StoryMedia.ElementAt(j).Path.Split("v=").ElementAt(1)/0.jpg'
                                          data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
                                                                         }
                                                                     }
@@ -133,7 +133,7 @@
                                                                         }
                                                                         else
                                                                         {
-                                                                           <img src="https://img.youtube.com/vi/@Model?.Stories?.StoryMedia.ElementAt(j).Path.Split(" v=")/.jpg"
+                                                                           <img src='https://img.youtube.com/vi/@Model?.Stories?.StoryMedia.ElementAt(j).Path.Split("v=").ElementAt(1)/0.jpg'
                                          data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" /> 
                                                                         }}
                                                                     } 
@@ -142,8 +142,17 @@
                              {
                              @for (int j = 0; j < @Model?.Stories?.StoryMedia.Count; j++)
                              {
-                                <img src='@Model?.Stories?.StoryMedia.ElementAt(j).Path'
-                                data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />}}
+                                                                    if (@Model?.Stories?.StoryMedia.ElementAt(j).Type == "img")
+                                                                    {
+                                                                        <img src='@Model?.Stories?.StoryMedia.ElementAt(j).Path'
+                                data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                       <img src='https://img.youtube.com/vi/@Model?.Stories?.StoryMedia.ElementAt(j).Path.Split("v=").ElementAt(1)/0.jpg'
+                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />   
+                                                                    }
+                                                                  }}
                         </div>
                      </div>
                      check = check + 4;
@@ -156,13 +165,33 @@
                         {
                            @for (int j = check; j < sub_count + check; j++)
                             {
-                                <img src='@Model?.Stories?.StoryMedia.ElementAt(j).Path'
-                                data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />} }
+                                                                    if (@Model?.Stories?.StoryMedia.ElementAt(j).Type == "img")
+                                                                    {
+                                                                      <img src='@Model?.Stories?.StoryMedia.ElementAt(j).Path'
+                                data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />  
+                                                                    }
+                                                                     else
+                                                                    {
+                                                                       <img src='https://img.youtube.com/vi/@Model?.Stories?.StoryMedia.ElementAt(j).Path.Split("v=").ElementAt(1)/0.jpg'
+                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />   
+                                                                    }
+                                                                    } }
                        else
                             {
                             @for (int j = check; j < @Model?.Stories?.StoryMedia.Count; j++)
                             {
-                            <img src='@Model?.Stories?.StoryMedia.ElementAt(j).Path' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />}}
+                                                                    if (@Model?.Stories?.StoryMedia.ElementAt(j).Type == "img")
+                                                                    {
+                                                                        <img src='@Model?.Stories?.StoryMedia.ElementAt(j).Path' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                       <img src='https://img.youtube.com/vi/@Model?.Stories?.StoryMedia.ElementAt(j).Path.Split("v=").ElementAt(1)/0.jpg'
+                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />   
+                                                                    }
+
+                                                                }
+                                                    }
                                 </div>
                             </div> check = check + 4;
                             }

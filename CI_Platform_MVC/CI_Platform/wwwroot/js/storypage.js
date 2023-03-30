@@ -302,23 +302,45 @@ const DRopzone = (StoryId) => {
                 // Show the remove button when a file is added
                 file.previewElement.querySelector(".btn-remove").style.display = "block";
             });
+            let myDropzone = this;
+            var imageurls = $(".imageurl").get();
+            imageurls.forEach(i => {
+                console.log(i.dataset.storyId)
+                if (i.dataset.storyId == StoryId) {
+                    //// get the file path from the input element
+                    //let filePath = i.value;
+
+                    //// extract the file name from the file path
+                    //let fileName = filePath.split('\\').pop().split('/').pop();
+
+                    //// create a new File object with the local file path
+                    //let file = new File([filePath], fileName);
+
+                    //// use the file object in Dropzone
+                    //myDropzone.displayExistingFile(file, filePath);
+                  /*  myDropzone.processFile(file);*/
+                    let mockFile = { name: "Filename 2", size: 12345 };
+                    myDropzone.displayExistingFile(mockFile, i.value);
+                    console.log(i.value);
+                   
+                    //myDropzone.files.push(mockFile); // manually trigger processing of the preselected file
+                }
+            } );
+        
         }
     });
 }
-//function validateYouTubeUrls(urls) {
-//    var regExp = /^((?:https?:)?\/\/)?((?:www|m)\.)?(youtube(?:-nocookie)?\.com|youtu.be)(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S*)$/;
-//    var isValid = true;
-//    for (var i = 0; i < urls.length; i++) {
-//        var url = urls[i];
-//        var match = url.match(regExp);
-//        if (!match || match[2].length !== 11) {
-//            // Invalid YouTube URL
-//            isValid = false;
-//            break;
-//        }
-//    }
-//    return isValid;
-//}
+function validateYouTubeUrls(urls) {
+    const regex = /^https?:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})$/;
+
+    for (const url of urls) {
+        if (!regex.test(url)) {
+            return false;
+        }
+    }
+
+    return true;
+}
 var edit_mission
 var edit_title
 var edit_date
@@ -331,7 +353,7 @@ function editstory(type,storyId,missionId) {
     validateEdit(storyId);
 
     if (edit_title.trim().length > 50 && edit_title.trim().length < 80 && edit_date.length != 0
-        && Date.parse(Current_date) >= Date.parse(Comparedate) && edit_mystory.trim().length > 70 && edit_mystory.trim().length < 40000 && Video_url.length > 1) {
+        && Date.parse(Current_date) >= Date.parse(Comparedate) && edit_mystory.trim().length > 70 && edit_mystory.trim().length < 40000 && validateYouTubeUrls(Video_url)) {
 
         var formData = new FormData();
 
@@ -370,7 +392,10 @@ function validateEdit(storyId) {
     Current_date = new Date()
     Comparedate = new Date($(`#edit-${storyId}`).find('#publish_date').val())
     edit_mystory = CKEDITOR.instances[`editor-${storyId}`].getData();
-    Video_url = $(`#edit-${storyId}`).find('.video-url').val().split("\n");
+    const urlString = $(`#edit-${storyId}`).find('.video-url').val();
+    const urls = urlString.trim().split(/\r?\n/);
+    Video_url = urls;
+/*    Video_url = $(`#edit-${storyId}`).find('.video-url').val().split("\n");*/
     // Define validation conditions
     const conditions = [
         { message: "Title should be at least 50 characters long", test: edit_title.trim().length < 50 },
@@ -378,7 +403,7 @@ function validateEdit(storyId) {
         { message: "Please enter a valid date", test: edit_date.length == 0 || Date.parse(Current_date) <= Date.parse(Comparedate) },
         { message: "Story description should be at least have 70 character", test: edit_mystory.trim().length < 70 },
         { message: "Story description is too big", test: edit_mystory.trim().length > 40000 },
-        { message: "Please enter youtube video urls only", test: Video_url.length < 1}
+        { message: "Please enter youtube video urls only", test: !validateYouTubeUrls(Video_url)}
     ];
 
     // Loop through validation conditions and display alert if test fails
@@ -409,7 +434,6 @@ $(function () {
     $("#datepicker").datepicker();
 });
 let alertId = 0;
-
 function showAlert(message) {
     const alert = document.createElement("div");
     alert.classList.add("alert");
