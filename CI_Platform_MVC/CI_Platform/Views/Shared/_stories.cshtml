@@ -11,7 +11,7 @@
                  <div class="col-12 col-md-6 col-lg-4">              
               <div class="card">
                 <div class="img-event">
-                  <img class="card-img-top" src=@story.image.Path alt="Card image cap">
+                  <img class="card-img-top" src=@story.Image.Path alt="Card image cap">
                 
                  <div class="middle">
                       <a asp-action = "StoryDetail" asp-route-id="@story?.Stories?.StoryId"  class="btn" id="view-details-button">View Details <span>
@@ -20,16 +20,19 @@
                 </div>
                 
                 <button class="mission-theme border-0">
-                    <span class="p-2">@story.Stories?.Mission.Theme.Title</span>
+                    <span class="p-2">@story.Story_theme</span>
                 </button>
                 </div>
                 <div class="card-body">
                   <h4 class="mission-title">@story.Stories?.Title</h4>
-                  <p class="card-text">@Html.Raw(@story.Stories?.Description)</p>
+                  <div class="story-desc" >
+                    <p class="card-text">@Html.Raw(@story.Stories?.Description)</p>
+                  </div>
+                  
                   <div class="d-flex justify-content-between"> 
                       <div>
-                          <img class="volunteer-image" src=@story.Stories?.User.Avatar />
-                      <span class="vol-name">@story.Stories?.User.FirstName @story.Stories?.User.LastName </span>
+                          <img class="volunteer-image" src=@story.User_avatar />
+                      <span class="vol-name">@story.User_firstname @story.User_lastname </span>
                       </div>
                       
                     @{

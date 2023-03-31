@@ -11,7 +11,7 @@ namespace CI_Platform.DataAccess.Repository.IRepository
 {
     public interface IStoryRepository : IRepository<Story>
     {
-        List<StoryViewModel> GetAllStories(long user_id,int page, int pageSize);
+        (List<StoryViewModel>, int) GetAllStories(long user_id,int page, int pageSize);
         List<StoryViewModel> GetFilteredStories(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, long user_id, string searchtext, int page = 1, int pageSize = 6 );
         List<City> CityCascade(long countryid);
 

@@ -223,7 +223,7 @@
                <span class="ms-1">@Model.Stories.StoryViews.Count views</span>
            </div>
        </div>
-      <div class="ms-3 mt-5 lorem px-3">
+      <div class="ms-3 mt-5 lorem px-3 vol-reason">
           @foreach (var line in Model.Stories.User.WhyIVolunteer.Split('.'))
                {
         <p class="lorem" >@line.Trim() </p><br /> 
@@ -247,7 +247,7 @@
               </ul>
               <div class="tab-content" id="myTabContent">
                   <div class="tab-pane fade show active" id="tab-1" role="tabpanel">
-                      @Model.Stories.Description
+                     @Html.Raw(@Model.Stories.Description )
                       </div>
                       
                   </div>

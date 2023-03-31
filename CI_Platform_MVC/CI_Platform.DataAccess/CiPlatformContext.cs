@@ -706,7 +706,7 @@ public partial class CiPlatformContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Description)
-                .HasColumnType("text")
+                .IsUnicode(false)
                 .HasColumnName("description");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.PublishedAt)

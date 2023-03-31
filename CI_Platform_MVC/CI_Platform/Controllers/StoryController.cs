@@ -38,7 +38,15 @@ namespace CI_Platform.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-                List<StoryViewModel> stories = db.StoryRepository.GetAllStories(user_id,page,pageSize);
+                var result = db.StoryRepository.GetAllStories(user_id, page, pageSize);
+                List<StoryViewModel> stories = result.Item1;
+                int totalItemCount = result.Item2;
+
+                // Generate pagination links
+                int pageCount = (int)Math.Ceiling((double)totalItemCount / pageSize);
+                ViewBag.PageCount = pageCount;
+                ViewBag.CurrentPage = page;
+
                 return View(stories);
             }
             else

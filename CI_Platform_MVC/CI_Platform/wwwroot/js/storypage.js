@@ -59,6 +59,9 @@ function Cityfilter(name) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
             }
+            else {
+                $('.page-not-found').css('display', 'none');
+            }
             $('.Stories').html(result);
             $('.pagination-link').css('display', 'none');
         },
@@ -104,6 +107,9 @@ function Countryfilter(name, dataid) {
                 success: function (result) {
                     if (result == "") {
                         $('.page-not-found').css('display', 'block');
+                    }
+                    else {
+                        $('.page-not-found').css('display', 'none');
                     }
                     $('.Stories').html(result);
                     $('.pagination-link').css('display', 'none');
@@ -158,6 +164,9 @@ const Themefilter = (name) => {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
             }
+            else {
+                $('.page-not-found').css('display', 'none');
+            }
             $('.Stories').html(result);
             $('.pagination-link').css('display', 'none');
         },
@@ -187,6 +196,9 @@ const Skillfilter = (name) => {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
             }
+            else {
+                $('.page-not-found').css('display', 'none');
+            }
             $('.Stories').html(result);
             $('.pagination-link').css('display', 'none');
         },
@@ -207,6 +219,9 @@ function search() {
             success: function (result) {
                 if (result == "") {
                     $('.page-not-found').css('display', 'block');
+                }
+                else {
+                    $('.page-not-found').css('display', 'none');
                 }
                 $('.Stories').html(result);
                 $('.pagination-link').css('display', 'none');
@@ -301,7 +316,16 @@ const DRopzone = (StoryId) => {
             this.on("addedfile", function (file) {
                 // Show the remove button when a file is added
                 file.previewElement.querySelector(".btn-remove").style.display = "block";
+                file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
+                    // Remove the file from Dropzone
+                    myDropzone.removeFile(file);
+                });
             });
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+                showAlert("You can only upload a maximum of 20 files.");
+            });
+
             let myDropzone = this;
             var imageurls = $(".imageurl").get();
             imageurls.forEach(i => {
@@ -332,14 +356,19 @@ const DRopzone = (StoryId) => {
 }
 function validateYouTubeUrls(urls) {
     const regex = /^https?:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})$/;
+  
 
     for (const url of urls) {
         if (!regex.test(url)) {
             return false;
         }
     }
-
-    return true;
+    if (urls.length > 20) {
+        return false;
+    }
+    else {
+        return true;
+    }
 }
 var edit_mission
 var edit_title
@@ -403,7 +432,7 @@ function validateEdit(storyId) {
         { message: "Please enter a valid date", test: edit_date.length == 0 || Date.parse(Current_date) <= Date.parse(Comparedate) },
         { message: "Story description should be at least have 70 character", test: edit_mystory.trim().length < 70 },
         { message: "Story description is too big", test: edit_mystory.trim().length > 40000 },
-        { message: "Please enter youtube video urls only", test: !validateYouTubeUrls(Video_url)}
+        { message: "Please enter youtube video urls only, enter different urls in new line and maximum 20 urls are allowed", test: !validateYouTubeUrls(Video_url)}
     ];
 
     // Loop through validation conditions and display alert if test fails
@@ -478,6 +507,11 @@ if (window.location.href === 'https://localhost:7064/Story/ShareStory') {
                     // Show the remove button when a file is added
                     file.previewElement.querySelector(".btn-remove").style.display = "block";
                 });
+                this.on("maxfilesexceeded", function (file) {
+                    this.removeFile(file);
+                    showAlert("You can only upload a maximum of 20 files.");
+                });
+             
             }
         });
 
@@ -526,7 +560,9 @@ function validate() {
     current_date = new Date()
     comparedate = new Date($('#datepicker').datepicker().val())
     mystory = CKEDITOR.instances.editor1.getData();
-    video_url = $('.videourl').val().split("\n");
+    const urlString = $('.videourl').val();
+    const urls = urlString.trim().split(/\r?\n/);
+    video_url = urls;
     // Define validation conditions
     const conditions = [
         { message: "Please select a mission", test: mission === 0 },
@@ -535,7 +571,7 @@ function validate() {
         { message: "Please enter a valid date", test: $('#datepicker').datepicker().val().length == 0 || Date.parse(current_date) <= Date.parse(comparedate) },
         { message: "Story description should be at least have 70 character", test: mystory.trim().length < 70 },
         { message: "Story description is too big", test: mystory.trim().length > 40000 },
-        { message: "Please enter youtube URLs only", test: video_url.length < 1 }
+        { message: "Please enter youtube video urls only, enter different urls in new line and maximum 20 urls are allowed", test: validateYouTubeUrls(video_url) }
     ];
 
     // Loop through validation conditions and display alert if test fails

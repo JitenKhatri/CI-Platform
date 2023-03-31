@@ -83,6 +83,9 @@ function search() {
                 if (result == "") {
                     $('.page-not-found').css('display', 'block');
                 }
+                else {
+                    $('.page-not-found').css('display', 'none');
+                }
                 $('.missions').html(result);
                 $('.pagination-link').css('display', 'none');
             },
@@ -186,6 +189,9 @@ function addcities(name) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
             }
+            else {
+                $('.page-not-found').css('display', 'none');
+            }
             $('.missions').html(result);
             $('.pagination-link').css('display', 'none');
         },
@@ -231,6 +237,9 @@ function addcountries(name,dataid) {
                 success: function (result) {
                     if (result == "") {
                         $('.page-not-found').css('display', 'block'); 
+                    }
+                    else {
+                        $('.page-not-found').css('display', 'none');
                     }
                     $('.missions').html(result);
                     $('.pagination-link').css('display', 'none');
@@ -285,6 +294,9 @@ const addthemes = (name) => {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
             }
+            else {
+                $('.page-not-found').css('display', 'none');
+            }
             $('.missions').html(result);
             $('.pagination-link').css('display', 'none');
         },
@@ -313,6 +325,9 @@ const addskills = (name) => {
         success: function (result) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
+            }
+            else {
+                $('.page-not-found').css('display', 'none');
             }
             $('.missions').html(result);
             $('.pagination-link').css('display', 'none');

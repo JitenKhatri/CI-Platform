@@ -125,6 +125,7 @@
                                     <label for="@theme.Text">@theme.Text</label>
                                 </div>
                             }
+                            </div>
 
 
                     </li>
@@ -177,12 +178,29 @@
             <h4 class="pt-2">No Story found</h4>
             <div class="d-flex justify-content-center mt-4">
                 <button class="apply-btn btn" style="width:12%">
-                    Submit new story <img src="images/right-arrow.png" alt="">
+                    Submit new story <img src="~/images/right-arrow.png" alt="">
                 </button>
             </div>
         </div>
         @*Pagination*@
         <nav aria-label="Page navigation" class="pagination-link">
+           @{ int pageSize = 6;}
+    <ul class="pagination justify-content-center">
+        <li class="page-item @if (ViewBag.CurrentPage <= 1) { @Html.Raw("disabled"); }">
+            <a class="page-link" href="@Url.Action("Story", "Story", new { page = ViewBag.CurrentPage - 1, pageSize = pageSize })">Previous</a>
+        </li>
+        @for (int i = 1; i <= ViewBag.PageCount; i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Story", "Story", new { page = i, pageSize = pageSize })">@i</a>
+            </li>
+        }
+        <li class="page-item @if (ViewBag.CurrentPage >= ViewBag.PageCount) { @Html.Raw("disabled"); }">
+            <a class="page-link" href="@Url.Action("Story", "Story", new { page = ViewBag.CurrentPage + 1, pageSize = pageSize })">Next</a>
+        </li>
+    </ul>
+</nav>
+       @* <nav aria-label="Page navigation" class="pagination-link">
             <ul class="pagination justify-content-center">
                 <li class="page-item pe-2">
                     <a class="page-link" href="@Url.Action("Story", "Story", new { page = 1, pageSize = 6 })">Previous</a>
@@ -197,7 +215,7 @@
                     <a class="page-link" href="@Url.Action("Story", "Story", new { page = 2, pageSize = 6 })">Next</a>
                 </li>
             </ul>
-        </nav>
+        </nav>*@
 
         @{
             foreach (var item in Model)
@@ -207,7 +225,7 @@
                 {
 
                     <div class="modal fade" id="edit-@item.Stories.StoryId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        @foreach (var urls in item.images)
+                        @foreach (var urls in item.Images)
                         {
                             <input type="hidden" value="@urls.Path" class="imageurl" data-story-id="@item.Stories.StoryId">
                         }
@@ -219,7 +237,7 @@
                                 <div class="modal-body">
                                     <div class="page-1">
                                         <select class="form-select" aria-label="Select mission">
-                                            <option value=@item.Stories.MissionId selected>@item.Stories.Mission.Title</option>
+                                            <option value=@item.MissionId selected>@item.Missiontitle</option>
                                         </select>
                                         <div class=" mt-2">
                                             <label class="form-label">My Story Title</label>
@@ -238,9 +256,9 @@
                                     </div>
                                     <div>
                                         <div class=" w-100 mt-4">
-                                            <label class="form-label">Enter Video URL</label>
+                                            <label class="form-label">Enter Youtube video urls</label>
                                             <textarea rows="3" class="form-control video-url" type="url" placeholder="Enter Your URL">
-                                                @foreach(var url in item.Stories.StoryMedia.Where(sm=>sm.Type=="vid").ToList())
+                                                @foreach(var url in item.Vidmedia)
                                                 {
                                                     @url.Path
                                                     @Html.Raw('\n')
@@ -249,9 +267,9 @@
                                         </div>
 
                                         <div class="row mt-3">
-                                            <div class="dropzone" id="myDropzone-@item.Stories.StoryId">
+                                            <div class="dropzone d-flex flex-row" id="myDropzone-@item.Stories.StoryId">
                                                 <div id="imagePreview" class="dz-preview">
-                                                    <div id="previewTemplate" class="preview-container">
+                                                    <div id="previewTemplate" class="preview-container mr-3">
                                                         <button type="button" class="btn-remove" style="display:none" data-dz-remove>
                                                             <img src="~/images/cross.png" />
                                                         </button>
@@ -265,8 +283,8 @@
                                 </div>
                                 <div class="modal-footer justify-content-between">
                                     <button type="button" class="btn applyButton" data-bs-dismiss="modal">Close</button>
-                                    <button onclick="editstory('DRAFT',@item.Stories.StoryId,@item.Stories.MissionId)" class="submitbtn me-2">Save</button>
-                                    <button onclick="editstory('PUBLISHED',@item.Stories.StoryId,@item.Stories.MissionId)" class="submitbtn">Submit</button>
+                                    <button onclick="editstory('DRAFT',@item.Stories.StoryId,@item.MissionId)" class="submitbtn me-2">Save</button>
+                                    <button onclick="editstory('PUBLISHED',@item.Stories.StoryId,@item.MissionId)" class="submitbtn">Submit</button>
                                 </div>
                             </div>
                         </div>

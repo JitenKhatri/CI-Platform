@@ -17,74 +17,89 @@ namespace CI_Platform.DataAccess.Repository
         {
             _db = db;
         }
-        public List<StoryViewModel> GetAllStories(long user_id,int page = 1, int pageSize = 6)
+
+
+        public (List<StoryViewModel>, int) GetAllStories(long user_id, int page = 1, int pageSize = 6)
         {
             int skipCount = (page - 1) * pageSize;
-            List<Story> stories = _db.Stories.Where(s => s.Status == "PUBLISHED" || s.UserId == user_id).Skip(skipCount).OrderBy(s=> s.Status)
-                                          .Take(pageSize).ToList();
-            List<StoryMedium> image = _db.StoryMedia.ToList();
-            List<User> users = _db.Users.ToList();
-            List<MissionTheme> themes = _db.MissionThemes.ToList();
-            List<Mission> mission = _db.Missions.ToList();
-            List<City> cities = _db.Cities.ToList();
-            List<Country> countries = _db.Countries.ToList();
-            List<StoryMedium> images = _db.StoryMedia.ToList();
-            var Stories = (from s in stories
-                           join i in image on s.StoryId equals i.StoryId into data
-                           from i in data.DefaultIfEmpty().Take(1)
-                           select new StoryViewModel { image=i,Stories=s,Countries=countries,Cities=cities,images=s.StoryMedia.Where(sm=> sm.Type == "img").ToList()
-                           }).ToList();
-            return Stories;
+
+            var storiesQuery = _db.Stories.Where(s => s.Status == "PUBLISHED" || s.UserId == user_id);
+
+            var storyQuery = storiesQuery
+                .OrderBy(s => s.Status)
+                .Skip(skipCount)
+                .Take(pageSize)
+                .Select(s => new StoryViewModel
+                {
+                    Stories = s,
+                    Image = s.StoryMedia.FirstOrDefault(),
+                    Countries = _db.Countries.ToList(),
+                    Cities = _db.Cities.ToList(),
+                    Story_city = s.Mission.City.Name,
+                    Story_theme = s.Mission.Theme.Title,
+                    User_firstname = s.User.FirstName, // include fields from User table
+                    User_lastname = s.User.LastName,
+                    User_avatar = s.User.Avatar,
+                    User_id = s.User.UserId,
+                    Images = s.StoryMedia.Where(sm => sm.Type == "img").ToList(),
+                    MissionId = s.Mission.MissionId,
+                    Missiontitle = s.Mission.Title,
+                    Vidmedia = s.StoryMedia.Where(sm => sm.Type == "vid").ToList()
+
+                }) ; ;
+
+            var stories = storyQuery.ToList();
+            int totalStories = storiesQuery.Count();
+
+            return (stories, totalStories);
         }
-
-        public List<StoryViewModel> GetFilteredStories(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, long user_id, string searchtext=null ,int page = 1, int pageSize = 6)
+        public List<StoryViewModel> GetFilteredStories(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, long user_id, string searchtext = null, int page = 1, int pageSize = 6)
         {
             int skipCount = (page - 1) * pageSize;
-            List<Story> stories = _db.Stories.Where(s => s.Status == "PUBLISHED" || s.UserId == user_id).OrderBy(s => s.Status).
-                                         ToList();
-            List<StoryMedium> image = _db.StoryMedia.ToList();
-            List<MissionTheme> theme = _db.MissionThemes.ToList();
-            List<Country> countries = _db.Countries.ToList();
-            List<City> cities = _db.Cities.ToList();
-            List<City> city = _db.Cities.ToList();
 
-            List<User> users = _db.Users.ToList();
-            List<Story> story = _db.Stories.ToList();
-            List<MissionSkill> missionskills = _db.MissionSkills.ToList();
-            List<Skill> skills = _db.Skills.ToList();
-            List<Mission> mission = _db.Missions.ToList();
+            var storiesQuery = _db.Stories
+                .Where(s => s.Status == "PUBLISHED" || s.UserId == user_id);
 
-            if(!String.IsNullOrEmpty(searchtext))
+            if (!string.IsNullOrEmpty(searchtext))
             {
-                stories = (from s in stories
-                           select s).Where(s => s.Title.ToLower().Replace(" ", "").Contains(searchtext.ToLower().Replace(" ", ""))
-                           || s.Description.ToLower().Replace(" ", "").Contains(searchtext.ToLower().Replace(" ", ""))).ToList();
+                storiesQuery = storiesQuery.Where(s => s.Title.ToLower().Replace(" ", "").Contains(searchtext.ToLower().Replace(" ", ""))
+                                                       || s.Description.ToLower().Replace(" ", "").Contains(searchtext.ToLower().Replace(" ", "")));
             }
+
+            var cityQuery = _db.Cities.AsQueryable();
+
             if (Countries.Count > 0)
             {
-                city = (from c in cities
-                        where Countries.Contains(c.Country.Name)
-                        select c).ToList();
+                cityQuery = cityQuery.Where(c => Countries.Contains(c.Country.Name));
             }
-            else
-            {
-                city = cities;
-            }
-            story = (from s in stories
-                     where ((Cities.Count == 0 || Cities.Contains(s.Mission.City.Name)) &&
-                            (Countries.Count == 0 || Countries.Contains(s.Mission.Country.Name)) &&
-                            (Themes.Count == 0 || Themes.Contains(s.Mission.Theme.Title)) && (Skills.Count == 0 || Skills.All(sm => s.Mission.MissionSkills.Any(k => k.Skill.SkillName == sm))))
-                     select s).ToList();
 
-            stories = stories.Skip(skipCount).Take(pageSize).ToList();
+            var storyQuery = storiesQuery
+                .Where(s => Cities.Count == 0 || Cities.Contains(s.Mission.City.Name))
+                .Where(s => Countries.Count == 0 || Countries.Contains(s.Mission.Country.Name))
+                .Where(s => Themes.Count == 0 || Themes.Contains(s.Mission.Theme.Title))
+                .Where(s => Skills.Count == 0 || Skills.All(sm => s.Mission.MissionSkills.Any(k => k.Skill.SkillName == sm)));
 
+            var stories = storyQuery
+                .OrderBy(s => s.Status)
+                .Skip(skipCount)
+                .Take(pageSize)
+                .Select(s => new StoryViewModel
+                {
+                    Stories = s,
+                    Image = s.StoryMedia.FirstOrDefault(),
+                    Countries = _db.Countries.ToList(),
+                    Cities = cityQuery.ToList(),
+                    Story_city = s.Mission.City.Name,
+                    Story_theme = s.Mission.Theme.Title,
+                    User_avatar = s.User.Avatar,
+                    User_id = s.User.UserId,
+                    User_firstname = s.User.FirstName,
+                    User_lastname = s.User.LastName,
 
-            var Stories = (from s in story
-                            join i in image on s.StoryId equals i.StoryId into data
-                            from i in data.DefaultIfEmpty().Take(1)
-                            select new StoryViewModel { image = i, Stories = s, Countries = countries, Cities = city, Story_city = s.Mission.City.Name, Story_theme = s.Mission.Theme.Title }).ToList();
-            return Stories;
+                })
+                .ToList();
 
+            return stories;
         }
 
         public List<City> CityCascade(long countryid)
@@ -180,9 +195,10 @@ namespace CI_Platform.DataAccess.Repository
                 var existingMedia = _db.StoryMedia.Where(sm => sm.StoryId == storyId);
                 foreach (var medium in existingMedia)
                 {
-                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", medium.Path);
+                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", Path.GetFileName(medium.Path));
                     if (File.Exists(filePath))
                     {
+                        string fileName = Path.GetFileName(medium.Path); // Extracts the file name from the file path
                         File.Delete(filePath);
                     }
                     _db.StoryMedia.Remove(medium);
@@ -238,12 +254,17 @@ namespace CI_Platform.DataAccess.Repository
 
         public StoryViewModel GetStoryDetail(long user_id, long id)
         {
-            List<Story> stories = _db.Stories.ToList();
-            List<StoryMedium> Storymedia = _db.StoryMedia.ToList();
-            List<User> users = _db.Users.ToList();
-            var story = _db.Stories.FirstOrDefault(c => c.StoryId == id);
+            var storyQuery = _db.Stories.Where(c => c.StoryId == id);
+            var storyMediaQuery = _db.StoryMedia.Where(sm => sm.StoryId == id);
+            var userQuery = _db.Users;
+
+            var story = storyQuery.FirstOrDefault();
+            var storyMedia = storyMediaQuery.ToList();
+            var users = userQuery.ToList();
+
             return new StoryViewModel { Stories = story, All_volunteers = users };
         }
+   
 
         public void Add_View(long user_id, long story_id)
         {
