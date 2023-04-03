@@ -53,9 +53,9 @@ namespace CI_Platform.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string? sortOrder, string searchtext = null, int page=1,int pageSize=6)
+        public IActionResult Index(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string? sortOrder, string searchtext = null, int page = 1, int pageSize = 6)
         {
-            List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries, cities, themes, skills, sortOrder,searchtext,page, pageSize);
+            List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(countries, cities, themes, skills, sortOrder, searchtext, page, pageSize);
             return PartialView("_Mission", missions);
         }
 
@@ -156,6 +156,78 @@ namespace CI_Platform.Controllers
             
         }
 
-        
+        public IActionResult Volunteering_Timesheet()
+        {
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            TimesheetViewModel model = db.MissionRepository.Get_Mission_For_TimeSheet(user_id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Volunteering_Timesheet(long mission_id, string date, int actions, string message, string type, int hours, int minutes, int timesheet_id)
+        {
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            if (type == "goal")
+            {
+                TimesheetViewModel model = new TimesheetViewModel
+                {
+                    Mission_id = mission_id,
+                    Volunteered_date = date,
+                    Actions = actions,
+                    Message = message
+                };
+                Timesheet timesheet = db.MissionRepository.AddTimeSheet(user_id, model, type);
+                var view = this.RenderViewAsync("_timesheet", timesheet, true);
+                return Json(new { view });
+            }
+            else if (type == "time-edit")
+            {
+                TimesheetViewModel model = new TimesheetViewModel
+                {
+                    Mission_id = mission_id,
+                    Volunteered_date = date,
+                    Hours = hours,
+                    Minutes = minutes,
+                    Message = message
+                };
+                Timesheet timesheet = db.MissionRepository.EditTimeSheet(timesheet_id, model, type);
+                var view = this.RenderViewAsync("_timesheet", timesheet, true);
+                return Json(new { view });
+            }
+            else if (type == "time-delete")
+            {
+                bool success = db.MissionRepository.DeleteTimesheet(timesheet_id);
+                return Json(new { success });
+            }
+            else if (type == "goal-edit")
+            {
+                TimesheetViewModel model = new TimesheetViewModel
+                {
+                    Mission_id = mission_id,
+                    Volunteered_date = date,
+                    Actions = actions,
+                    Message = message
+                };
+                Timesheet timesheet = db.MissionRepository.EditTimeSheet(timesheet_id, model, type);
+                var view = this.RenderViewAsync("_timesheet", timesheet, true);
+                return Json(new { view });
+            }
+            else
+            {
+                TimesheetViewModel model = new TimesheetViewModel
+                {
+                    Mission_id = mission_id,
+                    Volunteered_date = date,
+                    Hours = hours,
+                    Minutes = minutes,
+                    Message = message
+                };
+                Timesheet timesheet = db.MissionRepository.AddTimeSheet(user_id, model, type);
+                var view = this.RenderViewAsync("_timesheet", timesheet, true);
+                return Json(new { view });
+            }
+        }
+
+
     }
 }

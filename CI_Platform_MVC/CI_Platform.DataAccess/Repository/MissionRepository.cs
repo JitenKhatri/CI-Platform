@@ -18,96 +18,121 @@ namespace CI_Platform.DataAccess.Repository
         {
             _db = db;
         }
-  
+
         public List<MissionViewModel> GetAllMission(int page = 1, int pageSize = 6)
         {
             int skipCount = (page - 1) * pageSize;
-            List<Mission> mission = _db.Missions.Skip(skipCount)
-                                          .Take(pageSize).ToList();
-           
-            List<MissionMedium> image = _db.MissionMedia.ToList();
-            List<MissionTheme> theme = _db.MissionThemes.ToList();
-            List<Country> countries = _db.Countries.ToList();
-            List<City> city = _db.Cities.ToList();
-            List<Skill> skills = _db.Skills.ToList();
-            List<FavoriteMission> favoriteMissions = _db.FavoriteMissions.ToList();
-            List<MissionRating> missionRatings = _db.MissionRatings.ToList();
-            var Missions = (from m in mission
-                            join i in image on m.MissionId equals i.MissionId into data
-                            from i in data.DefaultIfEmpty().Take(1)
-                            select new MissionViewModel { image = i, Missions = m, Country = countries, themes = theme, skills = skills,favoriteMissions=favoriteMissions,missionRatings=missionRatings }).ToList();
-            return Missions;
+
+            IQueryable<MissionViewModel> query = from m in _db.Missions
+                                                 join ms in _db.MissionSkills on m.MissionId equals ms.MissionId
+                                                 join s in _db.Skills on ms.SkillId equals s.SkillId
+                                                 select new MissionViewModel
+                                                 {
+                                                     image = m.MissionMedia.FirstOrDefault(),
+                                                     Missions = m,
+                                                     Country = new CountryViewModel
+                                                     {
+                                                         CountryId = m.Country.CountryId,
+                                                         CountryName = m.Country.Name
+                                                     },
+                                                     themes = new ThemeViewModel
+                                                     {
+                                                         ThemeId = m.Theme.MissionThemeId,
+                                                         ThemeName = m.Theme.Title
+                                                     },
+                                                     skills = new SkillViewModel
+                                                     {
+                                                         SkillId = s.SkillId,
+                                                         SkillName = s.SkillName
+                                                     },
+                                                     Cities = new CityViewModel
+                                                     {
+                                                         CityId = m.CityId,
+                                                         CityName = m.City.Name
+                                                     }
+
+                                                 };
+
+            List<MissionViewModel> missions = query.Skip(skipCount).Take(pageSize).ToList();
+
+            return missions;
         }
 
-        public List<MissionViewModel> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills , string? sortOrder, string searchtext = null, int page=1 , int pageSize = 6)
-            {
+        public List<MissionViewModel> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, string? sortOrder, string searchtext = null, int page = 1, int pageSize = 6)
+        {
             int skipCount = (page - 1) * pageSize;
-            List<Mission> missions = _db.Missions.ToList();
+
+            // Create a queryable object for the missions table
+            IQueryable<Mission> missions = _db.Missions.AsQueryable();
+
+            // Apply sorting based on the sortOrder parameter
             switch (sortOrder)
             {
                 case null:
                 case "Oldest":
-                    sortOrder = "Oldest";
-                    missions = _db.Missions.OrderBy(m => m.CreatedAt).Skip(skipCount)
-                                          .Take(pageSize).ToList();
+                    missions = missions.OrderBy(m => m.CreatedAt);
                     break;
                 case "Newest":
-                    missions = _db.Missions.OrderByDescending(m => m.CreatedAt).Skip(skipCount)
-                                          .Take(pageSize).ToList();
+                    missions = missions.OrderByDescending(m => m.CreatedAt);
                     break;
                 case "Seats_ascending":
-                    missions = _db.Missions.OrderBy(m => m.SeatsLeft).Skip(skipCount)
-                                          .Take(pageSize).ToList();
+                    missions = missions.OrderBy(m => m.SeatsLeft);
                     break;
                 case "Seats_descending":
-                    missions = _db.Missions.OrderByDescending(m => m.SeatsLeft).Skip(skipCount)
-                                          .Take(pageSize).ToList();
+                    missions = missions.OrderByDescending(m => m.SeatsLeft);
                     break;
                 case "deadline":
-                    missions = _db.Missions.OrderBy(m => m.Deadline).Skip(skipCount)
-                                          .Take(pageSize).ToList();
+                    missions = missions.OrderBy(m => m.Deadline);
                     break;
                 default:
-                    missions = _db.Missions.OrderBy(m => m.CreatedAt).Skip(skipCount)
-                                          .Take(pageSize).ToList();
+                    missions = missions.OrderBy(m => m.CreatedAt);
                     break;
             }
-            List<MissionMedium> image = _db.MissionMedia.ToList();
-            List<MissionTheme> theme = _db.MissionThemes.ToList();
-            List<Country> countries = _db.Countries.ToList();
-            List<City> cities = _db.Cities.ToList();
-            List<City> city = new List<City>();
-            List<Mission> mission = new List<Mission>();
-            List<MissionSkill> missionskills = _db.MissionSkills.ToList();
-            List<Skill> skills = _db.Skills.ToList();
-          
-            if (Countries.Count > 0)
-            {
-                city = (from c in cities
-                        where Countries.Contains(c.Country.Name)
-                        select c).ToList();
-            }
-            else
-            {
-                city = cities;
-            }
-            mission = (from m in missions
-                     where ((Cities.Count == 0 || Cities.Contains(m.City.Name)) &&
-                            (Countries.Count == 0 || Countries.Contains(m.Country.Name)) &&
-                            (Themes.Count == 0 || Themes.Contains(m.Theme.Title)) && (Skills.Count == 0 || Skills.All(sm => m.MissionSkills.Any(k => k.Skill.SkillName == sm))))
-                     select m).ToList();
+
+            // Apply filtering based on the input parameters
+            missions = missions.Where(m =>
+                (Cities.Count == 0 || Cities.Contains(m.City.Name)) &&
+                (Countries.Count == 0 || Countries.Contains(m.Country.Name)) &&
+                (Themes.Count == 0 || Themes.Contains(m.Theme.Title)) &&
+                (Skills.Count == 0 ||
+                    _db.MissionSkills
+                        .Where(ms => ms.MissionId == m.MissionId)
+                        .All(ms => Skills.Contains(ms.Skill.SkillName))));
+
             if (!String.IsNullOrEmpty(searchtext))
             {
-                mission = (from m in missions
-                           select m).Where(m => m.Title.ToLower().Replace(" ", "").Contains(searchtext.ToLower().Replace(" ", ""))
-                           || m.Description.ToLower().Replace(" ", "").Contains(searchtext.ToLower().Replace(" ", ""))).ToList();
+                missions = missions.Where(m =>
+                    m.Title.ToLower().Replace(" ", "").Contains(searchtext.ToLower().Replace(" ", "")) ||
+                    m.Description.ToLower().Replace(" ", "").Contains(searchtext.ToLower().Replace(" ", "")));
             }
-            var Missions = (from m in mission
-                            join i in image on m.MissionId equals i.MissionId into data
-                            from i in data.DefaultIfEmpty().Take(1)
-                            select new MissionViewModel { image = i, Missions = m, Country = countries, Cities = city, Mission_city = m.City.Name, Mission_theme = m.Theme.Title }).ToList();
+
+            // Create a projection of the required data
+            var Missions = missions.Skip(skipCount).Take(pageSize)
+                                   .Select(m => new MissionViewModel
+                                   {
+                                       image = m.MissionMedia.FirstOrDefault(),
+                                       Missions = m,
+                                       Country = new CountryViewModel
+                                       {
+                                           CountryId = m.Country.CountryId,
+                                           CountryName = m.Country.Name
+                                       },
+                                       Cities = new CityViewModel
+                                       {
+                                           CityId = m.City.CityId,
+                                           CityName = m.City.Name
+                                       },
+                                       themes = new ThemeViewModel
+                                       {
+                                           ThemeId = m.Theme.MissionThemeId,
+                                           ThemeName = m.Theme.Title
+                                       }
+                                   }).ToList();
+
             return Missions;
         }
+
+
 
         public List<City> GetCitiesForCountry(long countryid)
         {
@@ -145,7 +170,7 @@ namespace CI_Platform.DataAccess.Repository
 
         public bool add_to_favourite(long user_id, long mission_id)
         {
-            List<FavoriteMission> favoriteMissions = _db.FavoriteMissions.ToList(); 
+            List<FavoriteMission> favoriteMissions = _db.FavoriteMissions.ToList();
             if (user_id != 0 && mission_id != 0)
             {
                 var favouritemission = (from fm in favoriteMissions
@@ -256,7 +281,7 @@ namespace CI_Platform.DataAccess.Repository
         }
         public VolunteeringMissionVM GetMissionById(int id, long user_id)
         {
-            List <MissionRating> ratings = _db.MissionRatings.ToList();
+            List<MissionRating> ratings = _db.MissionRatings.ToList();
             List<FavoriteMission> favoriteMissions = _db.FavoriteMissions.ToList();
             List<Mission> missions = _db.Missions.ToList();
             List<MissionTheme> themes = _db.MissionThemes.ToList();
@@ -282,7 +307,7 @@ namespace CI_Platform.DataAccess.Repository
             {
                 rating = int.Parse(Rating.ElementAt(0).Rating);
             }
-           
+
 
 
             Mission mission = _db.Missions.SingleOrDefault(m => m.MissionId == id);
@@ -313,25 +338,25 @@ namespace CI_Platform.DataAccess.Repository
 
 
             related_mission = (from m in missions
-                                   where !m.MissionId.Equals(mission.MissionId) && m.City?.Name != null && m.City.Name.Equals(mission.City.Name)
+                               where !m.MissionId.Equals(mission.MissionId) && m.City?.Name != null && m.City.Name.Equals(mission.City.Name)
+                               select m).Take(3).ToList();
+            if (related_mission.Count == 0)
+            {
+                related_mission = (from m in missions
+                                   where !m.MissionId.Equals(mission.MissionId) && m.Country?.Name != null && m.Country.Name.Equals(mission.Country.Name)
                                    select m).Take(3).ToList();
                 if (related_mission.Count == 0)
                 {
                     related_mission = (from m in missions
-                                       where !m.MissionId.Equals(mission.MissionId) && m.Country?.Name !=null && m.Country.Name.Equals(mission.Country.Name) 
+                                       where !m.MissionId.Equals(mission.MissionId) && m.Theme?.Title != null && m.Theme.Title.Equals(mission.Theme.Title)
                                        select m).Take(3).ToList();
-                    if (related_mission.Count == 0)
-                    {
-                        related_mission = (from m in missions
-                                           where !m.MissionId.Equals(mission.MissionId) && m.Theme?.Title !=null && m.Theme.Title.Equals(mission.Theme.Title)
-                                           select m).Take(3).ToList();
-                            
-                    }
-                    else
-                    {
-                        related_mission = null;
-                    }
+
                 }
+                else
+                {
+                    related_mission = null;
+                }
+            }
             List<MissionApplication> applied = (from ma in missionApplications
                                                 where ma.MissionId.Equals(mission?.MissionId) && ma.UserId.Equals(user_id)
                                                 select ma).ToList();
@@ -343,14 +368,6 @@ namespace CI_Platform.DataAccess.Repository
                                     where fm.UserId.Equals(user_id) && fm.MissionId.Equals(id)
                                     select fm).ToList();
 
-            //if (already_recommended_users.Count > 0)
-            //{
-            //    foreach (var item in already_recommended_users)
-            //    {
-            //        already_recommended.Add(item.ToUser);
-
-            //    }
-            //}
             if (volunteers.Count > 0)
             {
                 foreach (var item in volunteers)
@@ -382,9 +399,121 @@ namespace CI_Platform.DataAccess.Repository
                 All_volunteers = all_volunteers
             };
         }
+
+
+
+
         public void Save()
         {
             _db.SaveChanges();
         }
+
+        // volunteering timesheet
+        public TimesheetViewModel Get_Mission_For_TimeSheet(long user_id)
+        {
+            List<Mission> missions = _db.Missions.ToList();
+            var User_Timesheets = _db.Timesheets.Where(amt => amt.UserId == user_id);
+            var user_mission = _db.MissionApplications
+                .Where(m => m.UserId == user_id)
+                .Select(m => new SelectMissionViewModel
+                {
+                    Mission_id = m.MissionId,
+                    Title = m.Mission.Title,
+                    Mission_type = m.Mission.MissionType,
+                    Goal_object = m.Mission.GoalMotto
+                });
+            return new TimesheetViewModel
+            {
+                Missions = user_mission.ToList(),
+                Timesheets = User_Timesheets.ToList()
+            };
+        }
+
+        public Timesheet AddTimeSheet(long user_id, TimesheetViewModel model, string type)
+        {
+            List<Mission> missions = _db.Missions.ToList();
+            if (type == "goal")
+            {
+                Timesheet timesheet = new Timesheet
+                {
+                    MissionId = model.Mission_id,
+                    Action = model.Actions,
+                    UserId = user_id,
+                    DateVolunteered = DateTime.Parse(model.Volunteered_date),
+                    Notes = model.Message
+                };
+                _db.Timesheets.Add(timesheet);
+                Save();
+                return timesheet;
+            }
+            else
+            {
+                TimeSpan hours = TimeSpan.FromHours(model.Hours);
+                TimeSpan minutes = TimeSpan.FromMinutes(model.Minutes);
+                TimeSpan time = hours.Add(minutes);
+                Timesheet timesheet = new Timesheet
+                {
+                    MissionId = model.Mission_id,
+                    Time = time,
+                    UserId = user_id,
+                    DateVolunteered = DateTime.Parse(model.Volunteered_date),
+                    Notes = model.Message,
+                    Status = "SUBMIT_FOR_APPROVAL"
+                };
+                _db.Timesheets.Add(timesheet);
+                Save();
+                return timesheet;
+            }
+        }
+
+        public Timesheet EditTimeSheet(long timesheet_id, TimesheetViewModel model, string type)
+        {
+            List<Timesheet> timesheets = _db.Timesheets.ToList();
+            List<Mission> missions = _db.Missions.ToList();
+            Timesheet timesheet = _db.Timesheets.FirstOrDefault(t => t.TimesheetId == timesheet_id);
+            if (timesheet is not null)
+            {
+                if (type == "time-edit")
+                {
+                    TimeSpan hours = TimeSpan.FromHours(model.Hours);
+                    TimeSpan minutes = TimeSpan.FromMinutes(model.Minutes);
+                    TimeSpan time = hours.Add(minutes);
+                    timesheet.Time = time;
+                    timesheet.DateVolunteered = DateTime.Parse(model.Volunteered_date);
+                    timesheet.Notes = model.Message;
+                    Save();
+                    return timesheet;
+                }
+                else
+                {
+                    timesheet.Action = model.Actions;
+                    timesheet.DateVolunteered = DateTime.Parse(model.Volunteered_date);
+                    timesheet.Notes = model.Message;
+                    Save();
+                    return timesheet;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool DeleteTimesheet(long timesheet_id)
+        {
+            List<Timesheet> timesheets = _db.Timesheets.ToList();
+            Timesheet timesheet = _db.Timesheets.FirstOrDefault(t => t.TimesheetId == timesheet_id);
+            if (timesheet is not null)
+            {
+                _db.Timesheets.Remove(timesheet);
+                Save();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
+

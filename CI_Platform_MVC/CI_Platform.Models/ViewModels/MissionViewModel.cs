@@ -9,18 +9,20 @@ namespace CI_Platform.Models.ViewModels
     public class MissionViewModel
     {
 
-        public Mission? Missions { get; set; }
+        public Mission Missions { get; set; } = new Mission();
 
-        public MissionMedium image { get; set; }
-        public List<Country>? Country { get; set; }
-        public List<City>? Cities { get; set; }
-        public List<MissionTheme>? themes { get; set; }
-        public List<Skill>? skills { get; set; }
-        public List<FavoriteMission>? favoriteMissions { get; set; }
-        public List<MissionRating>? missionRatings { get; set; }
+        public MissionMedium image { get; set; } = new MissionMedium();
+        public List<FavoriteMission> favoriteMissions { get; set; } = new List<FavoriteMission>();
+        public List<MissionRating> missionRatings { get; set; } = new List<MissionRating>();
 
-        public string? Mission_city { get; set; }
-        public string? Mission_theme { get; set; }
-        public int? Favorite_mission { get; set; }
+        public string Mission_city { get; set; } = String.Empty;
+        public string Mission_theme { get; set; } = String.Empty;
+        public int Favorite_mission { get; set; }
+
+        public CountryViewModel Country { get; set; } = new CountryViewModel();
+
+        public ThemeViewModel themes { get; set; } = new ThemeViewModel();
+        public SkillViewModel skills { get; set; } = new SkillViewModel();
+        public CityViewModel Cities { get; set; } = new CityViewModel();
     }
 }

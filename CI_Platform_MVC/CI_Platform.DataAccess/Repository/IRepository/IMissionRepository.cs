@@ -24,5 +24,11 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         bool Recommend(long user_id, long mission_id, List<long> co_workers);
         VolunteeringMissionVM Next_Volunteers(int count, long user_id, long mission_id);
 
+        TimesheetViewModel Get_Mission_For_TimeSheet(long user_id);
+
+        Timesheet AddTimeSheet(long user_id, TimesheetViewModel model, string type);
+        Timesheet EditTimeSheet(long timesheet_id, Models.ViewModels.TimesheetViewModel model, string type);
+        bool DeleteTimesheet(long timesheet_id);
+
     }
 }

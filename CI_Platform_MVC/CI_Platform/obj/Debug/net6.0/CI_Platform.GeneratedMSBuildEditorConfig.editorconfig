@@ -31,6 +31,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWlzc2lvblxWb2x1bnRlZXJpbmdfbWlzc2lvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Mission/Volunteering_Timesheet.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWlzc2lvblxWb2x1bnRlZXJpbmdfVGltZXNoZWV0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -49,6 +53,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Shared/_stories.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9zdG9yaWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Shared/_timesheet.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF90aW1lc2hlZXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Shared/_ValidationScriptsPartial.cshtml]

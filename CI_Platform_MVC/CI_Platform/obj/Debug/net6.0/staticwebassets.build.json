@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "FB7QU3IpoX+IdBJDEZMdqM0pm67GBvxGMV3YLBCKn5I=",
+  "Hash": "agiDzOF9uN3Zp9wTmCoOe9d45UmQ980C8LLHjQhhdbQ=",
   "Source": "CI_Platform",
   "BasePath": "_content/CI_Platform",
   "Mode": "Default",
@@ -2737,6 +2737,23 @@
       "OriginalItemSpec": "wwwroot\\images\\7b46bf0a-a467-4139-9096-1ef32cea81ef_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\7de1d865-3629-4a74-90da-228440de07a5_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/7de1d865-3629-4a74-90da-228440de07a5_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\7de1d865-3629-4a74-90da-228440de07a5_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\825e9d43-f595-46bb-b65a-21fd6f00daa2_Education-Supplies-for-Every--Pair-of-Shoes-Sold.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -3196,6 +3213,23 @@
       "OriginalItemSpec": "wwwroot\\images\\cancel1.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\cf6b3bfd-7ae8-4ee8-a8bd-fe312d3e7c20_Animal-welfare-&-save-birds-campaign.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/cf6b3bfd-7ae8-4ee8-a8bd-fe312d3e7c20_Animal-welfare-&-save-birds-campaign.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\cf6b3bfd-7ae8-4ee8-a8bd-fe312d3e7c20_Animal-welfare-&-save-birds-campaign.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\checked.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -3534,6 +3568,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\e8c282d4-b798-4ba4-9126-071226c44b30_Grow-Trees-On-the-path-to-environment-sustainability-1.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\editing.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/editing.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\editing.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\Education-Supplies-for-Every--Pair-of-Shoes-Sold.png",
@@ -5030,6 +5081,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\storypage.js"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\js\\timesheet.js",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "js/timesheet.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\timesheet.js"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",

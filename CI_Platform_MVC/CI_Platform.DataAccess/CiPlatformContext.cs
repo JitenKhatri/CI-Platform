@@ -344,9 +344,7 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
-            entity.Property(e => e.Description)
-                .HasColumnType("text")
-                .HasColumnName("description");
+            entity.Property(e => e.Description).HasColumnName("description");
             entity.Property(e => e.EndDate)
                 .HasColumnType("datetime")
                 .HasColumnName("end_date");
@@ -835,7 +833,7 @@ public partial class CiPlatformContext : DbContext
                 .HasColumnType("text")
                 .HasColumnName("notes");
             entity.Property(e => e.Status)
-                .HasMaxLength(10)
+                .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasDefaultValueSql("('PENDING')")
                 .HasColumnName("status");

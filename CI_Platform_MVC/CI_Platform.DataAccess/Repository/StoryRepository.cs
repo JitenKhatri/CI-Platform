@@ -77,7 +77,11 @@ namespace CI_Platform.DataAccess.Repository
                 .Where(s => Cities.Count == 0 || Cities.Contains(s.Mission.City.Name))
                 .Where(s => Countries.Count == 0 || Countries.Contains(s.Mission.Country.Name))
                 .Where(s => Themes.Count == 0 || Themes.Contains(s.Mission.Theme.Title))
-                .Where(s => Skills.Count == 0 || Skills.All(sm => s.Mission.MissionSkills.Any(k => k.Skill.SkillName == sm)));
+                .Where(s => Skills.Count == 0 || _db.MissionSkills
+                                                            .Where(ms => ms.MissionId == s.MissionId)
+                                                            .Select(ms => ms.Skill.SkillName)
+                                                            .All(sn => Skills.Contains(sn)));
+                //.Where(s => Skills.Count == 0 || Skills.All(sm => s.Mission.MissionSkills.Any(k => k.Skill.SkillName == sm)));
 
             var stories = storyQuery
                 .OrderBy(s => s.Status)
