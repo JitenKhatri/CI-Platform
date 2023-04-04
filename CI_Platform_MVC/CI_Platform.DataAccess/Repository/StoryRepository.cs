@@ -124,7 +124,7 @@ namespace CI_Platform.DataAccess.Repository
             return missions;
         }
 
-        public bool ShareStory(long User_id,long storyId,long Mission_id,string title,string published_date,string story_description, List<IFormFile> storymedia,string type,List<String> videourl )
+        public bool ShareStory(long User_id, long storyId, long Mission_id, string title, string published_date, string story_description, List<IFormFile> storymedia, string type, List<String> videourl)
         {
             List<Story> stories = _db.Stories.ToList();
             List<StoryMedium> Storymedia = _db.StoryMedia.ToList();
@@ -132,46 +132,46 @@ namespace CI_Platform.DataAccess.Repository
             if (existingstory == null)
             {
                 var status = type == "PUBLISHED" ? "PUBLISHED" : "DRAFT";
-                    Story story = new Story();
-                    story.UserId = User_id;
-                    story.Title = title;
-                    story.Status = status;
-                    story.Description = story_description;
-                    story.PublishedAt = DateTime.Parse(published_date);
-                    story.MissionId = Mission_id;
-                    _db.Stories.Add(story);
-                    _db.SaveChanges();
+                Story story = new Story();
+                story.UserId = User_id;
+                story.Title = title;
+                story.Status = status;
+                story.Description = story_description;
+                story.PublishedAt = DateTime.Parse(published_date);
+                story.MissionId = Mission_id;
+                _db.Stories.Add(story);
+                _db.SaveChanges();
 
 
-                    long story_id = story.StoryId;
-                    foreach (var item in storymedia)
+                long story_id = story.StoryId;
+                foreach (var item in storymedia)
+                {
+                    string uniqueFileName = null;
+                    if (item != null)
                     {
-                        string uniqueFileName = null;
-                        if (item != null)
+                        // Get the uploaded file name
+                        string fileName = Path.GetFileName(item.FileName);
+
+                        // Create a unique file name to avoid overwriting existing files
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
+                        // Set the file path where the uploaded file will be saved
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
+
+                        // Save the uploaded file to the specified directory
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
-                            // Get the uploaded file name
-                            string fileName = Path.GetFileName(item.FileName);
-
-                            // Create a unique file name to avoid overwriting existing files
-                            uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
-
-                            // Set the file path where the uploaded file will be saved
-                            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
-
-                            // Save the uploaded file to the specified directory
-                            using (var fileStream = new FileStream(filePath, FileMode.Create))
-                            {
-                                item.CopyTo(fileStream);
-                            }
+                            item.CopyTo(fileStream);
                         }
-
-                        _db.StoryMedia.Add(new StoryMedium
-                        {
-                            StoryId = story_id,
-                            Type = "img",
-                            Path = "/images/" + uniqueFileName // Save the unique file name in the database
-                        });
                     }
+
+                    _db.StoryMedia.Add(new StoryMedium
+                    {
+                        StoryId = story_id,
+                        Type = "img",
+                        Path = "/images/" + uniqueFileName // Save the unique file name in the database
+                    });
+                }
                 foreach (var item in videourl)
                 {
 
@@ -183,10 +183,10 @@ namespace CI_Platform.DataAccess.Repository
                     });
                 }
                 _db.SaveChanges();
-                    return true;
-                }
-               
-            
+                return true;
+            }
+
+
             else
             {
                 existingstory.UserId = User_id;
@@ -199,10 +199,9 @@ namespace CI_Platform.DataAccess.Repository
                 var existingMedia = _db.StoryMedia.Where(sm => sm.StoryId == storyId);
                 foreach (var medium in existingMedia)
                 {
-                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", Path.GetFileName(medium.Path));
+                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", medium.Path);
                     if (File.Exists(filePath))
                     {
-                        string fileName = Path.GetFileName(medium.Path); // Extracts the file name from the file path
                         File.Delete(filePath);
                     }
                     _db.StoryMedia.Remove(medium);
@@ -235,20 +234,16 @@ namespace CI_Platform.DataAccess.Repository
                         Type = "img",
                         Path = "/images/" + uniqueFileName // Save the unique file name in the database
                     });
-                    foreach (var url in videourl)
+                    
+                }
+                foreach (var url in videourl)
+                {
+                    _db.StoryMedia.Add(new StoryMedium
                     {
-                        if (url == null)
-                        {
-                            continue;
-                        }
-
-                        _db.StoryMedia.Add(new StoryMedium
-                        {
-                            StoryId = existingstory.StoryId,
-                            Type = "vid",
-                            Path = url
-                        });
-                    }
+                        StoryId = existingstory.StoryId,
+                        Type = "vid",
+                        Path = url
+                    });
                 }
                 _db.SaveChanges();
                 return true;

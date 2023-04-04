@@ -80,7 +80,6 @@ namespace CI_Platform.Controllers
         public IActionResult ShareStory(long story_id, long Mission_id, string title, string published_date, string story_description, List<IFormFile> media, string type,List<string> videourl)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-            
             bool success = db.StoryRepository.ShareStory(user_id, story_id, Mission_id, title, published_date, story_description, media, type,videourl);
             return Json(new { success = true });
         }

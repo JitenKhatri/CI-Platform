@@ -1,18 +1,32 @@
-﻿@model Timesheet
+﻿
+
+
+@model Timesheet
 @{
 
 
     if (@Model.Action is not null)
     {
-        <tr id='timesheet-@Model.TimesheetId'><td>@Model.Mission.Title</td><td>@Model.DateVolunteered.ToString("dd-MM-yyyy")</td>
-            <td>@Model.Action</td><td> <img onclick="edittimesheet(@Model.TimesheetId,@Model.MissionId,0,
+        <tr id='timesheet-@Model.TimesheetId'>
+        <td>@Model.Mission.Title</td>
+        <td>@Model.DateVolunteered.ToString("dd-MM-yyyy")</td>
+            <td>@Model.Action</td>
+            <td> <img onclick="edittimesheet(@Model.TimesheetId,@Model.MissionId,0,
                0,'@Model.Notes','goal','@Model.Action')" data-bs-toggle="modal" data-bs-target="#goal"
                    src="/images/editing.png" class="edbutton" alt=""/>
-                <img src="~/images/bin.png" onclick="deletetimesheet(@Model.TimesheetId)" class="ms-2 edbutton" alt="" /></td></tr>
+                <img src="~/images/bin.png" onclick="deletetimesheet(@Model.TimesheetId)" class="ms-2 edbutton" alt="" /></td>
+                
+        </tr>
     }
     else
     {
-        <tr id="timesheet-@Model.TimesheetId"><td>@Model.Mission.Title</td><td>@Model.DateVolunteered.ToString("dd-MM-yyyy")</td><td>@Model.Time.ToString().Substring(0,2)</td><td>@Model.Time.ToString().Substring(3,5)</td><td> <img data-bs-toggle="modal" data-bs-target="#time" onclick="edittimesheet(@Model.TimesheetId,@Model.MissionId,'@Model.Time.ToString().Substring(0,2)','@Model.Time.ToString().Substring(3,5)','@Model.Notes')" src="/images/editing.png" class="edbutton" alt=""/>
-                                        <img src="~/images/bin.png" onclick="deletetimesheet(@Model.TimesheetId)" class="ms-2 edbutton" alt="" /></td></tr>
+        <tr id="timesheet-@Model.TimesheetId">
+        <td>@Model.Mission.Title.ToString().Substring(0,10)</td>
+        <td>@Model.DateVolunteered.ToString("dd-MM-yyyy")</td>
+        <td>@Model.Time.ToString().Substring(0,2)</td><td>@Model.Time.ToString().Substring(3,5)</td>
+        <td> <img data-bs-toggle="modal" data-bs-target="#time" onclick="edittimesheet(@Model.TimesheetId,@Model.MissionId,'@Model.Time.ToString().Substring(0,2)','@Model.Time.ToString().Substring(3,5)','@Model.Notes')" src="/images/editing.png" class="edbutton" alt=""/>
+                                        <img src="~/images/bin.png" onclick="deletetimesheet(@Model.TimesheetId)" class="ms-2 edbutton" alt="" /></td>
+                                        
+        </tr>
     }
 }

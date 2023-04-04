@@ -1,6 +1,7 @@
 ﻿using CI_Platform.DataAccess.Repository;
 using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
+using CI_Platform.Models.InputModels;
 using CI_Platform.Models.ViewModels;
 using Controllers;
 using Microsoft.AspNetCore.Mvc;
@@ -163,52 +164,54 @@ namespace CI_Platform.Controllers
             return View(model);
         }
 
+
         [HttpPost]
-        public IActionResult Volunteering_Timesheet(long mission_id, string date, int actions, string message, string type, int hours, int minutes, int timesheet_id)
+        public IActionResult Volunteering_Timesheet(TimesheetInputModel inputModel)
         {
+            // access the properties of inputModel instead of the individual parameters
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-            if (type == "goal")
+            if (inputModel.Type == "goal")
             {
                 TimesheetViewModel model = new TimesheetViewModel
                 {
-                    Mission_id = mission_id,
-                    Volunteered_date = date,
-                    Actions = actions,
-                    Message = message
+                    Mission_id = inputModel.Mission_id,
+                    Volunteered_date = inputModel.Date,
+                    Actions = inputModel.Actions,
+                    Message = inputModel.Message
                 };
-                Timesheet timesheet = db.MissionRepository.AddTimeSheet(user_id, model, type);
+                Timesheet timesheet = db.MissionRepository.AddTimeSheet(user_id, model, inputModel.Type);
                 var view = this.RenderViewAsync("_timesheet", timesheet, true);
                 return Json(new { view });
             }
-            else if (type == "time-edit")
+            else if (inputModel.Type == "time-edit")
             {
                 TimesheetViewModel model = new TimesheetViewModel
                 {
-                    Mission_id = mission_id,
-                    Volunteered_date = date,
-                    Hours = hours,
-                    Minutes = minutes,
-                    Message = message
+                    Mission_id = inputModel.Mission_id,
+                    Volunteered_date = inputModel.Date,
+                    Hours = inputModel.Hours,
+                    Minutes = inputModel.Minutes,
+                    Message = inputModel.Message
                 };
-                Timesheet timesheet = db.MissionRepository.EditTimeSheet(timesheet_id, model, type);
+                Timesheet timesheet = db.MissionRepository.EditTimeSheet(inputModel.Timesheet_id, model, inputModel.Type);
                 var view = this.RenderViewAsync("_timesheet", timesheet, true);
                 return Json(new { view });
             }
-            else if (type == "time-delete")
+            else if (inputModel.Type == "time-delete")
             {
-                bool success = db.MissionRepository.DeleteTimesheet(timesheet_id);
+                bool success = db.MissionRepository.DeleteTimesheet(inputModel.Timesheet_id);
                 return Json(new { success });
             }
-            else if (type == "goal-edit")
+            else if (inputModel.Type == "goal-edit")
             {
                 TimesheetViewModel model = new TimesheetViewModel
                 {
-                    Mission_id = mission_id,
-                    Volunteered_date = date,
-                    Actions = actions,
-                    Message = message
+                    Mission_id = inputModel.Mission_id,
+                    Volunteered_date = inputModel.Date,
+                    Actions = inputModel.Actions,
+                    Message = inputModel.Message
                 };
-                Timesheet timesheet = db.MissionRepository.EditTimeSheet(timesheet_id, model, type);
+                Timesheet timesheet = db.MissionRepository.EditTimeSheet(inputModel.Timesheet_id, model, inputModel.Type);
                 var view = this.RenderViewAsync("_timesheet", timesheet, true);
                 return Json(new { view });
             }
@@ -216,18 +219,18 @@ namespace CI_Platform.Controllers
             {
                 TimesheetViewModel model = new TimesheetViewModel
                 {
-                    Mission_id = mission_id,
-                    Volunteered_date = date,
-                    Hours = hours,
-                    Minutes = minutes,
-                    Message = message
+                    Mission_id = inputModel.Mission_id,
+                    Volunteered_date = inputModel.Date,
+                    Hours = inputModel.Hours,
+                    Minutes = inputModel.Minutes,
+                    Message = inputModel.Message
                 };
-                Timesheet timesheet = db.MissionRepository.AddTimeSheet(user_id, model, type);
+                Timesheet timesheet = db.MissionRepository.AddTimeSheet(user_id, model, inputModel.Type);
                 var view = this.RenderViewAsync("_timesheet", timesheet, true);
                 return Json(new { view });
             }
         }
 
-
     }
+
 }

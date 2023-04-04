@@ -1,5 +1,6 @@
 ﻿@using CI_Platform.Models.ViewModels
 @using System.Security.Claims
+@using System.Globalization
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -37,9 +38,9 @@
                         Policy <img src="~/images/drop-down.png" class="mx-2" />
                     </button>
                     <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">My Profile</a></li>
-                          <li><a class="dropdown-item" asp-controller="Mission" asp-action="Volunteering_Timesheet">Timesheet</a></li>
-                          <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="Logout">Logout</a></li>
+                          <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </div>
             </div>
@@ -55,7 +56,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">My Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Help</a></li>
+                        <li><a class="dropdown-item" asp-controller="Mission" asp-action="Volunteering_Timesheet">Timesheet</a></li>
                         <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="Logout">Logout</a></li>
                     </ul>
                 </div>
@@ -200,22 +201,6 @@
         </li>
     </ul>
 </nav>
-       @* <nav aria-label="Page navigation" class="pagination-link">
-            <ul class="pagination justify-content-center">
-                <li class="page-item pe-2">
-                    <a class="page-link" href="@Url.Action("Story", "Story", new { page = 1, pageSize = 6 })">Previous</a>
-                </li>
-                <li class="page-item pe-2">
-                    <a class="page-link" href="@Url.Action("Story", "Story", new { page = 1, pageSize = 6 })">1</a>
-                </li>
-                <li class="page-item pe-2">
-                    <a class="page-link" href="@Url.Action("Story", "Story", new { page = 2, pageSize = 6 })">2</a>
-                </li>
-                <li class="page-item pe-2">
-                    <a class="page-link" href="@Url.Action("Story", "Story", new { page = 2, pageSize = 6 })">Next</a>
-                </li>
-            </ul>
-        </nav>*@
 
         @{
             foreach (var item in Model)
@@ -245,7 +230,11 @@
                                         </div>
                                         <div class="mt-2 w-100">
                                             <label class="form-label">Select Date</label>
-                                            <input class="form-control" type="date" id="publish_date" placeholder="Select Date">
+                                           @{ string dateStr = @item.Stories.CreatedAt.ToString();
+                                   DateTime date = DateTime.ParseExact(dateStr, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                                    string formattedDate = date.ToString("yyyy-MM-dd");
+                                   <input class="form-control" type="date" id="publish_date" placeholder="Select Date" value="@formattedDate">}
+                                           
                                         </div>
 
                                         @*ckeditor*@
@@ -283,6 +272,7 @@
                                 </div>
                                 <div class="modal-footer justify-content-between">
                                     <button type="button" class="btn applyButton" data-bs-dismiss="modal">Close</button>
+                                    <a asp-action = "StoryDetail" asp-route-id="@item.Stories.StoryId" target ="_blank" class="btn preview-link" style="display:none">Preview</a>
                                     <button onclick="editstory('DRAFT',@item.Stories.StoryId,@item.MissionId)" class="submitbtn me-2">Save</button>
                                     <button onclick="editstory('PUBLISHED',@item.Stories.StoryId,@item.MissionId)" class="submitbtn">Submit</button>
                                 </div>

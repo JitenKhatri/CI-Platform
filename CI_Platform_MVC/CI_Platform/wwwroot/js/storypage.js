@@ -304,8 +304,9 @@ const DRopzone = (StoryId) => {
         maxFilesize: 4,
         acceptedFiles: ".jpeg,.jpg,.png",
         addRemoveLinks: false,
+        uploadMultiple: true,
+        parallelUploads: 20,
         dictRemoveFile: "Remove",
-        parallelupload: 20,
         autoProcessQueue: false,
         dictDefaultMessage: "Drop files here or click to upload",
         dictInvalidFileType: "Invalid file type. Only JPEG, JPG and PNG are allowed.",
@@ -331,18 +332,6 @@ const DRopzone = (StoryId) => {
             imageurls.forEach(i => {
                 console.log(i.dataset.storyId)
                 if (i.dataset.storyId == StoryId) {
-                    //// get the file path from the input element
-                    //let filePath = i.value;
-
-                    //// extract the file name from the file path
-                    //let fileName = filePath.split('\\').pop().split('/').pop();
-
-                    //// create a new File object with the local file path
-                    //let file = new File([filePath], fileName);
-
-                    //// use the file object in Dropzone
-                    //myDropzone.displayExistingFile(file, filePath);
-                  /*  myDropzone.processFile(file);*/
                     let mockFile = { name: "Filename 2", size: 12345 };
                     myDropzone.displayExistingFile(mockFile, i.value);
                     console.log(i.value);
@@ -387,10 +376,11 @@ function editstory(type,storyId,missionId) {
         var formData = new FormData();
 
         var myDropzone = Dropzone.getElement(`#myDropzone-${storyId}`).dropzone;
-
-        // Append the file(s) to the formData object
-        myDropzone.on("sending", function (file, xhr, formData) {
-            formData.append('media', file);
+  
+        myDropzone.on("sendingmultiple", function (files, xhr, formData) {
+            for (var i = 0; i < files.length; i++) {
+                formData.append('media', files[i]);
+            }
             formData.append('Mission_id', missionId);
             formData.append('title', edit_title);
             formData.append('story_id', storyId);
@@ -401,17 +391,15 @@ function editstory(type,storyId,missionId) {
                 formData.append('videourl', Video_url[j])
             }
         });
-
+        myDropzone.processQueue();
         // Send the AJAX request with the FormData object after the files have been uploaded
         myDropzone.on("success", function (file, response) {
             showAlert("Story edited successfully")
-            setTimeout(function () {
-                location.reload();
-            }, 5000);
+            $('.preview-link').css('display', 'block');
         });
 
         // Manually process queue to upload files
-        myDropzone.processQueue();
+       
     }
 }
 function validateEdit(storyId) {
@@ -492,10 +480,10 @@ if (window.location.href === 'https://localhost:7064/Story/ShareStory') {
             url: "/Story/ShareStory",
             maxFiles: 20,
             maxFilesize: 4,
+            uploadMultiple: true,
             acceptedFiles: ".jpeg,.jpg,.png",
             addRemoveLinks: false,
             dictRemoveFile: "Remove",
-            parallelupload: 20,
             autoProcessQueue: false,
             dictDefaultMessage: "Drop files here or click to upload",
             dictInvalidFileType: "Invalid file type. Only JPEG, JPG and PNG are allowed.",
@@ -506,6 +494,10 @@ if (window.location.href === 'https://localhost:7064/Story/ShareStory') {
                 this.on("addedfile", function (file) {
                     // Show the remove button when a file is added
                     file.previewElement.querySelector(".btn-remove").style.display = "block";
+                    file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
+                        // Remove the file from Dropzone
+                        myDropzone.removeFile(file);
+                    });
                 });
                 this.on("maxfilesexceeded", function (file) {
                     this.removeFile(file);
@@ -522,15 +514,17 @@ function sharestory(type) {
     validate();
 
     if (mission != 0 && title.trim().length > 50 && title.trim().length < 255 && $('#datepicker').datepicker().val().length != 0
-        && Date.parse(current_date) >= Date.parse(comparedate) && mystory.trim().length > 70 && mystory.trim().length < 40000 && video_url.length > 1 ) {
+        && Date.parse(current_date) >= Date.parse(comparedate) && mystory.trim().length > 70 && mystory.trim().length < 40000 && validateYouTubeUrls(video_url)){
 
         var formData = new FormData();
 
         var myDropzone = Dropzone.getElement("#myDropzone").dropzone;
 
         // Append the file(s) to the formData object
-        myDropzone.on("sending", function (file, xhr, formData) {
-            formData.append('media', file);
+        myDropzone.on("sendingmultiple", function (files, xhr, formData) {
+            for (var i = 0; i < files.length; i++) {
+                formData.append('media', files[i]);
+            }
             formData.append('Mission_id', mission);
             formData.append('title', title);
             formData.append('published_date', date.toString());
@@ -540,7 +534,8 @@ function sharestory(type) {
                 formData.append('videourl', video_url[j])
             }
         });
-
+        // Manually process queue to upload files
+        myDropzone.processQueue();
         // Send the AJAX request with the FormData object after the files have been uploaded
         myDropzone.on("success", function (file, response) {
             showAlert("Story added !!")
@@ -549,8 +544,7 @@ function sharestory(type) {
             }, 5000);
         });
 
-        // Manually process queue to upload files
-        myDropzone.processQueue();
+        
     }
 }
 function validate() {
@@ -571,7 +565,7 @@ function validate() {
         { message: "Please enter a valid date", test: $('#datepicker').datepicker().val().length == 0 || Date.parse(current_date) <= Date.parse(comparedate) },
         { message: "Story description should be at least have 70 character", test: mystory.trim().length < 70 },
         { message: "Story description is too big", test: mystory.trim().length > 40000 },
-        { message: "Please enter youtube video urls only, enter different urls in new line and maximum 20 urls are allowed", test: validateYouTubeUrls(video_url) }
+        { message: "Please enter youtube video urls only, enter different urls in new line and maximum 20 urls are allowed", test: !validateYouTubeUrls(video_url) }
     ];
 
     // Loop through validation conditions and display alert if test fails

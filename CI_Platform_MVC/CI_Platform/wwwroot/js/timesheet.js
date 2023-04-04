@@ -17,7 +17,15 @@ const goaldata = () => {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
                 type: 'POST',
-                data: { mission_id: mission_id, date: date.toString(), actions: actions, message: message, type: "goal-edit", timesheet_id: parseInt(document.getElementById("timesheet-id").value) },
+                data: {
+                    Mission_id: mission_id,
+                    Date: date.toString(),
+                    Actions: actions,
+                    Message: message,
+                    Type: "goal-edit",
+                    Timesheet_id: parseInt(document.getElementById("timesheet-id").value)
+                },
+               /* data: { mission_id: mission_id, date: date.toString(), actions: actions, message: message, type: "goal-edit", timesheet_id: parseInt(document.getElementById("timesheet-id").value) },*/
                 success: function (result) {
                     if (result.view) {
                         $(`#timesheet-${parseInt(document.getElementById("timesheet-id").value)}`).replaceWith(result.view.result)
@@ -35,7 +43,15 @@ const goaldata = () => {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
                 type: 'POST',
-                data: { mission_id: mission_id, date: date.toString(), actions: actions, message: message, type: "goal" },
+                data:{
+                    Mission_id: mission_id,
+                    Date: date.toString(),
+                    Actions: actions,
+                    Message: message,
+                    Type : "goal"
+
+                },
+                /*data: { mission_id: mission_id, date: date.toString(), actions: actions, message: message, type: "goal" },*/
                 success: function (result) {
                     if (result.view) {
                         $(".goal-timesheets").append(result.view.result)
@@ -59,7 +75,16 @@ const timedata = () => {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
                 type: 'POST',
-                data: { mission_id: time_mission, date: time_date.toString(), hours: hours, minutes: mins, message: time_message, type: "time-edit", timesheet_id: parseInt(document.getElementById("timesheet-id").value) },
+                /*data: { mission_id: time_mission, date: time_date.toString(), hours: hours, minutes: mins, message: time_message, type: "time-edit", timesheet_id: parseInt(document.getElementById("timesheet-id").value) },*/
+                data: {
+                    Mission_id: time_mission,
+                    Date: time_date.toString(),
+                    Hours: hours,
+                    Minutes: mins,
+                    Message: time_message,
+                    Type: "time-edit",
+                    Timesheet_id: parseInt(document.getElementById("timesheet-id").value)
+                },
                 success: function (result) {
                     if (result.view) {
                         $(`#timesheet-${parseInt(document.getElementById("timesheet-id").value)}`).replaceWith(result.view.result)
@@ -78,7 +103,15 @@ const timedata = () => {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
                 type: 'POST',
-                data: { mission_id: time_mission, date: time_date.toString(), hours: hours, minutes: mins, message: time_message, type: "time" },
+                /*data: { mission_id: time_mission, date: time_date.toString(), hours: hours, minutes: mins, message: time_message, type: "time" },*/
+                data: {
+                    Mission_id: time_mission,
+                    Date: time_date.toString(),
+                    Hours: hours,
+                    Minutes: mins,
+                    Message: time_message,
+                    Type: "time"
+                },
                 success: function (result) {
                     if (result.view) {
                         $(".time-timesheets").append(result.view.result)
@@ -206,7 +239,11 @@ const deletetimesheet = (id) => {
     $.ajax({
         url: '/Mission/Volunteering_Timesheet',
         type: 'POST',
-        data: { timesheet_id: parseInt(id), type: "time-delete" },
+        /* data: { timesheet_id: parseInt(id), type: "time-delete" },*/
+        data: {
+            Timesheet_id: parseInt(id),
+            Type: "time-delete"
+        },
         success: function (result) {
         },
         error: function () {
