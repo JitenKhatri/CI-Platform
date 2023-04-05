@@ -757,6 +757,33 @@ volunteers #img {
     opacity: 1;
 }
 
+/*Edit profile css*/
+.UserProfile {
+    text-align: center;
+    padding: 32px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25em;
+}
+
+    .UserProfile img {
+        border-radius: 50%;
+        width: 180px;
+        height: 180px;
+    }
+
+.Userheading {
+    font-size: 22px;
+    list-style: 26.4px;
+    color: #414141;
+    border-bottom: 2px solid #414141;
+    padding-bottom: 19px;
+}
+
+label {
+    text-align: left;
+    font-weight: lighter;
+    color: #414141;
+}
 @media (max-width: 575.98px) {
     .list-view .card {
         flex-direction: column;

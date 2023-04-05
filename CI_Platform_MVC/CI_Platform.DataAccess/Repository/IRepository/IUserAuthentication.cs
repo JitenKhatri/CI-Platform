@@ -1,4 +1,5 @@
 ﻿using CI_Platform.Models;
+using CI_Platform.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,10 @@ namespace CI_Platform.DataAccess.Repository.IRepository
     {
         User ResetPassword(string password, long id);
         void Add(PasswordReset resetPasswordInfo);
+        EditProfileViewModel GetUser(long UserId, int country);
 
+        bool ChangePassword(long UserId, string password);
+
+        bool UpdateProfile(EditProfileViewModel model, long user_id);
     }
 }

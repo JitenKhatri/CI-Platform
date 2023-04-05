@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Y2D1tb2jkK8gdi4ahENIXAxLep30EZu7E3cXwkVP5fM=",
+  "Hash": "F/aoxCpy1yEDpVrsPQ8fZ9kQo91hL4/SV6uL2KH7Nbc=",
   "Source": "CI_Platform",
   "BasePath": "_content/CI_Platform",
   "Mode": "Default",
@@ -4760,6 +4760,23 @@
       "OriginalItemSpec": "wwwroot\\images\\filter.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\Forma 1.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/Forma 1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Forma 1.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\gift.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -6050,6 +6067,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\xlsx.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\js\\EditProfile.js",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "js/EditProfile.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\EditProfile.js"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\js\\site.js",

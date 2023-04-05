@@ -2,6 +2,7 @@
 using CI_Platform.Models;
 using CI_Platform.Models.ViewModels;
 using CI_Platform.ViewModels;
+using Controllers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -255,6 +256,51 @@ namespace CI_Platform.Controllers
             }
             return View(model);
         }
+
+        [Route("EditProfile")]
+        public IActionResult EditProfile()
+        {
+          long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+          var user = db.UserAuthentication.GetUser(user_id,0);
+           return View(user);
+        }
+
+        [Route("EditProfile")]
+        [HttpPost]
+        public IActionResult EditProfile(int country,EditProfileViewModel model)
+        {
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            if (country!=0)
+            {
+                EditProfileViewModel details = db.UserAuthentication.GetUser(user_id, country);
+                var cities = this.RenderViewAsync("_SelectCityPartial", details, true);
+                return Json(new { cities = cities });
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    bool success = db.UserAuthentication.UpdateProfile(model, user_id);
+                    return RedirectToAction("EditProfile");
+                }
+                else
+                {
+                    return View(model);
+                }
+            }
+        }
+        [Route("ChangePassword")]
+        [HttpPost]
+        public IActionResult ChangePassword(string password)
+        {
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            bool success = db.UserAuthentication.ChangePassword(user_id, password);
+
+            return Json(new { success = true });
+        }
+
+      
+
 
     }
 }
