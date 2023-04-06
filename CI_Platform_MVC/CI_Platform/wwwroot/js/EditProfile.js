@@ -2,8 +2,19 @@
 var NewPassword
 var ConfirmPassword
 let alertId = 0;
-var skills = []
+var skills = [];
+var selectedSkillsInput = document.getElementById('selected_skills');
+if (selectedSkillsInput.value != "") {
+    skills = selectedSkillsInput.value.split(',').map(id => parseInt(id));
+}
+
 var skills_name = []
+var selectedskillnameinput = document.getElementById('selected_skill_names');
+if (selectedskillnameinput.value != "") {
+    skills_name = selectedskillnameinput.value.split(',');
+}
+   
+
 function showAlert(message) {
     const alert = document.createElement("div");
     alert.classList.add("alert");
@@ -103,14 +114,15 @@ const addskill = (skill_id, skill_name) => {
         $('.selected-skills').append(`<span class="mt-1" id=${id}>` + skill_name + '</span>')
         skills.push(id)
         skills_name.push(skill_name)
+        document.getElementById('selected_skills').value += (skills.length > 1 ? ',' : '') + id;
     }
     else {
         $(`#${skill_id}`).css("background-color", "white")
         $('.selected-skills').find(`#${id}`).remove()
         skills.splice(skills.indexOf(id), 1)
         skills_name.splice(skills_name.indexOf(skill_name), 1)
+        document.getElementById('selected_skills').value = skills.join(',');
     }
-    document.getElementById('selected_skills').value = skills
 }
 
 const saveskills = () => {
@@ -118,4 +130,13 @@ const saveskills = () => {
     skills_name.forEach((item, i) => {
         $('.saved-skills').append(`<span class="mt-1 ms-3">` + item + '</span>')
     })
+}
+
+const upload_profile_image = () => {
+    var image = document.getElementById('profile-image').files[0]
+    var fr = new FileReader()
+    fr.onload = () => {
+        $('#old-profile-image').attr('src', fr.result)
+    }
+    fr.readAsDataURL(image)
 }

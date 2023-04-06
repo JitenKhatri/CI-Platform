@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "F/aoxCpy1yEDpVrsPQ8fZ9kQo91hL4/SV6uL2KH7Nbc=",
+  "Hash": "q5lCCLkeW/NfsQeRQZVzsDyD4Pvi3daviKujK61hAR4=",
   "Source": "CI_Platform",
   "BasePath": "_content/CI_Platform",
   "Mode": "Default",
@@ -2616,6 +2616,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\1dce4684-423e-4fc6-b4a8-f876cc56a73f_3ab196e7-99fe-49b0-a053-185100b4e884_Grow-Trees-On-the-path-to-environment-sustainability-1.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\1e898ecd-a0c5-48e8-9f9a-4a062f762429_volunteer1.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/1e898ecd-a0c5-48e8-9f9a-4a062f762429_volunteer1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\1e898ecd-a0c5-48e8-9f9a-4a062f762429_volunteer1.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\20382fcf-c49f-4cda-8202-e6df6cf306c8_image2.png",

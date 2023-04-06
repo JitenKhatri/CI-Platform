@@ -47,14 +47,29 @@ namespace CI_Platform.DataAccess.Repository
                 List<City> cities = _db.Cities.ToList();
                 List<Country> countries = _db.Countries.ToList();
                 List<Skill> skills = _db.Skills.ToList();
+                var userskill = _db.UserSkills.Where(us => us.UserId== UserId).ToList();
+                var selectedSkills = string.Join(",", userskill.Select(x => x.SkillId.ToString()));
+                var Selectedskillnames = string.Join(",", userskill.Select(y => y.Skill.SkillName.ToString()));
                 return new EditProfileViewModel
                 {
-                    User = user,
                     Countries = countries,
-                    Cities= cities,
+                    Cities = cities,
                     Skills = skills,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Title = user.Title,
+                    EmployeeId = user.EmployeeId,
+                    Department = user.Department,
+                    CityId = user.CityId,
+                    CountryId = user.CountryId,
                     WhyIVolunteer = user.WhyIVolunteer,
-                    ProfileText = user.ProfileText
+                    ProfileText = user.ProfileText,
+                    LinkedInUrl = user.LinkedInUrl,
+                    Profile = user.Avatar,
+                    UserSkills = user.UserSkills.ToList(),
+                    Selected_Skills = selectedSkills,
+                    Selected_skill_names = Selectedskillnames
+                    
                 };
             }
             else
@@ -100,6 +115,25 @@ namespace CI_Platform.DataAccess.Repository
                 user.CityId = model.CityId;
                 user.CountryId = model.CountryId;
                 user.UpdatedAt = DateTime.Now;
+                string uniqueFileName = null;
+                if ( model.Avatar!= null)
+                {
+                    // Get the uploaded file name
+                    string fileName = Path.GetFileName(model.Avatar.FileName);
+
+                    // Create a unique file name to avoid overwriting existing files
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
+                    // Set the file path where the uploaded file will be saved
+                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
+
+                    // Save the uploaded file to the specified directory
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        model.Avatar.CopyTo(fileStream);
+                    }
+                    user.Avatar = "/images/" + uniqueFileName;
+                }
                 if (model.Selected_Skills is not null || model.Selected_Skills!= "")
                 {
                     List<UserSkill> user_skills = _db.UserSkills.Where(c => c.UserId == user_id).ToList();

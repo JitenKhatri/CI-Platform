@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,13 +11,15 @@ namespace CI_Platform.Models.ViewModels
     public class EditProfileViewModel
     {
         [Required]
-        [MinLength(3, ErrorMessage = "FirstName Is Too Short")]
+        [MinLength(3, ErrorMessage = "FirstName is too short")]
+        [MaxLength(16,ErrorMessage = "FirstName is too big")]
         public string FirstName { get; set; } = String.Empty;
         [Required]
-        [MinLength(3, ErrorMessage = "LastName Is Too Short")]
+        [MinLength(3, ErrorMessage = "LastName is too short")]
+        [MaxLength(16, ErrorMessage = "LastName is too big")]
         public string LastName { get; set; }   = String.Empty;
 
-        public string Avatar { get; set; } = String.Empty;
+        public IFormFile Avatar { get; set; }
 
         public string WhyIVolunteer { get; set; } = String.Empty;
 
@@ -34,15 +37,22 @@ namespace CI_Platform.Models.ViewModels
 
         public string LinkedInUrl { get; set; } = String.Empty;
 
+        [Required]
+        [MinLength(3,ErrorMessage = "Title is too short")]
+        [MaxLength(16, ErrorMessage = "Title is too big")]
         public string Title { get; set; } = String.Empty;
 
-        public User? User { get; set; } 
+        public string Profile { get; set; } = String.Empty;
+        //public User User { get; set; } = new User();
 
         public string Selected_Skills { get; set; } = String.Empty;
+        public string Selected_skill_names { get; set; } = String.Empty;
         public List<Country> Countries { get; set; } = new List<Country>();
 
         public List<City> Cities { get; set; } = new List<City>();
 
         public List<Skill> Skills { get; set; } = new List<Skill>();
+
+        public List<UserSkill> UserSkills { get; set; } = new List<UserSkill>();
     }
 }

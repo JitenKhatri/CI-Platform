@@ -784,6 +784,12 @@ label {
     font-weight: lighter;
     color: #414141;
 }
+.changepasswordbtn {
+    text-align: left;
+    letter-spacing: 0px;
+    color: #414141;
+    opacity: 1;
+}
 @media (max-width: 575.98px) {
     .list-view .card {
         flex-direction: column;

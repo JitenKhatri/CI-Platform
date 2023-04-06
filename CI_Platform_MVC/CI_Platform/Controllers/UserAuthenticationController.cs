@@ -283,10 +283,8 @@ namespace CI_Platform.Controllers
                     bool success = db.UserAuthentication.UpdateProfile(model, user_id);
                     return RedirectToAction("EditProfile");
                 }
-                else
-                {
-                    return View(model);
-                }
+                return BadRequest();
+
             }
         }
         [Route("ChangePassword")]
