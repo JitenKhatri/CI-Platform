@@ -32,15 +32,14 @@
     <div class="container-fluid p-0">
         <div class="row header">
             <div class="col d-flex flex-row justify-content-center">
-                <a href="#" class="mx-1 mx-sm-4">Stories</a>
+                <a asp-controller="Story" asp-action="Story" style="text-decoration:none;" class="mx-1 mx-sm-4">Stories</a>
                 <div class="dropdown">
                     <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown">
                         Policy <img src="~/images/drop-down.png" class="mx-2" />
                     </button>
                     <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item" href="#">Volunteering</a></li>
+                        <li><a class="dropdown-item" href="#">Sponsored</a></li>
                     </ul>
                 </div>
             </div>
@@ -55,7 +54,7 @@
                              class="mx-1 drop-down d-none d-sm-block" />
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">My Profile</a></li>
+                        <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="EditProfile">My Profile</a></li>
                         <li><a class="dropdown-item" asp-controller="Mission" asp-action="Volunteering_Timesheet">Timesheet</a></li>
                         <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="Logout">Logout</a></li>
                     </ul>
@@ -126,7 +125,7 @@
                                     <label for="@theme.Text">@theme.Text</label>
                                 </div>
                             }
-                            </div>
+                        </div>
 
 
                     </li>
@@ -185,22 +184,28 @@
         </div>
         @*Pagination*@
         <nav aria-label="Page navigation" class="pagination-link">
-           @{ int pageSize = 6;}
-    <ul class="pagination justify-content-center">
-        <li class="page-item @if (ViewBag.CurrentPage <= 1) { @Html.Raw("disabled"); }">
-            <a class="page-link" href="@Url.Action("Story", "Story", new { page = ViewBag.CurrentPage - 1, pageSize = pageSize })">Previous</a>
-        </li>
-        @for (int i = 1; i <= ViewBag.PageCount; i++)
-        {
-            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
-                <a class="page-link" href="@Url.Action("Story", "Story", new { page = i, pageSize = pageSize })">@i</a>
-            </li>
-        }
-        <li class="page-item @if (ViewBag.CurrentPage >= ViewBag.PageCount) { @Html.Raw("disabled"); }">
-            <a class="page-link" href="@Url.Action("Story", "Story", new { page = ViewBag.CurrentPage + 1, pageSize = pageSize })">Next</a>
-        </li>
-    </ul>
-</nav>
+            @{
+                int pageSize = 6;
+            }
+            <ul class="pagination justify-content-center">
+                <li class="page-item @if (ViewBag.CurrentPage <= 1) {
+                @Html.Raw("disabled")
+; }">
+                    <a class="page-link" href="@Url.Action("Story", "Story", new { page = ViewBag.CurrentPage - 1, pageSize = pageSize })">Previous</a>
+                </li>
+                @for (int i = 1; i <= ViewBag.PageCount; i++)
+                {
+                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Story", "Story", new { page = i, pageSize = pageSize })">@i</a>
+                    </li>
+                }
+                <li class="page-item @if (ViewBag.CurrentPage >= ViewBag.PageCount) {
+                @Html.Raw("disabled")
+; }">
+                    <a class="page-link" href="@Url.Action("Story", "Story", new { page = ViewBag.CurrentPage + 1, pageSize = pageSize })">Next</a>
+                </li>
+            </ul>
+        </nav>
 
         @{
             foreach (var item in Model)
@@ -230,11 +235,13 @@
                                         </div>
                                         <div class="mt-2 w-100">
                                             <label class="form-label">Select Date</label>
-                                           @{ string dateStr = @item.Stories.CreatedAt.ToString();
-                                   DateTime date = DateTime.ParseExact(dateStr, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                                    string formattedDate = date.ToString("yyyy-MM-dd");
-                                   <input class="form-control" type="date" id="publish_date" placeholder="Select Date" value="@formattedDate">}
-                                           
+                                            @{
+                                                string dateStr = @item.Stories.CreatedAt.ToString();
+                                                DateTime date = DateTime.ParseExact(dateStr, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                                                string formattedDate = date.ToString("yyyy-MM-dd");
+                                                <input class="form-control" type="date" id="publish_date" placeholder="Select Date" value="@formattedDate">
+                                            }
+
                                         </div>
 
                                         @*ckeditor*@
@@ -247,12 +254,12 @@
                                         <div class=" w-100 mt-4">
                                             <label class="form-label">Enter Youtube video urls</label>
                                             <textarea rows="3" class="form-control video-url" type="url" placeholder="Enter Your URL">
-                                                @foreach(var url in item.Vidmedia)
+                                                @foreach (var url in item.Vidmedia)
                                                 {
                                                     @url.Path
                                                     @Html.Raw('\n')
                                                 }
-                                            </textarea>
+                                                        </textarea>
                                         </div>
 
                                         <div class="row mt-3">
@@ -272,7 +279,7 @@
                                 </div>
                                 <div class="modal-footer justify-content-between">
                                     <button type="button" class="btn applyButton" data-bs-dismiss="modal">Close</button>
-                                    <a asp-action = "StoryDetail" asp-route-id="@item.Stories.StoryId" target ="_blank" class="btn preview-link" style="display:none">Preview</a>
+                                    <a asp-action="StoryDetail" asp-route-id="@item.Stories.StoryId" target="_blank" class="btn preview-link" style="display:none">Preview</a>
                                     <button onclick="editstory('DRAFT',@item.Stories.StoryId,@item.MissionId)" class="submitbtn me-2">Save</button>
                                     <button onclick="editstory('PUBLISHED',@item.Stories.StoryId,@item.MissionId)" class="submitbtn">Submit</button>
                                 </div>
@@ -297,5 +304,8 @@
     <script src="~/js/storypage.js"></script>
 
 </body>
-
+<footer>
+    <a class="text-muted" style="margin-left: 10%;
+    text-decoration: none;" asp-controller="Home" asp-action="Privacy"> Privacy policy</a>
+</footer>
 </html>

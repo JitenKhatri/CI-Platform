@@ -115,6 +115,7 @@ namespace CI_Platform.DataAccess.Repository
                 user.CityId = model.CityId;
                 user.CountryId = model.CountryId;
                 user.UpdatedAt = DateTime.Now;
+                user.EmployeeId = model.EmployeeId;
                 string uniqueFileName = null;
                 if ( model.Avatar!= null)
                 {

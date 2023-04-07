@@ -228,6 +228,7 @@ namespace CI_Platform.DataAccess.Repository
         public bool apply_for_mission(long user_id, long mission_id)
         {
             List<MissionApplication> missionApplications = _db.MissionApplications.ToList();
+            Mission Applied_mission = _db.Missions.FirstOrDefault(x => x.MissionId == mission_id);
             DateTime current = DateTime.Now;
             if (user_id != 0 && mission_id != 0)
             {
@@ -242,6 +243,10 @@ namespace CI_Platform.DataAccess.Repository
                         UserId = user_id,
                         MissionId = mission_id
                     });
+                    if (Applied_mission.SeatsLeft != null)
+                    {
+                        Applied_mission.SeatsLeft = Applied_mission.SeatsLeft - 1;
+                    }
                     Save();
                     return true;
                 }

@@ -70,8 +70,8 @@ const timedata = () => {
     var type = "time"
     validate(type)
     if ($(`.time-mission`).is(":disabled")) {
-        if (time_mission != 0 && time_date.length > 0 && hours <= 24 && hours > 0 &&
-            hours.length != 0 && mins <= 60 && mins > 0 && mins.length != 0 && time_message.trim().length > 20) {
+        if (time_mission != 0 && time_date.length > 0 && hours <= 23 && hours > 0 &&
+            hours.length != 0 && mins <= 59 && mins > 0 && mins.length != 0 && time_message.trim().length > 20) {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
                 type: 'POST',
@@ -98,8 +98,8 @@ const timedata = () => {
         }
     }
     else {
-        if (time_mission != 0 && time_date.length > 0 && hours <= 24 && hours > 0 &&
-            hours.length != 0 && mins <= 60 && mins > 0 && mins.length != 0 && time_message.trim().length > 20) {
+        if (time_mission != 0 && time_date.length > 0 && hours <= 23 && hours > 0 &&
+            hours.length != 0 && mins <= 59 && mins > 0 && mins.length != 0 && time_message.trim().length > 20) {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
                 type: 'POST',
@@ -180,13 +180,13 @@ const validate = (type) => {
         else {
             $(".time-date-empty").addClass("d-block").removeClass("d-none")
         }
-        if (hours > 24 || hours <= 0 || hours.length == 0) {
+        if (hours > 23 || hours <= 0 || hours.length == 0) {
             $(".time-hours-valid").addClass("d-block").removeClass("d-none")
         }
         else {
             $(".time-hours-valid").addClass("d-none").removeClass("d-block")
         }
-        if (mins > 60 || mins <= 0 || mins.length == 0) {
+        if (mins > 59 || mins <= 0 || mins.length == 0) {
             $(".time-min-valid").addClass("d-block").removeClass("d-none")
         }
         else {

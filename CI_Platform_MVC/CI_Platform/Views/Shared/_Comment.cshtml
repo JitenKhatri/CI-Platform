@@ -1,25 +1,25 @@
 ﻿@using CI_Platform.Models.ViewModels
 
 @model IEnumerable<CommentViewModel>
-@foreach(var item in Model)
-                {
-                      <div style="max-height:380px; overflow:auto;" class="mb-4" >
-                        <div class="d-flex"> 
-                <img id="img" class="rounded-circle img-fluid" src=@item.user?.Avatar alt="" />
+@foreach (var item in Model)
+{
+    <div style="max-height:380px; overflow:auto;" class="mb-4">
+        <div class="d-flex">
+            <img id="img" class="rounded-circle img-fluid" src=@item.user?.Avatar alt="" />
             <div>
                 <p style="font-size: 15px; margin-bottom:0;margin-left: 15px;
-                    margin-top: 15px;"> @item.user?.FirstName @item.user?.LastName</p> 
+                    margin-top: 15px;"> @item.user?.FirstName @item.user?.LastName</p>
                 <p style="font-size: 15px;margin-left: 15px;">
                     @item.User_Comment?.CreatedAt.ToString("dddd, MMMM dd, yyyy")
-                  
-                   </p>
-                      <div class="comment-text" style="margin-top:10px; margin-left : 15px;">
+
+                </p>
+                <div class="comment-text" style="margin-top:10px; margin-left : 15px;">
                     @item.User_Comment?.CommentText
                 </div>
             </div>
-     
-            </div>
-              
-                    </div>
-                                    
-                }
+
+        </div>
+
+    </div>
+
+}

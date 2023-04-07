@@ -39,7 +39,7 @@ function showAlert(message) {
 }
 function changePassword() {
     validate()
-    if (OldPassword.length >= 4 && NewPassword.length >= 4 && ConfirmPassword.length >= 4) {
+    if (OldPassword.length >= 4 && NewPassword.length >= 4 && ConfirmPassword.length >= 4 && NewPassword == ConfirmPassword) {
         $.ajax({
             url: '/UserAuthentication/ChangePassword',
             type: 'POST',
@@ -80,6 +80,12 @@ function validate() {
     }
     else {
         $(".c-pass").addClass("d-none").removeClass("d-block")
+    }
+    if (NewPassword != ConfirmPassword) {
+        $(".m-pass").addClass("d-block").removeClass("d-none");
+    }
+    else {
+        $(".m-pass").addClass("d-block").removeClass("d-none");
     }
 
 }

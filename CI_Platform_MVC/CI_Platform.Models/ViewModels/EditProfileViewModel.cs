@@ -12,14 +12,14 @@ namespace CI_Platform.Models.ViewModels
     {
         [Required]
         [MinLength(3, ErrorMessage = "FirstName is too short")]
-        [MaxLength(16,ErrorMessage = "FirstName is too big")]
+        [MaxLength(16, ErrorMessage = "FirstName is too big")]
         public string FirstName { get; set; } = String.Empty;
         [Required]
         [MinLength(3, ErrorMessage = "LastName is too short")]
         [MaxLength(16, ErrorMessage = "LastName is too big")]
         public string LastName { get; set; }   = String.Empty;
 
-        public IFormFile Avatar { get; set; }
+        public IFormFile? Avatar { get; set; }
 
         public string WhyIVolunteer { get; set; } = String.Empty;
 
@@ -35,10 +35,13 @@ namespace CI_Platform.Models.ViewModels
         [MinLength(20, ErrorMessage = "Bio Is Too Short")]
         public string ProfileText { get; set; } = String.Empty;
 
+        [RegularExpression(@"^(https:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9\-]+\/?$", ErrorMessage = "Please enter a valid LinkedIn URL.")]
         public string LinkedInUrl { get; set; } = String.Empty;
 
+        public string? Manager { get; set; } = String.Empty;
+
         [Required]
-        [MinLength(3,ErrorMessage = "Title is too short")]
+        [MinLength(3, ErrorMessage = "Title is too short")]
         [MaxLength(16, ErrorMessage = "Title is too big")]
         public string Title { get; set; } = String.Empty;
 

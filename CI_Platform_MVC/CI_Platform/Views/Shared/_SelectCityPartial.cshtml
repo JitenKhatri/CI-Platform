@@ -1,9 +1,9 @@
 ﻿@using CI_Platform.Models.ViewModels
 @model EditProfileViewModel
-<option value=0 disabled  selected>Select Your City</option>
+<option value=0 disabled selected>Select Your City</option>
                @{
-                   foreach (var item in Model.Cities)
-                   {
-                       <option value=@item.CityId>@item.Name</option>
-                   }
-               }    
+    foreach (var item in Model.Cities)
+    {
+        <option value=@item.CityId>@item.Name</option>
+    }
+}
