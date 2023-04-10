@@ -1,4 +1,5 @@
 ﻿using CI_Platform.Models;
+using CI_Platform.Models.InputModels;
 using CI_Platform.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace CI_Platform.DataAccess.Repository.IRepository
    public interface IMissionRepository : IRepository<Mission>
     {
         List<MissionViewModel> GetAllMission(int page , int pageSize);
-        List<MissionViewModel> GetFilteredMissions(List<string> countriesList,List<string> cities, List<string> themes, List<string> skiils, string? sortOrder,string searchtext,int page, int pageSize);
+        List<MissionViewModel> GetFilteredMissions(MissionInputModel model);
         List<City> GetCitiesForCountry(long countryid);
 
         List<MissionSkill> MissionSkillList(int id);

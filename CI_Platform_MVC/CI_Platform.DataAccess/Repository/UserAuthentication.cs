@@ -66,6 +66,7 @@ namespace CI_Platform.DataAccess.Repository
                     ProfileText = user.ProfileText,
                     LinkedInUrl = user.LinkedInUrl,
                     Profile = user.Avatar,
+                    Email = user.Email,
                     UserSkills = user.UserSkills.ToList(),
                     Selected_Skills = selectedSkills,
                     Selected_skill_names = Selectedskillnames
@@ -106,6 +107,7 @@ namespace CI_Platform.DataAccess.Repository
             {
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
+                model.Email = user.Email;
                 user.Title = model.Title;
                 user.WhyIVolunteer = model.WhyIVolunteer;
                 //user.Availablity = model.Availablity;
@@ -166,6 +168,21 @@ namespace CI_Platform.DataAccess.Repository
                 return false;
             }
 
+        }
+
+        public bool ContactUs(long user_id,string Subject, string Message)
+        {
+            var userquery = new UserQuery
+            {
+                UserId = user_id,
+                Subject = Subject,
+                Message = Message
+
+            };
+            _db.UserQueries.Add(userquery);
+            _db.SaveChanges();
+
+            return true;
         }
     }
         

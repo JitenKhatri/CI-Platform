@@ -46,6 +46,8 @@ namespace CI_Platform.Models.ViewModels
         public string Title { get; set; } = String.Empty;
 
         public string Profile { get; set; } = String.Empty;
+
+        public string Email { get; set; } = String.Empty;
         //public User User { get; set; } = new User();
 
         public string Selected_Skills { get; set; } = String.Empty;

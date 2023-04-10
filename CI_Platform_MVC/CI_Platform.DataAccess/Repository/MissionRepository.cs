@@ -1,5 +1,6 @@
 ﻿using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
+using CI_Platform.Models.InputModels;
 using CI_Platform.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -35,17 +36,17 @@ namespace CI_Platform.DataAccess.Repository
                                                          CountryId = m.Country.CountryId,
                                                          CountryName = m.Country.Name
                                                      },
-                                                     themes = new ThemeViewModel
+                                                     Theme = new ThemeViewModel
                                                      {
                                                          ThemeId = m.Theme.MissionThemeId,
                                                          ThemeName = m.Theme.Title
                                                      },
-                                                     skills = new SkillViewModel
+                                                     Skill = new SkillViewModel
                                                      {
                                                          SkillId = s.SkillId,
                                                          SkillName = s.SkillName
                                                      },
-                                                     Cities = new CityViewModel
+                                                     City = new CityViewModel
                                                      {
                                                          CityId = m.CityId,
                                                          CityName = m.City.Name
@@ -58,15 +59,15 @@ namespace CI_Platform.DataAccess.Repository
             return missions;
         }
 
-        public List<MissionViewModel> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, string? sortOrder, string searchtext = null, int page = 1, int pageSize = 6)
+        public List<MissionViewModel> GetFilteredMissions(MissionInputModel model)
         {
-            int skipCount = (page - 1) * pageSize;
+            int skipCount = (model.Page - 1) * model.PageSize;
 
             // Create a queryable object for the missions table
             IQueryable<Mission> missions = _db.Missions.AsQueryable();
 
             // Apply sorting based on the sortOrder parameter
-            switch (sortOrder)
+            switch (model.SortOrder)
             {
                 case null:
                 case "Oldest":
@@ -91,23 +92,23 @@ namespace CI_Platform.DataAccess.Repository
 
             // Apply filtering based on the input parameters
             missions = missions.Where(m =>
-                (Cities.Count == 0 || Cities.Contains(m.City.Name)) &&
-                (Countries.Count == 0 || Countries.Contains(m.Country.Name)) &&
-                (Themes.Count == 0 || Themes.Contains(m.Theme.Title)) &&
-                (Skills.Count == 0 ||
+                (model.Cities.Count == 0 || model.Cities.Contains(m.City.Name)) &&
+                (model.Countries.Count == 0 || model.Countries.Contains(m.Country.Name)) &&
+                (model.Themes.Count == 0 || model.Themes.Contains(m.Theme.Title)) &&
+                (model.Skills.Count == 0 ||
                     _db.MissionSkills
                         .Where(ms => ms.MissionId == m.MissionId)
-                        .All(ms => Skills.Contains(ms.Skill.SkillName))));
+                        .All(ms => model.Skills.Contains(ms.Skill.SkillName))));
 
-            if (!String.IsNullOrEmpty(searchtext))
+            if (!String.IsNullOrEmpty(model.SearchText))
             {
                 missions = missions.Where(m =>
-                    m.Title.ToLower().Replace(" ", "").Contains(searchtext.ToLower().Replace(" ", "")) ||
-                    m.Description.ToLower().Replace(" ", "").Contains(searchtext.ToLower().Replace(" ", "")));
+                    m.Title.ToLower().Replace(" ", "").Contains(model.SearchText.ToLower().Replace(" ", "")) ||
+                    m.Description.ToLower().Replace(" ", "").Contains(model.SearchText.ToLower().Replace(" ", "")));
             }
 
             // Create a projection of the required data
-            var Missions = missions.Skip(skipCount).Take(pageSize)
+            var Missions = missions.Skip(skipCount).Take(model.PageSize)
                                    .Select(m => new MissionViewModel
                                    {
                                        image = m.MissionMedia.FirstOrDefault(),
@@ -117,12 +118,12 @@ namespace CI_Platform.DataAccess.Repository
                                            CountryId = m.Country.CountryId,
                                            CountryName = m.Country.Name
                                        },
-                                       Cities = new CityViewModel
+                                       City = new CityViewModel
                                        {
                                            CityId = m.City.CityId,
                                            CityName = m.City.Name
                                        },
-                                       themes = new ThemeViewModel
+                                       Theme = new ThemeViewModel
                                        {
                                            ThemeId = m.Theme.MissionThemeId,
                                            ThemeName = m.Theme.Title

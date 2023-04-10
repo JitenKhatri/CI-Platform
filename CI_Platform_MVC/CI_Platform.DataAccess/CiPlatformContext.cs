@@ -63,6 +63,8 @@ public partial class CiPlatformContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<UserQuery> UserQueries { get; set; }
+
     public virtual DbSet<UserSkill> UserSkills { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -929,6 +931,28 @@ public partial class CiPlatformContext : DbContext
             entity.HasOne(d => d.Country).WithMany(p => p.Users)
                 .HasForeignKey(d => d.CountryId)
                 .HasConstraintName("FK__user__country_id__0F2D40CE");
+        });
+
+        modelBuilder.Entity<UserQuery>(entity =>
+        {
+            entity.HasKey(e => e.QueryId).HasName("PK__user_que__E793E34951810FA9");
+
+            entity.ToTable("user_query");
+
+            entity.Property(e => e.QueryId).HasColumnName("query_id");
+            entity.Property(e => e.Message)
+                .IsUnicode(false)
+                .HasColumnName("message");
+            entity.Property(e => e.Subject)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("subject");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserQueries)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__user_quer__user___02925FBF");
         });
 
         modelBuilder.Entity<UserSkill>(entity =>

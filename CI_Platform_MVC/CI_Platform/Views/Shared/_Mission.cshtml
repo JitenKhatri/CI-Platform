@@ -21,7 +21,7 @@
                 </div>
                 <div class="location-img">
                     <img class="text-light" src="~/images/pin.png" alt="">
-                    <span class="text-light"> @mission.Cities.CityName</span>
+                    <span class="text-light"> @mission.City.CityName</span>
                 </div>
                 <button class="like-img border-0" onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@mission?.Missions?.MissionId)">
                     <i class="bi bi-heart text-danger @mission?.Missions?.MissionId"></i>
@@ -31,7 +31,7 @@
                     <img class="text-light" src="~/images/add1.png" alt="">
                 </button>
                 <button class="mission-theme border-0">
-                    <span class="p-2">@mission.themes.ThemeName</span>
+                    <span class="p-2">@mission.Theme.ThemeName</span>
                 </button>
             </div>
             <div class="card-body">

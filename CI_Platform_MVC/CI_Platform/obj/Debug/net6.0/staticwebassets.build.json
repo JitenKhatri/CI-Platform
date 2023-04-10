@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "6gkJsi5e5kQoG/BW6HylcjPIsSlISDz0j+HPo45xAd0=",
+  "Hash": "jTBsMz1BdkAtKw813VdpBjJLzsTUBb+aeHetuBgBL4E=",
   "Source": "CI_Platform",
   "BasePath": "_content/CI_Platform",
   "Mode": "Default",
@@ -3162,6 +3162,23 @@
       "OriginalItemSpec": "wwwroot\\images\\b783704c-a35a-4fd7-8b30-4ee4038b801d_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\bbaa0611-f5ee-4642-8e82-25386c4d415b_img1.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/bbaa0611-f5ee-4642-8e82-25386c4d415b_img1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\bbaa0611-f5ee-4642-8e82-25386c4d415b_img1.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\bell - Copy.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -4095,6 +4112,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\facebook.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\fb37cca3-1019-40ea-8376-336ba85752f7_volunteer5.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/fb37cca3-1019-40ea-8376-336ba85752f7_volunteer5.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\fb37cca3-1019-40ea-8376-336ba85752f7_volunteer5.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\ff5f2fc1-7df7-4114-a6e9-a286ee48e8e2_volunteer7.png",

@@ -298,7 +298,15 @@ namespace CI_Platform.Controllers
         }
 
       
+        [Route("ContactUs")]
+        [HttpPost]
+        public IActionResult ContactUs(string Subject, string Message)
+        {
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            bool success = db.UserAuthentication.ContactUs(user_id, Subject, Message);
 
+            return Json(new { success = true });
+        }
 
     }
 }

@@ -10,7 +10,7 @@ namespace CI_Platform.Models.ViewModels
     {
         public Mission? Missions { get; set; }
 
-        public MissionMedium image { get; set; }
+        public MissionMedium image { get; set; } = new MissionMedium();
         public Country? Country { get; set; }
         public City? Cities { get; set; }
         public MissionTheme? theme { get; set; }

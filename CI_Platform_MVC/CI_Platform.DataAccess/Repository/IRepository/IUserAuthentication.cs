@@ -17,5 +17,7 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         bool ChangePassword(long UserId, string password);
 
         bool UpdateProfile(EditProfileViewModel model, long user_id);
+
+        bool ContactUs(long user_id, string Subject, string Message);
     }
 }

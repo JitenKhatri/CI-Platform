@@ -1,7 +1,7 @@
-﻿let cities = []
-let countries = []
-let themes = []
-let skills = []
+﻿////let cities = []
+////let countries = []
+////let themes = []
+////let skills = []
 
 $('.form-check-input').on('change', function () {
     const dropdown = $(this).closest('.dropdown');
@@ -54,7 +54,7 @@ function Cityfilter(name) {
     $.ajax({
         url: '/Story/Story',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills },
+        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
         success: function (result) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
@@ -94,16 +94,16 @@ function Countryfilter(name, dataid) {
         success: function (result) {
             console.log(result);
             if (result.cities.length > 0) {
-                loadcities(result.cities);
+                Loadcities(result.cities);
             }
             else {
-                loadcities(result.cities)
+                Loadcities(result.cities)
 
             }
             $.ajax({
                 url: '/Story/Story',
                 type: 'POST',
-                data: { countries: countries, cities: cities, themes: themes, skills: skills },
+                data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
                 success: function (result) {
                     if (result == "") {
                         $('.page-not-found').css('display', 'block');
@@ -126,7 +126,7 @@ function Countryfilter(name, dataid) {
     });
 
 }
-const loadcities = (cities) => {
+const Loadcities = (cities) => {
     $('.city').empty()
     $.each(cities, function (i, item) {
         var data = "<span>" +
@@ -159,7 +159,7 @@ const Themefilter = (name) => {
     $.ajax({
         url: '/Story/Story',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills },
+        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
         success: function (result) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
@@ -191,7 +191,7 @@ const Skillfilter = (name) => {
     $.ajax({
         url: '/Story/Story',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills },
+        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
         success: function (result) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
@@ -215,7 +215,7 @@ function search() {
         {
             url: '/Story/Story',
             type: 'POST',
-            data: { searchtext :input, cities: cities, themes: themes, skills: skills },
+            data: { SearchText :input, Cities: cities, Themes: themes, Skills: skills },
             success: function (result) {
                 if (result == "") {
                     $('.page-not-found').css('display', 'block');
@@ -241,7 +241,7 @@ function clear_all() {
     $.ajax({
         url: '/Story/Story',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills },
+        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
         success: function (result) {
             $('.Stories').html(result);
             $('.page-not-found').css('display', 'none');
@@ -273,7 +273,7 @@ function remove_badges(input) {
     $.ajax({
         url: '/Story/Story',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills },
+        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
         success: function (result) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
@@ -381,14 +381,14 @@ function editstory(type,storyId,missionId) {
             for (var i = 0; i < files.length; i++) {
                 formData.append('media', files[i]);
             }
-            formData.append('Mission_id', missionId);
-            formData.append('title', edit_title);
-            formData.append('story_id', storyId);
-            formData.append('published_date', edit_date);
-            formData.append('story_description', edit_mystory);
-            formData.append('type', type);
+            formData.append('MissionId', missionId);
+            formData.append('Title', edit_title);
+            formData.append('StoryId', storyId);
+            formData.append('PublishedDate', edit_date);
+            formData.append('StoryDescription', edit_mystory);
+            formData.append('Type', type);
             for (var j = 0; j < Video_url.length; j++) {
-                formData.append('videourl', Video_url[j])
+                formData.append('VideoUrls', Video_url[j])
             }
         });
         myDropzone.processQueue();
@@ -450,29 +450,6 @@ var count = 0
 $(function () {
     $("#datepicker").datepicker();
 });
-let alertId = 0;
-function showAlert(message) {
-    const alert = document.createElement("div");
-    alert.classList.add("alert");
-    alert.setAttribute("id", "alert-" + alertId);
-    alert.innerText = message;
-    document.body.appendChild(alert);
-
-    // Add CSS to position the alert at the top right and give it a reddish background color
-    alert.style.position = "fixed";
-    alert.style.top = (10 + alertId * 50) + "px";
-    alert.style.right = "10px";
-    alert.style.backgroundColor = "#ffcccc";
-
-    // Increment the alert ID for the next call to showAlert
-    alertId++;
-
-    // Remove the alert after 5 seconds
-    setTimeout(() => {
-        alert.remove();
-        alertId = 0;
-    }, 5000);
-}
 if (window.location.href === 'https://localhost:7064/Story/ShareStory') {
     Dropzone.autoDiscover = false;
     $(function () {
@@ -525,13 +502,13 @@ function sharestory(type) {
             for (var i = 0; i < files.length; i++) {
                 formData.append('media', files[i]);
             }
-            formData.append('Mission_id', mission);
-            formData.append('title', title);
-            formData.append('published_date', date.toString());
-            formData.append('story_description', mystory);
-            formData.append('type', type);
+            formData.append('MissionId', mission);
+            formData.append('Title', title);
+            formData.append('PublishedDate', date.toString());
+            formData.append('StoryDescription', mystory);
+            formData.append('Type', type);
             for (var j = 0; j < video_url.length; j++) {
-                formData.append('videourl', video_url[j])
+                formData.append('VideoUrls', video_url[j])
             }
         });
         // Manually process queue to upload files
@@ -581,7 +558,7 @@ function convertDate(inputFormat) {
     return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/')
 }
 
-function recommend(story_id, email, to_user_id) {
+function Recommend(story_id, email, to_user_id) {
         $.ajax({
             url: `/Story/StoryDetail/${story_id}`,
             type: 'POST',

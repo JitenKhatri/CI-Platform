@@ -63,5 +63,7 @@ public partial class User
 
     public virtual ICollection<Timesheet> Timesheets { get; } = new List<Timesheet>();
 
+    public virtual ICollection<UserQuery> UserQueries { get; } = new List<UserQuery>();
+
     public virtual ICollection<UserSkill> UserSkills { get; } = new List<UserSkill>();
 }

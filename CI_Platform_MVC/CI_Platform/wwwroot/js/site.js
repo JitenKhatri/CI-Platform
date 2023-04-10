@@ -78,7 +78,7 @@ function search() {
         {
             url: '/Mission',
             type: 'POST',
-            data: { searchtext: input, cities: cities, themes: themes, skills: skills },
+            data: { SearchText: input, Cities: cities, Themes: themes, Skills: skills },
             success: function (result) {
                 if (result == "") {
                     $('.page-not-found').css('display', 'block');
@@ -99,7 +99,7 @@ function sortby(order) {
     $.ajax({
         url: '/Mission',
         type: 'Post',
-        data: { sortOrder: order},
+        data: { SortOrder: order},
         success: function (result) {
             $('.missions').html(result);
         },
@@ -119,7 +119,7 @@ function clear_all() {
     $.ajax({
         url: '/Mission',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills},
+        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills},
         success: function (result) {
             $('.missions').html(result);
             $('.page-not-found').css('display', 'none');
@@ -151,7 +151,7 @@ function remove_badges(input) {
     $.ajax({
         url: '/Mission',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills},
+        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills},
         success: function (result) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
@@ -184,7 +184,7 @@ function addcities(name) {
     $.ajax({
         url: '/Mission',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills },
+        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
         success: function (result) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
@@ -233,7 +233,7 @@ function addcountries(name,dataid) {
             $.ajax({
                 url: '/Mission',
                 type: 'POST',
-                data: { countries: countries, cities: cities, themes: themes, skills: skills},
+                data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills},
                 success: function (result) {
                     if (result == "") {
                         $('.page-not-found').css('display', 'block'); 
@@ -289,7 +289,7 @@ const addthemes = (name) => {
     $.ajax({
         url: '/Mission',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills },
+        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
         success: function (result) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
@@ -321,7 +321,7 @@ const addskills = (name) => {
     $.ajax({
         url: '/Mission',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills},
+        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills},
         success: function (result) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
@@ -553,6 +553,46 @@ const recommend = (user_id, mission_id,email,to_user_id) => {
         })
     }
 }
+let alertId = 0;
 
+function showAlert(message) {
+    const alert = document.createElement("div");
+    alert.classList.add("alert");
+    alert.setAttribute("id", "alert-" + alertId);
+    alert.innerText = message;
+    document.body.appendChild(alert);
+
+    // Add CSS to position the alert at the top right and give it a reddish background color
+    alert.style.position = "fixed";
+    alert.style.top = (10 + alertId * 50) + "px";
+    alert.style.right = "10px";
+    alert.style.backgroundColor = "#ffcccc";
+
+    // Increment the alert ID for the next call to showAlert
+    alertId++;
+
+    // Remove the alert after 5 seconds
+    setTimeout(() => {
+        alert.remove();
+        alertId = 0;
+    }, 5000);
+}
+function contactUs() {
+    var subject = $('#contact-subject').val();
+    var message = $('#contact-message').val();
+    $.ajax({
+        url: '/UserAuthentication/ContactUs',
+        type: 'POST',
+        data: { Subject: subject, Message: message },
+        success: function (result) {
+            $("#contact-us-model").modal('hide')
+            ClearModal();
+            showAlert("Your concern has been saved!!")
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+}
 
 

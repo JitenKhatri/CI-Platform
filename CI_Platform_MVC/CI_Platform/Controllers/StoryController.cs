@@ -1,5 +1,6 @@
 ﻿using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
+using CI_Platform.Models.InputModels;
 using CI_Platform.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -62,10 +63,11 @@ namespace CI_Platform.Controllers
             return Json(new { cities, success = true });
         }
         [HttpPost]
-        public IActionResult Story(List<string> countries, List<string> cities, List<string> themes, List<string> skills,string searchtext=null, int page = 1, int pageSize = 6)
+        public IActionResult Story(StoryInputModel model)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-            List<StoryViewModel> stories = db.StoryRepository.GetFilteredStories(countries, cities, themes, skills,user_id,searchtext, page, pageSize);
+            model.UserId = user_id;
+            List<StoryViewModel> stories = db.StoryRepository.GetFilteredStories(model);
             return PartialView("_stories", stories);
         }
 
@@ -77,10 +79,11 @@ namespace CI_Platform.Controllers
         }
 
         [HttpPost]
-        public IActionResult ShareStory(long story_id, long Mission_id, string title, string published_date, string story_description, List<IFormFile> media, string type,List<string> videourl)
+        public IActionResult ShareStory(StoryInputModel model)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-            bool success = db.StoryRepository.ShareStory(user_id, story_id, Mission_id, title, published_date, story_description, media, type,videourl);
+            model.UserId = user_id;
+            bool success = db.StoryRepository.ShareStory(model);
             return Json(new { success = true });
         }
         public IActionResult StoryDetail(long id)
