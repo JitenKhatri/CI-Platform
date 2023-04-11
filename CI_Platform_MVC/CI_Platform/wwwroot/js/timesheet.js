@@ -25,7 +25,7 @@ const goaldata = () => {
                     Type: "goal-edit",
                     Timesheet_id: parseInt(document.getElementById("timesheet-id").value)
                 },
-               /* data: { mission_id: mission_id, date: date.toString(), actions: actions, message: message, type: "goal-edit", timesheet_id: parseInt(document.getElementById("timesheet-id").value) },*/
+                /* data: { mission_id: mission_id, date: date.toString(), actions: actions, message: message, type: "goal-edit", timesheet_id: parseInt(document.getElementById("timesheet-id").value) },*/
                 success: function (result) {
                     if (result.view) {
                         $(`#timesheet-${parseInt(document.getElementById("timesheet-id").value)}`).replaceWith(result.view.result)
@@ -43,12 +43,12 @@ const goaldata = () => {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
                 type: 'POST',
-                data:{
+                data: {
                     Mission_id: mission_id,
                     Date: date.toString(),
                     Actions: actions,
                     Message: message,
-                    Type : "goal"
+                    Type: "goal"
 
                 },
                 /*data: { mission_id: mission_id, date: date.toString(), actions: actions, message: message, type: "goal" },*/
@@ -235,19 +235,46 @@ const edittimesheet = (id, mission, hours, minutes, message, type, action) => {
 }
 
 const deletetimesheet = (id) => {
-    $(`#timesheet-${id}`).remove()
-    $.ajax({
-        url: '/Mission/Volunteering_Timesheet',
-        type: 'POST',
-        /* data: { timesheet_id: parseInt(id), type: "time-delete" },*/
-        data: {
-            Timesheet_id: parseInt(id),
-            Type: "time-delete"
-        },
-        success: function (result) {
-        },
-        error: function () {
-            console.log("Error updating variable");
-        }
+    const html = `
+<div class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-delete" >
+<div class="modal-content">
+<div class="modal-header border-0 d-flex justify-content-center">
+<h5 class="modal-title text-danger" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body text-center">
+<p class="mb-0">Are you sure you want to delete this timesheet?</p>
+</div>
+<div class="modal-footer border-0 d-flex align-item-center justify-content-center">
+<button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+<button type="button" class="btn btn-danger" id="confirmDeleteButton">Yes, Delete</button>
+</div>
+</div>
+</div>
+</div>
+`;
+    $(document.body).append(html);
+    $('#confirmDeleteModal').modal('show');
+    $('#confirmDeleteButton').on('click', () => {
+        $(`#timesheet-${id}`).remove()
+        $.ajax({
+            url: '/Mission/Volunteering_Timesheet',
+            type: 'POST',
+            /* data: { timesheet_id: parseInt(id), type: "time-delete" },*/
+            data: {
+                Timesheet_id: parseInt(id),
+                Type: "time-delete"
+            },
+            success: function (result) {
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        });
+        $('#confirmDeleteModal').modal('hide');
+    });
+    $('#confirmDeleteModal').on('hidden.bs.modal', () => {
+        $('#confirmDeleteModal').remove();
     });
 }

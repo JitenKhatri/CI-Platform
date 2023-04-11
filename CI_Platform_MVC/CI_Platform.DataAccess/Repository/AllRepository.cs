@@ -18,6 +18,7 @@ namespace CI_Platform.DataAccess.Repository
             MissionRepository = new MissionRepository(_db);
             PasswordResetRepository = new PasswordResetRepository(_db);
             StoryRepository = new StoryRepository(_db);
+            AdminRepository = new AdminRepository(_db);
         }
         public IUserAuthentication UserAuthentication { get; private set; }
 
@@ -25,6 +26,7 @@ namespace CI_Platform.DataAccess.Repository
 
         public IPasswordResetRepository PasswordResetRepository { get; private set; }
         public IStoryRepository StoryRepository { get; private set; }
+        public IAdminRepository AdminRepository { get; private set; }
 
         public void save()
         {

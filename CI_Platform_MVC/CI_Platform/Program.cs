@@ -43,13 +43,13 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 app.MapControllerRoute(
+name: "area",
+pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
 name: "default",
 pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "UserAuthentication",
     pattern: "{controller=UserAuthentication}/{action=ResetPassword}/{id?}");
-//app.MapControllerRoute(
-//    name: "UserAuthentication",
-//    pattern: "{controller=UserAuthentication}/{action=login}");
 
 app.Run();

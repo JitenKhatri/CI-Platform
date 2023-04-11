@@ -15,5 +15,7 @@ namespace CI_Platform.DataAccess.Repository.IRepository
 
         public IMissionRepository MissionRepository { get; }
         public IStoryRepository StoryRepository { get; }
+
+        public IAdminRepository AdminRepository { get; }
     }
 }

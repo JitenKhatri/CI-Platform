@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace CI_Platform.Controllers
 {
+    [ProfileCompletionFilter]
     public class StoryController : Controller
     {
         private readonly IAllRepository db;

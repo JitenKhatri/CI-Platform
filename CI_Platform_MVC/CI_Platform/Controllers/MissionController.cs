@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace CI_Platform.Controllers
 {
+    [ProfileCompletionFilter]
     public class MissionController : Controller
     {
         private readonly IAllRepository db;
@@ -21,7 +22,7 @@ namespace CI_Platform.Controllers
             db = _db;
         }
 
-     
+        
         public IActionResult Index(int page = 1, int pageSize = 6)
         {
             List<City> cities = new List<City>();
