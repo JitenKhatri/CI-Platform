@@ -278,3 +278,37 @@ const deletetimesheet = (id) => {
         $('#confirmDeleteModal').remove();
     });
 }
+$(document).ready(function () {
+
+    var timetstable = $('#TimeTimesheet').DataTable({
+        lengthChange: false,
+        paging: false,
+        searching: false,
+        columns: [
+            { "orderable": false }, // column 1
+            { "orderData": [1], "orderSequence": ["desc", "asc"], "title": "Date" }, // column 2 (date)
+            { "orderData": [2], "orderSequence": ["desc", "asc"], "title": "Hours" }, // column 3 (hours)
+            { "orderable": false }, // column 4
+            { "orderable": false },
+        ],
+        order: [[1, "desc"], [2, "asc"]], // default ordering for columns 2 and 3
+        language: { // remove "Showing 1 to 3 of 3 entries" message
+            "info": ""
+        },
+    });
+    var goaltstable = $('#GoalTimesheet').DataTable({
+
+        lengthChange: false,
+        paging: false,
+        searching: false,
+        order: [], // remove default ordering
+        info: false, // remove info message
+        columns: [
+            { "orderable": false }, // column 1
+            { "orderData": [1] }, // column 2 (date)
+            { "orderData": [2] }, // column 3 (hours)
+            { "orderable": false }, // column 4  
+        ],
+        order: [[1,"desc"],[2,"asc"]] // default ordering for columns 2 and 3
+    });
+});

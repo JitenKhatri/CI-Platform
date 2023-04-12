@@ -6,8 +6,8 @@
 .main-content {
     flex-grow: 0;
     flex-shrink: 0;
-    flex-basis: calc(100% - 242px);
-/*    max-width: calc(100% - 242px);*/
+    flex-basis: calc(100% - 303px);
+    /*    max-width: calc(100% - 242px);*/
     padding: 5px 7px;
     z-index: 1;
     transition: all 0.2s cubic-bezier(0.35, 0, 0.25, 1);
@@ -18,13 +18,13 @@
     flex-grow: 1;
 }
 .sidebar {
-    width: 242px;
+    width: 303px;
     border-radius: 3px;
     background-color: #F88634;
     min-height: 100vh;
     flex-grow: 0;
     flex-shrink: 0;
-    flex-basis: 242px;
+    flex-basis: 303px;
     z-index: 0;
     overflow-y: auto;
     top: 0px;
@@ -41,7 +41,7 @@
 
 .sidebar-open .sidebar {
     flex-shrink: 1;
-    margin-left: -242px;
+    margin-left: -303px;
 }
 
 body.toggle-sidebar {
@@ -133,10 +133,11 @@ ul {
     align-items: center;
     z-index: 1;
 }
-
+.dropdown-toggle::after {
+    display: none;
+}
 .table {
     border: 1px solid #D9D9D9;
-
 }
 th {
     background: #F8F9FC 0% 0% no-repeat padding-box !important;
@@ -157,46 +158,54 @@ td {
 .add-btn img {
         filter: invert(72%) sepia(35%) saturate(4855%) hue-rotate(336deg) brightness(99%) contrast(97%);
  }
-@media (max-width:991px) {
-    .sidebar {
-        position: fixed;
-        margin-left: -242px;
-        z-index: 30;
-    }
 
-    .overlay {
-        position: fixed;
-        transition: all 0.2s ease;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 29;
-        visibility: hidden;
-        background: rgba(0,0,0,0.4);
-        display: block;
-        opacity: 0;
-        right: 0;
-    }
-
-    .sidebar-open .overlay {
-        visibility: visible;
-        opacity: 1;
-    }
-
-    .sidebar-open .sidebar {
-        margin-left: 0;
-    }
-
-    body.sidebar-open {
-        overflow: hidden;
-    }
-
-    .main-content {
-        max-width: 100%;
-        flex-basis: 100%;
-        flex-grow: 0;
-    }
+.pagination {
+    --bs-pagination-color: #f88634;
+    --bs-pagination-hover-color: #f88634;
+    --bs-pagination-focus-color: #f88634;
+    --bs-pagination-active-bg: #f88634;
+    --bs-pagination-active-border-color: #f88634;
 }
+    @media (max-width:991px) {
+        .sidebar {
+            position: fixed;
+            margin-left: -303px;
+            z-index: 30;
+        }
+
+        .overlay {
+            position: fixed;
+            transition: all 0.2s ease;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 29;
+            visibility: hidden;
+            background: rgba(0,0,0,0.4);
+            display: block;
+            opacity: 0;
+            right: 0;
+        }
+
+        .sidebar-open .overlay {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .sidebar-open .sidebar {
+            margin-left: 0;
+        }
+
+        body.sidebar-open {
+            overflow: hidden;
+        }
+
+        .main-content {
+            max-width: 100%;
+            flex-basis: 100%;
+            flex-grow: 0;
+        }
+    }
 
 
 

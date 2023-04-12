@@ -9,21 +9,22 @@
     </h4>
 
     <div class="row justify-content-between mt-4" style="height:400px;">
-        <div class="timesheet-box h-100 col-lg-6 px-4" style="width:48%;">
+        <div class="timesheet-box h-100 col-lg-6 px-4">
             <div class="d-flex justify-content-between  align-items-center  mt-4">
                 <span>Volunteering Hours</span>
                 <button data-bs-toggle="modal" data-bs-target="#time" class="btn applybutton d-flex justify-content-between align-items-center" ><img src="~/images/add.png" class="me-2" style="height:13px;"/><span>Add</span></button>
             </div>
             <div class="mt-4 row table-responsive">
-                 <table class="table table-borderless">
-                     <tbody class="time-timesheets">
-                    <tr>
+                 <table id="TimeTimesheet" class="table table-borderless">
+                     <thead>    <tr>
                         <th>Mission</th>
                         <th>Date</th>
                         <th>Hours</th>
                         <th>Minutes</th>
                         <th> </th>
-                    </tr>
+                    </tr></thead>
+                     <tbody class="time-timesheets">
+                
                     @{
                         foreach(var item in Model.Timesheets)
                         {
@@ -54,20 +55,22 @@
 
 
         </div>
-        <div class="timesheet-box h-100 col-lg-6 px-4" style="width:48%;">
+        <div class="timesheet-box h-100 col-lg-6 px-4">
              <div class="d-flex justify-content-between align-items-center mt-4">
                 <span>Volunteering Goals</span>
                 <button data-bs-toggle="modal" data-bs-target="#goal" class="btn d-flex applybutton justify-content-between align-items-center"><img src="~/images/add.png" class="me-2" style="height:13px;"/><span>Add</span></button>
             </div>
             <div class="mt-4 row goal-table table-responsive">
-                <table class="table table-borderless">
-                    <tbody class="goal-timesheets">
-                    <tr>
+                <table id="GoalTimesheet" class="table table-borderless">
+                    <thead>
+                        <tr>
                         <th>Mission</th>
                         <th>Date</th>
                         <th>Action</th>
                         <th></th>
-                    </tr>
+                    </tr></thead>
+                    <tbody class="goal-timesheets">
+                  
 
                     @{
                         foreach(var item in Model.Timesheets)

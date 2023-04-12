@@ -34,7 +34,7 @@
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/Admin/Home/Index" title="User">
+                    <a class="nav-link" href="/Admin/Home/Index" title="User">
                         <img src="~/images/person.svg" alt="User" class="default" />
                         <img src="~/images/person-fill.svg" alt="User" class="icon-active" />
                         @*    <img src="./images/dashboard-active.svg" alt="dashboard" class="icon-active" />*@
@@ -49,21 +49,21 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Admin/Home/MissionCrud" title="Mission">
+                    <a class="nav-link active" href="#" title="Mission">
                         <img src="~/images/bullseye.svg" alt="bullseye" class="default" />
                         <img src="~/images/bullseye.svg" alt="bullseye" class="icon-active" />
                         <span>Mission</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Admin/Home/MissionThemeCrud" title="Mission Theme">
+                    <a class="nav-link" href="#" title="Mission Theme">
                         <img src="~/images/dashboard.svg" alt="dashboard" class="default" />
                         <img src="~/images/dashboard-active.svg" alt="dashboard" class="icon-active" />
                         <span>Mission Theme</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Admin/Home/MissionSkillCrud" title="Mission Skills">
+                    <a class="nav-link" href="#" title="Mission Skills">
                         <img src="~/images/tools.svg" alt="tools" class="default" />
                         <img src="~/images/tools.svg" alt="tools" class="icon-active" />
                         <span>Mission Skills</span>
@@ -77,7 +77,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Admin/Home/StoryCrud" title="Story">
+                    <a class="nav-link" href="#" title="Story">
                         <img src="~/images/journal-medical.svg" alt="Story" class="default" />
                         <img src="~/images/journal-medical.svg" alt="Story" class="icon-active" />
                         <span>Story</span>
@@ -128,7 +128,7 @@
         </div>
 
         <div class="crud-container mt-4 px-4">
-            <h3 class="ms-2 mt-4">Users</h3>
+            <h3 class="ms-2 mt-4">Missions</h3>
 
             <div class="d-flex justify-content-between mt-4">
                 <div class="search-bar">
@@ -136,10 +136,10 @@
                             <button type="button" class="btn">
                                 <img src="~/images/search.png" alt="search" />
                             </button>
-                            <input id="search-input"
+                            <input id="mission-search-input"
                                    class="form-control"
                                    type="text"
-                                   placeholder="Search User"
+                                   placeholder="Search Mission"
                                    aria-label="Search"
                                     />
                         </form></div>
@@ -147,36 +147,32 @@
             </div>
 
                <div class=" ms-2 mt-4 row table-responsive">
-                 <table id="Users-table" class="table">
+                 <table id="Missions-table" class="table">
                    
                          <thead>
                                <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Employee Id</th>
-                        <th> Department </th>
-                        <th> Status </th>
-                        <th></th>
+                        <th>Mission Title</th>
+                        <th>Mission Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th> Action </th>
                     </tr>
                          </thead>
                            <tbody>
-                            @foreach (var item in Model.Users)
+                            @foreach (var item in Model.Missions)
                             {
                                 <tr>
-                                    <td>@item.FirstName</td>
-                                    <td>@item.LastName</td>
-                                    <td>@item.Email</td>
-                                    <td>@item.EmployeeId</td>
-                                    <td>@item.Department</td>
-                                    
-                                        @if(@item.Status == "1")
-                                        {
-                                        <td style="color:green;">Active</td>
+                                    <td>@item.Title</td>
+                                    <td>@item.MissionType</td>
+                                    @if(@item.StartDate !=null && @item.EndDate !=null)
+                                    {
+                                     <td>@item.StartDate.ToString().Substring(0,10)</td>
+                                        <td>@item.EndDate.ToString().Substring(0,10)</td>
                                     }
                                     else
                                     {
-                                        <td style="color:orangered;">Inactive</td>
+                                        <td></td>
+                                        <td></td>
                                     }
 
                                     <td>
@@ -202,7 +198,8 @@
 
 
 
- <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>

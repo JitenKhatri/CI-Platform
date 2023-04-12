@@ -9,6 +9,10 @@ namespace CI_Platform.DataAccess.Repository.IRepository
 {
     public interface IAdminRepository
     {
-        UserCrudViewModel GetAllUsers();
+        CrudViewModel GetAllUsers();
+        CrudViewModel GetAllMissions();
+        CrudViewModel GetAllThemes();
+        CrudViewModel GetAllSkills();
+        CrudViewModel GetAllStories();
     }
 }
