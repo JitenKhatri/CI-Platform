@@ -43,7 +43,49 @@ namespace CI_Platform.DataAccess.Repository
                 MissionThemes = missionThemes
             };
         }
+        
+        public MissionTheme AddTheme(string ThemeName, int status)
+        {
+            MissionTheme NewTheme = new MissionTheme
+            {
+                Title = ThemeName,
+                Status = status
+            };
+            _db.MissionThemes.Add(NewTheme);
+            Save();
+            return NewTheme;
+        }
 
+        public bool DeleteTheme(int theme_id)
+        {
+            MissionTheme deletetheme = _db.MissionThemes.FirstOrDefault(t => t.MissionThemeId == theme_id );
+            if (deletetheme is not null)
+            {
+                _db.MissionThemes.Remove(deletetheme);
+                Save();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public MissionTheme EditTheme(int theme_id,int Status,string ThemeName)
+        {
+            MissionTheme edittheme = _db.MissionThemes.FirstOrDefault(t => t.MissionThemeId == theme_id);
+            if(edittheme is not null)
+            {
+                edittheme.Status = Status;
+                edittheme.Title = ThemeName;
+                Save();
+                return edittheme;
+            }
+            else
+            {
+                return null;
+            }
+        }
         public CrudViewModel GetAllSkills()
         {
             List<Skill> Skills = _db.Skills.ToList();
@@ -53,6 +95,32 @@ namespace CI_Platform.DataAccess.Repository
             };
         }
 
+        public Skill AddSkill(string SkillName,int Status)
+        {
+            Skill NewSkill = new Skill
+            {
+                SkillName = SkillName,
+                Status = (byte)Status
+            };
+            _db.Skills.Add(NewSkill);
+            Save();
+            return NewSkill;
+        }
+        public Skill EditSkill(int skillid, int Status, string SkillName)
+        {
+            Skill editskill = _db.Skills.FirstOrDefault(t => t.SkillId == skillid);
+            if (editskill is not null)
+            {
+                editskill.Status = (byte)Status;
+                editskill.SkillName = SkillName;
+                Save();
+                return editskill;
+            }
+            else
+            {
+                return null;
+            }
+        }
         public CrudViewModel GetAllStories()
         {
             var stories = _db.Stories
@@ -71,6 +139,11 @@ namespace CI_Platform.DataAccess.Repository
             {
                 Stories = stories
             };
+        }
+
+        public void Save()
+        {
+            _db.SaveChanges();
         }
     }
 }

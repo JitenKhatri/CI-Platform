@@ -1,0 +1,19 @@
+﻿@Model MissionTheme 
+<tr>
+                                    <td>@Model.Title</td>
+                                     @if(@Model.Status == 1)
+                                        {
+                                        <td style="color:green;">Active</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="color:orangered;">Inactive</td>
+                                    }
+                                    <td>
+                                        <img src="/images/editing.png" data-bs-toggle="modal" data-bs-target="#AddTheme"
+                                        class="edbutton" onclick="EditTheme(@Model.MissionThemeId,'@Model.Title',@Model.Status)" alt="" />
+                                        <img src="~/images/bin.png" onclick="DeleteTheme(@Model.MissionThemeId)"  class="ms-2 edbutton" alt="" />
+                                    </td>
+                                    
+                                    
+                                </tr>

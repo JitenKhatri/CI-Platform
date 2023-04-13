@@ -166,6 +166,21 @@ td {
     --bs-pagination-active-bg: #f88634;
     --bs-pagination-active-border-color: #f88634;
 }
+
+.cancelbtn {
+    padding: 0.4rem 1rem;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 2px solid #757575;
+    border-radius: 24px;
+}
+
+.submitbtn {
+    padding: 0.4rem 1rem;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 2px solid #F88634;
+    border-radius: 24px;
+    color: #F88634;
+}
     @media (max-width:991px) {
         .sidebar {
             position: fixed;

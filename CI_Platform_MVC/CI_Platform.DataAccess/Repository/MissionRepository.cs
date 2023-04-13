@@ -467,6 +467,7 @@ namespace CI_Platform.DataAccess.Repository
                     Status = "SUBMIT_FOR_APPROVAL"
                 };
                 _db.Timesheets.Add(timesheet);
+                _db.Timesheets.Add(timesheet);
                 Save();
                 return timesheet;
             }

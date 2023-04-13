@@ -632,9 +632,7 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
-            entity.Property(e => e.Status)
-                .HasDefaultValueSql("((1))")
-                .HasColumnName("status");
+            entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .IsUnicode(false)

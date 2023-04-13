@@ -16,6 +16,5 @@ namespace CI_Platform.Models.ViewModels
         public int Minutes { get; set; }
         public int Actions { get; set; }
         public string Message { get; set; } = String.Empty;
-
     }
 }

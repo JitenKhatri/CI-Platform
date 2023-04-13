@@ -1,0 +1,18 @@
+﻿@Model Skill 
+<tr>
+                                    <td>@Model.SkillName</td>
+                                     @if(@Model.Status == 1)
+                                        {
+                                        <td style="color:green;">Active</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="color:orangered;">Inactive</td>
+                                    }
+                                    <td>
+                                        <img src="/images/editing.png" alt="" />
+                                        <img src="~/images/bin.png" class="ms-2 edbutton" alt="" />
+                                    </td>
+                                    
+                                    
+                                </tr>

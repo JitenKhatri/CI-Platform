@@ -35,6 +35,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxTdG9yeUNydWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/_MissionSkill.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxfTWlzc2lvblNraWxsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/_MissionTheme.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxfTWlzc2lvblRoZW1lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
