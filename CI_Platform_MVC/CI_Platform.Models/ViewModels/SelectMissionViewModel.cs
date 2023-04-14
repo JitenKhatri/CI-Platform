@@ -13,5 +13,7 @@ namespace CI_Platform.Models.ViewModels
         public string? Mission_type { get; set; }
 
         public string? Goal_object { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿@Model Skill 
-<tr>
+<tr id='skill-@Model.SkillId'>
                                     <td>@Model.SkillName</td>
                                      @if(@Model.Status == 1)
                                         {
@@ -9,9 +9,10 @@
                                     {
                                         <td style="color:orangered;">Inactive</td>
                                     }
-                                    <td>
-                                        <img src="/images/editing.png" alt="" />
-                                        <img src="~/images/bin.png" class="ms-2 edbutton" alt="" />
+                                        <td>
+                                        <img src="/images/editing.png" data-bs-toggle="modal" data-bs-target="#EditSkill"
+                                        class="edbutton" onclick="EditSkill(@Model.SkillId,'@Model.SkillName',@Model.Status)" alt="" />
+                                        <img src="~/images/bin.png" onclick="DeleteSkill(@Model.SkillId)" class="ms-2 edbutton" alt="" />
                                     </td>
                                     
                                     

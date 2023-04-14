@@ -22,5 +22,11 @@ namespace CI_Platform.DataAccess.Repository.IRepository
 
         Skill AddSkill(string SkillName, int Status);
         Skill EditSkill(int skillid, int Status, string SkillName);
+        bool DeleteSkill(int skill_id);
+        CrudViewModel GetAllMissionApplications();
+        bool ApproveMissionApplication(int MissionApplicationId);
+        bool DeclineMissionApplication(int MissionApplicationId);
+        bool PublishStory(int StoryId);
+        bool DeclineStory(int StoryId);
     }
 }

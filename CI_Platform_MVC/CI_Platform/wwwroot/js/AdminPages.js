@@ -2,6 +2,7 @@
 	$("body").toggleClass("sidebar-open")
 });
 var MissionThemeTable
+var MissionApplicationTable
 $(document).ready(function () {
 
     var Usertable = $('#Users-table').DataTable({
@@ -51,6 +52,22 @@ $(document).ready(function () {
         MissionThemeTable.search($(this).val()).draw();
     });
 
+    MissionApplicationTable = $('#Missionapplication-table').DataTable({
+        "pagingType": "full_numbers",
+        lengthChange: false,
+        searchDelay: 500,
+        "ordering": false,
+        dom: 'lrtip',
+        lengthMenu: [[5, 10, 15, -1], [5, "5+5", "5+5", "All"]],
+        pageLength: 5,
+        initComplete: function () {
+            // Hide default search bar
+            $(this.api().table().container()).find('.dataTables_filter').hide();
+        }
+    });
+    $('#mission-application-search-input').on('keyup', function () {
+        MissionApplicationTable.search($(this).val()).draw();
+    });
     var MissionSkillTable = $('#Missionskill-table').DataTable({
         "pagingType": "full_numbers",
         lengthChange: false,
@@ -120,33 +137,7 @@ function AddTheme(action) {
                     console.log("Error updating variable");
                 }
             });
-        }
-    
-    //else {
-    //    /* edit*/
-    //    if (ThemeStatus != 2 && ThemeName.length > 4) {
-    //        $.ajax({
-    //            url: '/Admin/Home/MissionThemeCrud',
-    //            type: 'POST',
-    //            data: {
-    //                ThemeName: ThemeName,
-    //                Status: ThemeStatus,
-    //                ThemeId: parseInt(document.getElementById("theme-id").value),
-    //                Action: "Edit"
-    //            },
-    //            success: function (result) {
-    //                if (result.view) {
-    //                    $(`#theme-${parseInt(document.getElementById("theme-id").value)}`).replaceWith(result.view.result)
-    //                    $("#AddTheme").modal('hide')
-    //                }
-    //            },
-    //            error: function () {
-    //                console.log("Error updating variable");
-    //            }
-    //        });
-    //    }
-    //}
-    
+        } 
 }
 function ValidateEditTheme() {
     var modal = $("#EditTheme");
@@ -212,7 +203,7 @@ const DeleteTheme = (id) => {
     $(document.body).append(html);
     $('#confirmDeleteModal').modal('show');
     $('#confirmDeleteButton').on('click', () => {
-        $(`#theme-${id}`).remove()
+/*        $(`#theme-${id}`).remove()*/
         $.ajax({
             url: '/Admin/Home/MissionThemeCrud',
             type: 'POST',
@@ -221,7 +212,9 @@ const DeleteTheme = (id) => {
                 Action: "Delete"
             },
             success: function (result) {
-                window.location.reload();
+                var row = $(`#theme-${id}`);
+                row.remove();
+                $('#Missiontheme-table').DataTable().row(row).remove().draw();
             },
             error: function () {
                 console.log("Error updating variable");
@@ -240,10 +233,7 @@ function EditTheme(themeid, title, status) {
     // Find the input element with the class "theme-name" inside the modal and set its value
     modal.find(".theme-name").val(title);
     modal.find(`.theme-status option[value="${status}"]`).attr("selected", "selected");
-        document.getElementById("theme-id").value = themeid
-  /*  document.getElementsByClassName("theme-name")[0].value = title;*/
-/*    $(`.theme-status option[value=${status}]`).attr("selected", "selected");*/
-/*    document.getElementById("theme-id").value = themeid*/
+    document.getElementById("theme-id").value = themeid;
 }
 
 function ClearThemeModal() {
@@ -262,7 +252,7 @@ function ClearThemeModal() {
 //Skillpage js
 var SkillName
 var SkillStatus
-function ValidateAddTheme() {
+function ValidateAddSkill() {
     SkillName = document.getElementsByClassName("skill-name")[0].value;
     SkillStatus = parseInt(document.getElementsByClassName("skill-status")[0].value);
     if (SkillStatus == 2) {
@@ -279,7 +269,7 @@ function ValidateAddTheme() {
     }
 }
 function AddSkill(action) {
-    ValidateAddTheme()
+    ValidateAddSkill()
     if (action == "Add") {
         if (SkillStatus != 2 && SkillName.length > 4) {
             $.ajax({
@@ -351,4 +341,127 @@ function EditSkill(skillid, name, status) {
     modal.find(".skill-name").val(name);
     modal.find(`.skill-status option[value="${status}"]`).attr("selected", "selected");
     document.getElementById("skill-id").value = skillid
+}
+
+const DeleteSkill = (id) => {
+    const html = `
+<div class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-delete" >
+<div class="modal-content">
+<div class="modal-header border-0 d-flex justify-content-center">
+<h5 class="modal-title text-danger" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body text-center">
+<p class="mb-0">Are you sure you want to delete this Skill?</p>
+</div>
+<div class="modal-footer border-0 d-flex align-item-center justify-content-center">
+<button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+<button type="button" class="btn btn-danger" id="confirmDeleteButton">Yes, Delete</button>
+</div>
+</div>
+</div>
+</div>
+`;
+    $(document.body).append(html);
+    $('#confirmDeleteModal').modal('show');
+    $('#confirmDeleteButton').on('click', () => {
+        /*        $(`#theme-${id}`).remove()*/
+        $.ajax({
+            url: '/Admin/Home/MissionSkillCrud',
+            type: 'POST',
+            data: {
+                SkillId: id,
+                Action: "Delete"
+            },
+            success: function (result) {
+                var row = $(`#skill-${id}`);
+                row.remove();
+                $('#Missionskill-table').DataTable().row(row).remove().draw();
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        });
+        $('#confirmDeleteModal').modal('hide');
+    });
+    $('#confirmDeleteModal').on('hidden.bs.modal', () => {
+        $('#confirmDeleteModal').remove();
+    });
+}
+
+function MissionApplication(id, Action) {
+    $.ajax({
+        url: '/Admin/Home/MissionApplications',
+        type: 'POST',
+        data: {
+            MissionApplicationId: id,
+            Action: Action
+        },
+        success: function (result) {
+            if (Action == 1) {
+                toastr.success('Application Approved Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+                $('.MA-' + id).addClass("bi-check-circle-fill");
+                $('.MA-' + id).removeClass("bi-check-circle");
+            }
+            else {
+                toastr.error('Application Declined Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+                $('.MA-' + id).addClass("bi-x-circle-fill");
+                $('.MA-' + id).removeClass("bi-x-circle");
+            }
+          
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    });
+    
+}
+
+function ChangeStoryStatus(id, Action) {
+    $.ajax({
+        url: '/Admin/Home/StoryCrud',
+        type: 'POST',
+        data: {
+            StoryId: id,
+            Action: Action
+        },
+        success: function (result) {
+            if (Action == 1) {
+                toastr.success('Story Approved Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+                $('.story-' + id).addClass("bi-check-circle-fill");
+                $('.story-' + id).removeClass("bi-check-circle");
+            }
+            else {
+                toastr.error('Stored Declined Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+                $('.story-' + id).addClass("bi-x-circle-fill");
+                $('.story-' + id).removeClass("bi-x-circle");
+            }
+
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    });
+
 }

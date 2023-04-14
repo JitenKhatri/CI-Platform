@@ -137,7 +137,7 @@ namespace CI_Platform.DataAccess.Repository
                     }
                     user.Avatar = "/images/" + uniqueFileName;
                 }
-                if (model.Selected_Skills is not null || model.Selected_Skills!= "")
+                if (model.Selected_Skills!= null && model.Selected_Skills!= "")
                 {
                     List<UserSkill> user_skills = _db.UserSkills.Where(c => c.UserId == user_id).ToList();
                     if (user_skills.Count > 0)

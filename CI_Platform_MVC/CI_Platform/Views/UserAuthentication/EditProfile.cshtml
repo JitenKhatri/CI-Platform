@@ -144,7 +144,7 @@
                         </div>
                     </div>
                     <h2 class="Userheading mt-5">My Skills</h2>
-                    <span asp-validation-for="Selected_Skills" class="text-danger d-block"></span>
+                    @*<span asp-validation-for="Selected_Skills" class="text-danger d-block"></span>*@
                     <input asp-for="Selected_Skills" value="@Model.Selected_Skills" type="hidden" id="selected_skills" />
                     <input type="hidden" value="@Model.Selected_skill_names" id="selected_skill_names" />
                     <div class="mt-4 w-100 saved-skills d-flex flex-column border border-1" style="height:200px;">

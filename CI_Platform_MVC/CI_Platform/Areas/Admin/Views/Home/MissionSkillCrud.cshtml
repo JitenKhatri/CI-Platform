@@ -128,7 +128,7 @@
         </div>
 
         <div class="crud-container mt-4 px-4">
-            <h3 class="ms-2 mt-4">Mission Themes</h3>
+            <h3 class="ms-2 mt-4">Mission Skills</h3>
 
             <div class="d-flex justify-content-between mt-4">
                 <div class="search-bar">
@@ -172,7 +172,7 @@
                                         <td>
                                         <img src="/images/editing.png" data-bs-toggle="modal" data-bs-target="#EditSkill"
                                         class="edbutton" onclick="EditSkill(@item.SkillId,'@item.SkillName',@item.Status)" alt="" />
-                                        <img src="~/images/bin.png" class="ms-2 edbutton" alt="" />
+                                        <img src="~/images/bin.png" onclick="DeleteSkill(@item.SkillId)" class="ms-2 edbutton" alt="" />
                                     </td>
                                 </tr>
                             }

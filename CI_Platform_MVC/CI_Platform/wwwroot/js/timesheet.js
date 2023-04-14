@@ -71,7 +71,7 @@ const timedata = () => {
     validate(type)
     if ($(`.time-mission`).is(":disabled")) {
         if (time_mission != 0 && time_date.length > 0 && hours <= 23 && hours > 0 &&
-            hours.length != 0 && mins <= 59 && mins > 0 && mins.length != 0 && time_message.trim().length > 20) {
+            hours.length != 0 && mins <= 59 && mins > 0 && mins.length != 0 && time_message.trim().length > 20 && !(dateObj.getTime() < startDateObj.getTime() || dateObj.getTime() > endDateObj.getTime())) {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
                 type: 'POST',
@@ -99,7 +99,7 @@ const timedata = () => {
     }
     else {
         if (time_mission != 0 && time_date.length > 0 && hours <= 23 && hours > 0 &&
-            hours.length != 0 && mins <= 59 && mins > 0 && mins.length != 0 && time_message.trim().length > 20) {
+            hours.length != 0 && mins <= 59 && mins > 0 && mins.length != 0 && time_message.trim().length > 20 && !(dateObj.getTime() < startDateObj.getTime() || dateObj.getTime() > endDateObj.getTime())) {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
                 type: 'POST',
@@ -163,7 +163,13 @@ const validate = (type) => {
         }
     }
     else {
+        date = $('#time').find('#dateOfTimeStory').val();
         time_mission = parseInt(document.getElementsByClassName("time-mission")[0].value)
+        var startdate = $('#mission-' + time_mission + '-startdate').val();
+        var enddate = $('#mission-' + time_mission + '-enddate').val();
+        endDateObj = new Date(enddate);
+        startDateObj = new Date(startdate);
+        dateObj = new Date(date);
         time_date = document.getElementsByClassName("time-date")[0].value
         hours = document.getElementsByClassName("time-hours")[0].value
         mins = document.getElementsByClassName("time-min")[0].value
@@ -173,6 +179,12 @@ const validate = (type) => {
         }
         else {
             $(".time-mission-empty").addClass("d-none").removeClass("d-block")
+        }
+        if (dateObj.getTime() < startDateObj.getTime() || dateObj.getTime() > endDateObj.getTime()) {
+            $(".time-date-invalid").addClass("d-block").removeClass("d-none")
+        }
+        else {
+            $(".time-date-invalid").addClass("d-block").removeClass("d-none")
         }
         if (time_date.length > 0) {
             $(".time-date-empty").addClass("d-none").removeClass("d-block")
@@ -216,7 +228,7 @@ const clear_modal = (type) => {
 }
 
 
-const edittimesheet = (id, mission, hours, minutes, message, type, action) => {
+const edittimesheet = (id, mission, hours, minutes, message, type, action,date) => {
     if (type == "time") {
         $(`.time-mission option[value=${mission}]`).attr("selected", "selected")
         $(`.time-mission`).attr("disabled", "disabled")
@@ -224,6 +236,7 @@ const edittimesheet = (id, mission, hours, minutes, message, type, action) => {
         document.getElementsByClassName('time-min')[0].value = parseInt(minutes.slice(0, 2))
         document.getElementsByClassName('time-message')[0].value = message
         document.getElementById("timesheet-id").value = id
+        document.getElementById("dateOfTimeStory").value = date
     }
     else {
         $(`#mission-${mission}`).attr("selected", "selected")
@@ -231,6 +244,7 @@ const edittimesheet = (id, mission, hours, minutes, message, type, action) => {
         document.getElementById('action').value = parseInt(action)
         document.getElementById('goal-message').value = message
         document.getElementById("timesheet-id").value = id
+        document.getElementById("goal-date").value = date
     }
 }
 

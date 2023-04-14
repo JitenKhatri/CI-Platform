@@ -426,7 +426,9 @@ namespace CI_Platform.DataAccess.Repository
                     Mission_id = m.MissionId,
                     Title = m.Mission.Title,
                     Mission_type = m.Mission.MissionType,
-                    Goal_object = m.Mission.GoalMotto
+                    Goal_object = m.Mission.GoalMotto,
+                    StartDate = m.Mission.StartDate,
+                    EndDate = m.Mission.EndDate
                 });
             return new TimesheetViewModel
             {

@@ -121,13 +121,29 @@ namespace CI_Platform.DataAccess.Repository
                 return null;
             }
         }
+
+        public bool DeleteSkill(int skill_id)
+        {
+            Skill deleteskilll = _db.Skills.FirstOrDefault(t => t.SkillId == skill_id);
+            if (deleteskilll is not null)
+            {
+                _db.Skills.Remove(deleteskilll);
+                Save();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public CrudViewModel GetAllStories()
         {
-            var stories = _db.Stories
+            var stories = _db.Stories.Where(s => s.Status != "DRAFT")
                             .Select(s => new Story
                             {
                                 StoryId = s.StoryId,
                                 Title = s.Title,
+                                Status = s.Status,
                                 // Include related Mission entity
                                 Mission = _db.Missions.FirstOrDefault(m => m.MissionId == s.MissionId),
                                 // Include related User entity
@@ -141,6 +157,80 @@ namespace CI_Platform.DataAccess.Repository
             };
         }
 
+        public CrudViewModel GetAllMissionApplications()
+        {
+            var missionapplications = _db.MissionApplications.Select(ma => new MissionApplication
+            {
+                MissionApplicationId = ma.MissionApplicationId,
+                AppliedAt = ma.AppliedAt,
+                ApprovalStatus = ma.ApprovalStatus,
+                Mission = _db.Missions.FirstOrDefault(m => m.MissionId == ma.MissionId),
+                User = _db.Users.FirstOrDefault(m => m.UserId == ma.UserId)
+            }).ToList();
+            return new CrudViewModel
+            {
+                MissionApplications = missionapplications
+            };
+        }
+
+        public bool ApproveMissionApplication(int MissionApplicationId)
+        {
+            MissionApplication missionapplication = _db.MissionApplications.FirstOrDefault(ma => ma.MissionApplicationId == MissionApplicationId);
+            if(missionapplication != null)
+            {
+                missionapplication.ApprovalStatus = "APPROVE";
+                Save();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool DeclineMissionApplication(int MissionApplicationId)
+        {
+            MissionApplication missionapplication = _db.MissionApplications.FirstOrDefault(ma => ma.MissionApplicationId == MissionApplicationId);
+            if (missionapplication != null)
+            {
+                missionapplication.ApprovalStatus = "DECLINE";
+                Save();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool PublishStory(int StoryId)
+        {
+            Story story = _db.Stories.FirstOrDefault(s => s.StoryId == StoryId);
+            if(story != null)
+            {
+                story.Status = "PUBLISHED";
+                Save();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool DeclineStory(int StoryId)
+        {
+            Story story = _db.Stories.FirstOrDefault(s => s.StoryId == StoryId);
+            if (story != null)
+            {
+                story.Status = "DECLINED";
+                Save();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public void Save()
         {
             _db.SaveChanges();

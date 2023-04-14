@@ -70,7 +70,7 @@ namespace CI_Platform.Areas.Admin.Controllers
         {
             if (Action == "Delete")
             {
-                bool success = db.AdminRepository.DeleteTheme(SkillId);
+                bool success = db.AdminRepository.DeleteSkill(SkillId);
                 return Json(new { success });
             }
             else if (Action == "Edit")
@@ -92,6 +92,45 @@ namespace CI_Platform.Areas.Admin.Controllers
         {
             var stories = db.AdminRepository.GetAllStories();
             return View(stories);
+        }
+
+        [Area("Admin")]
+        [HttpPost]
+        public IActionResult StoryCrud(int StoryId,int Action)
+        {
+            if (Action == 1)
+            {
+                bool success = db.AdminRepository.PublishStory(StoryId);
+                return Json(new { success = success });
+            }
+            else
+            {
+                bool success = db.AdminRepository.DeclineStory(StoryId);
+                return Json(new { success = success });
+            }
+        }
+
+        [Area("Admin")]
+        public IActionResult MissionApplications()
+        {
+            var missionapplications = db.AdminRepository.GetAllMissionApplications();
+            return View(missionapplications);
+        }
+
+        [Area("Admin")]
+        [HttpPost]
+        public IActionResult MissionApplications(int MissionApplicationId,int Action)
+        {
+           if(Action == 1)
+            {
+                bool success = db.AdminRepository.ApproveMissionApplication(MissionApplicationId);
+                return Json(new { success = success });
+            }
+           else
+            {
+                bool success = db.AdminRepository.DeclineMissionApplication(MissionApplicationId);
+                return Json(new { success = success });
+            }
         }
     }
 }

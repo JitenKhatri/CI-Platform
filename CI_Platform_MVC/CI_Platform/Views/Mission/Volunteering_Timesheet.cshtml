@@ -38,7 +38,7 @@
                                 <td>
                                 <img data-bs-toggle="modal" data-bs-target="#time"
                                 onclick="edittimesheet(@item.TimesheetId,@item.MissionId,
-                                        '@item.Time.ToString().Substring(0,2)','@item.Time.ToString().Substring(3,5)','@item.Notes','time')" 
+                                        '@item.Time.ToString().Substring(0,2)','@item.Time.ToString().Substring(3,5)','@item.Notes','time',0,'@item.DateVolunteered.ToString("yyyy-MM-dd")')" 
                                 src="~/images/editing.png" class="edbutton" alt=""/>
                                         <img src="~/images/bin.png" onclick="deletetimesheet(@item.TimesheetId)"
                                         class="ms-2 edbutton" alt="" />
@@ -80,7 +80,7 @@
                                 <td>@item.Mission.Title.ToString().Substring(0,15)</td>
                                 <td>@item.DateVolunteered.ToString("dd-MM-yyyy")</td>
                                 <td>@item.Action</td><td>
-                                <img onclick="edittimesheet(@item.TimesheetId,@item.MissionId,0,0,'@item.Notes','goal','@item.Action')"
+                                <img onclick="edittimesheet(@item.TimesheetId,@item.MissionId,0,0,'@item.Notes','goal','@item.Action','@item.DateVolunteered.ToString("yyyy-MM-dd")')"
                                 data-bs-toggle="modal" data-bs-target="#goal" src="~/images/editing.png" class="edbutton" alt=""/>
                                         <img src="~/images/bin.png" onclick="deletetimesheet(@item.TimesheetId)"
                                         class="ms-2 edbutton" alt="" /></td>
@@ -96,8 +96,11 @@
 </div>
 </div>
 
-
-
+   @foreach(var date in Model.Missions)
+                                    {
+                                        <input type="hidden" id="mission-@date.Mission_id-startdate" value='@date.StartDate?.ToString("yyyy-MM-dd")'>
+                                        <input type="hidden" id="mission-@date.Mission_id-enddate" value='@date.EndDate?.ToString("yyyy-MM-dd")'>
+                                    }
 @*Modals*@
 
 <div class="modal fade" id="time" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -120,13 +123,16 @@
                                 }
       }
   }
+  
   </select>
+
   <span class="text-danger d-none time-mission-empty">Mission Required</span>
        </div>
        <div>
            <label class="form-label mt-3">Date Volunteered</label>
-            <input type="date" max=@DateTime.Now.ToString("dd/MM/yyyy") class="form-control time-date"/>
+            <input type="date" max=@DateTime.Now.ToString("dd/MM/yyyy") id="dateOfTimeStory" class="form-control time-date"/>
             <span class="text-danger d-none time-date-empty">Date Required</span>
+            <span class="text-danger d-none time-date-invalid">Invalid Date input (must be between mission's start date and end date</span>
        </div>
        <div class="d-flex justify-content-between w-100">
            <div style="width:48%;">
