@@ -1,6 +1,7 @@
 ﻿using CI_Platform.Areas.Admin.ViewModels;
 using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
+using CI_Platform.Models.ViewModels;
 using Controllers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,40 @@ namespace CI_Platform.Areas.Admin.Controllers
             var users = db.AdminRepository.GetAllUsers();
             return View(users);
         }
+        [Area("Admin")]
+        [HttpPost]
+        public IActionResult AddUserPartial(int countryId)
+        {
+            if(countryId == 0)
+            {
+                AddUserViewModel model = new AddUserViewModel
+                {
+                    Countries = db.AdminRepository.GetAllCountries()
+                };
+                return View("_AddUser", model);
+            }
+            else
+            {
+                AddUserViewModel model = db.AdminRepository.GetCitiesForCountries(countryId);
+                var cities = this.RenderViewAsync("_CascadeCityPartial", model, true);
+                return Json(new { cities = cities });
+            }
+        }
 
+        [Area("Admin")]
+        [HttpPost]
+        public IActionResult AddUser(AddUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                bool success = db.AdminRepository.AddUser(model);
+                return Json(new { success });
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
         [Area("Admin")]
         public IActionResult MissionCrud()
         {
@@ -103,6 +137,10 @@ namespace CI_Platform.Areas.Admin.Controllers
                 bool success = db.AdminRepository.PublishStory(StoryId);
                 return Json(new { success = success });
             }
+            else if(Action == 3){
+                bool success = db.AdminRepository.DeleteStory(StoryId);
+                return Json(new { success = success });
+            }
             else
             {
                 bool success = db.AdminRepository.DeclineStory(StoryId);
@@ -110,6 +148,13 @@ namespace CI_Platform.Areas.Admin.Controllers
             }
         }
 
+        [Area("Admin")]
+        [Route("Admin/{Home}/{StoryDetail}/{StoryId}")]
+        public IActionResult StoryDetail(int StoryId)
+        {
+            StoryViewModel story = db.AdminRepository.GetStoryDetail(StoryId);
+            return View(story);
+        }
         [Area("Admin")]
         public IActionResult MissionApplications()
         {

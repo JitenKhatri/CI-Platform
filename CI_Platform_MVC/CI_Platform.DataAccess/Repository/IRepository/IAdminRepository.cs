@@ -1,5 +1,6 @@
 ﻿using CI_Platform.Areas.Admin.ViewModels;
 using CI_Platform.Models;
+using CI_Platform.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,5 +29,10 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         bool DeclineMissionApplication(int MissionApplicationId);
         bool PublishStory(int StoryId);
         bool DeclineStory(int StoryId);
+        bool DeleteStory(int StoryId);
+        StoryViewModel GetStoryDetail(int StoryId);
+        AddUserViewModel GetCitiesForCountries(int CountryId);
+        List<Country> GetAllCountries();
+        bool AddUser(AddUserViewModel model);
     }
 }

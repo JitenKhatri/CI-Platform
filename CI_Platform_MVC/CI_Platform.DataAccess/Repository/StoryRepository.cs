@@ -24,7 +24,7 @@ namespace CI_Platform.DataAccess.Repository
         {
             int skipCount = (page - 1) * pageSize;
 
-            var storiesQuery = _db.Stories.Where(s => s.Status == "PUBLISHED" || s.UserId == user_id);
+            var storiesQuery = _db.Stories.Where(s => s.Status == "PUBLISHED" || s.UserId == user_id && s.DeletedAt == null);
 
             var storyQuery = storiesQuery
                 .OrderBy(s => s.Status)
@@ -59,7 +59,7 @@ namespace CI_Platform.DataAccess.Repository
             int skipCount = (model.Page - 1) * model.PageSize;
 
             var storiesQuery = _db.Stories
-                .Where(s => s.Status == "PUBLISHED" || s.UserId == model.UserId);
+                .Where(s => s.Status == "PUBLISHED" || s.UserId == model.UserId && s.DeletedAt == null);
 
             if (!string.IsNullOrEmpty(model.SearchText))
             {

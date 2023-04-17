@@ -203,12 +203,20 @@
             <span class="text-danger d-none skill-name-empty">Skill Name Is Required</span>
        </div>
          <div>
-           <label class="form-label mt-3">Status</label>
+              <label class="mt-3">
+                            <input type="radio" name="skill-status" value="1" checked>
+                            Active (1)
+                        </label>
+                        <label class="mt-3 ms-3">
+                            <input type="radio" name="skill-status" value="0">
+                            In-Active (0)
+                        </label>
+           @*<label class="form-label mt-3">Status</label>
                        <select class="form-select me-3 skill-status" aria-label="Select Status">
                         <option value="2" disabled  selected>Select Status Active(1)/In-Active(0)</option>
                         <option value="1" >1</option>
                         <option value="0" >0</option>
-              </select>
+              </select>*@
               <span class="text-danger d-none skill-status-empty">skill Status Is Required</span>
         </div>
       </div>
@@ -233,18 +241,26 @@
             <span class="text-danger d-none skill-name-empty">Skill Name Is Required</span>
        </div>
          <div>
-           <label class="form-label mt-3">Status</label>
+                 <label class="mt-3">
+                            <input type="radio" name="skill-edit-status" value="1" checked>
+                            Active (1)
+                        </label>
+                        <label class="mt-3 ms-3">
+                            <input type="radio" name="skill-edit-status" value="0">
+                            In-Active (0)
+                        </label>
+           @*<label class="form-label mt-3">Status</label>
                        <select class="form-select me-3 skill-status" aria-label="Select Status">
                         <option value="2" disabled  selected>Select Status Active(1)/In-Active(0)</option>
                         <option value="1" >1</option>
                         <option value="0" >0</option>
-              </select>
+              </select>*@
               <span class="text-danger d-none skill-status-empty">skill Status Is Required</span>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn cancelbtn" onclick="ClearSkillModal()" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn submitbtn" onclick="Editskill('Add')">Submit</button>
+        <button type="button" class="btn submitbtn" onclick="Editskill('Edit')">Submit</button>
       </div>
     </div>
   </div>

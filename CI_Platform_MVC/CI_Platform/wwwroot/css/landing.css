@@ -788,10 +788,11 @@ label {
     color: #414141;
 }
 .changepasswordbtn {
-    text-align: left;
-    letter-spacing: 0px;
-    color: #414141;
-    opacity: 1;
+    padding: 0.4rem 1rem;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 2px solid #F88634;
+    border-radius: 24px;
+    color: #F88634;
 }
 
 /*Privacy-policy css starts */

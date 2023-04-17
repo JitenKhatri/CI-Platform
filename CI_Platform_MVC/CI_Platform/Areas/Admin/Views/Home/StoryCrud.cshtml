@@ -163,30 +163,30 @@
                            <tbody>
                             @foreach (var item in Model.Stories)
                             {
-                                <tr>
+                                <tr id="story-@item.StoryId">
                                     <td>@item.Title</td>
                                     <td>@item.User.FirstName @item.User.LastName</td>
                                     <td>@item.Mission.Title</td>
-                                     <td>
-                                         
+                                     <td style="display:flex;align-items:center;">
+                                        <a class="btn add-btn" href="/Admin/Home/StoryDetail/@item.StoryId" data-StoryId ="@item.StoryId" style="font-size:12px">View</a>
                                         @if(item.Status == "PUBLISHED")
                                         {
-                                             <i class="bi bi-check-circle-fill fs-5 text-success story-@item.StoryId " ></i>
+                                             <i class="bi bi-check-circle-fill fs-5 text-success story-@item.StoryId ms-2" ></i>
                                         }
                                         else
                                         {
-                                             <i class="bi bi-check-circle text-success fs-5 story-@item.StoryId " onclick="ChangeStoryStatus(@item.StoryId,1)"></i>
+                                             <i class="bi bi-check-circle text-success fs-5 story-@item.StoryId ms-2" onclick="ChangeStoryStatus(@item.StoryId,1)"></i>
                                         }
                                        &nbsp;
                                         @if (item.Status == "DECLINED")
                                         {
-                                             <i class="bi bi-x-circle-fill text-danger fs-5 story-@item.StoryId" ></i>
+                                             <i class="bi bi-x-circle-fill text-danger fs-5 story-@item.StoryId ms-2" ></i>
                                         }
                                         else
                                         {
-                                             <i class="bi bi-x-circle text-danger fs-5 story-@item.StoryId" onclick="ChangeStoryStatus(@item.StoryId,2)" ></i>
+                                             <i class="bi bi-x-circle text-danger fs-5 story-@item.StoryId ms-2" onclick="ChangeStoryStatus(@item.StoryId,2)" ></i>
                                         }
-                                        <i class="bi bi-trash text-danger fs-5"></i>
+                                        <i class="bi bi-trash text-danger fs-5 ms-2" onclick="DeleteStory(@item.StoryId,3)"></i>
                                     
                                     </td>
                                     

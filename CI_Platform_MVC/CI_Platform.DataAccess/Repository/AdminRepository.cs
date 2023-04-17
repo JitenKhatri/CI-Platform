@@ -1,6 +1,7 @@
 ﻿using CI_Platform.Areas.Admin.ViewModels;
 using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
+using CI_Platform.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -95,6 +96,62 @@ namespace CI_Platform.DataAccess.Repository
             };
         }
 
+        public List<Country> GetAllCountries()
+        {
+            List<Country> Countries = _db.Countries.ToList();
+            return Countries;
+        }
+       
+        public AddUserViewModel GetCitiesForCountries(int CountryId)
+        {
+            List<City> cities = _db.Cities.Where(c => c.CountryId == CountryId).ToList();
+            return new AddUserViewModel { Cities = cities };
+        }
+
+        public bool AddUser(AddUserViewModel model)
+        {
+            User? User = _db.Users.FirstOrDefault(c => c.Email == model.Email);
+            if (User is null)
+            {
+                var user = new User();
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                model.Email = user.Email;
+                user.ProfileText = model.ProfileText;
+               
+                user.Department = model.Department;
+                user.CityId = model.CityId;
+                user.CountryId = model.CountryId;
+                user.UpdatedAt = DateTime.Now;
+                user.EmployeeId = model.EmployeeId;
+                string uniqueFileName = null;
+                if (model.Avatar != null)
+                {
+                    // Get the uploaded file name
+                    string fileName = Path.GetFileName(model.Avatar.FileName);
+
+                    // Create a unique file name to avoid overwriting existing files
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
+                    // Set the file path where the uploaded file will be saved
+                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
+
+                    // Save the uploaded file to the specified directory
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        model.Avatar.CopyTo(fileStream);
+                    }
+                    user.Avatar = "/images/" + uniqueFileName;
+                }
+                _db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
         public Skill AddSkill(string SkillName,int Status)
         {
             Skill NewSkill = new Skill
@@ -138,7 +195,7 @@ namespace CI_Platform.DataAccess.Repository
         }
         public CrudViewModel GetAllStories()
         {
-            var stories = _db.Stories.Where(s => s.Status != "DRAFT")
+            var stories = _db.Stories.Where(s => s.Status != "DRAFT" && s.DeletedAt == null)
                             .Select(s => new Story
                             {
                                 StoryId = s.StoryId,
@@ -155,6 +212,32 @@ namespace CI_Platform.DataAccess.Repository
             {
                 Stories = stories
             };
+        }
+        public StoryViewModel GetStoryDetail(int StoryId)
+        {
+            var storyQuery = _db.Stories.Where(c => c.StoryId == StoryId);
+            var storyMediaQuery = _db.StoryMedia.Where(sm => sm.StoryId == StoryId);
+            var userQuery = _db.Users;
+
+            var story = storyQuery.FirstOrDefault();
+            var storyMedia = storyMediaQuery.ToList();
+            var users = userQuery.ToList();
+
+            return new StoryViewModel { Stories = story, All_volunteers = users };
+        }
+        public bool DeleteStory(int StoryId)
+        {
+            Story deletestory = _db.Stories.FirstOrDefault(s => s.StoryId == StoryId);
+            if(deletestory is not null)
+            {
+                deletestory.DeletedAt = DateTime.Now;
+                Save();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public CrudViewModel GetAllMissionApplications()

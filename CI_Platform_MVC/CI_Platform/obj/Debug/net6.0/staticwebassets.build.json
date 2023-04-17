@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "So9VtQm4x3sZggUKq0uCHChg0lcVr0MUv2D0hxOcmIE=",
+  "Hash": "nku0zWWGx7rtBQTY70nERubGa3YnR71UyTsWx9XjmR4=",
   "Source": "CI_Platform",
   "BasePath": "_content/CI_Platform",
   "Mode": "Default",
@@ -2516,6 +2516,23 @@
       "OriginalItemSpec": "wwwroot\\images\\0cf8c97f-d6e4-4841-9d35-ecd20ca126b4_image2.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\1e25b3fc-2d1a-4e26-94e4-6d069dd55fb5_volunteer3.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/1e25b3fc-2d1a-4e26-94e4-6d069dd55fb5_volunteer3.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\1e25b3fc-2d1a-4e26-94e4-6d069dd55fb5_volunteer3.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\30161ff9-e3f7-47b3-85ef-33dc1bf074ab_volunteer5.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -2752,6 +2769,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\5e4726b9-5c5c-4bca-9cc5-e981f234d9ee_image2.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\6515c052-0d64-4705-ae0b-c6e1dc15261a_volunteer8.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/6515c052-0d64-4705-ae0b-c6e1dc15261a_volunteer8.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\6515c052-0d64-4705-ae0b-c6e1dc15261a_volunteer8.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\73db6508-03df-470b-a538-8547c860f336_image.png",

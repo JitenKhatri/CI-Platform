@@ -39,6 +39,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxTdG9yeUNydWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/StoryDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxTdG9yeURldGFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/_AddUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxfQWRkVXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/_CascadeCityPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxfQ2FzY2FkZUNpdHlQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/_MissionSkill.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxfTWlzc2lvblNraWxsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

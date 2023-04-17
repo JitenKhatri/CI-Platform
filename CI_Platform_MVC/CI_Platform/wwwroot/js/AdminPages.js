@@ -103,7 +103,8 @@ var ThemeName
 var ThemeStatus
 function ValidateAddTheme() {
     ThemeName = document.getElementsByClassName("theme-name")[0].value;
-    ThemeStatus = parseInt(document.getElementsByClassName("theme-status")[0].value);
+    ThemeStatus = parseInt(document.querySelector('input[name="status"]:checked').value);
+    /*ThemeStatus = parseInt(document.getElementsByClassName("theme-status")[0].value);*/
     if (ThemeStatus == 2) {
         $(".theme-status-empty").addClass("d-block").removeClass("d-none")
     }
@@ -142,7 +143,7 @@ function AddTheme(action) {
 function ValidateEditTheme() {
     var modal = $("#EditTheme");
     ThemeName = modal.find(".theme-name").val();
-    ThemeStatus = parseInt(modal.find(".theme-status").val());
+    ThemeStatus = parseInt(document.querySelector('input[name="theme-edit-status"]:checked').value);
     if (ThemeStatus == 2) {
         modal.find(".theme-status-empty").addClass("d-block").removeClass("d-none")
     }
@@ -232,20 +233,19 @@ function EditTheme(themeid, title, status) {
     var modal = $("#EditTheme");
     // Find the input element with the class "theme-name" inside the modal and set its value
     modal.find(".theme-name").val(title);
-    modal.find(`.theme-status option[value="${status}"]`).attr("selected", "selected");
+    modal.find(`input[name="theme-edit-status"][value="${status}"]`).prop("checked", true);
+    /*modal.find(`.theme-status option[value="${status}"]`).attr("selected", "selected");*/
     document.getElementById("theme-id").value = themeid;
 }
 
 function ClearThemeModal() {
-    document.getElementsByClassName("theme-name")[0].value = "";
-    // Select the disabled option that should remain selected
-    var $selectedOption = $('.theme-status option:selected:disabled');
-
-    // Remove the "selected" attribute from all non-disabled options
-    $('.theme-status option:not(:disabled)').removeAttr('selected');
-
-    // Set the "selected" attribute on the selected disabled option
-    $selectedOption.attr('selected', 'selected');
+    document.querySelector('.theme-name').value = "";
+    // Uncheck all radio buttons with the name "status"
+    document.querySelectorAll('input[name="status"]').forEach(function(radio) {
+        radio.checked = false;
+    });
+    // Check the first radio button with the name "status"
+    document.querySelector('input[name="status"]:first-of-type').checked = true;
 }
 
 
@@ -254,7 +254,8 @@ var SkillName
 var SkillStatus
 function ValidateAddSkill() {
     SkillName = document.getElementsByClassName("skill-name")[0].value;
-    SkillStatus = parseInt(document.getElementsByClassName("skill-status")[0].value);
+    SkillStatus = parseInt(document.querySelector('input[name="skill-status"]:checked').value);
+    /*SkillStatus = parseInt(document.getElementsByClassName("skill-status")[0].value);*/
     if (SkillStatus == 2) {
         $(".skill-status-empty").addClass("d-block").removeClass("d-none")
     }
@@ -296,7 +297,7 @@ function AddSkill(action) {
 function ValidateEditSkill() {
     var modal = $("#EditSkill");
     SkillName = modal.find(".skill-name").val();
-    SkillStatus = parseInt(modal.find(".skill-status").val());
+    SkillStatus = parseInt(document.querySelector('input[name="skill-edit-status"]:checked').value);
     if (SkillStatus == 2) {
         modal.find(".skill-status-empty").addClass("d-block").removeClass("d-none")
     }
@@ -310,7 +311,7 @@ function ValidateEditSkill() {
         modal.find(".skill-name-empty").addClass("d-block").removeClass("d-none")
     }
 }
-function Editskill() {
+function Editskill(action) {
     ValidateEditSkill();
     if (SkillStatus != 2 && SkillName.length > 4) {
         $.ajax({
@@ -339,7 +340,7 @@ function EditSkill(skillid, name, status) {
     var modal = $("#EditSkill");
     // Find the input element with the class "theme-name" inside the modal and set its value
     modal.find(".skill-name").val(name);
-    modal.find(`.skill-status option[value="${status}"]`).attr("selected", "selected");
+    modal.find(`input[name="skill-edit-status"][value="${status}"]`).prop("checked", true);
     document.getElementById("skill-id").value = skillid
 }
 
@@ -437,31 +438,154 @@ function ChangeStoryStatus(id, Action) {
             Action: Action
         },
         success: function (result) {
-            if (Action == 1) {
-                toastr.success('Story Approved Successfully!', {
-                    "positionClass": "toast-top-center",
-                    progressBar: true,
-                    timeOut: 3000,
-                    closeButton: true,
-                });
-                $('.story-' + id).addClass("bi-check-circle-fill");
-                $('.story-' + id).removeClass("bi-check-circle");
+            if (window.location.href === 'https://localhost:7064/Admin/Home/StoryCrud') {
+                if (Action == 1) {
+                    toastr.success('Story Approved Successfully!', {
+                        "positionClass": "toast-top-center",
+                        progressBar: true,
+                        timeOut: 3000,
+                        closeButton: true,
+                    });
+                    $('.story-' + id).addClass("bi-check-circle-fill");
+                    $('.story-' + id).removeClass("bi-check-circle");
+                }
+                else {
+                    toastr.error('Stored Declined Successfully!', {
+                        "positionClass": "toast-top-center",
+                        progressBar: true,
+                        timeOut: 3000,
+                        closeButton: true,
+                    });
+                    $('.story-' + id).addClass("bi-x-circle-fill");
+                    $('.story-' + id).removeClass("bi-x-circle");
+                }
             }
             else {
-                toastr.error('Stored Declined Successfully!', {
-                    "positionClass": "toast-top-center",
-                    progressBar: true,
-                    timeOut: 3000,
-                    closeButton: true,
-                });
-                $('.story-' + id).addClass("bi-x-circle-fill");
-                $('.story-' + id).removeClass("bi-x-circle");
+                if (Action == 1) {
+                    toastr.success('Story Approved Successfully!', {
+                        "positionClass": "toast-top-center",
+                        progressBar: true,
+                        timeOut: 3000,
+                        closeButton: true,
+                    });
+                    $('.publish-btn').prop('disabled', true).text('Published...');
+                    $('.decline-btn').removeClass('disabled').prop('disabled', false).html('Decline<i class="bi bi-x-circle text-danger fs-5 story-@item.StoryId ms-2"></i>');
+                   
+                }
+                else {
+                    toastr.error('Stored Declined Successfully!', {
+                        "positionClass": "toast-top-center",
+                        progressBar: true,
+                        timeOut: 3000,
+                        closeButton: true,
+                    });
+                    $('.decline-btn').prop('disabled', true).text('Declined...');
+                    $('.publish-btn').removeClass('disabled').prop('disabled', false).html('Publish<i class="bi bi-check-circle text-success fs-5 story-@item.StoryId ms-2"></i>');
+                }
             }
-
         },
         error: function () {
             console.log("Error updating variable");
         }
     });
 
+}
+
+function DeleteStory(StoryId,Action) {
+    const html = `
+<div class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-delete" >
+<div class="modal-content">
+<div class="modal-header border-0 d-flex justify-content-center">
+<h5 class="modal-title text-danger" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body text-center">
+<p class="mb-0">Are you sure you want to delete this Story?</p>
+</div>
+<div class="modal-footer border-0 d-flex align-item-center justify-content-center">
+<button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+<button type="button" class="btn btn-danger" id="confirmDeleteButton">Yes, Delete</button>
+</div>
+</div>
+</div>
+</div>
+`;
+    $(document.body).append(html);
+    $('#confirmDeleteModal').modal('show');
+    $('#confirmDeleteButton').on('click', () => {
+        $.ajax({
+            url: '/Admin/Home/StoryCrud',
+            type: 'POST',
+            data: {
+                StoryId: StoryId,
+                Action: Action
+            },
+            success: function (result) {
+                if (window.location.href === 'https://localhost:7064/Admin/Home/StoryCrud') {
+                    var row = $(`#story-${StoryId}`);
+                    row.remove();
+                    $('#Story-table').DataTable().row(row).remove().draw();
+                }
+                else {
+                    toastr.error('Stored Deleted Successfully!', {
+                        "positionClass": "toast-top-center",
+                        progressBar: true,
+                        timeOut: 3000,
+                        closeButton: true,
+                    });
+                    $('.delete-btn').prop('disabled', true).text('Deleted...');
+                    window.location.href = 'https://localhost:7064/Admin/Home/StoryCrud';
+                }
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        });
+        $('#confirmDeleteModal').modal('hide');
+    });
+    $('#confirmDeleteModal').on('hidden.bs.modal', () => {
+        $('#confirmDeleteModal').remove();
+    });
+}
+
+function AddUserModal() {
+    $.ajax({
+        url: '/Admin/Home/AddUserPartial',
+        type: 'POST',
+        success: function (result) {
+            $('.crud-container').empty();
+            $('.crud-container').append(result);
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    });
+    
+}
+
+function CascadeCity() {
+    var country = $('.country').find(":selected").val()
+    if (parseInt(country) != 0) {
+        $.ajax({
+            url: '/Admin/Home/AddUserPartial',
+            type: 'POST',
+            data: { CountryId: country },
+            success: function (result) {
+                $('.city').empty().append(result.cities.result)
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+}
+
+function upload_profile_image() {
+    var image = document.getElementById('profile-image').files[0]
+    var fr = new FileReader()
+    fr.onload = () => {
+        $('#old-profile-image').attr('src', fr.result)
+    }
+    fr.readAsDataURL(image)
 }

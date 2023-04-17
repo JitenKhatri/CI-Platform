@@ -221,8 +221,100 @@ td {
             flex-grow: 0;
         }
     }
+.other-image {
+    margin-right: 1.15%;
+    width: 24.1%;
+    cursor: pointer;
+}
+.left {
+    width: 2%;
+    opacity: 50%;
+    cursor: pointer;
+}
 
+.publish-btn {
+    border: solid green 2px;
+    color: green;
+    border-radius: 13px;
+}
+.decline-btn {
+    border: solid orangered 2px;
+    color: red;
+    border-radius: 13px;
+}
+.delete-btn {
+    border: solid orangered 2px;
+    color: red;
+    border-radius: 13px;
+}
+/*tabs*/
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover, .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    border-color: transparent;
+    color: #505050;
+}
 
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    border-bottom: 3px solid #414141;
+    color: #414141;
+    font-weight: 500;
+}
+
+.nav-link {
+    color: #ADADAD;
+    font-size: 15px;
+    line-height: 18px;
+    padding: 14px 18px;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #ADADAD;
+}
+
+.tab-content {
+    margin-top: 25px;
+}
+
+.tab-pane {
+    font-size: 15px;
+    line-height: 24px;
+    color: #3E3E3E;
+}
+
+.UserProfile {
+    text-align: center;
+    padding: 32px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25em;
+}
+
+    .UserProfile img {
+        border-radius: 50%;
+        width: 180px;
+        height: 180px;
+    }
+
+.Userheading {
+    font-size: 22px;
+    list-style: 26.4px;
+    color: #414141;
+    border-bottom: 2px solid #414141;
+    padding-bottom: 19px;
+}
+
+label {
+    text-align: left;
+    font-weight: lighter;
+    color: #414141;
+}
+@media only screen and (min-width:769px) and (max-width:2000px) {
+    .main-image {
+        height: 530px;
+    }
+
+    iframe {
+        height: 530px;
+    }
+}
 
 
 

@@ -14,5 +14,7 @@ namespace CI_Platform.Areas.Admin.ViewModels
         public List<Story> Stories { get; set; } = new List<Story>();
 
         public List<MissionApplication> MissionApplications { get; set; } = new List<MissionApplication>();
+
+
     }
 }

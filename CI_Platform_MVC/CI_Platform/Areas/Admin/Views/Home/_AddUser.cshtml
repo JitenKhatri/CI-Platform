@@ -1,0 +1,133 @@
+﻿@using CI_Platform.Models.ViewModels
+@model AddUserViewModel
+<div class="container-fluid grid-container">
+    <form asp-area="Admin" asp-action="AddUser" id="form" asp-controller="Home" method="post" enctype="multipart/form-data">
+        <div class="row my-5">
+
+
+            <div class="col-12 col-sm-4 ">
+                <div class="UserProfile">
+                    <input type="file" asp-for=Avatar onchange="upload_profile_image()" accept="image/*" id="profile-image" multiple="false" style="opacity:0;position:absolute;top:10%;cursor:pointer;height:12%" />
+                    <img class="img-fluid" id="old-profile-image" src="~/images/user1.png" alt="" />
+
+                </div>
+
+
+            </div>
+            <div class=" col-12 col-sm-8 mt-4 mt-sm-0">
+                <h2 class="Userheading">Basic Information</h2>
+                <div class="row mb-3">
+
+                    <div class="col-6">
+                        <span asp-validation-for="FirstName" class="text-danger d-block"></span>
+                        <label class="form-label">Name</label>
+                        <input type="text" asp-for="FirstName" name="FirstName" class="form-control" placeholder="Enter your name" />
+                    </div>
+
+                    <div class="col-6">
+                        <span asp-validation-for="LastName" class="text-danger d-block"></span>
+                        <label asp-for="LastName" class="form-label">Surname</label>
+                        <input type="text" asp-for="LastName" name="LastName" class="form-control" placeholder="Enter your surname" />
+                    </div>
+
+                </div>
+                   <div class="row mb-3">
+                    <div class="col-6">
+                        <span asp-validation-for="Email" class="text-danger d-block"></span>
+                        <label asp-for="Email" class="form-label">Email</label>
+                        <input asp-for="Email" type="email" class="form-control" placeholder="Enter email" />
+                    </div>
+                       <div class="col">
+                        <span asp-validation-for="Password" class="text-danger d-block"></span>
+                        <label asp-for="Password" class="form-label">Password</label>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="*****" />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <span asp-validation-for="EmployeeId" class="text-danger d-block"></span>
+                        <label asp-for="EmployeeId" class="form-label">Employee ID</label>
+                        <input type="text" asp-for="EmployeeId" name="EmployeeId" class="form-control" placeholder="Enter EmployeeId" />
+                    </div>
+                    <div class="col-6">
+                        @*<span asp-validation-for="Manager" class="text-danger d-block"></span>*@
+                        <label asp-for="Manager" class="form-label">Manager</label>
+                        <input asp-for="Manager" type="text" name="Manager" class="form-control"
+                               placeholder="Enter your manager details" />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <span asp-validation-for="Department" class="text-danger d-block"></span>
+                        <label asp-for="Department" class="form-label">Department</label>
+                        <input asp-for="Department" type="text" class="form-control" placeholder="Enter Department" />
+                    </div>
+                       <div class="col">
+                        <span asp-validation-for="ProfileText" class="text-danger d-block"></span>
+                        <label asp-for="ProfileText" class="form-label">My Profile</label>
+                        <textarea id="userprofile" asp-for="ProfileText" class="form-control d-block" placeholder="Enter your comments"></textarea>
+
+                    </div>
+                </div>
+              
+                <div class="mb-3 d-flex flex-row">
+                       <label>
+                            <input type="radio" name="status" value="1" checked>
+                            Active (1)
+                        </label>
+                        <label class="ms-5">
+                            <input type="radio" name="status" value="0">
+                            In-Active (0)
+                        </label>
+                </div>
+                <h2 class="Userheading mt-5">Address Information</h2>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <span asp-validation-for="CityId" class="text-danger d-block"></span>
+                        <label asp-for="CityId" class="form-label">City</label>
+                        <select asp-for="CityId" id='city' class="form-select city me-3" aria-label="Select City">
+                            <option disabled selected>Select Your City</option>
+                            @{
+                                foreach (var item in Model.Cities)
+                                {
+                                    bool isexist = (item.CityId == @Model.CityId);
+                                    if (isexist)
+                                    {
+                                        <option value=@item.CityId selected>@item.Name</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <span asp-validation-for="CountryId" class="text-danger d-block"></span>
+                        <label asp-for="CountryId" class="form-label">Country</label>
+                        <select id='country' asp-for="CountryId" onchange="CascadeCity()" class="form-select country me-3" aria-label="Select Country">
+                            <option disabled selected>Select Your Country</option>
+                            @{
+                                foreach (var item in Model.Countries)
+                                {
+                                    bool isexist = (item.CountryId == @Model.CountryId);
+                                    if (isexist)
+                                    {
+                                        <option value=@item.CountryId selected>@item.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value=@item.CountryId>@item.Name</option>
+                                    }
+
+                                }
+                            }
+
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex flex-row justify-content-end mt-3">
+                    <button type="submit" id="apply-button">Save</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>

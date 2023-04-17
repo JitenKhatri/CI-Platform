@@ -1,0 +1,381 @@
+﻿
+@using CI_Platform.Models.ViewModels
+@using System.Security.Claims
+@model StoryViewModel
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Admin Panel</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="Meta descriptions may be included in search results to concisely summarize page content.">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link href="~/css/AdminPages.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"> </script>
+     <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
+</head>
+
+<body>
+    <div class="main-container">
+
+        <!-- Main sidebar -->
+        <nav class="sidebar">
+            <ul>
+                <li class="mb-4">
+
+                    <span>Navigation</span>
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Admin/Home/Index" title="User">
+                        <img src="~/images/person.svg" alt="User" class="default" />
+                        <img src="~/images/person-fill.svg" alt="User" class="icon-active" />
+                        @*    <img src="./images/dashboard-active.svg" alt="dashboard" class="icon-active" />*@
+                        <span>User</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" title="CMS Page">
+                        <img src="~/images/file-earmark.svg" alt="file-earmark" class="default" />
+                        <img src="~/images/file-earmark-fill.svg" alt="file" class="icon-active" />
+                        <span>CMS Page</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Admin/Home/MissionCrud" title="Mission">
+                        <img src="~/images/bullseye.svg" alt="bullseye" class="default" />
+                        <img src="~/images/bullseye.svg" alt="bullseye" class="icon-active" />
+                        <span>Mission</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Admin/Home/MissionThemeCrud" title="Mission Theme">
+                        <img src="~/images/dashboard.svg" alt="dashboard" class="default" />
+                        <img src="~/images/dashboard-active.svg" alt="dashboard" class="icon-active" />
+                        <span>Mission Theme</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Admin/Home/MissionSkillCrud" title="Mission Skills">
+                        <img src="~/images/tools.svg" alt="tools" class="default" />
+                        <img src="~/images/tools.svg" alt="tools" class="icon-active" />
+                        <span>Mission Skills</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Admin/Home/MissionApplications" title="Mission Application">
+                        <img src="~/images/folder.svg" alt="folder" class="default" />
+                        <img src="~/images/folder-fill.svg" alt="folder-fill" class="icon-active" />
+                        <span>Mission Application</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/Admin/Home/StoryCrud" title="Story">
+                        <img src="~/images/journal-medical.svg" alt="Story" class="default" />
+                        <img src="~/images/journal-medical.svg" alt="Story" class="icon-active" />
+                        <span>Story</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" title="Banner Management">
+                        <img src="~/images/collection.svg" alt="Banner" class="default" />
+                        <img src="~/images/collection-fill.svg" alt="Banner" class="icon-active" />
+                        <span>Banner Management</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="overlay"></div>
+        <main class="main-content">
+        <div class="header justify-content-between">
+
+            <div>
+                <button class="btn-menu toggle-sidebar" style="border:none;" type="button">
+                    <img src="~/images/list.png" alt="sidebar menu">
+                </button>
+                <span class="ms-3">
+                    @{
+                        var time = DateTime.Now.ToString("dddd, MMMM d, yyyy, h:mm tt");
+                    }
+                    @time
+                </span>
+            </div>
+            <div>
+                <div class="dropdown">
+                    <button class="dropdown-toggle profile"
+                            type="button"
+                            data-bs-toggle="dropdown" style="border:none;">
+                        <img src="~/images/user-img.png" class="profileimg" />
+                        <span class="mx-2 d-none d-sm-block">Evan Donohue</span>
+                        <img src="~/images/drop-down.png"
+                             class="mx-1 drop-down d-none d-sm-block" />
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="EditProfile">My Profile</a></li>
+                        <li><a class="dropdown-item" asp-controller="Mission" asp-action="Volunteering_Timesheet">Timesheet</a></li>
+                        <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="Logout">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="crud-container mt-4 px-4">
+
+              <div class="container-fluid p-0">
+        <div class="container-fluid grid-container">
+            <div class="row">
+                @* carousel starts*@
+                <div class="col-lg-6">
+                    <div class="images">
+
+                        <div class="carousel slide" data-bs-interval="false" id="sub-images">
+                            <div class="carousel-inner">
+                                @{
+                                    int count = 0;
+                                    foreach (var item in Model?.Stories?.StoryMedia)
+                                    {
+                                        if (count == 0)
+                                        {
+                                            if (@item.Type == "img")
+                                            {
+                                                <img class="w-100 carousel-item active main-image" src='@item.Path' alt="" />
+                                                count = count + 1;
+                                            }
+                                            else
+                                            {
+                                                <iframe src="//www.youtube.com/embed/@item.Path.Split("v=").ElementAt(1)" class="w-100 carousel-item active main-image" allowfullscreen></iframe>
+                                                count = count + 1;
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            if (@item.Type == "img")
+                                            {
+                                                <img class="w-100 carousel-item main-image" src='@item.Path' alt="" />
+                                            }
+                                            else
+                                            {
+                                                <iframe src="//www.youtube.com/embed/@item.Path.Split("v=").ElementAt(1)"
+                                            class="w-100 carousel-item main-image" allowfullscreen></iframe>
+                                            }
+                                        }
+                                    }
+                                }
+                            </div>
+                            <div class="mt-1 w-100 position-relative">
+                                <div class="carousel slide" data-bs-interval="false" id="other-images">
+                                    <div class="carousel-inner">
+                                        @{
+                                            int sub_count = 4;
+                                            int check = 0;
+                                            int carousel_count = (int)Math.Ceiling((double)@Model?.Stories?.StoryMedia.Count / 4);
+                                            for (var i = 0; i < carousel_count; i++)
+                                            {
+                                                if (check == 0)
+                                                {
+                                                    <div class="carousel-item active">
+                                                        <div class="d-flex">
+                                                            @if (@Model?.Stories?.StoryMedia.Count >= sub_count)
+                                                            {
+                                                                @for (int j = 0; j < sub_count; j++)
+                                                                {
+                                                                    if (j == 0)
+                                                                    {
+                                                                        if (@Model?.Stories?.StoryMedia.ElementAt(j).Type == "img")
+                                                                        {
+                                                                            <img src='@Model?.Stories?.StoryMedia.ElementAt(j).Path'
+                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <img src='https://img.youtube.com/vi/@Model?.Stories?.StoryMedia.ElementAt(j).Path.Split("v=").ElementAt(1)/0.jpg'
+                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        if (@Model?.Stories?.StoryMedia.ElementAt(j).Type == "img")
+                                                                        {
+                                                                            <img src='@Model?.Stories?.StoryMedia.ElementAt(j).Path'
+                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <img src='https://img.youtube.com/vi/@Model?.Stories?.StoryMedia.ElementAt(j).Path.Split("v=").ElementAt(1)/0.jpg'
+                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                @for (int j = 0; j < @Model?.Stories?.StoryMedia.Count; j++)
+                                                                {
+                                                                    if (@Model?.Stories?.StoryMedia.ElementAt(j).Type == "img")
+                                                                    {
+                                                                        <img src='@Model?.Stories?.StoryMedia.ElementAt(j).Path'
+                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src='https://img.youtube.com/vi/@Model?.Stories?.StoryMedia.ElementAt(j).Path.Split("v=").ElementAt(1)/0.jpg'
+                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                    }
+                                                                }}
+                                                        </div>
+                                                    </div>
+                                                    check = check + 4;
+                                                }
+                                                else
+                                                {
+                                                    <div class="carousel-item">
+                                                        <div class="d-flex">
+                                                            @if (@Model?.Stories?.StoryMedia.Count - (4 * i) >= sub_count)
+                                                            {
+                                                                @for (int j = check; j < sub_count + check; j++)
+                                                                {
+                                                                    if (@Model?.Stories?.StoryMedia.ElementAt(j).Type == "img")
+                                                                    {
+                                                                        <img src='@Model?.Stories?.StoryMedia.ElementAt(j).Path'
+                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src='https://img.youtube.com/vi/@Model?.Stories?.StoryMedia.ElementAt(j).Path.Split("v=").ElementAt(1)/0.jpg'
+                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                    }
+                                                                } }
+                                                            else
+                                                            {
+                                                                @for (int j = check; j < @Model?.Stories?.StoryMedia.Count; j++)
+                                                                {
+                                                                    if (@Model?.Stories?.StoryMedia.ElementAt(j).Type == "img")
+                                                                    {
+                                                                        <img src='@Model?.Stories?.StoryMedia.ElementAt(j).Path' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src='https://img.youtube.com/vi/@Model?.Stories?.StoryMedia.ElementAt(j).Path.Split("v=").ElementAt(1)/0.jpg'
+                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    check = check + 4;
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                    <div class="bg-black d-flex align-items-center justify-content-center position-absolute left h-100 carousel-control-prev" data-bs-target="#other-images" data-bs-slide="prev">
+                                        <img src="~/images/left1.png" class="w-50" alt="not load" />
+                                    </div>
+
+                                    <div class="bg-black d-flex align-items-center justify-content-center position-absolute left h-100 carousel-control-next" style="left:98%;" data-bs-target="#other-images" data-bs-slide="next">
+                                        <img src="~/images/right-arrow2.png" class="w-50" alt="not load" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="description col-lg-6">
+                    <div class="px-3 mt-5 ms-3 d-flex justify-content-between">
+                        <span class="d-flex flex-column align-items-center">
+                            <img class="rounded-circle" src=@Model.Stories.User.Avatar />
+                            <span class="mt-2 lorem ps-3">@Model.Stories.User.FirstName @Model.Stories.User.LastName</span>
+                        </span>
+                      
+                    </div>
+                    <div class="ms-3 mt-5 lorem px-3 vol-reason">
+                        @foreach (var line in Model.Stories.User.WhyIVolunteer.Split('.'))
+                        {
+                            <p class="lorem">@line.Trim() </p>
+
+                            <br />
+                        }
+                    </div>
+                    <div class="px-3 ms-3 d-flex justify-content-between">
+                        @{if(@Model.Stories.Status == "PUBLISHED") {
+                            <button class="btn publish-btn disabled" onclick="ChangeStoryStatus(@Model.Stories.StoryId,1)">Published<i class="bi bi-check-circle text-success fs-5 story-@Model.Stories.StoryId ms-2" onclick="ChangeStoryStatus(@Model.Stories.StoryId,1)"></i></button>
+                        }
+                        else {
+                            <button class="btn publish-btn" onclick="ChangeStoryStatus(@Model.Stories.StoryId,1)">Publish <i class="bi bi-check-circle text-success fs-5 story-@Model.Stories.StoryId ms-2" onclick="ChangeStoryStatus(@Model.Stories.StoryId,1)"></i></button>
+                        } }
+                       @{ if(@Model.Stories.Status == "DECLINED") {
+                         <button class="btn decline-btn disabled" onclick="ChangeStoryStatus(@Model.Stories.StoryId,2)">Declined <i class="bi bi-x-circle text-danger fs-5 story-@Model.Stories.StoryId ms-2" ></i></button>
+                        }
+                        else {
+                        <button class="btn decline-btn" onclick="ChangeStoryStatus(@Model.Stories.StoryId,2)">Decline <i class="bi bi-x-circle text-danger fs-5 story-@Model.Stories.StoryId ms-2" ></i></button>
+                        }
+                        }
+                        <button class="btn delete-btn" onclick="DeleteStory(@Model.Stories.StoryId,3)">Delete <i class="bi bi-trash text-danger fs-5 ms-2"></i></button>
+                        
+                    </div>
+
+                </div>
+            </div>
+            <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active " data-bs-toggle="tab" data-bs-target="#tab-1" type="button"
+                            role="tab" aria-controls="home" aria-selected="true">
+                        <span class="storytitle">@Model.Stories.Title</span>
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="tab-1" role="tabpanel">
+                    @Html.Raw(@Model.Stories.Description )
+                </div>
+
+            </div>
+
+        </div> @*container-fluid*@
+    </div>
+            </div>
+        
+
+        </main>
+      
+
+    </div>
+
+
+
+
+
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/js/AdminPages.js"></script>
+</body>
+</html>
+
+
+
+  
