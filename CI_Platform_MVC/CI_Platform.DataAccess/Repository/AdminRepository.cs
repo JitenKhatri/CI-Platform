@@ -21,11 +21,63 @@ namespace CI_Platform.DataAccess.Repository
 
         public CrudViewModel GetAllUsers()
         {
-            var users = _db.Users.ToList();
+            var users = _db.Users.Where(User=>User.DeletedAt == null).ToList();
             return new CrudViewModel
             {
                 Users = users
             };
+        }
+
+        public bool DeleteUser(int UserId)
+        {
+            User User = _db.Users.FirstOrDefault(User => User.UserId == UserId);
+            if(User !=null)
+            {
+                User.DeletedAt = DateTime.Now;
+                //comment
+                List<Comment> DeletedUserComments = _db.Comments.Where(Comment => Comment.UserId == UserId).ToList();
+                foreach(var Comment in DeletedUserComments)
+                {
+                    Comment.DeletedAt = DateTime.Now;
+                }
+                //favoritemission
+                List<FavoriteMission> DeletedUserFM = _db.FavoriteMissions.Where(FavoriteMission => FavoriteMission.UserId == UserId).ToList();
+                foreach(var FavoriteMission in DeletedUserFM)
+                {
+                    FavoriteMission.DeletedAt = DateTime.Now;
+                }
+                //missionapplication
+                List<MissionApplication> DeletedUserMA = _db.MissionApplications.Where(MissionApplication => MissionApplication.UserId == UserId).ToList();
+                foreach(var MissionApplication in DeletedUserMA)
+                {
+                    MissionApplication.DeletedAt = DateTime.Now;
+                }
+                //missionrating
+                List<MissionRating> DeletedUserMR = _db.MissionRatings.Where(MissionRating => MissionRating.UserId == UserId).ToList();
+                foreach(var MissionRating in DeletedUserMR)
+                {
+                    MissionRating.DeletedAt = DateTime.Now;
+                }
+                //story
+                List<Story> DeletedUserStories = _db.Stories.Where(Story => Story.UserId == UserId).ToList();
+                foreach(var Story in DeletedUserStories)
+                {
+                    Story.DeletedAt = DateTime.Now;
+                }
+                //timesheets
+                List<Timesheet> DeletedUserTS = _db.Timesheets.Where(Timesheet => Timesheet.UserId == UserId).ToList();
+                foreach(var timesheet in DeletedUserTS)
+                {
+                    timesheet.DeletedAt = DateTime.Now;
+                }
+                Save();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+           
         }
         public CrudViewModel GetAllMissions()
         {
@@ -101,7 +153,17 @@ namespace CI_Platform.DataAccess.Repository
             List<Country> Countries = _db.Countries.ToList();
             return Countries;
         }
-       
+
+        public List<City> GetAllCities()
+        {
+            List<City> Cities = _db.Cities.ToList();
+            return Cities;
+        }
+        public User GetUserById(int UserId)
+        {
+            User user = _db.Users.FirstOrDefault(User => User.UserId == UserId);
+            return user;
+        }
         public AddUserViewModel GetCitiesForCountries(int CountryId)
         {
             List<City> cities = _db.Cities.Where(c => c.CountryId == CountryId).ToList();
@@ -116,14 +178,15 @@ namespace CI_Platform.DataAccess.Repository
                 var user = new User();
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
-                model.Email = user.Email;
+                user.Email = model.Email;
                 user.ProfileText = model.ProfileText;
-               
+                user.Password = model.Password;
                 user.Department = model.Department;
                 user.CityId = model.CityId;
                 user.CountryId = model.CountryId;
-                user.UpdatedAt = DateTime.Now;
+                user.CreatedAt = DateTime.Now;
                 user.EmployeeId = model.EmployeeId;
+                user.Status = model.Status.ToString();
                 string uniqueFileName = null;
                 if (model.Avatar != null)
                 {
@@ -143,14 +206,67 @@ namespace CI_Platform.DataAccess.Repository
                     }
                     user.Avatar = "/images/" + uniqueFileName;
                 }
+                _db.Users.Add(user);
                 _db.SaveChanges();
                 return true;
             }
             else
             {
-                return false;
+                if (model.UserId != null || model.UserId != 0)
+                {
+                    User? editUser = _db.Users.FirstOrDefault(c => c.UserId == model.UserId);
+                    editUser.FirstName = model.FirstName;
+                    editUser.LastName = model.LastName;
+                    editUser.Email = model.Email;
+                    editUser.ProfileText = model.ProfileText;
+                    editUser.Password = model.Password;
+                    editUser.Department = model.Department;
+                    editUser.CityId = model.CityId;
+                    editUser.CountryId = model.CountryId;
+                    editUser.CreatedAt = DateTime.Now;
+                    editUser.EmployeeId = model.EmployeeId;
+                    editUser.Status = model.Status.ToString();
+                    string uniqueFileName = null;
+                    if (model.Avatar != null)
+                    {
+                        // Get the uploaded file name
+                        string fileName = Path.GetFileName(model.Avatar.FileName);
+
+                        // Create a unique file name to avoid overwriting existing files
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
+                        // Set the file path where the uploaded file will be saved
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
+
+                        // Save the uploaded file to the specified directory
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            model.Avatar.CopyTo(fileStream);
+                        }
+                        editUser.Avatar = "/images/" + uniqueFileName;
+                    }
+                    _db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
+        }
+
+        public bool UserExists(string email)
+        {
+            User UserExists = _db.Users.FirstOrDefault(User => User.Email == email);
+            if(UserExists == null)
+            {
+                return false;
+            }
+            else
+            {
+                return false;
+            }
         }
         public Skill AddSkill(string SkillName,int Status)
         {
@@ -313,6 +429,28 @@ namespace CI_Platform.DataAccess.Repository
             {
                 return false;
             }
+        }
+
+        public CrudViewModel GetAllCmsPages()
+        {
+            List<CmsPage> cmspages = _db.CmsPages.Where(Cmspage => Cmspage.DeletedAt == null).ToList();
+            return new CrudViewModel
+            {
+                CmsPages = cmspages
+            };
+        }
+        public bool AddCmsPage(AddCMSViewModel addCMSViewModel)
+        {
+            CmsPage newcmsPage = new CmsPage
+            {
+                Title = addCMSViewModel.Title,
+                Description = addCMSViewModel.Description,
+                Slug = addCMSViewModel.Slug,
+                Status = addCMSViewModel.Status.ToString()
+            };
+            _db.CmsPages.Add(newcmsPage);
+            Save();
+            return true;
         }
         public void Save()
         {

@@ -1,6 +1,8 @@
 ﻿@using CI_Platform.Areas.Admin.ViewModels
 @model CrudViewModel
-
+@{
+    Layout = null;
+}
 <!doctype html>
 <html lang="en">
 
@@ -16,13 +18,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-     <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"> </script>
-     <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"> </script>
+    <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
 </head>
 
 <body>
@@ -37,7 +39,7 @@
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Admin/Home/Index" title="User">
+                    <a class="nav-link" href="/Admin/Index" title="User">
                         <img src="~/images/person.svg" alt="User" class="default" />
                         <img src="~/images/person-fill.svg" alt="User" class="icon-active" />
                         @*    <img src="./images/dashboard-active.svg" alt="dashboard" class="icon-active" />*@
@@ -52,35 +54,35 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Admin/Home/MissionCrud" title="Mission">
+                    <a class="nav-link" href="/Admin/MissionCrud" title="Mission">
                         <img src="~/images/bullseye.svg" alt="bullseye" class="default" />
                         <img src="~/images/bullseye.svg" alt="bullseye" class="icon-active" />
                         <span>Mission</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Admin/Home/MissionThemeCrud" title="Mission Theme">
+                    <a class="nav-link" href="/Admin/MissionThemeCrud" title="Mission Theme">
                         <img src="~/images/dashboard.svg" alt="dashboard" class="default" />
                         <img src="~/images/dashboard-active.svg" alt="dashboard" class="icon-active" />
                         <span>Mission Theme</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Admin/Home/MissionSkillCrud" title="Mission Skills">
+                    <a class="nav-link" href="/Admin/MissionSkillCrud" title="Mission Skills">
                         <img src="~/images/tools.svg" alt="tools" class="default" />
                         <img src="~/images/tools.svg" alt="tools" class="icon-active" />
                         <span>Mission Skills</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Admin/Home/MissionApplications" title="Mission Application">
+                    <a class="nav-link active" href="/Admin/MissionApplications" title="Mission Application">
                         <img src="~/images/folder.svg" alt="folder" class="default" />
                         <img src="~/images/folder-fill.svg" alt="folder-fill" class="icon-active" />
                         <span>Mission Application</span>
                     </a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Admin/Home/StoryCrud" title="Story">
+                <li class="nav-item">
+                    <a class="nav-link" href="/Admin/StoryCrud" title="Story">
                         <img src="~/images/journal-medical.svg" alt="Story" class="default" />
                         <img src="~/images/journal-medical.svg" alt="Story" class="icon-active" />
                         <span>Story</span>
@@ -97,121 +99,119 @@
         </nav>
         <div class="overlay"></div>
         <main class="main-content">
-        <div class="header justify-content-between">
+            <div class="header justify-content-between">
 
-            <div>
-                <button class="btn-menu toggle-sidebar" style="border:none;" type="button">
-                    <img src="~/images/list.png" alt="sidebar menu">
-                </button>
-                <span class="ms-3">
-                    @{
-                        var time = DateTime.Now.ToString("dddd, MMMM d, yyyy, h:mm tt");
-                    }
-                    @time
-                </span>
-            </div>
-            <div>
-                <div class="dropdown">
-                    <button class="dropdown-toggle profile"
-                            type="button"
-                            data-bs-toggle="dropdown" style="border:none;">
-                        <img src="~/images/user-img.png" class="profileimg" />
-                        <span class="mx-2 d-none d-sm-block">Evan Donohue</span>
-                        <img src="~/images/drop-down.png"
-                             class="mx-1 drop-down d-none d-sm-block" />
+                <div>
+                    <button class="btn-menu toggle-sidebar" style="border:none;" type="button">
+                        <img src="~/images/list.png" alt="sidebar menu">
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="EditProfile">My Profile</a></li>
-                        <li><a class="dropdown-item" asp-controller="Mission" asp-action="Volunteering_Timesheet">Timesheet</a></li>
-                        <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="Logout">Logout</a></li>
-                    </ul>
+                    <span class="ms-3">
+                        @{
+                            var time = DateTime.Now.ToString("dddd, MMMM d, yyyy, h:mm tt");
+                        }
+                        @time
+                    </span>
                 </div>
+                <div>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle profile"
+                                type="button"
+                                data-bs-toggle="dropdown" style="border:none;">
+                            <img src="~/images/user-img.png" class="profileimg" />
+                            <span class="mx-2 d-none d-sm-block">Evan Donohue</span>
+                            <img src="~/images/drop-down.png"
+                                 class="mx-1 drop-down d-none d-sm-block" />
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="EditProfile">My Profile</a></li>
+                            <li><a class="dropdown-item" asp-controller="Mission" asp-action="Volunteering_Timesheet">Timesheet</a></li>
+                            <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="Logout">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
 
-        </div>
+            <div class="crud-container mt-4 px-4">
+                <h3 class="ms-2 mt-4">Mission Application</h3>
 
-        <div class="crud-container mt-4 px-4">
-            <h3 class="ms-2 mt-4">Stories</h3>
-
-            <div class="d-flex justify-content-between mt-4">
-                <div class="search-bar">
-                    <form class="d-flex my-2 my-lg-0">
+                <div class="d-flex justify-content-between mt-4">
+                    <div class="search-bar">
+                        <form class="d-flex my-2 my-lg-0">
                             <button type="button" class="btn">
                                 <img src="~/images/search.png" alt="search" />
                             </button>
-                            <input id="story-search-input"
+                            <input id="mission-application-search-input"
                                    class="form-control"
                                    type="text"
-                                   placeholder="Search Stories"
-                                   aria-label="Search"
-                                    />
-                        </form></div>
-                        <div> <button type="button" class="btn add-btn"> <img src="~/images/plus-lg.svg"/>Add</button></div>
-            </div>
+                                   placeholder="Search MissionApplication"
+                                   aria-label="Search" />
+                        </form>
+                    </div>
 
-               <div class=" ms-2 mt-4 row table-responsive">
-                 <table id="Story-table" class="table">
-                   
-                         <thead>
-                               <tr>
-                        <th>Story Title</th>
-                        <th>Full Name</th>
-                        <th>Mission Title</th>
-                        <th>Action</th>
-                    </tr>
-                         </thead>
-                           <tbody>
-                            @foreach (var item in Model.Stories)
+                </div>
+
+                <div class=" ms-2 mt-4 row table-responsive">
+                    <table id="Missionapplication-table" class="table">
+
+                        <thead>
+                            <tr>
+                                <th>Mission Title</th>
+                                <th>Mission Id</th>
+                                <th>User Id</th>
+                                <th>User Name</th>
+                                <th>Applied Date</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody class="missionapplications">
+                            @foreach (var item in Model.MissionApplications)
                             {
-                                <tr id="story-@item.StoryId">
-                                    <td>@item.Title</td>
-                                    <td>@item.User.FirstName @item.User.LastName</td>
+                                <tr>
                                     <td>@item.Mission.Title</td>
-                                     <td style="display:flex;align-items:center;">
-                                        <a class="btn add-btn" href="/Admin/Home/StoryDetail/@item.StoryId" data-StoryId ="@item.StoryId" style="font-size:12px">View</a>
-                                        @if(item.Status == "PUBLISHED")
+                                    <td>@item.Mission.MissionId</td>
+                                    <td>@item.User.UserId</td>
+                                    <td>@item.User.FirstName @item.User.LastName</td>
+                                    <td>@item.AppliedAt.ToString().Substring(0,10)</td>
+                                    <td>
+                                         
+                                        @if(item.ApprovalStatus == "APPROVE")
                                         {
-                                             <i class="bi bi-check-circle-fill fs-5 text-success story-@item.StoryId ms-2" ></i>
+                                             <i class="bi bi-check-circle-fill fs-5 text-success MA-@item.MissionApplicationId " ></i>
                                         }
                                         else
                                         {
-                                             <i class="bi bi-check-circle text-success fs-5 story-@item.StoryId ms-2" onclick="ChangeStoryStatus(@item.StoryId,1)"></i>
+                                             <i class="bi bi-check-circle text-success fs-5 MA-@item.MissionApplicationId " onclick="MissionApplication(@item.MissionApplicationId,1)"></i>
                                         }
                                        &nbsp;
-                                        @if (item.Status == "DECLINED")
+                                        @if (item.ApprovalStatus == "DECLINE")
                                         {
-                                             <i class="bi bi-x-circle-fill text-danger fs-5 story-@item.StoryId ms-2" ></i>
+                                             <i class="bi bi-x-circle-fill text-danger fs-5 MA-@item.MissionApplicationId" ></i>
                                         }
                                         else
                                         {
-                                             <i class="bi bi-x-circle text-danger fs-5 story-@item.StoryId ms-2" onclick="ChangeStoryStatus(@item.StoryId,2)" ></i>
+                                             <i class="bi bi-x-circle text-danger fs-5 MA-@item.MissionApplicationId" onclick="MissionApplication(@item.MissionApplicationId,2)" ></i>
                                         }
-                                        <i class="bi bi-trash text-danger fs-5 ms-2" onclick="DeleteStory(@item.StoryId,3)"></i>
+
                                     
                                     </td>
-                                    
+
                                 </tr>
                             }
 
-                    
                         </tbody>
-                </table>
-            </div>
+                    </table>
+                </div>
 
             </div>
-        
+
 
         </main>
-      
 
     </div>
 
 
-
-
-
-
-    
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
@@ -219,10 +219,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/js/AdminPages.js"></script>
 </body>
 </html>
-
 

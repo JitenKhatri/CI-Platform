@@ -39,13 +39,24 @@ namespace CI_Platform.Models.ViewModels
 
         [Required]
         public string Email { get; set; } = string.Empty;
+
+        [Required]
+        public string Password { get; set; } = string.Empty;
+
+        public string? Manager { get; set; } = string.Empty;
         //public User User { get; set; } = new User();
 
         public List<Country> Countries { get; set; } = new List<Country>();
 
         public List<City> Cities { get; set; } = new List<City>();
 
+        public int UserId { get; set; }
+
+        public string? AvatarPath { get; set; }
+
         public int Status { get; set; }
+
     }
 }
+
 

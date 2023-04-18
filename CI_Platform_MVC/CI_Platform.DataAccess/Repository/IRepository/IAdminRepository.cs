@@ -20,7 +20,7 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         CrudViewModel GetAllThemes();
         CrudViewModel GetAllSkills();
         CrudViewModel GetAllStories();
-
+        CrudViewModel GetAllCmsPages();
         Skill AddSkill(string SkillName, int Status);
         Skill EditSkill(int skillid, int Status, string SkillName);
         bool DeleteSkill(int skill_id);
@@ -34,5 +34,11 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         AddUserViewModel GetCitiesForCountries(int CountryId);
         List<Country> GetAllCountries();
         bool AddUser(AddUserViewModel model);
+        bool UserExists(string email);
+        bool DeleteUser(int UserId);
+        List<City> GetAllCities();
+        User GetUserById(int UserId);
+        
+        bool AddCmsPage(AddCMSViewModel addCMSViewModel);
     }
 }

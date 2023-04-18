@@ -15,48 +15,56 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/CMSCrud.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ01TQ3J1ZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/MissionApplications.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxNaXNzaW9uQXBwbGljYXRpb25zLmNzaHRtbA==
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/MissionCrud.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxNaXNzaW9uQ3J1ZC5jc2h0bWw=
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/MissionApplications.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWlzc2lvbkFwcGxpY2F0aW9ucy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/MissionSkillCrud.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxNaXNzaW9uU2tpbGxDcnVkLmNzaHRtbA==
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/MissionCrud.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWlzc2lvbkNydWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/MissionThemeCrud.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxNaXNzaW9uVGhlbWVDcnVkLmNzaHRtbA==
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/MissionSkillCrud.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWlzc2lvblNraWxsQ3J1ZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/StoryCrud.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxTdG9yeUNydWQuY3NodG1s
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/MissionThemeCrud.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWlzc2lvblRoZW1lQ3J1ZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/StoryDetail.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxTdG9yeURldGFpbC5jc2h0bWw=
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/StoryCrud.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU3RvcnlDcnVkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/_AddUser.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxfQWRkVXNlci5jc2h0bWw=
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/StoryDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU3RvcnlEZXRhaWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/_CascadeCityPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxfQ2FzY2FkZUNpdHlQYXJ0aWFsLmNzaHRtbA==
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/_AddCMS.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0FkZENNUy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/_MissionSkill.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxfTWlzc2lvblNraWxsLmNzaHRtbA==
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/_AddUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0FkZFVzZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Areas/Admin/Views/Home/_MissionTheme.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxfTWlzc2lvblRoZW1lLmNzaHRtbA==
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/_CascadeCityPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0Nhc2NhZGVDaXR5UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/_MissionSkill.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX01pc3Npb25Ta2lsbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/_MissionTheme.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX01pc3Npb25UaGVtZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Home/Index.cshtml]

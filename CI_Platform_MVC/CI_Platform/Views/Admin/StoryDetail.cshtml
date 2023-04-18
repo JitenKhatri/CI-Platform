@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    Layout = null;
+}
 @using CI_Platform.Models.ViewModels
 @using System.Security.Claims
 @model StoryViewModel
@@ -38,7 +40,7 @@
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Admin/Home/Index" title="User">
+                    <a class="nav-link" href="/Admin/Index" title="User">
                         <img src="~/images/person.svg" alt="User" class="default" />
                         <img src="~/images/person-fill.svg" alt="User" class="icon-active" />
                         @*    <img src="./images/dashboard-active.svg" alt="dashboard" class="icon-active" />*@
@@ -53,35 +55,35 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Admin/Home/MissionCrud" title="Mission">
+                    <a class="nav-link" href="/Admin/MissionCrud" title="Mission">
                         <img src="~/images/bullseye.svg" alt="bullseye" class="default" />
                         <img src="~/images/bullseye.svg" alt="bullseye" class="icon-active" />
                         <span>Mission</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Admin/Home/MissionThemeCrud" title="Mission Theme">
+                    <a class="nav-link" href="/Admin/MissionThemeCrud" title="Mission Theme">
                         <img src="~/images/dashboard.svg" alt="dashboard" class="default" />
                         <img src="~/images/dashboard-active.svg" alt="dashboard" class="icon-active" />
                         <span>Mission Theme</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Admin/Home/MissionSkillCrud" title="Mission Skills">
+                    <a class="nav-link" href="/Admin/MissionSkillCrud" title="Mission Skills">
                         <img src="~/images/tools.svg" alt="tools" class="default" />
                         <img src="~/images/tools.svg" alt="tools" class="icon-active" />
                         <span>Mission Skills</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Admin/Home/MissionApplications" title="Mission Application">
+                    <a class="nav-link" href="/Admin/MissionApplications" title="Mission Application">
                         <img src="~/images/folder.svg" alt="folder" class="default" />
                         <img src="~/images/folder-fill.svg" alt="folder-fill" class="icon-active" />
                         <span>Mission Application</span>
                     </a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/Admin/Home/StoryCrud" title="Story">
+                    <a class="nav-link" href="/Admin/StoryCrud" title="Story">
                         <img src="~/images/journal-medical.svg" alt="Story" class="default" />
                         <img src="~/images/journal-medical.svg" alt="Story" class="icon-active" />
                         <span>Story</span>

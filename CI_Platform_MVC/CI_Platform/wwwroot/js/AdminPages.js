@@ -97,6 +97,21 @@ $(document).ready(function () {
     $('#story-search-input').on('keyup', function () {
         StoryTable.search($(this).val()).draw();
     });
+
+    var CMSTable = $('#CMS-table').DataTable({
+        "pagingType": "full_numbers",
+        lengthChange: false,
+        searchDelay: 500,
+        "ordering": false,
+        dom: 'lrtip',
+        initComplete: function () {
+            // Hide default search bar
+            $(this.api().table().container()).find('.dataTables_filter').hide();
+        }
+    });
+    $('#cms-search-input').on('keyup', function () {
+        CMSTable.search($(this).val()).draw();
+    });
 });
 
 var ThemeName
@@ -122,7 +137,7 @@ function AddTheme(action) {
     ValidateAddTheme()
         if (ThemeStatus != 2 && ThemeName.length > 4) {
             $.ajax({
-                url: '/Admin/Home/MissionThemeCrud',
+                url: '/Admin/MissionThemeCrud',
                 type: 'POST',
                 data: {
                     ThemeName: ThemeName,
@@ -161,7 +176,7 @@ function Edittheme() {
     ValidateEditTheme();
     if (ThemeStatus != 2 && ThemeName.length > 4) {
         $.ajax({
-            url: '/Admin/Home/MissionThemeCrud',
+            url: '/Admin/MissionThemeCrud',
             type: 'POST',
             data: {
                 ThemeName: ThemeName,
@@ -206,7 +221,7 @@ const DeleteTheme = (id) => {
     $('#confirmDeleteButton').on('click', () => {
 /*        $(`#theme-${id}`).remove()*/
         $.ajax({
-            url: '/Admin/Home/MissionThemeCrud',
+            url: '/Admin/MissionThemeCrud',
             type: 'POST',
             data: {
                 ThemeId: id,
@@ -274,7 +289,7 @@ function AddSkill(action) {
     if (action == "Add") {
         if (SkillStatus != 2 && SkillName.length > 4) {
             $.ajax({
-                url: '/Admin/Home/MissionSkillCrud',
+                url: '/Admin/MissionSkillCrud',
                 type: 'POST',
                 data: {
                     SkillName: SkillName,
@@ -315,7 +330,7 @@ function Editskill(action) {
     ValidateEditSkill();
     if (SkillStatus != 2 && SkillName.length > 4) {
         $.ajax({
-            url: '/Admin/Home/MissionSkillCrud',
+            url: '/Admin/MissionSkillCrud',
             type: 'POST',
             data: {
                 SkillName: SkillName,
@@ -369,7 +384,7 @@ const DeleteSkill = (id) => {
     $('#confirmDeleteButton').on('click', () => {
         /*        $(`#theme-${id}`).remove()*/
         $.ajax({
-            url: '/Admin/Home/MissionSkillCrud',
+            url: '/Admin/MissionSkillCrud',
             type: 'POST',
             data: {
                 SkillId: id,
@@ -393,7 +408,7 @@ const DeleteSkill = (id) => {
 
 function MissionApplication(id, Action) {
     $.ajax({
-        url: '/Admin/Home/MissionApplications',
+        url: '/Admin/MissionApplications',
         type: 'POST',
         data: {
             MissionApplicationId: id,
@@ -431,7 +446,7 @@ function MissionApplication(id, Action) {
 
 function ChangeStoryStatus(id, Action) {
     $.ajax({
-        url: '/Admin/Home/StoryCrud',
+        url: '/Admin/StoryCrud',
         type: 'POST',
         data: {
             StoryId: id,
@@ -515,7 +530,7 @@ function DeleteStory(StoryId,Action) {
     $('#confirmDeleteModal').modal('show');
     $('#confirmDeleteButton').on('click', () => {
         $.ajax({
-            url: '/Admin/Home/StoryCrud',
+            url: '/Admin/StoryCrud',
             type: 'POST',
             data: {
                 StoryId: StoryId,
@@ -549,10 +564,13 @@ function DeleteStory(StoryId,Action) {
     });
 }
 
-function AddUserModal() {
+function AddUserModal(UserId) {
     $.ajax({
-        url: '/Admin/Home/AddUserPartial',
+        url: '/Admin/AddUserPartial',
         type: 'POST',
+        data: {
+            UserId: UserId
+        },
         success: function (result) {
             $('.crud-container').empty();
             $('.crud-container').append(result);
@@ -564,11 +582,44 @@ function AddUserModal() {
     
 }
 
+function AddUser(form, e) {
+    e.preventDefault();
+    var formData = new FormData(form);
+
+    $.ajax({
+        type: 'POST',
+        url: "/Admin/Index",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function () {
+            toastr.success('User Saved Successfully!', {
+                "positionClass": "toast-top-center",
+                progressBar: true,
+                timeOut: 3000,
+                closeButton: true,
+            });
+            $("#AddUserForm")[0].reset();
+        },
+        error: function (error) {
+            if ($("#Email").val().length > 0) {
+                $('#valid-email-error').show();
+                $("#Email").on('input', function () {
+                    if ($("#Email").val().lenght != 0) {
+                        $("#valid-email-error").hide();
+                        flag = true;
+                    }
+                });
+            }
+        }
+    });
+}
+
 function CascadeCity() {
     var country = $('.country').find(":selected").val()
     if (parseInt(country) != 0) {
         $.ajax({
-            url: '/Admin/Home/AddUserPartial',
+            url: '/Admin/AddUserPartial',
             type: 'POST',
             data: { CountryId: country },
             success: function (result) {
@@ -588,4 +639,96 @@ function upload_profile_image() {
         $('#old-profile-image').attr('src', fr.result)
     }
     fr.readAsDataURL(image)
+}
+
+function DeleteUser(id){
+    const html = `
+<div class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-delete" >
+<div class="modal-content">
+<div class="modal-header border-0 d-flex justify-content-center">
+<h5 class="modal-title text-danger" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body text-center">
+<p class="mb-0">Are you sure you want to delete this User?</p>
+</div>
+<div class="modal-footer border-0 d-flex align-item-center justify-content-center">
+<button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+<button type="button" class="btn btn-danger" id="confirmDeleteButton">Yes, Delete</button>
+</div>
+</div>
+</div>
+</div>
+`;
+    $(document.body).append(html);
+    $('#confirmDeleteModal').modal('show');
+    $('#confirmDeleteButton').on('click', () => {
+        $.ajax({
+            url: '/Admin/Index',
+            type: 'POST',
+            data: {
+                UserId: id,
+                Action: "Delete"
+            },
+            success: function (result) {
+                var row = $(`#user-${id}`);
+                row.remove();
+                $('#Users-table').DataTable().row(row).remove().draw();
+                toastr.error('User Deleted Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        });
+        $('#confirmDeleteModal').modal('hide');
+    });
+    $('#confirmDeleteModal').on('hidden.bs.modal', () => {
+        $('#confirmDeleteModal').remove();
+    });
+}
+
+function AddCMSModel() {
+    $.ajax({
+        url: '/Admin/AddCMSPartial',
+        type: 'POST',
+        success: function (result) {
+            $('.crud-container').empty();
+            $('.crud-container').append(result);
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    });
+
+}
+
+function AddCMS(form, e) {
+    e.preventDefault();
+    var formData = new FormData(form);
+    formData.set('Description', CKEDITOR.instances.cmseditorhtml.getData());
+    $.ajax({
+        type: 'POST',
+        url: "/Admin/CMSCrud",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function () {
+            toastr.success('CMS Page Saved Successfully!', {
+                "positionClass": "toast-top-center",
+                progressBar: true,
+                timeOut: 3000,
+                closeButton: true,
+            });
+            $("#cmsform")[0].reset();
+        },
+        error: function (error) {
+            console.log("Error updating variable");
+        }
+    });
 }

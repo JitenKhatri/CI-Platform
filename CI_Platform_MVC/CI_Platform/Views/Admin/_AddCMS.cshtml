@@ -1,0 +1,92 @@
+﻿@using CI_Platform.Models.ViewModels
+@{
+    Layout = null;
+}
+
+
+
+@model AddCMSViewModel
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<div class="add">
+    <div class="title">
+        <p>ADD</p>
+    </div>
+    <form id="cmsform" onsubmit="AddCMS(this,event)">
+        <input type="hidden" id="cmsTitle" asp-for="CMSPageId" name="CMSPageId" class="form-control" />
+        <div class="row mb-2">
+            <div class="col">
+                <label for="Title" class="form-label">Title</label>
+                <input type="text" id="cmsTitle" asp-for="Title" name="Title" class="form-control" placeholder="Enter Title" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col">
+                <label for="Title" class="form-label">Description</label>
+                <textarea id="cmseditorhtml" class="form-control"
+                          placeholder="Write your description here" asp-for="Description" name="Description"></textarea>
+
+            </div>
+
+        </div>
+        <span asp-validation-for="Description" class="text-danger"></span>
+
+        <div class="row mb-2">
+            <div class="col">
+                <label for="Title" class="form-label">Slug</label>
+                <input type="text" id="slug" asp-for="Slug" name="Slug" class="form-control" />
+                <span asp-validation-for="Slug" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col">
+                <label for="name" class="form-label">Status</label>
+                <select id="cmsStatus" name="mission" asp-for="Status" name="Status" class="form-select">
+                    <option>Select a status</option>
+                    <option value="1">Active</option>
+                    <option value="0">In-Active</option>
+
+                </select>
+
+            </div>
+        </div>
+        <div class="d-flex flex-row justify-content-between align-items-start">
+
+            <div class="save d-flex flex-row align-items-center mt-4">
+                <button type="button" class="cancel-btn rounded-pill py-1 px-3 me-2"
+                        data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button type="submit"
+                        class="submit-btn rounded-pill py-1 px-3">
+                    Add
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <script>
+                                             CKEDITOR.replace('cmseditorhtml', {
+                                 height: 200,
+                                removeButtons: ['About', 'Cut', 'Copy', 'Paste', 'Link', 'Unlink', 'Anchor', 'Indent', 'Outdent', 'NumberedList', 'BulletedList']
+                            }
+                            );
+        // Get the CKEditor instance
+            var editor = CKEDITOR.instances['cmseditorhtml'];
+
+            // Add validation attributes to the CKEditor instance
+            editor.element.setAttribute('data-val', 'true');
+            editor.element.setAttribute('data-val-required', 'The Description field is required.');
+    </script>
+    @section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    }
+</div>
