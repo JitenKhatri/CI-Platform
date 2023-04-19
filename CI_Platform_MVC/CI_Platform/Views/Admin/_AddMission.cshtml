@@ -1,0 +1,274 @@
+﻿@using CI_Platform.Models.ViewModels
+@{
+    Layout = null;
+}
+@model AddMissionViewModel
+
+<div class="container-fluid grid-container">
+
+    <form itemid="AddMissionForm" onsubmit="AddMission(this,event)" enctype="multipart/form-data">
+       <div class="row mb-3">
+                    <div class="col-6">
+                        <span asp-validation-for="Title" class="text-danger d-block"></span>
+                        <label class="form-label">Title</label>
+                        <input type="text" asp-for="Title" name="Title" class="form-control" value="@Model.Title" placeholder="Enter Mission Title" />
+                    </div>
+
+                    <div class="col-6">
+                        <span asp-validation-for="ShortDescription" class="text-danger d-block"></span>
+                        <label asp-for="ShortDescription" class="form-label">ShortDescription</label>
+                        <input type="text" asp-for="ShortDescription" name="ShortDescription" class="form-control" value="@Model.ShortDescription" placeholder="Enter Short Description" />
+                    </div>
+                </div> 
+    <div class="mb-3">
+        <span asp-validation-for="Description" class="alert-danger d-block"></span>
+        <label class="form-label">Description</label>
+        <textarea asp-for="Description" name="Description" class="form-control" value="@Model.Description"></textarea>
+    </div>
+           <div class="row mb-3">
+                    <div class="col-6">
+                        <span asp-validation-for="CityId" class="text-danger d-block"></span>
+                        <label asp-for="CityId" class="form-label">City</label>
+                        <select asp-for="CityId" id='city' class="form-select city me-3" aria-label="Select City">
+                            <option disabled selected>Select Your City</option>
+                            @{
+                                foreach (var item in Model.Cities)
+                                {
+                                    bool isexist = (item.CityId == @Model.CityId);
+                                    if (isexist)
+                                    {
+                                        <option value=@item.CityId selected>@item.Name</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <span asp-validation-for="CountryId" class="text-danger d-block"></span>
+                        <label asp-for="CountryId" class="form-label">Country</label>
+                        <select id='country' asp-for="CountryId" onchange="CascadeCity()" class="form-select country me-3" aria-label="Select Country">
+                            <option disabled selected>Select Your Country</option>
+                            @{
+                                foreach (var item in Model.Countries)
+                                {
+                                    bool isexist = (item.CountryId == @Model.CountryId);
+                                    if (isexist)
+                                    {
+                                        <option value=@item.CountryId selected>@item.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value=@item.CountryId>@item.Name</option>
+                                    }
+
+                                }
+                            }
+
+                        </select>
+                    </div>
+                </div>
+                       <div class="row mb-3">
+                    <div class="col-6">
+                        <span asp-validation-for="OrganizationName" class="text-danger d-block"></span>
+                        <label class="form-label">OrganizationName</label>
+                        <input type="text" asp-for="OrganizationName" name="OrganizationName" class="form-control" value="@Model.OrganizationName" placeholder="Enter Organization Name" />
+                    </div>
+
+                    <div class="col-6">
+                        <span asp-validation-for="OrganizationDetail" class="text-danger d-block"></span>
+                        <label asp-for="OrganizationDetail" class="form-label">OrganizationDetail</label>
+                        <input type="text" asp-for="OrganizationDetail" name="OrganizationDetail" class="form-control" value="@Model.OrganizationDetail" placeholder="Enter OrganizationDetail" />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <span asp-validation-for="StartDate" class="text-danger d-block"></span>
+                        <label class="form-label">StartDate</label>
+                        <input type="date" asp-for="StartDate" name="StartDate" class="form-control" value="@Model.StartDate" placeholder="Enter StartDate" />
+                    </div>
+                     <div class="col-6">
+                        <span asp-validation-for="EndDate" class="text-danger d-block"></span>
+                        <label class="form-label">EndDate</label>
+                        <input type="date" asp-for="EndDate" name="EndDate" class="form-control" value="@Model.EndDate" placeholder="Enter EndDate" />
+                    </div>
+                </div>
+                      <div class="row mb-3">
+                          <div class="col-6">
+                               <span asp-validation-for="MissionType" class="text-danger d-block"></span>
+                        <label asp-for="MissionType" class="form-label">MissionType</label>
+                        <select id="mission-type" asp-for="MissionType" class="form-select missiontype me-3" aria-label="Select MissionType">
+                            <option disabled selected>Select Mission Type</option>
+                            <option value="Time">Time</option>
+                            <option value="Goal">Goal</option>
+                        </select>
+                    </div>
+                    <div class="col-6 d-none" id="SeatsLeft">
+                        <span asp-validation-for="SeatsLeft" class="text-danger d-block"></span>
+                        <label class="form-label">TotalSeats</label>
+                        <input type="number" asp-for="SeatsLeft" name="SeatsLeft" class="form-control" value="@Model.SeatsLeft" placeholder="Enter TotalSeats" />
+                    </div>
+                  
+                </div> 
+                <div class="mb-3 d-none" id="Deadline">
+                    <span asp-validation-for="Deadline" class="text-danger d-block"></span>
+                        <label class="form-label">Deadline</label>
+                        <input type="date" asp-for="Deadline" name="Deadline" class="form-control" value="@Model.Deadline" placeholder="Enter Deadline" />
+                </div>
+                <div class="mb-3 d-none" id="Goal_Motto">
+                    <span asp-validation-for="Goal_Motto" class="text-danger d-block"></span>
+                        <label asp-for="Goal_Motto" class="form-label">Goal_Motto</label>
+                        <input type="text" asp-for="Goal_Motto" name="Goal_Motto" class="form-control" value="@Model.Goal_Motto" placeholder="Enter Goal_Motto" />
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                    <span asp-validation-for="ThemeId" class="text-danger d-block"></span>
+                        <label asp-for="ThemeId" class="form-label">Theme</label>
+                        <select id='Theme' asp-for="ThemeId" class="form-select theme me-3" aria-label="Select Theme">
+                            <option disabled selected>Select Mission Theme</option>
+                            @{
+                                foreach (var item in Model.Themes)
+                                {
+                                    bool isexist = (item.MissionThemeId == @Model.ThemeId);
+                                    if (isexist)
+                                    {
+                                        <option value=@item.MissionThemeId selected>@item.Title</option>
+                                    }
+                                    else
+                                    {
+                                        <option value=@item.MissionThemeId>@item.Title</option>
+                                    }
+
+                                }
+                            }
+
+                        </select>
+                        </div>
+                        <div class="col-6">
+                               <span asp-validation-for="Availability" class="text-danger d-block"></span>
+                        <label asp-for="Availability" class="form-label">Availability</label>
+                        <select asp-for="Availability" class="form-select Availability me-3" aria-label="Select Availability">
+                            <option disabled selected>Select Availability</option>
+                            <option value="weekly">weekly</option>
+                            <option value="daily">daily</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                       <input asp-for="Selected_Skills" value="@Model.Selected_Skills" type="hidden" id="selected_skills" />
+                    <input type="hidden" value="@Model.Selected_skill_names" id="selected_skill_names" />
+                    <div class="mt-4 w-100 saved-skills d-flex flex-column border border-1" style="height:200px;">
+
+                        @{
+                            foreach (var item in Model.MissionSkills)
+                            {
+                                <span class="mt-1 ms-1" id="@item.SkillId">@item.Skill.SkillName</span>
+                            }
+                        }
+                    </div>
+                     <div class="save d-flex flex-row align-items-start mt-3">
+
+
+                        <button type="button" class="cancelbtn mt-2" data-bs-toggle="modal" data-bs-target="#addskills">Add Skills</button>
+
+
+                    </div>
+                </div>
+    </form>
+  
+</div>
+          @*modal of skills*@
+           <div class="modal fade" id="addskills" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Add Your Skills</h5>
+                    </div>
+                    <div class="modal-body d-flex justify-content-between">
+                        <div class="all-skills d-flex flex-column text-muted border border-1 px-2" style="min-width:46%;">
+                            @{
+                                foreach (var item in Model.Skills)
+                                {
+                                    <span onclick="addskill('skill-@item.SkillId','@item.SkillName')" class="mt-1" style="cursor:pointer;" id="skill-@item.SkillId">@item.SkillName</span>
+                                }
+                            }
+
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center buttons">
+                            <img style="cursor:pointer;" src="~/images/right-arrow1.png" />
+                            <img class="mt-3" src="~/images/left.png" />
+                        </div>
+                        <div class="selected-skills d-flex flex-column text-muted border border-1 px-2" style="min-width:46%;">
+                            @{
+                                foreach (var item in Model.MissionSkills)
+                                {
+                                    <span class="mt-1" id="@item.SkillId">@item.Skill.SkillName</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                            <span class="p-1 text-muted" style="white-space:nowrap;">Cancel</span>
+                        </div>
+                        <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" type="button" onclick="saveskills()" class="btn applyButton" data-bs-dismiss="modal">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var Skills = [];
+var skills_name = [];
+var selectedSkillsInput = document.getElementById('selected_skills');
+if (selectedSkillsInput.value != "") {
+    Skills = selectedSkillsInput.value.split(',').map(id => parseInt(id));
+}
+
+
+var selectedskillnameinput = document.getElementById('selected_skill_names');
+if (selectedskillnameinput.value != "") {
+    skills_name = selectedskillnameinput.value.split(',');
+}
+function addskill(skill_id, skill_name) {
+    var id = parseInt(skill_id.slice(6))
+    if (!Skills.includes(id)) {
+        $(`#${skill_id}`).css("background-color", "#0000000D")
+        $('.selected-skills').append(`<span class="mt-1" id=${id}>` + skill_name + '</span>')
+        Skills.push(id)
+        skills_name.push(skill_name)
+        document.getElementById('selected_skills').value += (Skills.length > 1 ? ',' : '') + id;
+    }
+    else {
+        $(`#${skill_id}`).css("background-color", "white")
+        $('.selected-skills').find(`#${id}`).remove()
+        Skills.splice(Skills.indexOf(id), 1)
+        skills_name.splice(skills_name.indexOf(skill_name), 1)
+        document.getElementById('selected_skills').value = Skills.join(',');
+    }
+}
+
+function saveskills() {
+    $('.saved-skills').empty()
+    skills_name.forEach((item, i) => {
+        $('.saved-skills').append(`<span class="mt-1 ms-3">` + item + '</span>')
+    })
+}
+const missionTypeSelect = document.querySelector('#mission-type');
+missionTypeSelect.addEventListener('change', (event) => {
+    // Get the value of the selected option
+    const selectedValue = event.target.value;
+
+    // Hide both mission sections initially
+     $('#Deadline').addClass('d-none').removeClass('d-block');
+     $('#SeatsLeft').addClass('d-none').removeClass('d-block');
+     $('#Goal_Motto').addClass('d-none').removeClass('d-block');
+
+    // Show the appropriate mission section based on the selected value
+    if (selectedValue === 'Time') {
+      $('#Deadline').addClass('d-block').removeClass('d-none');
+      $('#SeatsLeft').addClass('d-block').removeClass('d-none');
+    } else if (selectedValue === 'Goal') {
+        $('#Goal_Motto').addClass('d-block').removeClass('d-none');
+    }
+  });
+        </script>

@@ -81,7 +81,7 @@ namespace CI_Platform.DataAccess.Repository
         }
         public CrudViewModel GetAllMissions()
         {
-            var missions = _db.Missions.ToList();
+            var missions = _db.Missions.Where(mission => mission.DeletedAt == null).ToList();
             return new CrudViewModel
             {
                 Missions = missions
@@ -90,7 +90,7 @@ namespace CI_Platform.DataAccess.Repository
 
         public CrudViewModel GetAllThemes()
         {
-            var missionThemes = _db.MissionThemes.ToList();
+            var missionThemes = _db.MissionThemes.Where(missiontheme => missiontheme.DeletedAt == null).ToList();
             return new CrudViewModel
             {
                 MissionThemes = missionThemes
@@ -114,7 +114,7 @@ namespace CI_Platform.DataAccess.Repository
             MissionTheme deletetheme = _db.MissionThemes.FirstOrDefault(t => t.MissionThemeId == theme_id );
             if (deletetheme is not null)
             {
-                _db.MissionThemes.Remove(deletetheme);
+                deletetheme.DeletedAt = DateTime.Now;
                 Save();
                 return true;
             }
@@ -141,7 +141,7 @@ namespace CI_Platform.DataAccess.Repository
         }
         public CrudViewModel GetAllSkills()
         {
-            List<Skill> Skills = _db.Skills.ToList();
+            List<Skill> Skills = _db.Skills.Where(skill => skill.DeletedAt == null).ToList();
             return new CrudViewModel
             {
                 Skills = Skills
@@ -158,6 +158,18 @@ namespace CI_Platform.DataAccess.Repository
         {
             List<City> Cities = _db.Cities.ToList();
             return Cities;
+        }
+
+        public List<MissionTheme> GetAllMissionThemes()
+        {
+            List<MissionTheme> themes = _db.MissionThemes.Where(MissionTheme => MissionTheme.DeletedAt == null).ToList();
+            return themes;
+        }
+
+        public List<Skill> GetAllMissionSkills()
+        {
+            List<Skill> skills = _db.Skills.Where(Skill => Skill.DeletedAt == null).ToList();
+            return skills;
         }
         public User GetUserById(int UserId)
         {
@@ -265,7 +277,7 @@ namespace CI_Platform.DataAccess.Repository
             }
             else
             {
-                return false;
+                return true;
             }
         }
         public Skill AddSkill(string SkillName,int Status)
@@ -300,7 +312,7 @@ namespace CI_Platform.DataAccess.Repository
             Skill deleteskilll = _db.Skills.FirstOrDefault(t => t.SkillId == skill_id);
             if (deleteskilll is not null)
             {
-                _db.Skills.Remove(deleteskilll);
+                deleteskilll.DeletedAt = DateTime.Now;
                 Save();
                 return true;
             }
@@ -441,16 +453,53 @@ namespace CI_Platform.DataAccess.Repository
         }
         public bool AddCmsPage(AddCMSViewModel addCMSViewModel)
         {
-            CmsPage newcmsPage = new CmsPage
+            if(addCMSViewModel.CMSPageId == 0)
             {
-                Title = addCMSViewModel.Title,
-                Description = addCMSViewModel.Description,
-                Slug = addCMSViewModel.Slug,
-                Status = addCMSViewModel.Status.ToString()
-            };
-            _db.CmsPages.Add(newcmsPage);
-            Save();
-            return true;
+                CmsPage newcmsPage = new CmsPage
+                {
+                    Title = addCMSViewModel.Title,
+                    Description = addCMSViewModel.Description,
+                    Slug = addCMSViewModel.Slug,
+                    Status = addCMSViewModel.Status
+                };
+                _db.CmsPages.Add(newcmsPage);
+                Save();
+                return true;
+            }
+            else
+            {
+                CmsPage editCmsPage = _db.CmsPages.FirstOrDefault(CmsPage => CmsPage.CmsPageId == addCMSViewModel.CMSPageId);
+                editCmsPage.Title = addCMSViewModel.Title;
+                editCmsPage.Description = addCMSViewModel.Description;
+                editCmsPage.Slug = addCMSViewModel.Slug;
+                editCmsPage.Status = addCMSViewModel.Status;
+                editCmsPage.UpdatedAt = DateTime.Now;
+                Save();
+                return true;
+
+            }
+            
+        }
+
+        public CmsPage GetCmsPageById(long CMSPageId)
+        {
+            CmsPage cmsPage = _db.CmsPages.FirstOrDefault(CmsPage => CmsPage.CmsPageId == CMSPageId);
+            return cmsPage;
+        }
+
+        public bool DeleteCMSPage(long CMSPageId)
+        {
+            CmsPage deleteCMSPage = _db.CmsPages.FirstOrDefault(CmsPage => CmsPage.CmsPageId == CMSPageId);
+            if (deleteCMSPage is not null)
+            {
+                deleteCMSPage.DeletedAt = DateTime.Now;
+                Save();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public void Save()
         {

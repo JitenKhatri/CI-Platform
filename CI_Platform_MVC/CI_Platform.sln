@@ -5,11 +5,16 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CI_Platform", "CI_Platform\CI_Platform.csproj", "{A61ED90F-B62C-4D46-BE9A-4D2F7959956C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CI_Platform.DataAccess", "CI_Platform.DataAccess\CI_Platform.DataAccess.csproj", "{291E1A83-2D19-4EE0-9782-ED276C5130AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CI_Platform.DataAccess", "CI_Platform.DataAccess\CI_Platform.DataAccess.csproj", "{291E1A83-2D19-4EE0-9782-ED276C5130AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CI_Platform.Models", "CI_Platform.Models\CI_Platform.Models.csproj", "{B4007050-6EEF-4229-8DFE-12BC3BDE9797}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CI_Platform.Models", "CI_Platform.Models\CI_Platform.Models.csproj", "{B4007050-6EEF-4229-8DFE-12BC3BDE9797}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CI_Platform.Utility", "CI_Platform.Utility\CI_Platform.Utility.csproj", "{08AC603B-EB66-4376-8FBB-352BCB1891A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CI_Platform.Utility", "CI_Platform.Utility\CI_Platform.Utility.csproj", "{08AC603B-EB66-4376-8FBB-352BCB1891A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6232BA9F-8937-423C-8E50-927D0E04AA5D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

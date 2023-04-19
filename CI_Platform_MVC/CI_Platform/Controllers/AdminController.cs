@@ -1,4 +1,5 @@
-﻿using CI_Platform.DataAccess.Repository.IRepository;
+﻿using CI_Platform.DataAccess.CustomValidations;
+using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
 using CI_Platform.Models.ViewModels;
 using Controllers;
@@ -13,18 +14,18 @@ namespace CI_Platform.Controllers
         {
             db = _db;
         }
-       
+
         public IActionResult Index()
         {
             var users = db.AdminRepository.GetAllUsers();
             return View(users);
         }
 
-        
+
         [HttpPost]
-        public IActionResult AddUserPartial(int countryId,int UserId)
+        public IActionResult AddUserPartial(int countryId, int UserId)
         {
-            if(UserId == 0)
+            if (UserId == 0)
             {
                 if (countryId == 0)
                 {
@@ -72,52 +73,70 @@ namespace CI_Platform.Controllers
                     return Json(new { cities = cities });
                 }
             }
-            
+
         }
 
-        
+
         [HttpPost]
-        public IActionResult Index(AddUserViewModel model,string Action)
+        public IActionResult Index(AddUserViewModel model, string Action)
         {
             if (Action == "Delete")
             {
                 bool success = db.AdminRepository.DeleteUser(model.UserId);
                 return Json(new { success });
             }
-            else {
-                var userExists = db.AdminRepository.UserExists(model.Email);
-                if (userExists)
+            else
+            {
+                if (model.UserId == 0)
                 {
-                    return BadRequest();
+                    var userExists = db.AdminRepository.UserExists(model.Email);
+                    if (userExists)
+                    {
+                        return Json(new { success = true, message = "Email exists" });
+                    }
+                    else
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            bool success = db.AdminRepository.AddUser(model);
+                            return Json(new { success = true });
+                        }
+                        else
+                        {
+                            return BadRequest(ModelState);
+                        }
+                    }
                 }
                 else
                 {
                     if (ModelState.IsValid)
                     {
                         bool success = db.AdminRepository.AddUser(model);
-                        return Json(new { success });
+                        return Json(new { success = true });
                     }
                     else
                     {
-                        return BadRequest();
+                        return BadRequest(ModelState);
                     }
-                } }
+                }
+            }
+
         }
-        
+
         public IActionResult MissionCrud()
         {
             var missions = db.AdminRepository.GetAllMissions();
             return View(missions);
         }
 
-        
+
         public IActionResult MissionThemeCrud()
         {
             var themes = db.AdminRepository.GetAllThemes();
             return View(themes);
         }
 
-        
+
         [HttpPost]
         public IActionResult MissionThemeCrud(int ThemeId, String ThemeName, int Status, String Action)
         {
@@ -141,14 +160,14 @@ namespace CI_Platform.Controllers
 
         }
 
-        
+
         public IActionResult MissionSkillCrud()
         {
             var skills = db.AdminRepository.GetAllSkills();
             return View(skills);
         }
 
-        
+
         [HttpPost]
         public IActionResult MissionSkillCrud(int SkillId, String SkillName, int Status, String Action)
         {
@@ -171,14 +190,14 @@ namespace CI_Platform.Controllers
             }
         }
 
-        
+
         public IActionResult StoryCrud()
         {
             var stories = db.AdminRepository.GetAllStories();
             return View(stories);
         }
 
-        
+
         [HttpPost]
         public IActionResult StoryCrud(int StoryId, int Action)
         {
@@ -199,21 +218,21 @@ namespace CI_Platform.Controllers
             }
         }
 
-        
-        
+
+        [Route("Admin/{StoryDetail}/{StoryId}")]
         public IActionResult StoryDetail(int StoryId)
         {
             StoryViewModel story = db.AdminRepository.GetStoryDetail(StoryId);
             return View(story);
         }
-        
+
         public IActionResult MissionApplications()
         {
             var missionapplications = db.AdminRepository.GetAllMissionApplications();
             return View(missionapplications);
         }
 
-        
+
         [HttpPost]
         public IActionResult MissionApplications(int MissionApplicationId, int Action)
         {
@@ -236,24 +255,77 @@ namespace CI_Platform.Controllers
         }
 
         [HttpPost]
-        public IActionResult CMSCrud(AddCMSViewModel addCMSViewModel)
+        public IActionResult CMSCrud(AddCMSViewModel addCMSViewModel, string Action)
         {
-            if (ModelState.IsValid)
+            if (Action == "Delete")
             {
-                bool success = db.AdminRepository.AddCmsPage(addCMSViewModel);
+                bool success = db.AdminRepository.DeleteCMSPage(addCMSViewModel.CMSPageId);
                 return Json(new { success });
             }
             else
             {
-                return BadRequest();
+                if (ModelState.IsValid)
+                {
+                    bool success = db.AdminRepository.AddCmsPage(addCMSViewModel);
+                    return Json(new { success });
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
+
         }
         [HttpPost]
-        public IActionResult AddCMSPartial()
+        public IActionResult AddCMSPartial(long CMSPageId)
         {
-            AddCMSViewModel addCMSViewModel = new AddCMSViewModel();
-            return View("_AddCMS", addCMSViewModel);
+            if (CMSPageId == 0)
+            {
+                AddCMSViewModel addCMSViewModel = new AddCMSViewModel();
+                return View("_AddCMS", addCMSViewModel);
+            }
+            else
+            {
+                var CmsPage = db.AdminRepository.GetCmsPageById(CMSPageId);
+                AddCMSViewModel AddCmsViewModel = new AddCMSViewModel
+                {
+                    CMSPageId = CmsPage.CmsPageId,
+                    Title = CmsPage.Title,
+                    Slug = CmsPage.Slug,
+                    Description = CmsPage.Description,
+                    Status = CmsPage.Status
+                };
+                return View("_AddCMS", AddCmsViewModel);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult AddMissionPartial(int countryId, int MissionId)
+        {
+            if (countryId == 0)
+            {
+                AddMissionViewModel model = new AddMissionViewModel
+                {
+                    Countries = db.AdminRepository.GetAllCountries(),
+                    Cities = db.AdminRepository.GetAllCities(),
+                    Themes = db.AdminRepository.GetAllMissionThemes(),
+                    Skills = db.AdminRepository.GetAllMissionSkills()
+                };
+                return View("_AddMission", model);
+            }
+            else
+            {
+                AddUserViewModel model = db.AdminRepository.GetCitiesForCountries(countryId);
+                var cities = this.RenderViewAsync("_CascadeCityPartial", model, true);
+                return Json(new { cities = cities });
+            }
         }
     }
 }
+            
+            
+
+        
+    
+
 

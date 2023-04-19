@@ -2807,7 +2807,6 @@
       "CI_Platform.DataAccess/1.0.0": {
         "dependencies": {
           "CI_Platform.Models": "1.0.0",
-          "CI_Platform.Utility": "1.0.0",
           "EntityFramework": "6.4.4",
           "Microsoft.AspNetCore.Identity": "2.2.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.14",

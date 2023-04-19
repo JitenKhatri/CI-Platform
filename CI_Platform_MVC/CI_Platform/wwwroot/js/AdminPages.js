@@ -592,25 +592,31 @@ function AddUser(form, e) {
         data: formData,
         processData: false,
         contentType: false,
-        success: function () {
-            toastr.success('User Saved Successfully!', {
-                "positionClass": "toast-top-center",
-                progressBar: true,
-                timeOut: 3000,
-                closeButton: true,
-            });
-            $("#AddUserForm")[0].reset();
+        success: function (result) {
+            if (result.message == "Email exists") {
+                if ($("#Email").val().length > 0) {
+                    $('#valid-email-error').removeClass('d-none').addClass('d-block');
+                    $("#Email").on('input', function () {
+                        if ($("#Email").val().lenght != 0) {
+                            $("#valid-email-error").removeClass('d-block').addClass('d-none');
+                            flag = true;
+                        }
+                    });
+                }
+            }
+            else {
+                toastr.success('User Saved Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+                $("#AddUserForm")[0].reset();
+            }
+            
         },
         error: function (error) {
-            if ($("#Email").val().length > 0) {
-                $('#valid-email-error').show();
-                $("#Email").on('input', function () {
-                    if ($("#Email").val().lenght != 0) {
-                        $("#valid-email-error").hide();
-                        flag = true;
-                    }
-                });
-            }
+            console.log("Error updating variable");
         }
     });
 }
@@ -693,9 +699,12 @@ function DeleteUser(id){
     });
 }
 
-function AddCMSModel() {
+function AddCMSModel(CMSPageId) {
     $.ajax({
         url: '/Admin/AddCMSPartial',
+        data: {
+            CMSPageId: CMSPageId
+        },
         type: 'POST',
         success: function (result) {
             $('.crud-container').empty();
@@ -726,9 +735,86 @@ function AddCMS(form, e) {
                 closeButton: true,
             });
             $("#cmsform")[0].reset();
+            if (formData.CMSPageId != 0) {
+                setTimeout(function () {
+                    window.location.reload();
+                }, 5000);
+               
+            }
         },
         error: function (error) {
             console.log("Error updating variable");
         }
     });
 }
+
+function DeleteCMS(id) {
+    const html = `
+<div class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-delete" >
+<div class="modal-content">
+<div class="modal-header border-0 d-flex justify-content-center">
+<h5 class="modal-title text-danger" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body text-center">
+<p class="mb-0">Are you sure you want to delete this CMS Page?</p>
+</div>
+<div class="modal-footer border-0 d-flex align-item-center justify-content-center">
+<button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+<button type="button" class="btn btn-danger" id="confirmDeleteButton">Yes, Delete</button>
+</div>
+</div>
+</div>
+</div>
+`;
+    $(document.body).append(html);
+    $('#confirmDeleteModal').modal('show');
+    $('#confirmDeleteButton').on('click', () => {
+        $.ajax({
+            url: '/Admin/CMSCrud',
+            type: 'POST',
+            data: {
+                CMSPageId: id,
+                Action: "Delete"
+            },
+            success: function (result) {
+                var row = $(`#cms-${id}`);
+                row.remove();
+                $('#CMS-table').DataTable().row(row).remove().draw();
+                toastr.error('CMS Page Deleted Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        });
+        $('#confirmDeleteModal').modal('hide');
+    });
+    $('#confirmDeleteModal').on('hidden.bs.modal', () => {
+        $('#confirmDeleteModal').remove();
+    });
+}
+
+function AddMissionModel(MissionId) {
+    $.ajax({
+        url: '/Admin/AddMissionPartial',
+        data: {
+            MissionId: MissionId
+        },
+        type: 'POST',
+        success: function (result) {
+            $('.crud-container').empty();
+            $('.crud-container').append(result);
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    });
+
+}
+

@@ -38,7 +38,10 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         bool DeleteUser(int UserId);
         List<City> GetAllCities();
         User GetUserById(int UserId);
-        
+        CmsPage GetCmsPageById(long CMSPageId);
         bool AddCmsPage(AddCMSViewModel addCMSViewModel);
+        bool DeleteCMSPage(long CMSPageId);
+        List<MissionTheme> GetAllMissionThemes();
+        List<Skill> GetAllMissionSkills();
     }
 }

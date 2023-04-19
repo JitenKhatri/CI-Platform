@@ -9,7 +9,7 @@ namespace CI_Platform.Models.ViewModels
 {
     public class AddCMSViewModel
     {
-        public int CMSPageId { get; set; }
+        public long CMSPageId { get; set; }
 
         [Required]
         public string Title { get; set; } = string.Empty;
@@ -21,6 +21,6 @@ namespace CI_Platform.Models.ViewModels
         public string Slug { get; set; } = string.Empty;
 
         [Required]
-        public int Status { get; set; }
+        public string Status { get; set; }
     }
 }

@@ -9,7 +9,6 @@
       "CI_Platform.DataAccess/1.0.0": {
         "dependencies": {
           "CI_Platform.Models": "1.0.0",
-          "CI_Platform.Utility": "1.0.0",
           "EntityFramework": "6.4.4",
           "Microsoft.AspNetCore.Identity": "2.2.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.14",
@@ -1132,11 +1131,6 @@
         "runtime": {
           "CI_Platform.Models.dll": {}
         }
-      },
-      "CI_Platform.Utility/1.0.0": {
-        "runtime": {
-          "CI_Platform.Utility.dll": {}
-        }
       }
     }
   },
@@ -1861,11 +1855,6 @@
       "hashPath": "system.windows.extensions.5.0.0.nupkg.sha512"
     },
     "CI_Platform.Models/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "CI_Platform.Utility/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

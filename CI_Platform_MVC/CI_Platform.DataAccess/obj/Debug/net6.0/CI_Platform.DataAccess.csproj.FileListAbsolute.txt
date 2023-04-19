@@ -9,9 +9,7 @@ C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\b
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\bin\Debug\net6.0\ref\CI_Platform.DataAccess.dll
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\bin\Debug\net6.0\CI_Platform.DataAccess.pdb
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\bin\Debug\net6.0\CI_Platform.Models.dll
-C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\bin\Debug\net6.0\CI_Platform.Utility.dll
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\bin\Debug\net6.0\CI_Platform.Models.pdb
-C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\bin\Debug\net6.0\CI_Platform.Utility.pdb
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\CI_Platform.DataAccess.csproj.CopyComplete
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\CI_Platform.DataAccess.dll
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform.DataAccess\obj\Debug\net6.0\ref\CI_Platform.DataAccess.dll

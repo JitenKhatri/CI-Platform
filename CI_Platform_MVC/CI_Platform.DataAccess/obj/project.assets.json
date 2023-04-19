@@ -1414,16 +1414,6 @@
         "runtime": {
           "bin/placeholder/CI_Platform.Models.dll": {}
         }
-      },
-      "CI_Platform.Utility/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/CI_Platform.Utility.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/CI_Platform.Utility.dll": {}
-        }
       }
     }
   },
@@ -4484,17 +4474,11 @@
       "type": "project",
       "path": "../CI_Platform.Models/CI_Platform.Models.csproj",
       "msbuildProject": "../CI_Platform.Models/CI_Platform.Models.csproj"
-    },
-    "CI_Platform.Utility/1.0.0": {
-      "type": "project",
-      "path": "../CI_Platform.Utility/CI_Platform.Utility.csproj",
-      "msbuildProject": "../CI_Platform.Utility/CI_Platform.Utility.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "CI_Platform.Models >= 1.0.0",
-      "CI_Platform.Utility >= 1.0.0",
       "EntityFramework >= 6.4.4",
       "Microsoft.AspNetCore.Identity >= 2.2.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.14",
@@ -4540,9 +4524,6 @@
           "projectReferences": {
             "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj": {
               "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj"
-            },
-            "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj": {
-              "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj"
             }
           }
         }

@@ -35,9 +35,6 @@
             "projectReferences": {
               "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj": {
                 "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Models\\CI_Platform.Models.csproj"
-              },
-              "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj": {
-                "projectPath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.Utility\\CI_Platform.Utility.csproj"
               }
             }
           }
