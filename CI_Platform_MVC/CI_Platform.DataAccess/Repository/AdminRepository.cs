@@ -501,6 +501,352 @@ namespace CI_Platform.DataAccess.Repository
                 return false;
             }
         }
+
+        public bool AddMission(AddMissionViewModel addMissionViewModel)
+        {
+            if (addMissionViewModel.MissionId == 0)
+            {
+                if (addMissionViewModel.MissionType == "Time")
+                {
+                    Mission NewMission = new Mission
+                    {
+                        MissionType = "TIME",
+                        Title = addMissionViewModel.Title,
+                        ShortDescription = addMissionViewModel.ShortDescription,
+                        Description = addMissionViewModel.Description,
+                        Deadline = addMissionViewModel.Deadline,
+                        StartDate = addMissionViewModel.StartDate,
+                        EndDate = addMissionViewModel.EndDate,
+                        CityId = addMissionViewModel.CityId,
+                        CountryId = addMissionViewModel.CountryId,
+                        SeatsLeft = addMissionViewModel.SeatsLeft,
+                        ThemeId = addMissionViewModel.ThemeId,
+                        Availability = addMissionViewModel.Availability,
+                        OrganizationName = addMissionViewModel.OrganizationName,
+                        OrganizationDetail = addMissionViewModel.OrganizationDetail
+                    };
+                    _db.Missions.Add(NewMission);
+                    Save();
+                    long NewMissionId = NewMission.MissionId;
+                    foreach (var item in addMissionViewModel.Media)
+                    {
+                        string uniqueFileName = null;
+                        // Get the uploaded file name
+                        string fileName = Path.GetFileName(item.FileName);
+
+                        // Create a unique file name to avoid overwriting existing files
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
+                        // Set the file path where the uploaded file will be saved
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
+
+                        // Save the uploaded file to the specified directory
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            item.CopyTo(fileStream);
+                        }
+                        _db.MissionMedia.Add(new MissionMedium
+                        {
+                            MissionId = NewMissionId,
+                            MediaType = "img",
+                            MediaPath = "/images/" + uniqueFileName, // Save the unique file name in the database
+                            MediaName = fileName,
+                            // set the first instance of item in Media as default and for remaining set default as 0
+                        });
+                    }
+                    if (addMissionViewModel.Selected_Skills != null && addMissionViewModel.Selected_Skills != "")
+                    {
+                        List<MissionSkill> mission_skills = _db.MissionSkills.Where(c => c.MissionId == NewMissionId).ToList();
+                        if (mission_skills.Count > 0)
+                        {
+                            _db.RemoveRange(mission_skills);
+                            string[] skills = addMissionViewModel.Selected_Skills.Split(',');
+                            foreach (var skill in skills)
+                            {
+                                _db.MissionSkills.Add(new MissionSkill { SkillId = int.Parse(skill), MissionId = NewMissionId });
+                            }
+                        }
+                        else
+                        {
+                            string[] skills = addMissionViewModel.Selected_Skills.Split(',');
+                            foreach (var skill in skills)
+                            {
+                                _db.MissionSkills.Add(new MissionSkill { SkillId = int.Parse(skill), MissionId = NewMissionId });
+                            }
+                        }
+                    }
+                    Save();
+                    return true;
+                }
+                else if (addMissionViewModel.MissionType == "Goal")
+                {
+                    Mission NewMission = new Mission
+                    {
+                        MissionType = "GO",
+                        Title = addMissionViewModel.Title,
+                        ShortDescription = addMissionViewModel.ShortDescription,
+                        Description = addMissionViewModel.Description,
+                        Deadline = addMissionViewModel.Deadline,
+                        CityId = addMissionViewModel.CityId,
+                        CountryId = addMissionViewModel.CountryId,
+                        ThemeId = addMissionViewModel.ThemeId,
+                        Availability = addMissionViewModel.Availability,
+                        OrganizationName = addMissionViewModel.OrganizationName,
+                        OrganizationDetail = addMissionViewModel.OrganizationDetail,
+                        GoalMotto = addMissionViewModel.Goal_Motto,
+                        StartDate = addMissionViewModel.StartDate,
+                        EndDate = addMissionViewModel.EndDate,
+                    };
+                    _db.Missions.Add(NewMission);
+                    Save();
+                    long NewMissionId = NewMission.MissionId;
+                    foreach (var item in addMissionViewModel.Media)
+                    {
+                        string uniqueFileName = null;
+                        // Get the uploaded file name
+                        string fileName = Path.GetFileName(item.FileName);
+
+                        // Create a unique file name to avoid overwriting existing files
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
+                        // Set the file path where the uploaded file will be saved
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
+
+                        // Save the uploaded file to the specified directory
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            item.CopyTo(fileStream);
+                        }
+                        _db.MissionMedia.Add(new MissionMedium
+                        {
+                            MissionId = NewMissionId,
+                            MediaType = "img",
+                            MediaPath = "/images/" + uniqueFileName, // Save the unique file name in the database
+                            MediaName = fileName,
+                            // set the first instance of item in Media as default and for remaining set default as 0
+                        });
+                    }
+                    if (addMissionViewModel.Selected_Skills != null && addMissionViewModel.Selected_Skills != "")
+                    {
+                        List<MissionSkill> mission_skills = _db.MissionSkills.Where(c => c.MissionId == NewMissionId).ToList();
+                        if (mission_skills.Count > 0)
+                        {
+                            _db.RemoveRange(mission_skills);
+                            string[] skills = addMissionViewModel.Selected_Skills.Split(',');
+                            foreach (var skill in skills)
+                            {
+                                _db.MissionSkills.Add(new MissionSkill { SkillId = int.Parse(skill), MissionId = NewMissionId });
+                            }
+                        }
+                        else
+                        {
+                            string[] skills = addMissionViewModel.Selected_Skills.Split(',');
+                            foreach (var skill in skills)
+                            {
+                                _db.MissionSkills.Add(new MissionSkill { SkillId = int.Parse(skill), MissionId = NewMissionId });
+                            }
+                        }
+                    }
+                    Save();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (addMissionViewModel.MissionType == "Time")
+                {
+                    Mission editTimeMission = _db.Missions.FirstOrDefault(Mission => Mission.MissionId == addMissionViewModel.MissionId);
+                    editTimeMission.MissionType = "TIME";
+                    editTimeMission.Title = addMissionViewModel.Title;
+                    editTimeMission.ShortDescription = addMissionViewModel.ShortDescription;
+                    editTimeMission.Description = addMissionViewModel.Description;
+                    editTimeMission.Deadline = addMissionViewModel.Deadline;
+                    editTimeMission.StartDate = addMissionViewModel.StartDate;
+                    editTimeMission.EndDate = addMissionViewModel.EndDate;
+                    editTimeMission.CityId = addMissionViewModel.CityId;
+                    editTimeMission.CountryId = addMissionViewModel.CountryId;
+                    editTimeMission.SeatsLeft = addMissionViewModel.SeatsLeft;
+                    editTimeMission.ThemeId = addMissionViewModel.ThemeId;
+                    editTimeMission.Availability = addMissionViewModel.Availability;
+                    editTimeMission.OrganizationName = addMissionViewModel.OrganizationName;
+                    editTimeMission.OrganizationDetail = addMissionViewModel.OrganizationDetail;
+                    Save();
+                    long EditMissionId = addMissionViewModel.MissionId;
+                    //Deleting existing media 
+                    List<MissionMedium> mission_media = _db.MissionMedia.Where(c => c.MissionId == EditMissionId).ToList();
+                    if (mission_media.Count > 0)
+                    {
+                        _db.RemoveRange(mission_media);
+                    }
+                        foreach (var item in addMissionViewModel.Media)
+                       {
+                        string uniqueFileName = null;
+                        // Get the uploaded file name
+                        string fileName = Path.GetFileName(item.FileName);
+
+                        // Create a unique file name to avoid overwriting existing files
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
+                        // Set the file path where the uploaded file will be saved
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
+
+                        // Save the uploaded file to the specified directory
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            item.CopyTo(fileStream);
+                        }
+                        _db.MissionMedia.Add(new MissionMedium
+                        {
+                            MissionId = EditMissionId,
+                            MediaType = "img",
+                            MediaPath = "/images/" + uniqueFileName, // Save the unique file name in the database
+                            MediaName = fileName,
+                            // set the first instance of item in Media as default and for remaining set default as 0
+                        });
+                    }
+                    if (addMissionViewModel.Selected_Skills != null && addMissionViewModel.Selected_Skills != "")
+                    {
+                        List<MissionSkill> mission_skills = _db.MissionSkills.Where(c => c.MissionId == EditMissionId).ToList();
+                        if (mission_skills.Count > 0)
+                        {
+                            _db.RemoveRange(mission_skills);
+                            string[] skills = addMissionViewModel.Selected_Skills.Split(',');
+                            foreach (var skill in skills)
+                            {
+                                _db.MissionSkills.Add(new MissionSkill { SkillId = int.Parse(skill), MissionId = EditMissionId });
+                            }
+                        }
+                        else
+                        {
+                            string[] skills = addMissionViewModel.Selected_Skills.Split(',');
+                            foreach (var skill in skills)
+                            {
+                                _db.MissionSkills.Add(new MissionSkill { SkillId = int.Parse(skill), MissionId = EditMissionId });
+                            }
+                        }
+                    }
+                    Save();
+                    return true;
+                }
+                else if (addMissionViewModel.MissionType == "Goal")
+                {
+                    Mission editGoalMission = _db.Missions.FirstOrDefault(Mission => Mission.MissionId == addMissionViewModel.MissionId);
+                    editGoalMission.MissionType = "GO";
+                    editGoalMission.Title = addMissionViewModel.Title;
+                    editGoalMission.ShortDescription = addMissionViewModel.ShortDescription;
+                    editGoalMission.Description = addMissionViewModel.Description;
+                    editGoalMission.Deadline = addMissionViewModel.Deadline;
+                    editGoalMission.StartDate = addMissionViewModel.StartDate;
+                    editGoalMission.EndDate = addMissionViewModel.EndDate;
+                    editGoalMission.CityId = addMissionViewModel.CityId;
+                    editGoalMission.CountryId = addMissionViewModel.CountryId;
+                    editGoalMission.ThemeId = addMissionViewModel.ThemeId;
+                    editGoalMission.Availability = addMissionViewModel.Availability;
+                    editGoalMission.OrganizationName = addMissionViewModel.OrganizationName;
+                    editGoalMission.OrganizationDetail = addMissionViewModel.OrganizationDetail;
+                    editGoalMission.GoalMotto = addMissionViewModel.Goal_Motto;
+                    Save();
+                    long EditMissionId = editGoalMission.MissionId;
+                    //Deleting existing media 
+                    List<MissionMedium> mission_media = _db.MissionMedia.Where(c => c.MissionId == EditMissionId).ToList();
+                    if (mission_media.Count > 0)
+                    {
+                        _db.RemoveRange(mission_media);
+                    }
+                    foreach (var item in addMissionViewModel.Media)
+                    {
+                        string uniqueFileName = null;
+                        // Get the uploaded file name
+                        string fileName = Path.GetFileName(item.FileName);
+
+                        // Create a unique file name to avoid overwriting existing files
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
+                        // Set the file path where the uploaded file will be saved
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
+
+                        // Save the uploaded file to the specified directory
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            item.CopyTo(fileStream);
+                        }
+                        _db.MissionMedia.Add(new MissionMedium
+                        {
+                            MissionId = EditMissionId,
+                            MediaType = "img",
+                            MediaPath = "/images/" + uniqueFileName, // Save the unique file name in the database
+                            MediaName = fileName,
+                            // set the first instance of item in Media as default and for remaining set default as 0
+                        });
+                    }
+                    if (addMissionViewModel.Selected_Skills != null && addMissionViewModel.Selected_Skills != "")
+                    {
+                        List<MissionSkill> mission_skills = _db.MissionSkills.Where(c => c.MissionId == EditMissionId).ToList();
+                        if (mission_skills.Count > 0)
+                        {
+                            _db.RemoveRange(mission_skills);
+                            string[] skills = addMissionViewModel.Selected_Skills.Split(',');
+                            foreach (var skill in skills)
+                            {
+                                _db.MissionSkills.Add(new MissionSkill { SkillId = int.Parse(skill), MissionId = EditMissionId });
+                            }
+                        }
+                        else
+                        {
+                            string[] skills = addMissionViewModel.Selected_Skills.Split(',');
+                            foreach (var skill in skills)
+                            {
+                                _db.MissionSkills.Add(new MissionSkill { SkillId = int.Parse(skill), MissionId = EditMissionId});
+                            }
+                        }
+                    }
+                    Save();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+
+        public AddMissionViewModel GetMissionById(long MissionId)
+        {
+            Mission mission = _db.Missions.FirstOrDefault(Mission => Mission.MissionId == MissionId);
+            List<Skill> skills = _db.Skills.ToList();
+            var missionskill = _db.MissionSkills.Where(ms => ms.MissionId == MissionId).ToList();
+            var selectedSkills = string.Join(",", missionskill.Select(x => x.SkillId.ToString()));
+            var Selectedskillnames = string.Join(",", missionskill.Select(y => y.Skill.SkillName.ToString()));
+            return new AddMissionViewModel
+            {
+                MissionType = mission.MissionType,
+                Title = mission.Title,
+                ShortDescription = mission.ShortDescription,
+                Description = mission.Description,
+                Deadline = mission.Deadline,
+                StartDate = mission.StartDate ?? new DateTime(),
+                EndDate = mission.EndDate ?? new DateTime(),
+                CityId = mission.CityId,
+                CountryId = mission.CountryId,
+                SeatsLeft = mission.SeatsLeft ?? 0,
+                ThemeId = mission.ThemeId,
+                Availability = mission.Availability,
+                OrganizationName = mission.OrganizationName,
+                OrganizationDetail = mission.OrganizationDetail,
+                Goal_Motto = mission.GoalMotto ?? string.Empty,
+                Selected_Skills = selectedSkills,
+                Selected_skill_names = Selectedskillnames,
+                MissionSkills = missionskill,
+                MissionId = mission.MissionId,
+                MissionMedia = _db.MissionMedia.Where(missionmedium => missionmedium.MissionId == MissionId).ToList(),
+            };
+        }
+
         public void Save()
         {
             _db.SaveChanges();

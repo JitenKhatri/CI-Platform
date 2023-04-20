@@ -302,23 +302,83 @@ namespace CI_Platform.Controllers
         [HttpPost]
         public IActionResult AddMissionPartial(int countryId, int MissionId)
         {
-            if (countryId == 0)
+            if(MissionId == 0)
             {
-                AddMissionViewModel model = new AddMissionViewModel
+                if (countryId == 0)
                 {
-                    Countries = db.AdminRepository.GetAllCountries(),
-                    Cities = db.AdminRepository.GetAllCities(),
-                    Themes = db.AdminRepository.GetAllMissionThemes(),
-                    Skills = db.AdminRepository.GetAllMissionSkills()
-                };
-                return View("_AddMission", model);
+                    AddMissionViewModel model = new AddMissionViewModel
+                    {
+                        Countries = db.AdminRepository.GetAllCountries(),
+                        Cities = db.AdminRepository.GetAllCities(),
+                        Themes = db.AdminRepository.GetAllMissionThemes(),
+                        Skills = db.AdminRepository.GetAllMissionSkills()
+                    };
+                    return View("_AddMission", model);
+                }
+                else
+                {
+                    AddUserViewModel model = db.AdminRepository.GetCitiesForCountries(countryId);
+                    var cities = this.RenderViewAsync("_CascadeCityPartial", model, true);
+                    return Json(new { cities = cities });
+                }
             }
             else
             {
-                AddUserViewModel model = db.AdminRepository.GetCitiesForCountries(countryId);
-                var cities = this.RenderViewAsync("_CascadeCityPartial", model, true);
-                return Json(new { cities = cities });
+                if (countryId == 0)
+                {
+                    var Mission = db.AdminRepository.GetMissionById(MissionId);
+                    AddMissionViewModel model = new AddMissionViewModel
+                    {
+                        Countries = db.AdminRepository.GetAllCountries(),
+                        Cities = db.AdminRepository.GetAllCities(),
+                        Themes = db.AdminRepository.GetAllMissionThemes(),
+                        Skills = db.AdminRepository.GetAllMissionSkills(),
+                        MissionType = Mission.MissionType,
+                        Title = Mission.Title,
+                        ShortDescription = Mission.ShortDescription,
+                        Description = Mission.Description,
+                        Deadline = Mission.Deadline ?? new DateTime(),
+                        StartDate = Mission.StartDate,
+                        EndDate = Mission.EndDate,
+                        CityId = Mission.CityId,
+                        CountryId = Mission.CountryId,
+                        SeatsLeft = Mission.SeatsLeft ,
+                        ThemeId = Mission.ThemeId,
+                        Availability = Mission.Availability,
+                        OrganizationName = Mission.OrganizationName,
+                        OrganizationDetail = Mission.OrganizationDetail,
+                        Goal_Motto = Mission.Goal_Motto,
+                        Selected_Skills = Mission.Selected_Skills,
+                        Selected_skill_names = Mission.Selected_skill_names,
+                        MissionSkills = Mission.MissionSkills,
+                        MissionMedia = Mission.MissionMedia,
+                        MissionId = Mission.MissionId
+                    };
+                    return View("_AddMission", model);
+                }
+                else
+                {
+                    AddUserViewModel model = db.AdminRepository.GetCitiesForCountries(countryId);
+                    var cities = this.RenderViewAsync("_CascadeCityPartial", model, true);
+                    return Json(new { cities = cities });
+                }
             }
+            
+        }
+
+        [HttpPost]
+        public IActionResult MissionCrud(AddMissionViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                bool success = db.AdminRepository.AddMission(model);
+                return Json(new { success });
+            }
+            else
+            {
+                return BadRequest();
+            }
+                
         }
     }
 }

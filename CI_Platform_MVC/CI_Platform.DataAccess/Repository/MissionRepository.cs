@@ -316,19 +316,19 @@ namespace CI_Platform.DataAccess.Repository
 
 
 
-            Mission mission = _db.Missions.SingleOrDefault(m => m.MissionId == id);
+            Mission mission = _db.Missions.FirstOrDefault(m => m.MissionId == id);
             if (mission == null)
             {
                 return null; // or throw an exception if desired
             }
 
-            MissionMedium image = _db.MissionMedia.SingleOrDefault(i => i.MissionId == id);
-            MissionTheme theme = _db.MissionThemes.SingleOrDefault(t => t.MissionThemeId == mission.ThemeId);
+            MissionMedium image = _db.MissionMedia.FirstOrDefault(i => i.MissionId == id);
+            MissionTheme theme = _db.MissionThemes.FirstOrDefault(t => t.MissionThemeId == mission.ThemeId);
             List<Skill> skills = _db.MissionSkills.Where(s => s.MissionId == id).Select(s => s.Skill).ToList();
             List<Comment> comments = _db.Comments.Where(s => s.MissionId == id).OrderByDescending(m => m.CreatedAt).Take(5).ToList();
             List<MissionDocument> missiondocuments = _db.MissionDocuments.Where(ms => ms.MissionId == id).ToList();
-            Country country = _db.Countries.SingleOrDefault(c => c.CountryId == mission.CountryId);
-            City city = _db.Cities.SingleOrDefault(c => c.CityId == mission.CityId);
+            Country country = _db.Countries.FirstOrDefault(c => c.CountryId == mission.CountryId);
+            City city = _db.Cities.FirstOrDefault(c => c.CityId == mission.CityId);
 
             if (mission.MissionRatings.Count > 0)
             {

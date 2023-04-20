@@ -43,5 +43,7 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         bool DeleteCMSPage(long CMSPageId);
         List<MissionTheme> GetAllMissionThemes();
         List<Skill> GetAllMissionSkills();
+        bool AddMission(AddMissionViewModel addMissionViewModel);
+        AddMissionViewModel GetMissionById(long MissionId);
     }
 }

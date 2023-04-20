@@ -341,7 +341,7 @@ public partial class CiPlatformContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
             entity.Property(e => e.Deadline)
-                .HasColumnType("date")
+                .HasColumnType("datetime")
                 .HasColumnName("deadline");
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
@@ -376,6 +376,7 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.Status)
                 .HasMaxLength(2)
                 .IsUnicode(false)
+                .HasDefaultValueSql("((0))")
                 .HasColumnName("status");
             entity.Property(e => e.ThemeId).HasColumnName("theme_id");
             entity.Property(e => e.Title)
