@@ -49,8 +49,8 @@ namespace CI_Platform.DataAccess.Repository
 
                 }) ; ;
 
-            var stories = storyQuery.ToList();
-            int totalStories = storiesQuery.Count();
+            var stories = storyQuery.Skip(skipCount).Take(pageSize).ToList();
+            int totalStories = storyQuery.Count();
 
             return (stories, totalStories);
         }

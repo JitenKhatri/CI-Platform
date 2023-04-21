@@ -1,0 +1,152 @@
+﻿@using CI_Platform.Models.ViewModels
+@{
+    Layout = null;
+}
+@model AddBannerViewModel
+
+<div class="container-fluid grid-container">
+
+    <form id="AddBannerForm" onsubmit="AddBanner(this,event)" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="mb-3" id="bannertext">
+            <span asp-validation-for="BannerText" class="text-danger d-block"></span>
+            <label class="form-label">BannerText</label>
+            <input type="text" asp-for="BannerText" name="BannerText" class="form-control" placeholder="Enter BannerText" />
+        </div>
+        <div class="mb-3" >
+            <span asp-validation-for="SortOrder" class="text-danger d-block"></span>
+            <label class="form-label">Banner SortOrder</label>
+            <input type="number" asp-for="SortOrder" name="SortOrder" class="form-control" placeholder="Enter SortOrder" />
+        </div>
+        <span asp-validation-for="BannerImage" class="text-danger d-block"></span>
+        <label class="form-label">Banner Image</label>
+             <div class="mb-3">
+            <div class="dropzone d-flex flex-row" asp-for="BannerImage" id="myDropzone">
+                <div id="imagePreview" class="dz-preview">
+                    <div id="previewTemplate" class="preview-container" style="margin-right:30px;">
+                        <button type="button" class="btn-remove" style="display:none" data-dz-remove>
+                            <img src="~/images/cross.png" />
+                        </button>
+                        <img class="preview" data-dz-thumbnail />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-flex flex-row mt-3">
+            <button type="submit" class="btn add-btn">Save</button>
+        </div>
+        <input asp-for="BannerId" type="hidden"/>
+        <input type="hidden" asp-for="BannerImagePath" class="imageurl" />
+    </form>      
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</div>
+
+<script>
+  Dropzone.autoDiscover = false;
+$(function () {
+    var myDropzone = new Dropzone("#myDropzone", {
+        url: "/Story/ShareStory",
+        maxFiles: 1,
+        maxFilesize: 10000,
+        uploadMultiple: true,
+        acceptedFiles: ".jpeg,.jpg,.png",
+        addRemoveLinks: false,
+        dictRemoveFile: "Remove",
+        autoProcessQueue: false,
+        dictDefaultMessage: "Drop files here or click to upload",
+        dictInvalidFileType: "Invalid file type. Only JPEG, JPG and PNG are allowed.",
+        dictFileTooBig: "File size is too big. Maximum file size allowed is 4MB.",
+        dictMaxFilesExceeded: "You can only upload a maximum of 1 files.",
+        previewTemplate: $("#imagePreview").html(),
+        init: function () {
+            this.on("addedfile", function (file) {
+                // Show the remove button when a file is added
+                file.previewElement.querySelector(".btn-remove").style.display = "block";
+                file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
+                    // Remove the file from Dropzone
+                    myDropzone.removeFile(file);
+                });
+            });
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+                toastr.error('You can only upload a maximum of 1 file.', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+            });
+            let myDropzone = this;
+            var imageurls = $(".imageurl").get();
+            imageurls.forEach(i => {
+                //let mockFile = { name: "Filename 2", size: 12345 };
+                //myDropzone.displayExistingFile(mockFile, i.value);
+                console.log(i.value);
+                fetch(i.value)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        var file = new File([blob], i.value, { type: blob.type });
+                        var files = myDropzone.getAcceptedFiles();
+                        files.push(file);
+                        myDropzone.addFile(file); // add the file to the upload queue
+                    })
+                    .catch(error => console.error(error));
+            });// manually trigger processing of the preselected file
+            myDropzone.on("addedfile", function(file) {
+                console.log("Added file:", file);
+                file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
+                    // Remove the file from Dropzone
+                    myDropzone.removeFile(file);
+                });
+                myDropzone.on("removedfile", function (file) {
+                     console.log("Removed file:",file)
+                      var formData = new FormData(document.getElementById("AddBannerForm"));
+  for (var i = 0; i < myDropzone.files.length; i++) {
+    formData.append("BannerImage", myDropzone.files[i]);
+  }
+  document.getElementById("AddBannerForm").formData = formData;
+                });
+        });
+        }
+
+    });
+});
+
+        function AddBanner(form, e)
+        {
+        e.preventDefault();
+        var formData = new FormData(form);
+        var myDropzone = Dropzone.forElement("#myDropzone");
+        var files = myDropzone.files;
+        for (var i = 0; i < files.length; i++) {
+                    formData.append('BannerImage', files[i]);
+                }
+        $.ajax({
+            type: 'POST',
+            url: "/Admin/BannerCrud",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function () {
+                toastr.success('Banner Saved Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+                $("#AddBannerForm")[0].reset();
+                if (formData.BannerId != 0) {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 5000);
+
+                }
+            },
+            error: function (error) {
+                console.log("Error updating variable");
+            }
+        });
+    }
+</script>

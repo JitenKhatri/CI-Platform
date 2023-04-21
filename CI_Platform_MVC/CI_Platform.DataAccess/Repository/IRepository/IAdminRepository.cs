@@ -45,5 +45,12 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         List<Skill> GetAllMissionSkills();
         bool AddMission(AddMissionViewModel addMissionViewModel);
         AddMissionViewModel GetMissionById(long MissionId);
+        bool DeleteMission(long MissionId);
+
+        CrudViewModel GetAllBanners();
+
+        bool Addbanner(AddBannerViewModel addBannerViewModel);
+        AddBannerViewModel GetBannerById(int BannerId);
+        bool DeleteBanner(int BannerId);
     }
 }

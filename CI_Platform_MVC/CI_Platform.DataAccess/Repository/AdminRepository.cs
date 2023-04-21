@@ -534,8 +534,14 @@ namespace CI_Platform.DataAccess.Repository
                         // Get the uploaded file name
                         string fileName = Path.GetFileName(item.FileName);
 
+                        Random random = new Random();
+                        string randomString = new string(
+                            Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
+                                      .Select(s => s[random.Next(s.Length)])
+                                      .ToArray()
+                        );
                         // Create a unique file name to avoid overwriting existing files
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+                        uniqueFileName = randomString + "_" + fileName;
 
                         // Set the file path where the uploaded file will be saved
                         string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
@@ -606,8 +612,14 @@ namespace CI_Platform.DataAccess.Repository
                         // Get the uploaded file name
                         string fileName = Path.GetFileName(item.FileName);
 
+                        Random random = new Random();
+                        string randomString = new string(
+                            Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
+                                      .Select(s => s[random.Next(s.Length)])
+                                      .ToArray()
+                        );
                         // Create a unique file name to avoid overwriting existing files
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+                        uniqueFileName = randomString + "_" + fileName;
 
                         // Set the file path where the uploaded file will be saved
                         string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
@@ -687,9 +699,14 @@ namespace CI_Platform.DataAccess.Repository
                         string uniqueFileName = null;
                         // Get the uploaded file name
                         string fileName = Path.GetFileName(item.FileName);
-
+                        Random random = new Random();
+                        string randomString = new string(
+                            Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
+                                      .Select(s => s[random.Next(s.Length)])
+                                      .ToArray()
+                        );
                         // Create a unique file name to avoid overwriting existing files
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+                        uniqueFileName = randomString + "_" + fileName;
 
                         // Set the file path where the uploaded file will be saved
                         string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
@@ -763,8 +780,14 @@ namespace CI_Platform.DataAccess.Repository
                         // Get the uploaded file name
                         string fileName = Path.GetFileName(item.FileName);
 
+                        Random random = new Random();
+                        string randomString = new string(
+                            Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
+                                      .Select(s => s[random.Next(s.Length)])
+                                      .ToArray()
+                        );
                         // Create a unique file name to avoid overwriting existing files
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+                        uniqueFileName = randomString + "_" + fileName;
 
                         // Set the file path where the uploaded file will be saved
                         string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
@@ -847,6 +870,130 @@ namespace CI_Platform.DataAccess.Repository
             };
         }
 
+        public bool DeleteMission(long MissionId)
+        {
+            Mission DeleteMission = _db.Missions.FirstOrDefault(Mission => Mission.MissionId == MissionId);
+            //delete mission
+            DeleteMission.DeletedAt = DateTime.Now;  // soft delete mission
+            //missionapplication
+            List<MissionApplication> DeleteMisssionApplications = _db.MissionApplications.Where(MissionApplication => MissionApplication.MissionId == MissionId).ToList();
+            foreach(var MissionApplication in DeleteMisssionApplications)
+            {
+                MissionApplication.DeletedAt = DateTime.Now;
+            }
+            //relatedstories
+            List<Story> DeleteMissionStory = _db.Stories.Where(Story => Story.MissionId == MissionId).ToList();
+            foreach(var Story in DeleteMissionStory)
+            {
+                Story.DeletedAt = DateTime.Now;
+            }
+            //timesheets
+            List<Timesheet> DeleteMissionTimesheets = _db.Timesheets.Where(Timesheet => Timesheet.MissionId == MissionId).ToList();
+            foreach(var timesheet in DeleteMissionTimesheets)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+            }
+            Save();
+            return true;
+        }
+
+        public CrudViewModel GetAllBanners()
+        {
+            List<Banner> Banners = _db.Banners.Where(Banner => Banner.DeletedAt == null).ToList();
+            return new CrudViewModel
+            {
+                Banners = Banners
+            };
+        }
+
+        public bool Addbanner(AddBannerViewModel addBannerViewModel)
+        {
+            if(addBannerViewModel.BannerId == 0)
+            {
+                string uniqueFileName = null;
+                // Get the uploaded file name
+                string fileName = Path.GetFileName(addBannerViewModel.BannerImage.FileName);
+
+                Random random = new Random();
+                string randomString = new string(
+                    Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
+                              .Select(s => s[random.Next(s.Length)])
+                              .ToArray()
+                );
+                // Create a unique file name to avoid overwriting existing files
+                uniqueFileName = randomString + "_" + fileName;
+
+                // Set the file path where the uploaded file will be saved
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
+
+                // Save the uploaded file to the specified directory
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    addBannerViewModel.BannerImage.CopyTo(fileStream);
+                }
+                Banner NewBanner = new Banner
+                {
+                    SortOrder = addBannerViewModel.SortOrder,
+                    Text = addBannerViewModel.BannerText,
+                    Image = "/images/" + uniqueFileName,
+                };
+                _db.Banners.Add(NewBanner);
+                Save();
+                return true;
+            }
+            else
+            {
+                Banner EditBanner = _db.Banners.FirstOrDefault(banner => banner.BannerId == addBannerViewModel.BannerId);
+                EditBanner.SortOrder = addBannerViewModel.SortOrder;
+                EditBanner.Text = addBannerViewModel.BannerText;
+                string uniqueFileName = null;
+                // Get the uploaded file name
+                string fileName = Path.GetFileName(addBannerViewModel.BannerImage.FileName);
+
+                Random random = new Random();
+                string randomString = new string(
+                    Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
+                              .Select(s => s[random.Next(s.Length)])
+                              .ToArray()
+                );
+                // Create a unique file name to avoid overwriting existing files
+                uniqueFileName = randomString + "_" + fileName;
+
+                // Set the file path where the uploaded file will be saved
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
+
+                // Save the uploaded file to the specified directory
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    addBannerViewModel.BannerImage.CopyTo(fileStream);
+                }
+                EditBanner.Image = "/images/" + uniqueFileName;
+                EditBanner.UpdatedAt = DateTime.Now;
+                Save();
+                return true;
+            }
+            
+        }
+
+        public AddBannerViewModel GetBannerById(int BannerId)
+        {
+            Banner banner = _db.Banners.FirstOrDefault(banner => banner.BannerId == BannerId);
+            return new AddBannerViewModel
+            {
+                BannerId = BannerId,
+                SortOrder = banner.SortOrder,
+                BannerText = banner.Text,
+                BannerImagePath = banner.Image
+            };
+        }
+
+        public bool DeleteBanner(int BannerId)
+        {
+            Banner deletebanner = _db.Banners.FirstOrDefault(banner => banner.BannerId == BannerId);
+            deletebanner.DeletedAt = DateTime.Now;
+            Save();
+            return true;
+        }
         public void Save()
         {
             _db.SaveChanges();

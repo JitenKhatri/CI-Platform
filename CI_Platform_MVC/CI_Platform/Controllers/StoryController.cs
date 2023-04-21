@@ -30,8 +30,8 @@ namespace CI_Platform.Controllers
             {
                 cities = dbContext.Cities.ToList();
                 countries = dbContext.Countries.ToList();
-                themes = dbContext.MissionThemes.ToList();
-                skills = dbContext.Skills.ToList();
+                themes = dbContext.MissionThemes.Where(theme => theme.DeletedAt == null).ToList();
+                skills = dbContext.Skills.Where(skill => skill.DeletedAt == null).ToList();
             }
             ViewBag.CityList = new SelectList(cities, "CityId", "Name");
             ViewBag.CountryList = new SelectList(countries, "CountryId", "Name");
@@ -43,12 +43,10 @@ namespace CI_Platform.Controllers
                 var result = db.StoryRepository.GetAllStories(user_id, page, pageSize);
                 List<StoryViewModel> stories = result.Item1;
                 int totalItemCount = result.Item2;
-
                 // Generate pagination links
                 int pageCount = (int)Math.Ceiling((double)totalItemCount / pageSize);
                 ViewBag.PageCount = pageCount;
                 ViewBag.CurrentPage = page;
-
                 return View(stories);
             }
             else

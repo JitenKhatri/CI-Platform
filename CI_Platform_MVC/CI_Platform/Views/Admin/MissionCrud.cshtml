@@ -24,6 +24,7 @@
      <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
      <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"> </script>
      <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
+     <script src="//cdn.ckeditor.com/4.21.0/basic/ckeditor.js"></script>
 </head>
 
 <body>
@@ -165,7 +166,7 @@
                            <tbody>
                             @foreach (var item in Model.Missions)
                             {
-                                <tr>
+                                <tr id='mission-@item.MissionId'>
                                     <td>@item.Title</td>
                                     <td>@item.MissionType</td>
                                     @if(@item.StartDate !=null && @item.EndDate !=null)
@@ -181,7 +182,7 @@
 
                                     <td>
                                         <img src="/images/editing.png" onclick="AddMissionModel(@item.MissionId)" class="edbutton" alt="" />
-                                        <img src="~/images/bin.png"  class="ms-2 edbutton" alt="" />
+                                        <img src="~/images/bin.png" onclick="DeleteMission(@item.MissionId)"  class="ms-2 edbutton" alt="" />
                                     </td>
                                 </tr>
                             }

@@ -531,11 +531,9 @@ public partial class CiPlatformContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.MediaName)
-                .HasMaxLength(64)
                 .IsUnicode(false)
                 .HasColumnName("media_name");
             entity.Property(e => e.MediaPath)
-                .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("media_path");
             entity.Property(e => e.MediaType)
@@ -907,6 +905,10 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.ProfileText)
                 .HasColumnType("text")
                 .HasColumnName("profile_text");
+            entity.Property(e => e.Role)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("role");
             entity.Property(e => e.Status)
                 .HasMaxLength(2)
                 .IsUnicode(false)

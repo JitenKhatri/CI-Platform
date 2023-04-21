@@ -34,8 +34,8 @@ namespace CI_Platform.Controllers
             {
                 cities = dbContext.Cities.ToList();
                 countries = dbContext.Countries.ToList();
-                themes = dbContext.MissionThemes.ToList();
-                skills = dbContext.Skills.ToList();
+                themes = dbContext.MissionThemes.Where(theme => theme.DeletedAt == null).ToList();
+                skills = dbContext.Skills.Where(skill => skill.DeletedAt == null).ToList();
             }
             ViewBag.CityList = new SelectList(cities, "CityId", "Name");
             ViewBag.CountryList = new SelectList(countries, "CountryId", "Name");
@@ -45,7 +45,12 @@ namespace CI_Platform.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                List<MissionViewModel> missions = db.MissionRepository.GetAllMission(page,pageSize);
+                var result = db.MissionRepository.GetAllMission(page, pageSize);
+                List<MissionViewModel> missions = result.Item1;
+                int totalitemcount = result.Item2;
+                int pageCount = (int)Math.Ceiling((double)totalitemcount / pageSize);
+                ViewBag.PageCount = pageCount;
+                ViewBag.CurrentPage = page;
                 return View(missions);
             }
             else

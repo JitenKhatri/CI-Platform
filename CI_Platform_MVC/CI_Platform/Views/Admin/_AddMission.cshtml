@@ -23,7 +23,7 @@
         <div class="mb-3">
             <span asp-validation-for="Description" class="alert-danger d-block"></span>
             <label class="form-label">Description</label>
-            <textarea asp-for="Description" name="Description" class="form-control" value="@Model.Description"></textarea>
+            <textarea asp-for="Description" name="Description" class="form-control" id="missiondescription" value="@Model.Description"></textarea>
         </div>
         <div class="row mb-3">
             <div class="col-6">
@@ -77,7 +77,7 @@
             <div class="col-6">
                 <span asp-validation-for="OrganizationDetail" class="text-danger d-block"></span>
                 <label asp-for="OrganizationDetail" class="form-label">OrganizationDetail</label>
-                <input type="text" asp-for="OrganizationDetail" name="OrganizationDetail" class="form-control" value="@Model.OrganizationDetail" placeholder="Enter OrganizationDetail" />
+                <textarea asp-for="OrganizationDetail" id="organizationdetail" name="OrganizationDetail" class="form-control" value="@Model.OrganizationDetail"></textarea>
             </div>
         </div>
         <div class="row mb-3">
@@ -186,7 +186,7 @@
             </div>
 
         </div>
-
+        <input type="hidden" asp-for="MissionId" />
 
         <div class="d-flex flex-row mt-3">
             <button type="submit" class="btn add-btn">Save</button>
@@ -294,7 +294,7 @@
         }
       });
 
-     Dropzone.autoDiscover = false;
+ Dropzone.autoDiscover = false;
 $(function () {
     var myDropzone = new Dropzone("#myDropzone", {
         url: "/Story/ShareStory",
@@ -347,9 +347,34 @@ $(function () {
 
     });
 });
+
+CKEDITOR.replace('missiondescription', {
+                                 height: 200,
+                                removeButtons: ['About', 'Cut', 'Copy', 'Paste', 'Link', 'Unlink', 'Anchor', 'Indent', 'Outdent', 'NumberedList', 'BulletedList']
+                            }
+                            );
+        // Get the CKEditor instance
+            var editor = CKEDITOR.instances['missiondescription'];
+
+            // Add validation attributes to the CKEditor instance
+            editor.element.setAttribute('data-val', 'true');
+            editor.element.setAttribute('data-val-required', 'The Description field is required.');
+
+            CKEDITOR.replace('', {
+                                 height: 200,
+                                removeButtons: ['About', 'Cut', 'Copy', 'Paste', 'Link', 'Unlink', 'Anchor', 'Indent', 'Outdent', 'NumberedList', 'BulletedList']
+                            }
+                            );
+        // Get the CKEditor instance
+            var editor1 = CKEDITOR.instances['organizationdetail'];
+            // Add validation attributes to the CKEditor instance
+            editor1.element.setAttribute('data-val', 'true');
+            editor1.element.setAttribute('data-val-required', 'The Description field is required.');
         function AddMission(form, e)
         {
         e.preventDefault();
+        editor.updateElement();
+        editor1.updateElement();
         var formData = new FormData(form);
         var myDropzone = Dropzone.forElement("#myDropzone");
         var files = myDropzone.files;

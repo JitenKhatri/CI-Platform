@@ -11,7 +11,7 @@ namespace CI_Platform.DataAccess.Repository.IRepository
 {
    public interface IMissionRepository : IRepository<Mission>
     {
-        List<MissionViewModel> GetAllMission(int page , int pageSize);
+        (List<MissionViewModel>, int) GetAllMission(int page , int pageSize);
         List<MissionViewModel> GetFilteredMissions(MissionInputModel model);
         List<City> GetCitiesForCountry(long countryid);
 

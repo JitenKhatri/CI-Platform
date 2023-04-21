@@ -53,6 +53,7 @@ namespace CI_Platform.Controllers
                                   new Claim(ClaimTypes.Name, $"{userExists.FirstName} {userExists.LastName}"),
                                   new Claim(ClaimTypes.Email, userExists.Email),
                                   new Claim(ClaimTypes.Sid, userExists.UserId.ToString()),
+                                  new Claim(ClaimTypes.Role, userExists.Role.TrimEnd())
                                };
                     var identity = new ClaimsIdentity(claims, "AuthCookie");
                     var Principle = new ClaimsPrincipal(identity);
@@ -74,6 +75,10 @@ namespace CI_Platform.Controllers
                         HttpContext.Session.Remove("Storyid");
                         // Redirect to the storydetail page
                         return RedirectToAction("StoryDetail", "Story", new { id = long.Parse(storyid) });
+                    }
+                    else if(Principle.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)!.Value == "admin")
+                    {
+                        return RedirectToAction("Index", "Admin");
                     }
                     else
                     {
@@ -119,7 +124,8 @@ namespace CI_Platform.Controllers
                         LastName = model.LastName,
                         Email = model.Email,
                         PhoneNumber = model.PhoneNumber,
-                        Password = model.Password
+                        Password = model.Password,
+                        Role = "user"
                     };
                     db.UserAuthentication.Add(user);
                     db.save();

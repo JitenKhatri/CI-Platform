@@ -112,6 +112,21 @@ $(document).ready(function () {
     $('#cms-search-input').on('keyup', function () {
         CMSTable.search($(this).val()).draw();
     });
+
+    var BannerTable = $('#Banners-table').DataTable({
+        "pagingType": "full_numbers",
+        lengthChange: false,
+        searchDelay: 500,
+        "ordering": false,
+        dom: 'lrtip',
+        initComplete: function () {
+            // Hide default search bar
+            $(this.api().table().container()).find('.dataTables_filter').hide();
+        }
+    });
+    $('#banner-search-input').on('keyup', function () {
+        BannerTable.search($(this).val()).draw();
+    });
 });
 
 var ThemeName
@@ -818,3 +833,124 @@ function AddMissionModel(MissionId) {
 
 }
 
+function DeleteMission(id) {
+    const html = `
+<div class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-delete" >
+<div class="modal-content">
+<div class="modal-header border-0 d-flex justify-content-center">
+<h5 class="modal-title text-danger" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body text-center">
+<p class="mb-0">Are you sure you want to delete this Mission?</p>
+</div>
+<div class="modal-footer border-0 d-flex align-item-center justify-content-center">
+<button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+<button type="button" class="btn btn-danger" id="confirmDeleteButton">Yes, Delete</button>
+</div>
+</div>
+</div>
+</div>
+`;
+    $(document.body).append(html);
+    $('#confirmDeleteModal').modal('show');
+    $('#confirmDeleteButton').on('click', () => {
+        $.ajax({
+            url: '/Admin/MissionCrud',
+            type: 'POST',
+            data: {
+                MissionId: id,
+                Action: "Delete"
+            },
+            success: function (result) {
+                var row = $(`#mission-${id}`);
+                row.remove();
+                $('#Missions-table').DataTable().row(row).remove().draw();
+                toastr.error('Mission Deleted Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        });
+        $('#confirmDeleteModal').modal('hide');
+    });
+    $('#confirmDeleteModal').on('hidden.bs.modal', () => {
+        $('#confirmDeleteModal').remove();
+    });
+}
+
+function AddBannerModel(BannerId) {
+    $.ajax({
+        url: '/Admin/AddBannerPartial',
+        data: {
+            BannerId: BannerId
+        },
+        type: 'POST',
+        success: function (result) {
+            $('.crud-container').empty();
+            $('.crud-container').append(result);
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    });
+
+}
+
+function DeleteBanner(id) {
+    const html = `
+<div class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-delete" >
+<div class="modal-content">
+<div class="modal-header border-0 d-flex justify-content-center">
+<h5 class="modal-title text-danger" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body text-center">
+<p class="mb-0">Are you sure you want to delete this Banner?</p>
+</div>
+<div class="modal-footer border-0 d-flex align-item-center justify-content-center">
+<button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+<button type="button" class="btn btn-danger" id="confirmDeleteButton">Yes, Delete</button>
+</div>
+</div>
+</div>
+</div>
+`;
+    $(document.body).append(html);
+    $('#confirmDeleteModal').modal('show');
+    $('#confirmDeleteButton').on('click', () => {
+        $.ajax({
+            url: '/Admin/BannerCrud',
+            type: 'POST',
+            data: {
+                BannerId: id,
+                Action: "Delete"
+            },
+            success: function (result) {
+                var row = $(`#banner-${id}`);
+                row.remove();
+                $('#Banners-table').DataTable().row(row).remove().draw();
+                toastr.error('Banner Deleted Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        });
+        $('#confirmDeleteModal').modal('hide');
+    });
+    $('#confirmDeleteModal').on('hidden.bs.modal', () => {
+        $('#confirmDeleteModal').remove();
+    });
+}

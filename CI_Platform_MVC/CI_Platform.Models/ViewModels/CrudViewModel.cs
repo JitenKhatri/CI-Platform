@@ -16,5 +16,7 @@ namespace CI_Platform.Areas.Admin.ViewModels
         public List<MissionApplication> MissionApplications { get; set; } = new List<MissionApplication>();
 
         public List<CmsPage> CmsPages { get; set; } = new List<CmsPage>();
+
+        public List<Banner> Banners { get; set; } = new List<Banner>();
     }
 }

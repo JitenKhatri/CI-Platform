@@ -20,43 +20,46 @@ namespace CI_Platform.DataAccess.Repository
             _db = db;
         }
 
-        public List<MissionViewModel> GetAllMission(int page = 1, int pageSize = 6)
+        public (List<MissionViewModel>,int) GetAllMission(int page = 1, int pageSize = 6)
         {
             int skipCount = (page - 1) * pageSize;
 
-            IQueryable<MissionViewModel> query = from m in _db.Missions
-                                                 join ms in _db.MissionSkills on m.MissionId equals ms.MissionId
-                                                 join s in _db.Skills on ms.SkillId equals s.SkillId
-                                                 select new MissionViewModel
-                                                 {
-                                                     image = m.MissionMedia.FirstOrDefault(),
-                                                     Missions = m,
-                                                     Country = new CountryViewModel
-                                                     {
-                                                         CountryId = m.Country.CountryId,
-                                                         CountryName = m.Country.Name
-                                                     },
-                                                     Theme = new ThemeViewModel
-                                                     {
-                                                         ThemeId = m.Theme.MissionThemeId,
-                                                         ThemeName = m.Theme.Title
-                                                     },
-                                                     Skill = new SkillViewModel
-                                                     {
-                                                         SkillId = s.SkillId,
-                                                         SkillName = s.SkillName
-                                                     },
-                                                     City = new CityViewModel
-                                                     {
-                                                         CityId = m.CityId,
-                                                         CityName = m.City.Name
-                                                     }
+            IQueryable<MissionViewModel> query = _db.Missions.Where(Mission => Mission.DeletedAt == null)
+    .Include(m => m.MissionSkills)
+        .ThenInclude(ms => ms.Skill)
+    .Include(m => m.Theme)
+    .Include(m => m.Country)
+    .Include(m => m.City)
+    .Select(m => new MissionViewModel
+    {
+        image = m.MissionMedia.FirstOrDefault(),
+        Missions = m,
+        Country = new CountryViewModel
+        {
+            CountryId = m.Country.CountryId,
+            CountryName = m.Country.Name
+        },
+        Theme = new ThemeViewModel
+        {
+            ThemeId = m.Theme.MissionThemeId,
+            ThemeName = m.Theme.Title
+        },
+        Skill = new SkillViewModel
+        {
+            SkillId = m.MissionSkills.Select(ms => ms.Skill.SkillId).FirstOrDefault(),
+            SkillName = m.MissionSkills.Select(ms => ms.Skill.SkillName).FirstOrDefault()
+        },
+        City = new CityViewModel
+        {
+            CityId = m.CityId,
+            CityName = m.City.Name
+        }
+    });
 
-                                                 };
 
             List<MissionViewModel> missions = query.Skip(skipCount).Take(pageSize).ToList();
-
-            return missions;
+            int totalmissions = query.Count();
+            return (missions,totalmissions);
         }
 
         public List<MissionViewModel> GetFilteredMissions(MissionInputModel model)
@@ -64,7 +67,7 @@ namespace CI_Platform.DataAccess.Repository
             int skipCount = (model.Page - 1) * model.PageSize;
 
             // Create a queryable object for the missions table
-            IQueryable<Mission> missions = _db.Missions.AsQueryable();
+            IQueryable<Mission> missions = _db.Missions.Where(Mission => Mission.DeletedAt == null).AsQueryable();
 
             // Apply sorting based on the sortOrder parameter
             switch (model.SortOrder)
@@ -417,7 +420,7 @@ namespace CI_Platform.DataAccess.Repository
         // volunteering timesheet
         public TimesheetViewModel Get_Mission_For_TimeSheet(long user_id)
         {
-            List<Mission> missions = _db.Missions.ToList();
+            List<Mission> missions = _db.Missions.Where(Mission => Mission.DeletedAt == null).ToList();
             var User_Timesheets = _db.Timesheets.Where(amt => amt.UserId == user_id);
             var user_mission = _db.MissionApplications
                 .Where(m => m.UserId == user_id)

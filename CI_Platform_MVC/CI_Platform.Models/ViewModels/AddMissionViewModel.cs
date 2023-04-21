@@ -28,13 +28,13 @@ namespace CI_Platform.Models.ViewModels
         public string OrganizationName { get; set; } = string.Empty;
         public string OrganizationDetail { get; set; } = string.Empty;
         [Required]
-        public DateTime StartDate { get; set; } = new DateTime();
+        public DateTime? StartDate { get; set; }
         [Required]
-        public DateTime EndDate { get; set; } = new DateTime();
+        public DateTime? EndDate { get; set; }
         [Required]
         public string MissionType { get; set; } = string.Empty;
         public long SeatsLeft { get; set; }
-        public DateTime? Deadline { get; set; } = new DateTime();
+        public DateTime? Deadline { get; set; }
 
         [Required]
         public long ThemeId { get; set; }

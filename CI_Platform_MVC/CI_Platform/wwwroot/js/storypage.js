@@ -296,7 +296,69 @@ const editor = (StoryId) => {
         removeButtons: ['About', 'Cut', 'Copy', 'Paste', 'Link', 'Unlink', 'Anchor', 'Indent', 'Outdent', 'NumberedList', 'BulletedList']
     });
 }
+//Dropzone.autoDiscover = false;
+//const DRopzone = (StoryId) => {
+//    var myDropzone = new Dropzone(`#myDropzone-${StoryId}`, {
+//        url: "/Story/ShareStory",
+//        maxFiles: 20,
+//        maxFilesize: 4,
+//        acceptedFiles: ".jpeg,.jpg,.png",
+//        addRemoveLinks: false,
+//        uploadMultiple: true,
+//        parallelUploads: 20,
+//        dictRemoveFile: "Remove",
+//        autoProcessQueue: false,
+//        dictDefaultMessage: "Drop files here or click to upload",
+//        dictInvalidFileType: "Invalid file type. Only JPEG, JPG and PNG are allowed.",
+//        dictFileTooBig: "File size is too big. Maximum file size allowed is 4MB.",
+//        dictMaxFilesExceeded: "You can only upload a maximum of 20 files.",
+//        previewTemplate: $("#imagePreview").html(),
+//        init: function () {
+//            this.on("addedfile", function (file) {
+//                // Show the remove button when a file is added
+//                file.previewElement.querySelector(".btn-remove").style.display = "block";
+//                file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
+//                    // Remove the file from Dropzone
+//                    myDropzone.removeFile(file);
+//                });
+//            });
+//            this.on("maxfilesexceeded", function (file) {
+//                this.removeFile(file);
+//                showAlert("You can only upload a maximum of 20 files.");
+//            });
+
+//            let myDropzone = this;
+//            var imageurls = $(".imageurl").get();
+//            imageurls.forEach(i => {
+//                //let mockFile = { name: "Filename 2", size: 12345 };
+//                //myDropzone.displayExistingFile(mockFile, i.value);
+//                console.log(i.value);
+//                fetch(i.value)
+//                    .then(response => response.blob())
+//                    .then(blob => {
+//                        var file = new File([blob], i.value, { type: blob.type });
+//                        var files = myDropzone.getAcceptedFiles();
+//                        files.push(file);
+//                        myDropzone.addFile(file); // add the file to the upload queue
+//                    })
+//                    .catch(error => console.error(error));
+//            });// manually trigger processing of the preselected file
+//            myDropzone.on("addedfile", function (file) {
+//                console.log("Added file:", file);
+//                file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
+//                    // Remove the file from Dropzone
+//                    myDropzone.removeFile(file);
+//                });
+//                myDropzone.on("removedfile", function (file) {
+//                    console.log("Removed file:", file)
+
+//                });
+        
+//        }
+//    });
+//}
 Dropzone.autoDiscover = false;
+
 const DRopzone = (StoryId) => {
     var myDropzone = new Dropzone(`#myDropzone-${StoryId}`, {
         url: "/Story/ShareStory",
@@ -330,19 +392,35 @@ const DRopzone = (StoryId) => {
             let myDropzone = this;
             var imageurls = $(".imageurl").get();
             imageurls.forEach(i => {
-                console.log(i.dataset.storyId)
+                //let mockFile = { name: "Filename 2", size: 12345 };
+                //myDropzone.displayExistingFile(mockFile, i.value);
+                console.log(i.value);
                 if (i.dataset.storyId == StoryId) {
-                    let mockFile = { name: "Filename 2", size: 12345 };
-                    myDropzone.displayExistingFile(mockFile, i.value);
-                    console.log(i.value);
-                   
-                    //myDropzone.files.push(mockFile); // manually trigger processing of the preselected file
-                }
-            } );
-        
+                    fetch(i.value)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            var file = new File([blob], i.value, { type: blob.type });
+                            var files = myDropzone.getAcceptedFiles();
+                            files.push(file);
+                            myDropzone.addFile(file); // add the file to the upload queue
+                        })
+                        .catch(error => console.error(error));
+                }});
+        // manually trigger processing of the preselected file
+            myDropzone.on("addedfile", function (file) {
+                console.log("Added file:", file);
+                file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
+                    // Remove the file from Dropzone
+                    myDropzone.removeFile(file);
+                });
+            });
+            myDropzone.on("removedfile", function (file) {
+                console.log("Removed file:", file);
+            });
         }
     });
 }
+
 function validateYouTubeUrls(urls) {
     const regex = /^https?:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})$/;
   
@@ -490,7 +568,7 @@ if (window.location.href === 'https://localhost:7064/Story/ShareStory') {
 function sharestory(type) {
     validate();
 
-    if (mission != 0 && title.trim().length > 50 && title.trim().length < 255 && $('#datepicker').datepicker().val().length != 0
+    if (mission != 0 && title.trim().length > 50 && title.trim().length < 80 && $('#datepicker').datepicker().val().length != 0
         && Date.parse(current_date) >= Date.parse(comparedate) && mystory.trim().length > 70 && mystory.trim().length < 40000 && validateYouTubeUrls(video_url)){
 
         var formData = new FormData();

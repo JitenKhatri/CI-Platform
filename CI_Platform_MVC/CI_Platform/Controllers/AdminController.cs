@@ -3,10 +3,12 @@ using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
 using CI_Platform.Models.ViewModels;
 using Controllers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CI_Platform.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
         private readonly IAllRepository db;
@@ -367,18 +369,71 @@ namespace CI_Platform.Controllers
         }
 
         [HttpPost]
-        public IActionResult MissionCrud(AddMissionViewModel model)
+        public IActionResult MissionCrud(AddMissionViewModel model,string Action)
         {
-            if (ModelState.IsValid)
+            if (Action == "Delete")
             {
-                bool success = db.AdminRepository.AddMission(model);
+                bool success = db.AdminRepository.DeleteMission(model.MissionId);
                 return Json(new { success });
             }
             else
             {
-                return BadRequest();
+                if (ModelState.IsValid)
+                {
+                    bool success = db.AdminRepository.AddMission(model);
+                    return Json(new { success });
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
+            
                 
+        }
+
+        public IActionResult BannerCrud()
+        {
+            var Banners = db.AdminRepository.GetAllBanners();
+            return View(Banners);
+        }
+
+        [HttpPost]
+        public IActionResult AddBannerPartial(int BannerId)
+        {
+            if(BannerId == 0)
+            {
+                AddBannerViewModel model = new AddBannerViewModel();
+                return View("_AddBanner", model);
+            }
+            else
+            {
+                AddBannerViewModel model = db.AdminRepository.GetBannerById(BannerId);
+                return View("_AddBanner", model);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult BannerCrud(AddBannerViewModel addBannerViewModel,string Action)
+        {
+            if (Action == "Delete")
+            {
+                bool success = db.AdminRepository.DeleteBanner(addBannerViewModel.BannerId);
+                return Json(new { success });
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    bool success = db.AdminRepository.Addbanner(addBannerViewModel);
+                    return Json(new { success });
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            
         }
     }
 }
