@@ -59,6 +59,7 @@ namespace CI_Platform.Models.ViewModels
 
         public int Status { get; set; }
 
+
     }
 }
 

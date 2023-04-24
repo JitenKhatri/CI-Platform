@@ -8,8 +8,8 @@ namespace CI_Platform.Models.ViewModels
 {
     public class VolunteeringMissionVM
     {
-        public Mission? Missions { get; set; }
-
+        public Mission Missions { get; set; } = new Mission();
+        public List<MissionMedium> MissionMedia { get; set; } = new List<MissionMedium>();
         public MissionMedium image { get; set; } = new MissionMedium();
         public Country? Country { get; set; }
         public City? Cities { get; set; }

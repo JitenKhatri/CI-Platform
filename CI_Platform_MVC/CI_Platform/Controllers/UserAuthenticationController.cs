@@ -27,6 +27,7 @@ namespace CI_Platform.Controllers
         [Route("login")]
         public IActionResult login()
         {
+            ViewBag.banners = db.AdminRepository.GetBanners();
             return View();
         }
 
@@ -34,6 +35,7 @@ namespace CI_Platform.Controllers
         [Route("login")]
         public async Task<IActionResult>  login(LoginViewModel model)
         {
+            ViewBag.banners = db.AdminRepository.GetBanners();
             if (ModelState.IsValid)
             {
                 // Check if a user with the provided email and password exists in the database
@@ -94,6 +96,7 @@ namespace CI_Platform.Controllers
         [Route("registration")]
         public IActionResult registration()
         {
+            ViewBag.banners = db.AdminRepository.GetBanners();
             return View();
         }
 
@@ -111,6 +114,7 @@ namespace CI_Platform.Controllers
         [Route("registration")]
         public  IActionResult registration(RegistrationViewModel model)
         {
+            ViewBag.banners = db.AdminRepository.GetBanners();
             if (ModelState.IsValid)
             {
                 User userExists = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(model.Email.ToLower()));
@@ -149,11 +153,13 @@ namespace CI_Platform.Controllers
         [Route("lostPassword")]
         public IActionResult lostPassword()
         {
-           return View();
+            ViewBag.banners = db.AdminRepository.GetBanners();
+            return View();
         }
 
         public IActionResult ResetPasswordConfirmation()
         {
+            ViewBag.banners = db.AdminRepository.GetBanners();
             return View();
         }
 
@@ -162,6 +168,7 @@ namespace CI_Platform.Controllers
         public IActionResult lostPassword(ForgotPasswordViewModel user)
 
         {
+            ViewBag.banners = db.AdminRepository.GetBanners();
             if (ModelState.IsValid)
             {
                 User myuser = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
@@ -220,6 +227,7 @@ namespace CI_Platform.Controllers
         [Route("resetPassword", Name = "UserResetPassword")]
         public IActionResult resetPassword(string email, string token)
         {
+            ViewBag.banners = db.AdminRepository.GetBanners();
             return View(new ResetPasswordViewModel
             {
                 Email = email,
@@ -234,6 +242,7 @@ namespace CI_Platform.Controllers
         [Route("resetPassword")]
         public IActionResult resetPassword(ResetPasswordViewModel model)
         {
+            ViewBag.banners = db.AdminRepository.GetBanners();
             CiPlatformContext context = new CiPlatformContext();
             if (ModelState.IsValid)
             {

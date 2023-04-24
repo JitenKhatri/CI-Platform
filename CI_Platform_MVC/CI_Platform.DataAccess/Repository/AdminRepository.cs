@@ -199,6 +199,7 @@ namespace CI_Platform.DataAccess.Repository
                 user.CreatedAt = DateTime.Now;
                 user.EmployeeId = model.EmployeeId;
                 user.Status = model.Status.ToString();
+                user.Role = "user";
                 string uniqueFileName = null;
                 if (model.Avatar != null)
                 {
@@ -559,7 +560,15 @@ namespace CI_Platform.DataAccess.Repository
                             MediaName = fileName,
                             // set the first instance of item in Media as default and for remaining set default as 0
                         });
+                
                     }
+                    _db.MissionMedia.Add(new MissionMedium
+                    {
+                        MissionId = NewMissionId,
+                        MediaType = "vid",
+                        MediaPath = addMissionViewModel.YoutubeUrl,
+                        MediaName = "youtubevideo"
+                    });
                     if (addMissionViewModel.Selected_Skills != null && addMissionViewModel.Selected_Skills != "")
                     {
                         List<MissionSkill> mission_skills = _db.MissionSkills.Where(c => c.MissionId == NewMissionId).ToList();
@@ -637,7 +646,15 @@ namespace CI_Platform.DataAccess.Repository
                             MediaName = fileName,
                             // set the first instance of item in Media as default and for remaining set default as 0
                         });
+                       
                     }
+                    _db.MissionMedia.Add(new MissionMedium
+                    {
+                        MissionId = NewMissionId,
+                        MediaType = "vid",
+                        MediaPath = addMissionViewModel.YoutubeUrl,
+                        MediaName = "youtubevideo"
+                    });
                     if (addMissionViewModel.Selected_Skills != null && addMissionViewModel.Selected_Skills != "")
                     {
                         List<MissionSkill> mission_skills = _db.MissionSkills.Where(c => c.MissionId == NewMissionId).ToList();
@@ -725,6 +742,13 @@ namespace CI_Platform.DataAccess.Repository
                             // set the first instance of item in Media as default and for remaining set default as 0
                         });
                     }
+                    _db.MissionMedia.Add(new MissionMedium
+                    {
+                        MissionId = EditMissionId,
+                        MediaType = "vid",
+                        MediaPath = addMissionViewModel.YoutubeUrl,
+                        MediaName = "youtubevideo"
+                    });
                     if (addMissionViewModel.Selected_Skills != null && addMissionViewModel.Selected_Skills != "")
                     {
                         List<MissionSkill> mission_skills = _db.MissionSkills.Where(c => c.MissionId == EditMissionId).ToList();
@@ -806,6 +830,13 @@ namespace CI_Platform.DataAccess.Repository
                             // set the first instance of item in Media as default and for remaining set default as 0
                         });
                     }
+                    _db.MissionMedia.Add(new MissionMedium
+                    {
+                        MissionId = EditMissionId,
+                        MediaType = "vid",
+                        MediaPath = addMissionViewModel.YoutubeUrl,
+                        MediaName = "youtubevideo"
+                    });
                     if (addMissionViewModel.Selected_Skills != null && addMissionViewModel.Selected_Skills != "")
                     {
                         List<MissionSkill> mission_skills = _db.MissionSkills.Where(c => c.MissionId == EditMissionId).ToList();
@@ -845,6 +876,7 @@ namespace CI_Platform.DataAccess.Repository
             var missionskill = _db.MissionSkills.Where(ms => ms.MissionId == MissionId).ToList();
             var selectedSkills = string.Join(",", missionskill.Select(x => x.SkillId.ToString()));
             var Selectedskillnames = string.Join(",", missionskill.Select(y => y.Skill.SkillName.ToString()));
+            MissionMedium Videourls = _db.MissionMedia.FirstOrDefault(missionmedium => missionmedium.MissionId == MissionId && missionmedium.MediaType == "vid");
             return new AddMissionViewModel
             {
                 MissionType = mission.MissionType,
@@ -866,7 +898,8 @@ namespace CI_Platform.DataAccess.Repository
                 Selected_skill_names = Selectedskillnames,
                 MissionSkills = missionskill,
                 MissionId = mission.MissionId,
-                MissionMedia = _db.MissionMedia.Where(missionmedium => missionmedium.MissionId == MissionId).ToList(),
+                MissionMedia = _db.MissionMedia.Where(missionmedium => missionmedium.MissionId == MissionId && missionmedium.MediaType == "img").ToList(),
+                YoutubeUrl = Videourls?.MediaPath ?? String.Empty
             };
         }
 
@@ -993,6 +1026,23 @@ namespace CI_Platform.DataAccess.Repository
             deletebanner.DeletedAt = DateTime.Now;
             Save();
             return true;
+        }
+
+        public IEnumerable<AddBannerViewModel> GetBanners()
+        {
+            List<Banner> banners = _db.Banners.ToList();
+            List<AddBannerViewModel> displaybanners = (from b in banners
+                                                    orderby b.SortOrder
+                                                    where b.DeletedAt == null
+                                                    select new AddBannerViewModel
+                                                    {
+                                                        BannerId = (int)b.BannerId,
+                                                        BannerImagePath = b.Image,
+                                                        BannerText = b.Text,
+                                                        SortOrder = b.SortOrder
+                                                    }).ToList();
+
+            return displaybanners;
         }
         public void Save()
         {

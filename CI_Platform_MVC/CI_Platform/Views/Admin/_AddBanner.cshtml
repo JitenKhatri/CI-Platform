@@ -7,7 +7,6 @@
 <div class="container-fluid grid-container">
 
     <form id="AddBannerForm" onsubmit="AddBanner(this,event)" enctype="multipart/form-data">
-        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="mb-3" id="bannertext">
             <span asp-validation-for="BannerText" class="text-danger d-block"></span>
             <label class="form-label">BannerText</label>

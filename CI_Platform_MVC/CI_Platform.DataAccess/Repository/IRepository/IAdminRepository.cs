@@ -52,5 +52,6 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         bool Addbanner(AddBannerViewModel addBannerViewModel);
         AddBannerViewModel GetBannerById(int BannerId);
         bool DeleteBanner(int BannerId);
+        IEnumerable<AddBannerViewModel> GetBanners();
     }
 }

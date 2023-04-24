@@ -354,7 +354,8 @@ namespace CI_Platform.Controllers
                         Selected_skill_names = Mission.Selected_skill_names,
                         MissionSkills = Mission.MissionSkills,
                         MissionMedia = Mission.MissionMedia,
-                        MissionId = Mission.MissionId
+                        MissionId = Mission.MissionId,
+                        YoutubeUrl = Mission.YoutubeUrl
                     };
                     return View("_AddMission", model);
                 }

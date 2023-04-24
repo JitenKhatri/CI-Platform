@@ -67,18 +67,18 @@
                 </select>
             </div>
         </div>
-        <div class="row mb-3">
-            <div class="col-6">
+        <div class="mb-3">
+
                 <span asp-validation-for="OrganizationName" class="text-danger d-block"></span>
                 <label class="form-label">OrganizationName</label>
                 <input type="text" asp-for="OrganizationName" name="OrganizationName" class="form-control" value="@Model.OrganizationName" placeholder="Enter Organization Name" />
-            </div>
 
-            <div class="col-6">
+
+ </div>  <div class="mb-3">
                 <span asp-validation-for="OrganizationDetail" class="text-danger d-block"></span>
                 <label asp-for="OrganizationDetail" class="form-label">OrganizationDetail</label>
                 <textarea asp-for="OrganizationDetail" id="organizationdetail" name="OrganizationDetail" class="form-control" value="@Model.OrganizationDetail"></textarea>
-            </div>
+
         </div>
         <div class="row mb-3">
             <div class="col-6">
@@ -173,6 +173,14 @@
 
             </div>
         </div>
+        <div class="mb-3">
+
+                <span asp-validation-for="YoutubeUrl" class="text-danger d-block"></span>
+                <label class="form-label">YoutubeUrl</label>
+                <input type="text" asp-for="YoutubeUrl" class="form-control" value="@Model.YoutubeUrl" placeholder="Enter YoutubeUrls" /> 
+
+
+ </div> 
         <div class="mb-3">
             <div class="dropzone d-flex flex-row" id="myDropzone">
                 <div id="imagePreview" class="dz-preview">
@@ -360,7 +368,7 @@ CKEDITOR.replace('missiondescription', {
             editor.element.setAttribute('data-val', 'true');
             editor.element.setAttribute('data-val-required', 'The Description field is required.');
 
-            CKEDITOR.replace('', {
+            CKEDITOR.replace('organizationdetail', {
                                  height: 200,
                                 removeButtons: ['About', 'Cut', 'Copy', 'Paste', 'Link', 'Unlink', 'Anchor', 'Indent', 'Outdent', 'NumberedList', 'BulletedList']
                             }

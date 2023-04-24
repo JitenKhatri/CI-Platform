@@ -56,5 +56,9 @@ namespace CI_Platform.Models.ViewModels
         public List<MissionSkill> MissionSkills { get; set; } = new List<MissionSkill>();
 
         public long MissionId { get; set; }
+
+        [Required]
+        [RegularExpression(@"^https?:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})$", ErrorMessage = "Please enter a valid YouTube video URL.")]
+        public string YoutubeUrl { get; set; } = string.Empty;
     }
 }

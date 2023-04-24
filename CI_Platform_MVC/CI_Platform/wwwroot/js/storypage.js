@@ -3,42 +3,42 @@
 ////let themes = []
 ////let skills = []
 
-$('.form-check-input').on('change', function () {
-    const dropdown = $(this).closest('.dropdown');
-    const dropdownTitle = dropdown.find('.dropdown-toggle').text();
-    const value = $(this).data('value');
-    const selectedItemsRow = $('#selected-items-row');
-    const itemId = $(this).attr('id');
+//$('.form-check-input').on('change', function () {
+//    const dropdown = $(this).closest('.dropdown');
+//    const dropdownTitle = dropdown.find('.dropdown-toggle').text();
+//    const value = $(this).data('value');
+//    const selectedItemsRow = $('#selected-items-row');
+//    const itemId = $(this).attr('id');
 
-    // Create a badge element to display the selected item
-    const badge = $('<span class="badge text-bg-light ml-2 "></span>').text(value);
-    const cross = $('<span class="badge text-bg-light ml-2 d-inline" id="cross-btn"></span>').html('&times;');
+//    // Create a badge element to display the selected item
+//    const badge = $('<span class="badge text-bg-light ml-2 "></span>').text(value);
+//    const cross = $('<span class="badge text-bg-light ml-2 d-inline" id="cross-btn"></span>').html('&times;');
 
-    if ($(this).is(':checked')) {
-          cross.addClass('d-inline');
-        badge.append(cross);
-        selectedItemsRow.append(badge);
-        // Cross button click event listener
-        cross.on('click', function () {
-            //    $(this).closest('.badge').remove();
-            dropdown.find(`input[data-value="${value}"]`).prop('checked', false);
-            badge.remove();
-            remove_badges(dropdown.find(`input[id="${itemId}"]`));
+//    if ($(this).is(':checked')) {
+//          cross.addClass('d-inline');
+//        badge.append(cross);
+//        selectedItemsRow.append(badge);
+//        // Cross button click event listener
+//        cross.on('click', function () {
+//            //    $(this).closest('.badge').remove();
+//            dropdown.find(`input[data-value="${value}"]`).prop('checked', false);
+//            badge.remove();
+//            remove_badges(dropdown.find(`input[id="${itemId}"]`));
 
-        });
-        // Clear all button click event listener
-        $('#clear-all-btn').on('click', function () {
-            $('.form-check-input').prop('checked', false);
-            selectedItemsRow.empty();
-            clear_all();
-        });
-    } else {
-        // Checkbox is unchecked, remove its corresponding badge
-        // If checkbox is unchecked, remove its corresponding badge
-        const badge = selectedItemsRow.find(`span:contains(${value})`);
-        badge.remove();
-    }
-});
+//        });
+//        // Clear all button click event listener
+//        $('#clear-all-btn').on('click', function () {
+//            $('.form-check-input').prop('checked', false);
+//            selectedItemsRow.empty();
+//            clear_all();
+//        });
+//    } else {
+//        // Checkbox is unchecked, remove its corresponding badge
+//        // If checkbox is unchecked, remove its corresponding badge
+//        const badge = selectedItemsRow.find(`span:contains(${value})`);
+//        badge.remove();
+//    }
+//});
 function Cityfilter(name) {
     $('.Stories').empty()
     if (document.getElementById(name).checked) {

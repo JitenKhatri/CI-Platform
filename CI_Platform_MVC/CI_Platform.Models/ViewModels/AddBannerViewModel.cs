@@ -21,7 +21,7 @@ namespace CI_Platform.Models.ViewModels
 
         public int BannerId { get; set; }
 
-        public string BannerImagePath { get; set; } = string.Empty;
+        public string? BannerImagePath { get; set; } = string.Empty;
 
     }
 }

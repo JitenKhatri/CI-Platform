@@ -1,6 +1,17 @@
 ﻿$(".toggle-sidebar,.overlay").click(function () {
 	$("body").toggleClass("sidebar-open")
 });
+var currentPath = window.location.pathname;
+$(".sidebar ul li.nav-item").each(function () {
+    var menuItem = $(this);
+    var url = menuItem.find("a.nav-link").attr("href");
+
+    if (url === currentPath) {
+        menuItem.addClass("active");
+    } else {
+        menuItem.removeClass("active");
+    }
+});
 var MissionThemeTable
 var MissionApplicationTable
 $(document).ready(function () {

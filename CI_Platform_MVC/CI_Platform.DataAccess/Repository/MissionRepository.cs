@@ -25,40 +25,41 @@ namespace CI_Platform.DataAccess.Repository
             int skipCount = (page - 1) * pageSize;
 
             IQueryable<MissionViewModel> query = _db.Missions.Where(Mission => Mission.DeletedAt == null)
-    .Include(m => m.MissionSkills)
-        .ThenInclude(ms => ms.Skill)
-    .Include(m => m.Theme)
-    .Include(m => m.Country)
-    .Include(m => m.City)
-    .Select(m => new MissionViewModel
-    {
-        image = m.MissionMedia.FirstOrDefault(),
-        Missions = m,
-        Country = new CountryViewModel
-        {
-            CountryId = m.Country.CountryId,
-            CountryName = m.Country.Name
-        },
-        Theme = new ThemeViewModel
-        {
-            ThemeId = m.Theme.MissionThemeId,
-            ThemeName = m.Theme.Title
-        },
-        Skill = new SkillViewModel
-        {
-            SkillId = m.MissionSkills.Select(ms => ms.Skill.SkillId).FirstOrDefault(),
-            SkillName = m.MissionSkills.Select(ms => ms.Skill.SkillName).FirstOrDefault()
-        },
-        City = new CityViewModel
-        {
-            CityId = m.CityId,
-            CityName = m.City.Name
-        }
-    });
+                        .Include(m => m.MissionSkills)
+                            .ThenInclude(ms => ms.Skill)
+                        .Include(m => m.Theme)
+                        .Include(m => m.Country)
+                        .Include(m => m.City)
+                        .Select(m => new MissionViewModel
+                        {
+                            image = m.MissionMedia.FirstOrDefault(),
+                            Missions = m,
+                            Country = new CountryViewModel
+                            {
+                                CountryId = m.Country.CountryId,
+                                CountryName = m.Country.Name
+                            },
+                            Theme = new ThemeViewModel
+                            {
+                                ThemeId = m.Theme.MissionThemeId,
+                                ThemeName = m.Theme.Title
+                            },
+                            Skill = new SkillViewModel
+                            {
+                                SkillId = m.MissionSkills.Select(ms => ms.Skill.SkillId).FirstOrDefault(),
+                                SkillName = m.MissionSkills.Select(ms => ms.Skill.SkillName).FirstOrDefault()
+                            },
+                            City = new CityViewModel
+                            {
+                                CityId = m.CityId,
+                                CityName = m.City.Name
+                            }
+                        });
 
 
             List<MissionViewModel> missions = query.Skip(skipCount).Take(pageSize).ToList();
             int totalmissions = query.Count();
+            
             return (missions,totalmissions);
         }
 
@@ -405,7 +406,8 @@ namespace CI_Platform.DataAccess.Repository
                 Recent_volunteers = volunteers.Take(1).ToList(),
                 Total_volunteers = volunteers.Count,
                 documents = missiondocuments,
-                All_volunteers = all_volunteers
+                All_volunteers = all_volunteers,
+                MissionMedia = _db.MissionMedia.Where(missionmedium => missionmedium.MissionId == id).ToList()
             };
         }
 

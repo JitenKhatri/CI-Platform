@@ -1,4 +1,5 @@
-﻿using CI_Platform.Models;
+﻿using CI_Platform.DataAccess.Repository.IRepository;
+using CI_Platform.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,10 +8,12 @@ namespace CI_Platform.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IAllRepository db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IAllRepository _db)
         {
             _logger = logger;
+            db = _db;
         }
 
         public IActionResult Index()
@@ -22,7 +25,8 @@ namespace CI_Platform.Controllers
 
         public IActionResult Privacy()
         {
-            return View();
+            var cmspages = db.AdminRepository.GetAllCmsPages();
+            return View(cmspages);
         }
        
       

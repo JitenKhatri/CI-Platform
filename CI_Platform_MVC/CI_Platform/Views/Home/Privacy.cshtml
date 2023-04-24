@@ -1,9 +1,12 @@
-﻿@{
+﻿@using CI_Platform.Areas.Admin.ViewModels
+@using System.Web
+@{
     Layout = null;
     //var UserName = ViewBag.UserName;
     var userName = Context.User.Identity.Name;
     //var viewContext = (Microsoft.AspNetCore.Mvc.Rendering.ViewContext)PageContext;
 }
+@model CrudViewModel
 <!DOCTYPE html>
 
 <html lang="en">
@@ -23,16 +26,16 @@
     <div class="container-fluid p-0">
         <div class="row header">
             <div class="col d-flex flex-row justify-content-center">
-                <a asp-controller="Story" asp-action="Story" class="mx-1 mx-sm-4">Stories</a>
+                <a asp-controller="Story" asp-action="Story" style="text-decoration:none;" class="mx-1 mx-sm-4">Stories</a>
                 <div class="dropdown">
                     <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown">
                         Policy <img src="~/images/drop-down.png" class="mx-2" />
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                            <li><a class="dropdown-item" href="#">Volunteering</a></li>
+                            <li><a class="dropdown-item" href="#">Sponsored</a></li>
+                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Privacy"> Privacy policy</a></li>
+                        </ul>
                 </div>
             </div>
             <div class="col p-0">
@@ -57,23 +60,56 @@
             <h1 class="privacy-h1"> Privacy and Cookies Policy</h1>
             <div class="row">
                 <div id="section-nav" class="col-md-4">
-
-                    <div class="d-flex flex-row justify-content-between align-items-center">
+                    @{
+                        int count = 0;
+                        foreach(var item in @Model.CmsPages)
+                        {
+                            if(count == 0)
+                            {
+                                   <div class="d-flex flex-row justify-content-between align-items-center">
+                        <a href="#@item.Slug" class="active" style="text-decoration:none; text-align:center;">@item.Title</a>
+                        <img src="~/images/right-arrow1.png" style="height:14px;margin-left:26px;" />
+                                </div>
+                                count++;
+                            }
+                            else
+                            {
+                               <div class="d-flex flex-row justify-content-between align-items-center">
+                        <a href="#@item.Slug" style="text-decoration:none; text-align:center;">@item.Title</a>
+                        <img src="~/images/right-arrow1.png" style="height:14px; margin-left:26px;" />
+                                </div>
+                                count++;
+                            }
+                        }
+                    }
+                    @*          <div class="d-flex flex-row justify-content-between align-items-center">
                         <a href="#section1" class="active" style="text-decoration:none; text-align:center;">Introduction</a>
                         <img src="~/images/right-arrow1.png" style="height:14px;margin-left:26px;" />
-                    </div>
-                    <div class="d-flex flex-row justify-content-between align-items-center">
+                        </div>
+                        <div class="d-flex flex-row justify-content-between align-items-center">
                         <a href="#section2" style="text-decoration:none; text-align:center;">How does use cookies</a>
                         <img src="~/images/right-arrow1.png" style="height:14px; margin-left:26px;" />
-                    </div>
-                    <div class="d-flex flex-row justify-content-between align-items-center">
+                        </div>
+                        <div class="d-flex flex-row justify-content-between align-items-center">
                         <a href="#section3" style="text-decoration:none; text-align:center;">How to manage your cookies</a>
                         <img src="~/images/right-arrow1.png" style="height:14px; margin-left:26px;" />
-                    </div>
-                    <div class="d-flex flex-row align-items-center"> <a href="#" style="text-decoration:none; text-align:center;">preferences</a></div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center"> <a href="#" style="text-decoration:none; text-align:center;">preferences</a></div>*@
                 </div>
                 <div id="privacy-section" class="col-md-8">
-                    <section id="section1">
+                    @{
+                        foreach (var item in Model.CmsPages)
+                        {
+                            <section id="@item.Slug">
+                                <h2>@item.Title</h2>
+                                <div> @Html.Raw(HttpUtility.HtmlDecode(@item.Description))</div>
+                                
+                                
+                            </section>
+                            <hr class="mt-5 mb-5" />
+                        }
+                    }
+                    @*<section id="section1">
                         <h2>Introduction</h2>
                         <p class="mt-4">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -127,7 +163,7 @@
                         <h5>The fifth level heading - H5</h5>
                         <h6>The sixth level heading - H6</h6>
                         <p class="mt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    </section>
+                    </section>*@
 
                 </div>
             </div>

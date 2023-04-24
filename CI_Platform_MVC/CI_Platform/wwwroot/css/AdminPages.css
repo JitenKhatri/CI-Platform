@@ -3,6 +3,7 @@
 .main-container {
     display: flex;
 }
+
 .main-content {
     flex-grow: 0;
     flex-shrink: 0;
@@ -342,7 +343,14 @@ label {
         height: 530px;
     }
 }
-
+@media only screen and (max-width: 768px)
+{
+    .UserProfile img {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+    }
+}
 
 
 
