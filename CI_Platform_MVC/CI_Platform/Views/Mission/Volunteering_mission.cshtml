@@ -1,415 +1,362 @@
 ﻿@using CI_Platform.Models.ViewModels
 @using System.Security.Claims
+@using System.Web
 @model VolunteeringMissionVM
 
 
-    <div class="container-fluid p-0">
+<div class="container-fluid p-0">
 
 
-        <!-- Selected items row -->
-        <div class="container">
-            <div id="selected-items-row">
-            </div>
+    <!-- Selected items row -->
+    <div class="container">
+        <div id="selected-items-row">
         </div>
+    </div>
 
-        <div class="container-fluid grid-container">
-            <div class="row">
-                @* carousel starts*@
-                <div class="col-lg-6">
-               @*     <div class="images">
-                        <div class="carousel slide" data-bs-interval="false" id="sub-images">
-                            <div class="carousel-inner">
-                                <img class="w-100 carousel-item active main-image" src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png" alt="" />
-                                <img src="~/images/img1.png" class="w-100 carousel-item main-image" alt="" />
-                                <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-2.png" class="w-100 main-image carousel-item" alt="" />
-                                <img src="~/images/img11.png" class="w-100 carousel-item main-image" alt="" />
-                                <img class="w-100 carousel-item main-image" src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png" alt="" />
-                                <img src="~/images/img1.png" class="w-100 carousel-item main-image" alt="" />
-                            </div>
-                            <div class="mt-1 w-100 position-relative">
-                                <div class="carousel slide" data-bs-interval="false" id="other-images">
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <div class="d-flex">
-                                                <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-6.png" data-bs-target="#sub-images" data-bs-slide-to="0" class="other-image" alt="" />
-                                                <img src="~/images/img3.png" class="other-image" data-bs-target="#sub-images" data-bs-slide-to="1" alt="" />
-                                                <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-3.png" data-bs-target="#sub-images" data-bs-slide-to="2" class="other-image" alt="" />
-                                                <img src="~/images/img22.png" class="other-image" data-bs-target="#sub-images" data-bs-slide-to="3" alt="" />
-                                            </div>
-                                        </div>
-                                        <div class="carousel-item">
-                                            <div class="d-flex">
-                                                <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-6.png" data-bs-target="#sub-images" data-bs-slide-to="4" class="other-image" alt="" />
-                                                <img src="~/images/img3.png" class="other-image" data-bs-target="#sub-images" data-bs-slide-to="5" alt="" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="bg-black d-flex align-items-center justify-content-center position-absolute left h-100 carousel-control-prev" data-bs-target="#other-images" data-bs-slide="prev">
-                                        <img src="~/images/left1.png" class="w-50" alt="not load" />
-                                    </div>
+    <div class="container-fluid grid-container">
+        <div class="row">
+            @* carousel starts*@
+            <div class="col-lg-6">
+                <div class="images">
 
-                                    <div class="bg-black d-flex align-items-center justify-content-center position-absolute left h-100 carousel-control-next" style="left:98%;" data-bs-target="#other-images" data-bs-slide="next">
-                                        <img src="~/images/right-arrow2.png" class="w-50" alt="not load" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-*@
-    <div class="images">
-
-                        <div class="carousel slide" data-bs-interval="false" id="sub-images">
-                            <div class="carousel-inner">
-                                @{
-                                    int count = 0;
-                                    foreach (var item in Model?.MissionMedia)
+                    <div class="carousel slide" data-bs-interval="false" id="sub-images">
+                        <div class="carousel-inner">
+                            @{
+                                int count = 0;
+                                foreach (var item in Model?.MissionMedia)
+                                {
+                                    if (count == 0)
                                     {
-                                        if (count == 0)
+                                        if (@item.MediaType == "img")
                                         {
-                                            if (@item.MediaType== "img")
-                                            {
-                                                <img class="w-100 carousel-item active main-image" src='@item.MediaPath' alt="" />
-                                                count = count + 1;
-                                            }
-                                            else
-                                            {
-                                                <iframe src="//www.youtube.com/embed/@item.MediaPath.Split("v=").ElementAt(1)" class="w-100 carousel-item active main-image" allowfullscreen></iframe>
-                                                count = count + 1;
-                                            }
-
+                                            <img class="w-100 carousel-item active main-image" src='@item.MediaPath' alt="" />
+                                            count = count + 1;
                                         }
                                         else
                                         {
-                                            if (@item.MediaType == "img")
-                                            {
-                                                <img class="w-100 carousel-item main-image" src='@item.MediaPath' alt="" />
-                                            }
-                                            else
-                                            {
-                                                <iframe src="//www.youtube.com/embed/@item.MediaPath.Split("v=").ElementAt(1)"
-                                            class="w-100 carousel-item main-image" allowfullscreen></iframe>
-                                            }
+                                            <iframe src="//www.youtube.com/embed/@item.MediaPath.Split("v=").ElementAt(1)" class="w-100 carousel-item active main-image" allowfullscreen></iframe>
+                                            count = count + 1;
                                         }
-                                    }
-                                }
-                            </div>
-                            <div class="mt-1 w-100 position-relative">
-                                <div class="carousel slide" data-bs-interval="false" id="other-images">
-                                    <div class="carousel-inner">
-                                        @{
-                                            int sub_count = 4;
-                                            int check = 0;
-                                            int carousel_count = (int)Math.Ceiling((double)@Model.MissionMedia.Count / 4);
-                                            for (var i = 0; i < carousel_count; i++)
-                                            {
-                                                if (check == 0)
-                                                {
-                                                    <div class="carousel-item active">
-                                                        <div class="d-flex">
-                                                            @if (@Model?.MissionMedia.Count >= sub_count)
-                                                            {
-                                                                @for (int j = 0; j < sub_count; j++)
-                                                                {
-                                                                    if (j == 0)
-                                                                    {
-                                                                        if (@Model?.MissionMedia.ElementAt(j).MediaType == "img")
-                                                                        {
-                                                                            <img src='@Model?.MissionMedia.ElementAt(j).MediaPath'
-                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <img src='https://img.youtube.com/vi/@Model?.MissionMedia.ElementAt(j).MediaPath.Split("v=").ElementAt(1)/0.jpg'
-                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
-                                                                        }
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        if (@Model?.MissionMedia.ElementAt(j).MediaType == "img")
-                                                                        {
-                                                                            <img src='@Model?.MissionMedia.ElementAt(j).MediaPath'
-                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <img src='https://img.youtube.com/vi/@Model?.MissionMedia.ElementAt(j).MediaPath.Split("v=").ElementAt(1)/0.jpg'
-                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                @for (int j = 0; j < @Model?.MissionMedia.Count; j++)
-                                                                {
-                                                                    if (@Model?.MissionMedia.ElementAt(j).MediaType == "img")
-                                                                    {
-                                                                        <img src='@Model?.MissionMedia.ElementAt(j).MediaPath'
-                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <img src='https://img.youtube.com/vi/@Model?.MissionMedia.ElementAt(j).MediaPath.Split("v=").ElementAt(1)/0.jpg'
-                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
-                                                                    }
-                                                                }}
-                                                        </div>
-                                                    </div>
-                                                    check = check + 4;
-                                                }
-                                                else
-                                                {
-                                                    <div class="carousel-item">
-                                                        <div class="d-flex">
-                                                            @if (@Model?.MissionMedia.Count - (4 * i) >= sub_count)
-                                                            {
-                                                                @for (int j = check; j < sub_count + check; j++)
-                                                                {
-                                                                    if (@Model?.MissionMedia.ElementAt(j).MediaType == "img")
-                                                                    {
-                                                                        <img src='@Model?.MissionMedia.ElementAt(j).MediaPath'
-                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <img src='https://img.youtube.com/vi/@Model?.MissionMedia.ElementAt(j).MediaPath.Split("v=").ElementAt(1)/0.jpg'
-                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
-                                                                    }
-                                                                } }
-                                                            else
-                                                            {
-                                                                @for (int j = check; j < @Model?.MissionMedia.Count; j++)
-                                                                {
-                                                                    if (@Model?.MissionMedia.ElementAt(j).MediaType == "img")
-                                                                    {
-                                                                        <img src='@Model?.MissionMedia.ElementAt(j).MediaPath' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <img src='https://img.youtube.com/vi/@Model?.MissionMedia.ElementAt(j).MediaPath.Split("v=").ElementAt(1)/0.jpg'
-                                                         data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
-                                                                    }
 
-                                                                }
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                    check = check + 4;
-                                                }
-                                            }
-                                        }
-                                    </div>
-                                    <div class="bg-black d-flex align-items-center justify-content-center position-absolute left h-100 carousel-control-prev" data-bs-target="#other-images" data-bs-slide="prev">
-                                        <img src="~/images/left1.png" class="w-50" alt="not load" />
-                                    </div>
-
-                                    <div class="bg-black d-flex align-items-center justify-content-center position-absolute left h-100 carousel-control-next" style="left:98%;" data-bs-target="#other-images" data-bs-slide="next">
-                                        <img src="~/images/right-arrow2.png" class="w-50" alt="not load" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-lg-6">
-
-                    <p class="CSR_heading">@Model?.Missions?.Title</p>
-                    <p class="lorem"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                    <div class="duration-seats-info mt-4">
-                        <div class="duration">
-                            @if (@Model?.Missions?.StartDate != null && @Model?.Missions?.EndDate != null)
-                            {
-                                <p id="duration-txt" style="margin-bottom: 0;">
-
-                                    From @Model?.Missions?.StartDate?.ToString().Substring(0,10)  until @Model?.Missions?.EndDate?.ToString().Substring(0,10)
-                                </p>
-                            }
-                            else
-                            {
-                                <p id="duration-txt" style="margin-bottom: 0;">
-                                    @Model?.Missions?.GoalMotto
-                                </p>
-                            }
-                        </div>
-                        <div class="d-flex flex-row mission-deadline">
-                            @if (@Model?.Missions?.SeatsLeft != null)
-                            {
-                                <div class="d-flex flex-row">
-                                    <div><img src="~/images/Seats-left.png" alt=""> </div>
-                                    <div><span>@Model?.Missions?.SeatsLeft<br> Seats left</span></div>
-                                </div>
-                            }
-
-                            <div class="d-flex flex-row">
-                                @if (@Model?.Missions?.MissionType == "TIME")
-                                {
-                                    <div><img src="~/images/deadline.png" alt=""></div>
-                                }
-
-                                <div class="ms-2 p-bar">
-
-                                    @if (@Model?.Missions?.Deadline != null)
-                                    {
-                                        <span>@Model?.Missions?.Deadline?.ToString().Substring(0,10) <br> Deadline </span>
                                     }
                                     else
                                     {
-                                        @if (@Model?.Missions?.MissionType == "GO")
+                                        if (@item.MediaType == "img")
                                         {
-                                            <div class="d-flex flex-column">
-                                                <div class="d-flex flex-row">
-                                                    <img class="align-self-center ms-3" src="~/images/mission.png" alt="" style="height:25px; width:25px;">
-                                                    <div class="progress align-self-center ms-3">
-                                                        <div class="progress-bar w-75" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div><p>8000 achieved</p></div>
-                                            </div>
+                                            <img class="w-100 carousel-item main-image" src='@item.MediaPath' alt="" />
                                         }
                                         else
                                         {
-                                            <span>@Model?.Missions?.GoalMotto</span>
+                                            <iframe src="//www.youtube.com/embed/@item.MediaPath.Split("v=").ElementAt(1)"
+                                        class="w-100 carousel-item main-image" allowfullscreen></iframe>
                                         }
-
                                     }
+                                }
+                            }
+                        </div>
+                        <div class="mt-1 w-100 position-relative">
+                            <div class="carousel slide" data-bs-interval="false" id="other-images">
+                                <div class="carousel-inner">
+                                    @{
+                                        int sub_count = 4;
+                                        int check = 0;
+                                        int carousel_count = (int)Math.Ceiling((double)@Model.MissionMedia.Count / 4);
+                                        for (var i = 0; i < carousel_count; i++)
+                                        {
+                                            if (check == 0)
+                                            {
+                                                <div class="carousel-item active">
+                                                    <div class="d-flex">
+                                                        @if (@Model?.MissionMedia.Count >= sub_count)
+                                                        {
+                                                            @for (int j = 0; j < sub_count; j++)
+                                                            {
+                                                                if (j == 0)
+                                                                {
+                                                                    if (@Model?.MissionMedia.ElementAt(j).MediaType == "img")
+                                                                    {
+                                                                        <img src='@Model?.MissionMedia.ElementAt(j).MediaPath'
+                                                     data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src='https://img.youtube.com/vi/@Model?.MissionMedia.ElementAt(j).MediaPath.Split("v=").ElementAt(1)/0.jpg'
+                                                     data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (@Model?.MissionMedia.ElementAt(j).MediaType == "img")
+                                                                    {
+                                                                        <img src='@Model?.MissionMedia.ElementAt(j).MediaPath'
+                                                     data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src='https://img.youtube.com/vi/@Model?.MissionMedia.ElementAt(j).MediaPath.Split("v=").ElementAt(1)/0.jpg'
+                                                     data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            @for (int j = 0; j < @Model?.MissionMedia.Count; j++)
+                                                            {
+                                                                if (@Model?.MissionMedia.ElementAt(j).MediaType == "img")
+                                                                {
+                                                                    <img src='@Model?.MissionMedia.ElementAt(j).MediaPath'
+                                                     data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img src='https://img.youtube.com/vi/@Model?.MissionMedia.ElementAt(j).MediaPath.Split("v=").ElementAt(1)/0.jpg'
+                                                     data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                }
+                                                            }}
+                                                    </div>
+                                                </div>
+                                                check = check + 4;
+                                            }
+                                            else
+                                            {
+                                                <div class="carousel-item">
+                                                    <div class="d-flex">
+                                                        @if (@Model?.MissionMedia.Count - (4 * i) >= sub_count)
+                                                        {
+                                                            @for (int j = check; j < sub_count + check; j++)
+                                                            {
+                                                                if (@Model?.MissionMedia.ElementAt(j).MediaType == "img")
+                                                                {
+                                                                    <img src='@Model?.MissionMedia.ElementAt(j).MediaPath'
+                                                     data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img src='https://img.youtube.com/vi/@Model?.MissionMedia.ElementAt(j).MediaPath.Split("v=").ElementAt(1)/0.jpg'
+                                                     data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                }
+                                                            } }
+                                                        else
+                                                        {
+                                                            @for (int j = check; j < @Model?.MissionMedia.Count; j++)
+                                                            {
+                                                                if (@Model?.MissionMedia.ElementAt(j).MediaType == "img")
+                                                                {
+                                                                    <img src='@Model?.MissionMedia.ElementAt(j).MediaPath' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img src='https://img.youtube.com/vi/@Model?.MissionMedia.ElementAt(j).MediaPath.Split("v=").ElementAt(1)/0.jpg'
+                                                     data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                                }
+
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                                check = check + 4;
+                                            }
+                                        }
+                                    }
+                                </div>
+                                <div class="bg-black d-flex align-items-center justify-content-center position-absolute left h-100 carousel-control-prev" data-bs-target="#other-images" data-bs-slide="prev">
+                                    <img src="~/images/left1.png" class="w-50" alt="not load" />
+                                </div>
+
+                                <div class="bg-black d-flex align-items-center justify-content-center position-absolute left h-100 carousel-control-next" style="left:98%;" data-bs-target="#other-images" data-bs-slide="next">
+                                    <img src="~/images/right-arrow2.png" class="w-50" alt="not load" />
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <div class="d-flex justify-content-between mt-4">
 
-                        <button class="btn btn-outline-secondary rounded-pill add_favorite ms-4"
-                                onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)">
+                </div>
+            </div>
+            <div class="col-lg-6">
 
-                            @{
-                                @if (Model?.Favorite_mission == 0)
+                <p class="CSR_heading">@Model?.Missions?.Title</p>
+                <p class="lorem"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                <div class="duration-seats-info mt-4">
+                    <div class="duration">
+                        @if (@Model?.Missions?.StartDate != null && @Model?.Missions?.EndDate != null)
+                        {
+                            <p id="duration-txt" style="margin-bottom: 0;">
+
+                                From @Model?.Missions?.StartDate?.ToString().Substring(0,10)  until @Model?.Missions?.EndDate?.ToString().Substring(0,10)
+                            </p>
+                        }
+                        else
+                        {
+                            <p id="duration-txt" style="margin-bottom: 0;">
+                                @Model?.Missions?.GoalMotto
+                            </p>
+                        }
+                    </div>
+                    <div class="d-flex flex-row mission-deadline">
+                        @if (@Model?.Missions?.SeatsLeft != null)
+                        {
+                            <div class="d-flex flex-row">
+                                <div><img src="~/images/Seats-left.png" alt=""> </div>
+                                <div><span>@Model?.Missions?.SeatsLeft<br> Seats left</span></div>
+                            </div>
+                        }
+
+                        <div class="d-flex flex-row">
+                            @if (@Model?.Missions?.MissionType == "TIME")
+                            {
+                                <div><img src="~/images/deadline.png" alt=""></div>
+                            }
+
+                            <div class="ms-2 p-bar">
+
+                                @if (@Model?.Missions?.Deadline != null)
                                 {
-                                    <img class="heart-image @Model?.Missions?.MissionId" src="~/images/heart1.png" alt="" />
-                                    <span class="favorite-text">Add to favorite</span>
+                                    <span>@Model?.Missions?.Deadline?.ToString().Substring(0,10) <br> Deadline </span>
                                 }
                                 else
                                 {
-                                    <img class="heart-image @Model?.Missions?.MissionId" src="~/images/red-heart-png.png" alt="" />
-                                    <span class="favorite-text">Added to favorite</span>
+                                    @if (@Model?.Missions?.MissionType == "GO")
+                                    {
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex flex-row">
+                                                <img class="align-self-center ms-3" src="~/images/mission.png" alt="" style="height:25px; width:25px;">
+                                                <div class="progress align-self-center ms-3">
+                                                    <div class="progress-bar w-75" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div><p>8000 achieved</p></div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span>@Model?.Missions?.GoalMotto</span>
+                                    }
 
                                 }
-                            }
-                        </button>
-                        <button data-bs-toggle="modal" data-bs-target="#recommend" class="btn btn-outline-secondary add_favorite rounded-pill ms-4"><img src="~/images/add1.png" /> Recommend to a Co-Worker </button>
-                    </div>
-
-                    <div class="modal fade" id="recommend" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">Select the coworker to recommend this mission</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <ul class="list-group">
-                                        @foreach (var item in @Model?.All_volunteers)
-                                        {
-                                            <li class="list-group-item">
-                                                <div class="d-flex align-items-center">
-                                                    <img class="rounded-circle img-fluid me-2" src=@item.Avatar alt="" />
-                                                    <span class="me-auto">@item.FirstName @item.LastName</span>
-                                                    <button id="recommend-@item.UserId" type="button" class="btn btn-primary recommend-button" onclick="recommend(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId,'@item.Email',@item.UserId);add_coworkers('coworker-@item.UserId'); ">Recommend</button>
-                                                </div>
-                                            </li>
-                                        }
-
-                                    </ul>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                                </div>
                             </div>
                         </div>
                     </div>
 
+                </div>
+                <div class="d-flex justify-content-between mt-4">
 
+                    <button class="btn btn-outline-secondary rounded-pill add_favorite ms-4"
+                            onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)">
 
-                    <div style="cursor:pointer;" class="d-flex stars justify-content-center rating">
                         @{
-                            if (@Model?.Rating == 0)
+                            @if (Model?.Favorite_mission == 0)
                             {
-                                <img style="height:30px" id='1-star-empty' onclick="rating(1,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" src="~/images/star-empty.png" alt="" />
-                                <img style="height:30px" id='2-star-empty' onclick="rating(2,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" src="~/images/star-empty.png" alt="" />
-                                <img style="height:30px" id='3-star-empty' onclick="rating(3,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" src="~/images/star-empty.png" alt="" />
-                                <img style="height:30px" id='4-star-empty' onclick="rating(4,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" src="~/images/star-empty.png" alt="" />
-                                <img style="height:30px" id='5-star-empty' onclick="rating(5,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" src="~/images/star-empty.png" alt="" />
+                                <img class="heart-image @Model?.Missions?.MissionId" src="~/images/heart1.png" alt="" />
+                                <span class="favorite-text">Add to favorite</span>
                             }
                             else
                             {
-                                for (var i = 1; i <= 5; i++)
+                                <img class="heart-image @Model?.Missions?.MissionId" src="~/images/red-heart-png.png" alt="" />
+                                <span class="favorite-text">Added to favorite</span>
+
+                            }
+                        }
+                    </button>
+                    <button data-bs-toggle="modal" data-bs-target="#recommend" class="btn btn-outline-secondary add_favorite rounded-pill ms-4"><img src="~/images/add1.png" /> Recommend to a Co-Worker </button>
+                </div>
+
+                <div class="modal fade" id="recommend" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Select the coworker to recommend this mission</h5>
+                            </div>
+                            <div class="modal-body">
+                                <ul class="list-group">
+                                    @foreach (var item in @Model?.All_volunteers)
+                                    {
+                                        <li class="list-group-item">
+                                            <div class="d-flex align-items-center">
+                                                <img class="rounded-circle img-fluid me-2" src=@item.Avatar alt="" />
+                                                <span class="me-auto">@item.FirstName @item.LastName</span>
+                                                <button id="recommend-@item.UserId" type="button" class="btn btn-primary recommend-button" onclick="recommend(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId,'@item.Email',@item.UserId);add_coworkers('coworker-@item.UserId'); ">Recommend</button>
+                                            </div>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div style="cursor:pointer;" class="d-flex stars justify-content-center rating">
+                    @{
+                        if (@Model?.Rating == 0)
+                        {
+                            <img style="height:30px" id='1-star-empty' onclick="rating(1,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" src="~/images/star-empty.png" alt="" />
+                            <img style="height:30px" id='2-star-empty' onclick="rating(2,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" src="~/images/star-empty.png" alt="" />
+                            <img style="height:30px" id='3-star-empty' onclick="rating(3,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" src="~/images/star-empty.png" alt="" />
+                            <img style="height:30px" id='4-star-empty' onclick="rating(4,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" src="~/images/star-empty.png" alt="" />
+                            <img style="height:30px" id='5-star-empty' onclick="rating(5,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" src="~/images/star-empty.png" alt="" />
+                        }
+                        else
+                        {
+                            for (var i = 1; i <= 5; i++)
+                            {
+                                if (i <= @Model?.Rating)
                                 {
-                                    if (i <= @Model?.Rating)
-                                    {
-                                        <img style="height:30px" id='@i-star' onclick="rating(@i,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" src="~/images/selected-star.png" alt="" />
-                                    }
-                                    else
-                                    {
-                                        <img style="height:30px" id='@i-star-empty' onclick="rating(@i,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" src="~/images/star-empty.png" alt="" />
-                                    }
+                                    <img style="height:30px" id='@i-star' onclick="rating(@i,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" src="~/images/selected-star.png" alt="" />
+                                }
+                                else
+                                {
+                                    <img style="height:30px" id='@i-star-empty' onclick="rating(@i,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" src="~/images/star-empty.png" alt="" />
                                 }
                             }
                         }
+                    }
+                </div>
+                <div class="d-flex flex-row">
+                    <div class="d-flex flex-column mission-badge ">
+                        <img src="~/images/pin1.png" class="pin-img mt-2 ms-2" />
+                        <div class="d-flex flex-column mt-4 ms-2">
+                            <p style="margin-bottom: 7px; font-weight: lighter;"> City</p>
+                            <p style="color:#414141"> @Model?.Cities?.Name </p>
+                        </div>
                     </div>
-                    <div class="d-flex flex-row">
-                        <div class="d-flex flex-column mission-badge ">
-                            <img src="~/images/pin1.png" class="pin-img mt-2 ms-2" />
-                            <div class="d-flex flex-column mt-4 ms-2">
-                                <p style="margin-bottom: 7px; font-weight: lighter;"> City</p>
-                                <p style="color:#414141"> @Model?.Cities?.Name </p>
-                            </div>
-                        </div>
 
-                        <div class="d-flex flex-column mission-badge ">
-                            <img src="~/images/web.png" class="web-img mt-2 ms-2" />
-                            <div class="d-flex flex-column mt-4 ms-2">
-                                <p style="margin-bottom: 7px; font-weight: lighter;"> Theme</p>
-                                <p style="color:#414141"> @Model?.theme?.Title</p>
-                            </div>
+                    <div class="d-flex flex-column mission-badge ">
+                        <img src="~/images/web.png" class="web-img mt-2 ms-2" />
+                        <div class="d-flex flex-column mt-4 ms-2">
+                            <p style="margin-bottom: 7px; font-weight: lighter;"> Theme</p>
+                            <p style="color:#414141"> @Model?.theme?.Title</p>
                         </div>
-                        <div class="d-flex flex-column mission-badge ">
-                            <img src="~/images/calender.png" class="calender-img mt-2 ms-2" />
-                            <div class="d-flex flex-column mt-4 ms-2">
-                                <p style="margin-bottom: 7px; font-weight: lighter;"> Date</p>
-                                <p style="color:#414141"> Ongoing</p>
-                            </div>
+                    </div>
+                    <div class="d-flex flex-column mission-badge ">
+                        <img src="~/images/calender.png" class="calender-img mt-2 ms-2" />
+                        <div class="d-flex flex-column mt-4 ms-2">
+                            <p style="margin-bottom: 7px; font-weight: lighter;"> Date</p>
+                            <p style="color:#414141"> Ongoing</p>
                         </div>
-                        <div class="d-flex flex-column mission-badge">
-                            <img src="~/images/organization.png" class="organization-img mt-2 ms-2" />
-                            <div class="d-flex flex-column mt-4 ms-2">
-                                <p style="margin-bottom: 7px; font-weight: lighter;"> Organization</p>
-                                <p style="color:#414141"> @Model?.Missions?.OrganizationName</p>
-                            </div>
+                    </div>
+                    <div class="d-flex flex-column mission-badge">
+                        <img src="~/images/organization.png" class="organization-img mt-2 ms-2" />
+                        <div class="d-flex flex-column mt-4 ms-2">
+                            <p style="margin-bottom: 7px; font-weight: lighter;"> Organization</p>
+                            <p style="color:#414141"> @Model?.Missions?.OrganizationName</p>
                         </div>
+                    </div>
 
-                    </div> @*mission-badge-row completes*@
-                    <div class="d-flex justify-content-center mt-2 applyButton">
-                        @{
-                            @if (Model.Missions.Deadline != null && Model.Missions.SeatsLeft != null)
+                </div> @*mission-badge-row completes*@
+                <div class="d-flex justify-content-center mt-2 applyButton">
+                    @{
+                        @if (Model.Missions.Deadline != null && Model.Missions.SeatsLeft != null)
+                        {
+                            DateTime currentdate = DateTime.Now;
+                            if (Model.Missions.Deadline < currentdate || Model.Missions.SeatsLeft < 1)
                             {
-                                DateTime currentdate = DateTime.Now;
-                                if (Model.Missions.Deadline < currentdate || Model.Missions.SeatsLeft < 1)
-                                {
-                                    <button class="btn apply-btn" disabled>No longer accepting applications<span> <img src=~/images/right-arrow.png /></span></button>
-                                }
-                                else
-                                {
-                                    @if (@Model.Applied_or_not)
-                                    {
-                                        <button class="btn apply-btn" disabled>Already Applied<span> <img src=~/images/right-arrow.png /></span></button>
-                                    }
-
-                                    else
-                                    {
-                                        <button class="btn apply-btn" onclick="apply_for_mission(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)"> Apply Now <span> <img src=~/images/right-arrow.png /></span></button>
-                                    }
-
-                                }
+                                <button class="btn apply-btn" disabled>No longer accepting applications<span> <img src=~/images/right-arrow.png /></span></button>
                             }
                             else
                             {
@@ -422,343 +369,326 @@
                                 {
                                     <button class="btn apply-btn" onclick="apply_for_mission(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)"> Apply Now <span> <img src=~/images/right-arrow.png /></span></button>
                                 }
+
                             }
                         }
-                    </div>
+                        else
+                        {
+                            @if (@Model.Applied_or_not)
+                            {
+                                <button class="btn apply-btn" disabled>Already Applied<span> <img src=~/images/right-arrow.png /></span></button>
+                            }
+
+                            else
+                            {
+                                <button class="btn apply-btn" onclick="apply_for_mission(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)"> Apply Now <span> <img src=~/images/right-arrow.png /></span></button>
+                            }
+                        }
+                    }
                 </div>
             </div>
-
         </div>
+
     </div>
+</div>
 
 
 
 
-    <div class="container-fluid grid-container">
-        @* tabs *@
+<div class="container-fluid grid-container">
+    @* tabs *@
 
-        <div class="row">
-            <div class="col-lg-8">
+    <div class="row">
+        <div class="col-lg-8">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-1" type="button"
+                            role="tab" aria-controls="home" aria-selected="true">
+                        Mission
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-2" type="button" role="tab"
+                            aria-controls="profile" aria-selected="false">
+                        Organization
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-3" type="button" role="tab"
+                            aria-controls="contact" aria-selected="false">
+                        Comments
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="tab-1" role="tabpanel">
+                    <p style="font-size:25px;text-align: left;letter-spacing: 0px;color: #414141;opacity: 1;">Introduction</p>
+                    <p class="lorem">
+                        @Html.Raw(HttpUtility.HtmlDecode(@Model.Missions.Description))
+
+                    </p>
+
+                    <p style="font-size:25px;text-align: left;letter-spacing: 0px;color: #414141;opacity: 1;">Documents</p>
+                    <div class="d-flex flex-row" style="flex-wrap : wrap">
+                        @foreach (var item in Model?.documents)
+                        {
+                            if (item.DocumentType == ".pdf")
+                            {
+                                <a class="btn" style="text-decoration:none;" target="_blank" href=@item.DocumentPath>
+                                    <img src="~/images/pdf.png">
+                                    <span> @item.DocumentName</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn" style="text-decoration:none;" target="_blank" href=@item.DocumentPath>
+                                    <img src="~/images/doc.png">
+                                    <span> @item.DocumentName</span>
+                                </a>
+                            }
+
+                        }
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                    @Html.Raw(HttpUtility.HtmlDecode(@Model.Missions.OrganizationDetail))
+                </div>
+                <div class="tab-pane fade" id="tab-3" role="tabpanel">
+
+                    <textarea id="comment-text" type="text-area" rows="5" cols="80" class="form-control vh-20" aria-label="With textarea" placeholder="Enter your comments.."></textarea>
+                    <span class="text-danger"></span>
+
+
+                    <button onclick="add_comments(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" class="btn apply-btn mb-5"> Post comment</button>
+
+                    <div id="comments" style="max-height: 380px; overflow: auto;">
+                        @*@await Html.PartialAsync("_Comment",Model.Comment)*@
+                        @foreach (var item in Model?.comments)
+                        {
+                            <div style="max-height:380px; overflow:auto;" class="mb-4">
+                                <div class="d-flex">
+                                    <img id="img" class="rounded-circle img-fluid" src=@item.User.Avatar alt="" />
+                                    <div>
+                                        <p style="font-size: 15px; margin-bottom:0;margin-left: 15px;
+                    margin-top: 15px;"> @item.User.FirstName @item.User.LastName</p>
+                                        <p style="font-size: 15px;margin-left: 15px;">
+                                            @item.CreatedAt.ToString("dddd, MMMM dd, yyyy")
+                                        </p>
+                                        <div class="comment-text" style="margin-top:10px; margin-left : 15px;">
+                                            @item.CommentText
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-4">
+            <div class="information-tbl border p-3 mt-4">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-1" type="button"
-                                role="tab" aria-controls="home" aria-selected="true">
-                            Mission
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-2" type="button" role="tab"
-                                aria-controls="profile" aria-selected="false">
-                            Organization
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-3" type="button" role="tab"
-                                aria-controls="contact" aria-selected="false">
-                            Comments
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-1" type="button" role="tab"
+                                aria-controls="home" aria-selected="true">
+                            Information
                         </button>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="tab-1" role="tabpanel">
-                        <p style="font-size:25px;text-align: left;letter-spacing: 0px;color: #414141;opacity: 1;">Introduction</p>
-                        <p class="lorem">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut aliquip ex ea commodo consequat.
-                        </p>
-                        <p class="lorem">
-                            Duis aute irure dolor in reprehenderit in
-                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                            non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p class="lorem">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p style="font-size:25px;text-align: left;letter-spacing: 0px;color: #414141;opacity: 1;">Challenge</p>
-                        <p class="lorem">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p class="lorem">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p style="font-size:25px;text-align: left;letter-spacing: 0px;color: #414141;opacity: 1;">Documents</p>
-                        <div class="d-flex flex-row" style="flex-wrap : wrap">
-                            @foreach (var item in Model?.documents)
-                            {
-                                if (item.DocumentType == "pdf")
-                                {
-                                    <a class="btn" style="text-decoration:none;" target="_blank" href=@item.DocumentPath>
-                                        <img src="~/images/pdf.png">
-                                        <span> @item.DocumentName</span>
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a class="btn" style="text-decoration:none;" target="_blank" href=@item.DocumentPath>
-                                        <img src="~/images/doc.png">
-                                        <span> @item.DocumentName</span>
-                                    </a>
-                                }
+                        <table class="table">
+                            <thead>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Skills</th>
 
-                            }
-
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="tab-2" role="tabpanel">
-                        It
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                        Ipsum has been the industry's standard
-                        dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen
-                        book. It has survived not only five centuries, but also the leap into electronic
-                        typesetting, remaining essentially
-                        unchanged. It was popularised in the 1960s with the release of Letraset sheets
-                        containing
-                    </div>
-                    <div class="tab-pane fade" id="tab-3" role="tabpanel">
-
-                        <textarea id="comment-text" type="text-area" rows="5" cols="80" class="form-control vh-20" aria-label="With textarea" placeholder="Enter your comments.."></textarea>
-                        <span class="text-danger"></span>
-
-
-                        <button onclick="add_comments(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId)" class="btn apply-btn mb-5"> Post comment</button>
-
-                        <div id="comments" style="max-height: 380px; overflow: auto;">
-                            @*@await Html.PartialAsync("_Comment",Model.Comment)*@
-                            @foreach (var item in Model?.comments)
-                            {
-                                <div style="max-height:380px; overflow:auto;" class="mb-4">
-                                    <div class="d-flex">
-                                        <img id="img" class="rounded-circle img-fluid" src=@item.User.Avatar alt="" />
-                                        <div>
-                                            <p style="font-size: 15px; margin-bottom:0;margin-left: 15px;
-                    margin-top: 15px;"> @item.User.FirstName @item.User.LastName</p>
-                                            <p style="font-size: 15px;margin-left: 15px;">
-                                                @item.CreatedAt.ToString("dddd, MMMM dd, yyyy")
-                                            </p>
-                                            <div class="comment-text" style="margin-top:10px; margin-left : 15px;">
-                                                @item.CommentText
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            }
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-lg-4">
-                <div class="information-tbl border p-3 mt-4">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-1" type="button" role="tab"
-                                    aria-controls="home" aria-selected="true">
-                                Information
-                            </button>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="tab-1" role="tabpanel">
-                            <table class="table">
-                                <thead>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Skills</th>
-
-                                        <td>
-                                            @foreach (var item in Model?.skills)
+                                    <td>
+                                        @foreach (var item in Model?.skills)
+                                        {
+                                            @item.SkillName @if (item != Model.skills.Last())
                                             {
-                                                @item.SkillName @if (item != Model.skills.Last())
-                                                {
-                                                    @Html.Raw(",")
-                                                    ;
-                                                }
-                                                @Html.Raw(" ")
+                                                @Html.Raw(",")
                                                 ;
                                             }
-                                        </td>
-
-
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Days</th>
-                                        <td>
-
-                                            @Model?.Missions?.Availability
-                                        </td>
-                                    </tr>
-                                    <tr style="border:white;">
-                                        <th scope="row">Rating</th>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                @{
-                                                    for (var i = 1; i <= 5; i++)
-                                                    {
-                                                        if (i <= @Model?.Avg_ratings)
-                                                        {
-                                                            <img style="height:22px;" src="~/images/selected-star.png" alt="" />
-                                                        }
-                                                        else
-                                                        {
-                                                            <img style="height:22px;" src="~/images/star-empty.png" alt="" />
-                                                        }
-                                                    }
-                                                }
-                                                <span class="ms-2">(By @Model?.Rating_count volunteers)</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div id="recent-volunteer-page-1" class="volunteers  mt-4 border">
-                    <partial name="~/Views/Shared/_recent_volunteers.cshtml" />
-                </div>
-            </div>
-
-
-        </div>
-        <!-- related missions -->
-        <h1 class="related_mission_heading mt-4"> Related Missions</h1>
-        <div class="row mt-4">
-            @if (Model?.relatedMissions != null)
-            {
-                @foreach (var mission in Model.relatedMissions)
-                {
-                    <div class="col-12 col-md-6 col-lg-4 mission-card">
-                        <div class="card">
-                            <div class="img-event">
-                                <img class="card-img-top" src=@mission.MissionMedia.ElementAt(0).MediaPath alt="Card image cap">
-                                <div class="middle">
-                                    <a asp-action="Volunteering_mission" asp-route-id="@mission.MissionId" asp-route-user_id="@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value" class="btn" id="view-details-button">
-                                        View Details <span>
-                                            <img src="~/images/right-arrow.png" />
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="location-img">
-                                    <img class="text-light" src="~/images/pin.png" alt="">
-                                    <span class="text-light"> @mission.City.Name</span>
-                                </div>
-                                <button class="like-img border-0">
-                                    <img class="text-light" src="~/images/heart.png" alt="">
-                                </button>
-                                <button class="stop-img border-0">
-                                    <img class="text-light" src="~/images/add1.png" alt="">
-                                </button>
-                                <button class="mission-theme border-0">
-                                    <span class="p-2">@mission.Theme.Title</span>
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">@mission.Title</h5>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
-                                <div class="d-flex justify-content-between">
-                                    <div><p class="slug">@mission.OrganizationName</p></div>
-                                    <div class="d-flex flex-row">
-                                        <img class="star" src="~/images/selected-star.png" alt="">
-                                        <img class="star" src="~/images/selected-star.png" alt="">
-                                        <img class="star" src="~/images/selected-star.png" alt="">
-                                        <img class="star" src="~/images/star-empty.png" alt="">
-                                        <img class="star" src="~/images/star-empty.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="duration-seats-info mt-4">
-                                    <div class="duration">
-                                        @if (@mission.StartDate != null && @mission.EndDate != null)
-                                        {
-                                            <p id="duration-txt" style="margin-bottom: 0;">
-
-                                                From @mission.StartDate?.ToString().Substring(0,10)  until @mission.EndDate?.ToString().Substring(0,10)
-                                            </p>
+                                            @Html.Raw(" ")
+                                            ;
                                         }
-                                        else
-                                        {
-                                            <p id="duration-txt" style="margin-bottom: 0;">
-                                                @mission.GoalMotto
-                                            </p>
-                                        }
+                                    </td>
 
-                                    </div>
-                                    <div class="d-flex flex-row mission-deadline">
-                                        @if (@mission.SeatsLeft != null)
-                                        {
-                                            <div class="d-flex flex-row">
-                                                <div><img src="~/images/Seats-left.png" alt=""> </div>
-                                                <div><span>@mission.SeatsLeft<br> Seats left</span></div>
-                                            </div>
-                                        }
 
-                                        <div class="d-flex flex-row">
-                                            @if (mission.MissionType == "TIME")
-                                            {
-                                                <div><img src="~/images/deadline.png" alt=""></div>
-                                            }
+                                </tr>
+                                <tr>
+                                    <th scope="row">Days</th>
+                                    <td>
 
-                                            <div class="ms-2 p-bar">
-
-                                                @if (mission.Deadline != null)
+                                        @Model?.Missions?.Availability
+                                    </td>
+                                </tr>
+                                <tr style="border:white;">
+                                    <th scope="row">Rating</th>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            @{
+                                                for (var i = 1; i <= 5; i++)
                                                 {
-                                                    <span>@mission?.Deadline?.ToString().Substring(0,10) <br> Deadline </span>
-                                                }
-                                                else
-                                                {
-                                                    @if (mission.MissionType == "GO")
+                                                    if (i <= @Model?.Avg_ratings)
                                                     {
-                                                        <div class="d-flex flex-column">
-                                                            <div class="d-flex flex-row">
-                                                                <img class="align-self-center ms-3" src="~/images/mission.png" alt="" style="height:25px; width:25px;">
-                                                                <div class="progress align-self-center ms-3">
-                                                                    <div class="progress-bar w-75" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div><p>8000 achieved</p></div>
-                                                        </div>
+                                                        <img style="height:22px;" src="~/images/selected-star.png" alt="" />
                                                     }
                                                     else
                                                     {
-                                                        <span>@mission.GoalMotto</span>
+                                                        <img style="height:22px;" src="~/images/star-empty.png" alt="" />
                                                     }
-
                                                 }
-                                            </div>
+                                            }
+                                            <span class="ms-2">(By @Model?.Rating_count volunteers)</span>
                                         </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="recent-volunteer-page-1" class="volunteers  mt-4 border">
+                <partial name="~/Views/Shared/_recent_volunteers.cshtml" />
+            </div>
+        </div>
 
+
+    </div>
+    <!-- related missions -->
+    <h1 class="related_mission_heading mt-4"> Related Missions</h1>
+    <div class="row mt-4">
+        @if (Model?.relatedMissions != null)
+        {
+            @foreach (var mission in Model.relatedMissions)
+            {
+                <div class="col-12 col-md-6 col-lg-4 mission-card">
+                    <div class="card">
+                        <div class="img-event">
+                            <img class="card-img-top" src=@mission.MissionMedia.ElementAt(0).MediaPath alt="Card image cap">
+                            <div class="middle">
+                                <a asp-action="Volunteering_mission" asp-route-id="@mission.MissionId" asp-route-user_id="@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value" class="btn" id="view-details-button">
+                                    View Details <span>
+                                        <img src="~/images/right-arrow.png" />
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="location-img">
+                                <img class="text-light" src="~/images/pin.png" alt="">
+                                <span class="text-light"> @mission.City.Name</span>
+                            </div>
+                            <button class="like-img border-0">
+                                <img class="text-light" src="~/images/heart.png" alt="">
+                            </button>
+                            <button class="stop-img border-0">
+                                <img class="text-light" src="~/images/add1.png" alt="">
+                            </button>
+                            <button class="mission-theme border-0">
+                                <span class="p-2">@mission.Theme.Title</span>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@mission.Title</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore...</p>
+                            <div class="d-flex justify-content-between">
+                                <div><p class="slug">@mission.OrganizationName</p></div>
+                                <div class="d-flex flex-row">
+                                    <img class="star" src="~/images/selected-star.png" alt="">
+                                    <img class="star" src="~/images/selected-star.png" alt="">
+                                    <img class="star" src="~/images/selected-star.png" alt="">
+                                    <img class="star" src="~/images/star-empty.png" alt="">
+                                    <img class="star" src="~/images/star-empty.png" alt="">
+                                </div>
+                            </div>
+                            <div class="duration-seats-info mt-4">
+                                <div class="duration">
+                                    @if (@mission.StartDate != null && @mission.EndDate != null)
+                                    {
+                                        <p id="duration-txt" style="margin-bottom: 0;">
+
+                                            From @mission.StartDate?.ToString().Substring(0,10)  until @mission.EndDate?.ToString().Substring(0,10)
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p id="duration-txt" style="margin-bottom: 0;">
+                                            @mission.GoalMotto
+                                        </p>
+                                    }
+
+                                </div>
+                                <div class="d-flex flex-row mission-deadline">
+                                    @if (@mission.SeatsLeft != null)
+                                    {
+                                        <div class="d-flex flex-row">
+                                            <div><img src="~/images/Seats-left.png" alt=""> </div>
+                                            <div><span>@mission.SeatsLeft<br> Seats left</span></div>
+                                        </div>
+                                    }
+
+                                    <div class="d-flex flex-row">
+                                        @if (mission.MissionType == "TIME")
+                                        {
+                                            <div><img src="~/images/deadline.png" alt=""></div>
+                                        }
+
+                                        <div class="ms-2 p-bar">
+
+                                            @if (mission.Deadline != null)
+                                            {
+                                                <span>@mission?.Deadline?.ToString().Substring(0,10) <br> Deadline </span>
+                                            }
+                                            else
+                                            {
+                                                @if (mission.MissionType == "GO")
+                                                {
+                                                    <div class="d-flex flex-column">
+                                                        <div class="d-flex flex-row">
+                                                            <img class="align-self-center ms-3" src="~/images/mission.png" alt="" style="height:25px; width:25px;">
+                                                            <div class="progress align-self-center ms-3">
+                                                                <div class="progress-bar w-75" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div><p>8000 achieved</p></div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <span>@mission.GoalMotto</span>
+                                                }
+
+                                            }
+                                        </div>
                                     </div>
 
                                 </div>
-                                <div class="d-flex justify-content-center mt-4">
-                                    <a asp-action="Volunteering_mission" asp-route-id="@mission?.MissionId" asp-route-user_id="@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value" class="apply-btn" style="text-decoration:none; text-align:center;">
-                                        Apply <span><img src="~/images/right-arrow.png" alt=""></span>
-                                    </a>
-                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-center mt-4">
+                                <a asp-action="Volunteering_mission" asp-route-id="@mission?.MissionId" asp-route-user_id="@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value" class="apply-btn" style="text-decoration:none; text-align:center;">
+                                    Apply <span><img src="~/images/right-arrow.png" alt=""></span>
+                                </a>
                             </div>
                         </div>
                     </div>
-                }
+                </div>
             }
+        }
 
 
-        </div>
     </div>
+</div>
 
 
 

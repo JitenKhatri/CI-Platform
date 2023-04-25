@@ -27,8 +27,10 @@ namespace CI_Platform.Models.ViewModels
         public long CountryId { get; set; }
         public string OrganizationName { get; set; } = string.Empty;
         public string OrganizationDetail { get; set; } = string.Empty;
+
         [Required]
         public DateTime? StartDate { get; set; }
+
         [Required]
         public DateTime? EndDate { get; set; }
         [Required]
@@ -51,14 +53,19 @@ namespace CI_Platform.Models.ViewModels
 
         public string? Goal_Motto { get; set; } = string.Empty;
         public string Selected_skill_names { get; set; } = string.Empty;
+        [Required]
         public List<IFormFile>? Media { get; set; }
+        [Required]
+        public List<IFormFile>? MissionDocuments { get; set; }
         public List<string>? VideoUrls { get; set; } = new List<string>();
         public List<MissionSkill> MissionSkills { get; set; } = new List<MissionSkill>();
+        public List<MissionDocument> ExistingDocuments { get; set; } = new List<MissionDocument>();
 
         public long MissionId { get; set; }
 
         [Required]
         [RegularExpression(@"^https?:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})$", ErrorMessage = "Please enter a valid YouTube video URL.")]
         public string YoutubeUrl { get; set; } = string.Empty;
+
     }
 }

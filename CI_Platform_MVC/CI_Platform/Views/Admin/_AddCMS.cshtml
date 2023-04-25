@@ -46,13 +46,13 @@
         <div class="row mb-2">
             <div class="col">
                 <label for="name" class="form-label">Status</label>
-                <select id="cmsStatus" name="mission" asp-for="Status" name="Status" class="form-select">
-                    <option>Select a status</option>
+                <select id="cmsStatus" asp-for="Status" name="Status" class="form-select">
+                    <option value="">Select a status</option>
                     <option value="1">Active</option>
                     <option value="0">In-Active</option>
 
                 </select>
-
+                <span asp-validation-for="Status" class="text-danger"></span>
             </div>
         </div>
         <div class="d-flex flex-row justify-content-between align-items-start">

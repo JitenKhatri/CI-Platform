@@ -8,17 +8,18 @@
 
     <form id="AddBannerForm" onsubmit="AddBanner(this,event)" enctype="multipart/form-data">
         <div class="mb-3" id="bannertext">
-            <span asp-validation-for="BannerText" class="text-danger d-block"></span>
             <label class="form-label">BannerText</label>
             <input type="text" asp-for="BannerText" name="BannerText" class="form-control" placeholder="Enter BannerText" />
+            <span asp-validation-for="BannerText" class="text-danger d-block"></span>
         </div>
         <div class="mb-3" >
-            <span asp-validation-for="SortOrder" class="text-danger d-block"></span>
             <label class="form-label">Banner SortOrder</label>
             <input type="number" asp-for="SortOrder" name="SortOrder" class="form-control" placeholder="Enter SortOrder" />
+            <span asp-validation-for="SortOrder" class="text-danger d-block"></span>
         </div>
-        <span asp-validation-for="BannerImage" class="text-danger d-block"></span>
+        
         <label class="form-label">Banner Image</label>
+        <span asp-validation-for="BannerImage" class="text-danger d-block"></span>
              <div class="mb-3">
             <div class="dropzone d-flex flex-row" asp-for="BannerImage" id="myDropzone">
                 <div id="imagePreview" class="dz-preview">
@@ -86,6 +87,7 @@ $(function () {
                 fetch(i.value)
                     .then(response => response.blob())
                     .then(blob => {
+                        if(i.value != null && i.value != "")
                         var file = new File([blob], i.value, { type: blob.type });
                         var files = myDropzone.getAcceptedFiles();
                         files.push(file);
@@ -139,7 +141,7 @@ $(function () {
                 if (formData.BannerId != 0) {
                     setTimeout(function () {
                         window.location.reload();
-                    }, 5000);
+                    }, 3000);
 
                 }
             },

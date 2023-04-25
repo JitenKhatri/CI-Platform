@@ -1,7 +1,12 @@
 ﻿@using CI_Platform.Models.ViewModels
 @using System.Security.Claims
 @using System.Globalization
-
+@{
+    var cityList = ViewData["CityList"] as SelectList;
+    var countryList = ViewData["CountryList"] as SelectList;
+    var themeList = ViewData["ThemeList"] as SelectList;
+    var skillList = ViewData["SkillList"] as SelectList;
+}
 @model List<StoryViewModel>
 
 
@@ -33,7 +38,7 @@
                             Country <img src="~/images/drop-down.png" class="mx-2">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="countryDropdown">
-                            @foreach (var country in ViewBag.CountryList)
+                            @foreach (var country in countryList)
                             {
                                 <div id="country">
                                     <input type="checkbox" id="@country.Text" data-id="@country.Value" class="form-check-input" onchange="Countryfilter('@country.Text','@country.Value')" data-value="@country.Text">
@@ -47,7 +52,7 @@
                             City <img src="~/images/drop-down.png" class="mx-2">
                         </button>
                         <div class="dropdown-menu city" aria-labelledby="cityDropdown">
-                            @foreach (var city in ViewBag.CityList)
+                            @foreach (var city in cityList)
                             {
                                 <div>
                                     <input type="checkbox" id="@city.Text" class="form-check-input" onchange="Cityfilter('@city.Text')" data-value="@city.Text">
@@ -62,7 +67,7 @@
                             Theme <img src="~/images/drop-down.png" class="mx-2">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="themeDropdown">
-                            @foreach (var theme in ViewBag.ThemeList)
+                            @foreach (var theme in themeList)
                             {
                                 <div class="theme">
                                     <input type="checkbox" id="@theme.Text" class="form-check-input" onchange="Themefilter('@theme.Text')" data-value="@theme.Text">
@@ -78,7 +83,7 @@
                             Skills <img src="~/images/drop-down.png" class="mx-2">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="skillDropdown">
-                            @foreach (var skill in ViewBag.SkillList)
+                            @foreach (var skill in skillList)
                             {
                                 <div class="skill">
                                     <input type="checkbox" id="@skill.Text" class="form-check-input" onchange="Skillfilter('@skill.Text')" data-value="@skill.Text">

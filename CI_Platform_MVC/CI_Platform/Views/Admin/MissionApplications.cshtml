@@ -51,20 +51,20 @@
 
                             @if (item.ApprovalStatus == "APPROVE")
                             {
-                                <i class="bi bi-check-circle-fill fs-5 text-success MA-@item.MissionApplicationId "></i>
+                                <i class="bi bi-check-circle-fill fs-5 text-success MA-approve-@item.MissionApplicationId "></i>
                             }
                             else
                             {
-                                <i class="bi bi-check-circle text-success fs-5 MA-@item.MissionApplicationId " onclick="MissionApplication(@item.MissionApplicationId,1)"></i>
+                                <i class="bi bi-check-circle text-success fs-5 MA-approve-@item.MissionApplicationId " onclick="MissionApplication(@item.MissionApplicationId,1)"></i>
                             }
                             &nbsp;
                             @if (item.ApprovalStatus == "DECLINE")
                             {
-                                <i class="bi bi-x-circle-fill text-danger fs-5 MA-@item.MissionApplicationId"></i>
+                                <i class="bi bi-x-circle-fill text-danger fs-5 MA-decline-@item.MissionApplicationId"></i>
                             }
                             else
                             {
-                                <i class="bi bi-x-circle text-danger fs-5 MA-@item.MissionApplicationId" onclick="MissionApplication(@item.MissionApplicationId,2)"></i>
+                                <i class="bi bi-x-circle text-danger fs-5 MA-decline-@item.MissionApplicationId" onclick="MissionApplication(@item.MissionApplicationId,2)"></i>
                             }
 
 

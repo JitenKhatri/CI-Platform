@@ -326,12 +326,10 @@ namespace CI_Platform.DataAccess.Repository
                 return null; // or throw an exception if desired
             }
 
-            MissionMedium image = _db.MissionMedia.FirstOrDefault(i => i.MissionId == id);
             MissionTheme theme = _db.MissionThemes.FirstOrDefault(t => t.MissionThemeId == mission.ThemeId);
             List<Skill> skills = _db.MissionSkills.Where(s => s.MissionId == id).Select(s => s.Skill).ToList();
-            List<Comment> comments = _db.Comments.Where(s => s.MissionId == id).OrderByDescending(m => m.CreatedAt).Take(5).ToList();
+            List<Comment> comments = _db.Comments.Where(s => s.MissionId == id).OrderByDescending(m => m.CreatedAt).Take(15).ToList();
             List<MissionDocument> missiondocuments = _db.MissionDocuments.Where(ms => ms.MissionId == id).ToList();
-            Country country = _db.Countries.FirstOrDefault(c => c.CountryId == mission.CountryId);
             City city = _db.Cities.FirstOrDefault(c => c.CityId == mission.CityId);
 
             if (mission.MissionRatings.Count > 0)
@@ -391,10 +389,8 @@ namespace CI_Platform.DataAccess.Repository
             return new VolunteeringMissionVM
             {
                 Missions = mission,
-                image = image,
                 theme = theme,
                 skills = skills,
-                Country = country,
                 Cities = city,
                 comments = comments,
                 Rating = rating,

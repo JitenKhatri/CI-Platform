@@ -24,5 +24,7 @@ namespace CI_Platform.Models.ViewModels
         public ThemeViewModel Theme { get; set; } = new ThemeViewModel();
         public SkillViewModel Skill { get; set; } = new SkillViewModel();
         public CityViewModel City { get; set; } = new CityViewModel();
+
+        public List<City> Cities { get; set; } = new List<City>();
     }
 }

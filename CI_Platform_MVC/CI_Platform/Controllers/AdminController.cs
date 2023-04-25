@@ -1,5 +1,4 @@
-﻿using CI_Platform.DataAccess.CustomValidations;
-using CI_Platform.DataAccess.Repository.IRepository;
+﻿using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
 using CI_Platform.Models.ViewModels;
 using Controllers;
@@ -64,7 +63,8 @@ namespace CI_Platform.Controllers
                         Password = user.Password,
                         AvatarPath = user.Avatar,
                         ProfileText = user.ProfileText,
-                        UserId = (int)user.UserId
+                        UserId = (int)user.UserId,
+                        Status = user.Status
                     };
                     return View("_AddUser", model);
                 }
@@ -77,8 +77,6 @@ namespace CI_Platform.Controllers
             }
 
         }
-
-
         [HttpPost]
         public IActionResult Index(AddUserViewModel model, string Action)
         {
@@ -355,7 +353,8 @@ namespace CI_Platform.Controllers
                         MissionSkills = Mission.MissionSkills,
                         MissionMedia = Mission.MissionMedia,
                         MissionId = Mission.MissionId,
-                        YoutubeUrl = Mission.YoutubeUrl
+                        YoutubeUrl = Mission.YoutubeUrl,
+                        ExistingDocuments = Mission.ExistingDocuments
                     };
                     return View("_AddMission", model);
                 }

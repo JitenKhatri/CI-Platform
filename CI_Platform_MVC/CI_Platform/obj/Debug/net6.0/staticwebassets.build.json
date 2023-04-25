@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "UrHdIfMmRs74UiWheUnXLAvBTW9RyaglDUATIRxeb/0=",
+  "Hash": "6IaZxaAq9pfkRIqlCz97/ue7zL2jcmH0nEFT/AOLEJM=",
   "Source": "CI_Platform",
   "BasePath": "_content/CI_Platform",
   "Mode": "Default",
@@ -2448,6 +2448,40 @@
       "OriginalItemSpec": "wwwroot\\css\\style.css"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\documents\\447I_SampleDocs.docx",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "documents/447I_SampleDocs.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\documents\\447I_SampleDocs.docx"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\documents\\JYJS_sample-pdf-file.pdf",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "documents/JYJS_sample-pdf-file.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\documents\\JYJS_sample-pdf-file.pdf"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\documents\\SampleDocs.docx",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -2941,6 +2975,40 @@
       "OriginalItemSpec": "wwwroot\\images\\68002513-acb3-4bd6-a979-9d9380443e3e_volunteer7.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\6BDK_volunteer2.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/6BDK_volunteer2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\6BDK_volunteer2.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\6E03_2F3Y_T01A_6ec507b9-147d-4d0f-b3da-6ba4a50a4891_image2.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/6E03_2F3Y_T01A_6ec507b9-147d-4d0f-b3da-6ba4a50a4891_image2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\6E03_2F3Y_T01A_6ec507b9-147d-4d0f-b3da-6ba4a50a4891_image2.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\6ec507b9-147d-4d0f-b3da-6ba4a50a4891_image2.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -3024,6 +3092,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\795I_PVJV_pexels-arthouse-studio-4338092.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\7DR8_Grow-Trees-On-the-path-to-environment-sustainability.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/7DR8_Grow-Trees-On-the-path-to-environment-sustainability.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\7DR8_Grow-Trees-On-the-path-to-environment-sustainability.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\7f2591d4-03ff-4ca8-a56d-88ea2a44f141_image.png",
@@ -3128,6 +3213,23 @@
       "OriginalItemSpec": "wwwroot\\images\\8f65b642-3b80-45d9-82b3-78a0941b1cd7_image.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\8Z3L_volunteer3.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/8Z3L_volunteer3.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\8Z3L_volunteer3.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\9a0a2b54-2de4-4db3-a556-908164bd40f7_image.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -3211,6 +3313,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\a7e17af7-5cc7-43c9-8769-a8c2b49e1963_volunteer3.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\a93ff914-9ea1-44f2-a4bb-c6330279bdd6_volunteer5.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/a93ff914-9ea1-44f2-a4bb-c6330279bdd6_volunteer5.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\a93ff914-9ea1-44f2-a4bb-c6330279bdd6_volunteer5.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\achieved - Copy.png",
@@ -3842,6 +3961,23 @@
       "OriginalItemSpec": "wwwroot\\images\\checked.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\CM3I_AVMW_6GBE_f58fc421-19ff-4100-84ae-2641348910dd_img.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/CM3I_AVMW_6GBE_f58fc421-19ff-4100-84ae-2641348910dd_img.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\CM3I_AVMW_6GBE_f58fc421-19ff-4100-84ae-2641348910dd_img.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\collection.svg",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -3908,6 +4044,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\cross.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\CSLN_Animal-welfare-&-save-birds-campaign.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/CSLN_Animal-welfare-&-save-birds-campaign.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\CSLN_Animal-welfare-&-save-birds-campaign.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\CSR-initiative-stands-for-Coffee--and-Farmer-Equity - Copy.png",
@@ -4386,6 +4539,23 @@
       "OriginalItemSpec": "wwwroot\\images\\drop-down.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\E0DF_OPTE_img.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/E0DF_OPTE_img.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\E0DF_OPTE_img.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\e1f4352d-c838-43d8-afb3-5ad4b080d98e_Education-Supplies-for-Every--Pair-of-Shoes-Sold-1.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -4452,6 +4622,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\e8cbd98e-4a25-438f-a48f-186b091c99ed_image.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\ea8994db-5b05-458d-8e3d-6c90bffe0cab_volunteer7.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/ea8994db-5b05-458d-8e3d-6c90bffe0cab_volunteer7.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\ea8994db-5b05-458d-8e3d-6c90bffe0cab_volunteer7.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\editing.png",
@@ -5219,6 +5406,23 @@
       "OriginalItemSpec": "wwwroot\\images\\Grow-Trees-On-the-path-to-environment-sustainability-login-story.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\GXES_7DR8_Grow-Trees-On-the-path-to-environment-sustainability.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/GXES_7DR8_Grow-Trees-On-the-path-to-environment-sustainability.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\GXES_7DR8_Grow-Trees-On-the-path-to-environment-sustainability.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\heart - Copy.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -5319,6 +5523,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\hours.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\HU9A_KY0B_Nourish-the-Children-in--African-country.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/HU9A_KY0B_Nourish-the-Children-in--African-country.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\HU9A_KY0B_Nourish-the-Children-in--African-country.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\image - Copy.png",
@@ -5780,6 +6001,23 @@
       "OriginalItemSpec": "wwwroot\\images\\K630_Nourish-the-Children-in--African-country.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\KY0B_Nourish-the-Children-in--African-country.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/KY0B_Nourish-the-Children-in--African-country.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\KY0B_Nourish-the-Children-in--African-country.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\left - Copy.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -6186,6 +6424,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Open-Volunteering-Requests.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\OPTE_img.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/OPTE_img.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\OPTE_img.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\organization - Copy.png",
@@ -6766,6 +7021,23 @@
       "OriginalItemSpec": "wwwroot\\images\\right-white.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\RTQL_CSLN_Animal-welfare-&-save-birds-campaign.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/RTQL_CSLN_Animal-welfare-&-save-birds-campaign.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\RTQL_CSLN_Animal-welfare-&-save-birds-campaign.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\S2FW_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -6936,6 +7208,23 @@
       "OriginalItemSpec": "wwwroot\\images\\settings.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\SQN0_795I_PVJV_pexels-arthouse-studio-4338092.jpg",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/SQN0_795I_PVJV_pexels-arthouse-studio-4338092.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\SQN0_795I_PVJV_pexels-arthouse-studio-4338092.jpg"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\star - Copy.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -7070,6 +7359,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\twitter.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\UO9P_ISRZ_Grow-Trees-On-the-path-to-environment-sustainability-login.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/UO9P_ISRZ_Grow-Trees-On-the-path-to-environment-sustainability-login.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\UO9P_ISRZ_Grow-Trees-On-the-path-to-environment-sustainability-login.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\up - Copy.png",
@@ -7716,6 +8022,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Z60G_Plantation-and-Afforestation-programme.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\ZTMV_K630_Nourish-the-Children-in--African-country.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/ZTMV_K630_Nourish-the-Children-in--African-country.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\ZTMV_K630_Nourish-the-Children-in--African-country.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\js\\AdminPages.js",

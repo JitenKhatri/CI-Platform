@@ -152,6 +152,7 @@ function ValidateAddTheme() {
     else {
         $(".theme-status-empty").addClass("d-none").removeClass("d-block")
     }
+
     if (ThemeName.length > 0) {
         $(".theme-name-empty").addClass("d-none").removeClass("d-block")
     }
@@ -448,8 +449,10 @@ function MissionApplication(id, Action) {
                     timeOut: 3000,
                     closeButton: true,
                 });
-                $('.MA-' + id).addClass("bi-check-circle-fill");
-                $('.MA-' + id).removeClass("bi-check-circle");
+                $('.MA-approve-' + id).addClass("bi-check-circle-fill");
+                $('.MA-approve-' + id).removeClass("bi-check-circle");
+                $('.MA-decline-' + id).removeClass("bi-x-circle-fill");
+                $('.MA-decline-' + id).addClass("bi-x-circle");
             }
             else {
                 toastr.error('Application Declined Successfully!', {
@@ -458,8 +461,10 @@ function MissionApplication(id, Action) {
                     timeOut: 3000,
                     closeButton: true,
                 });
-                $('.MA-' + id).addClass("bi-x-circle-fill");
-                $('.MA-' + id).removeClass("bi-x-circle");
+                $('.MA-decline-' + id).addClass("bi-x-circle-fill");
+                $('.MA-decline-' + id).removeClass("bi-x-circle");
+                $('.MA-approve-' + id).removeClass("bi-check-circle-fill");
+                $('.MA-approve-' + id).addClass("bi-check-circle");
             }
           
         },
@@ -479,7 +484,7 @@ function ChangeStoryStatus(id, Action) {
             Action: Action
         },
         success: function (result) {
-            if (window.location.href === 'https://localhost:7064/Admin/Home/StoryCrud') {
+            if (window.location.href == 'https://localhost:7064/Admin/StoryCrud') {
                 if (Action == 1) {
                     toastr.success('Story Approved Successfully!', {
                         "positionClass": "toast-top-center",
@@ -487,8 +492,10 @@ function ChangeStoryStatus(id, Action) {
                         timeOut: 3000,
                         closeButton: true,
                     });
-                    $('.story-' + id).addClass("bi-check-circle-fill");
-                    $('.story-' + id).removeClass("bi-check-circle");
+                    $('.story-publish-' + id).addClass("bi-check-circle-fill");
+                    $('.story-publish-' + id).removeClass("bi-check-circle");
+                    $('.story-decline-' + id).removeClass("bi-x-circle-fill");
+                    $('.story-decline-' + id).addClass("bi-x-circle");
                 }
                 else {
                     toastr.error('Stored Declined Successfully!', {
@@ -497,8 +504,10 @@ function ChangeStoryStatus(id, Action) {
                         timeOut: 3000,
                         closeButton: true,
                     });
-                    $('.story-' + id).addClass("bi-x-circle-fill");
-                    $('.story-' + id).removeClass("bi-x-circle");
+                    $('.story-decline-' + id).addClass("bi-x-circle-fill");
+                    $('.story-decline-' + id).removeClass("bi-x-circle");
+                    $('.story-publish-' + id).removeClass("bi-check-circle-fill");
+                    $('.story-publish-' + id).addClass("bi-check-circle");
                 }
             }
             else {
@@ -563,7 +572,7 @@ function DeleteStory(StoryId,Action) {
                 Action: Action
             },
             success: function (result) {
-                if (window.location.href === 'https://localhost:7064/Admin/Home/StoryCrud') {
+                if (window.location.href === 'https://localhost:7064/Admin/StoryCrud') {
                     var row = $(`#story-${StoryId}`);
                     row.remove();
                     $('#Story-table').DataTable().row(row).remove().draw();
@@ -576,7 +585,7 @@ function DeleteStory(StoryId,Action) {
                         closeButton: true,
                     });
                     $('.delete-btn').prop('disabled', true).text('Deleted...');
-                    window.location.href = 'https://localhost:7064/Admin/Home/StoryCrud';
+                    window.location.href = 'https://localhost:7064/Admin/StoryCrud';
                 }
             },
             error: function () {
@@ -638,6 +647,12 @@ function AddUser(form, e) {
                     closeButton: true,
                 });
                 $("#AddUserForm")[0].reset();
+                if (formData.UserId != 0) {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 4000);
+
+                }
             }
             
         },
@@ -965,3 +980,4 @@ function DeleteBanner(id) {
         $('#confirmDeleteModal').remove();
     });
 }
+

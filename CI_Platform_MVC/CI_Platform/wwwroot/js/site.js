@@ -342,7 +342,6 @@ const addskills = (name) => {
 /*volunteering mission js starts*/
 /*recent volunteers*/
 function add_comments (user_id, mission_id) {
-    $('#comments').empty()
     var commentText = document.getElementById('comment-text').value
     console.log(commentText)
     if (commentText.length > 3) {

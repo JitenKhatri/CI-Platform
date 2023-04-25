@@ -57,7 +57,8 @@ namespace CI_Platform.Models.ViewModels
 
         public string? AvatarPath { get; set; }
 
-        public int Status { get; set; }
+        [Required]
+        public string Status { get; set; }
 
 
     }

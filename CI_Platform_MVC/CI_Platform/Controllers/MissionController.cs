@@ -29,19 +29,18 @@ namespace CI_Platform.Controllers
             List<Skill> skills = new List<Skill>();
             List<Country> countries = new List<Country>();
             List<MissionTheme> themes = new List<MissionTheme>();
-
             using (var dbContext = new CiPlatformContext())
             {
                 cities = dbContext.Cities.ToList();
                 countries = dbContext.Countries.ToList();
                 themes = dbContext.MissionThemes.Where(theme => theme.DeletedAt == null).ToList();
                 skills = dbContext.Skills.Where(skill => skill.DeletedAt == null).ToList();
-            }
-            ViewBag.CityList = new SelectList(cities, "CityId", "Name");
-            ViewBag.CountryList = new SelectList(countries, "CountryId", "Name");
-            ViewBag.ThemeList = new SelectList(themes, "MissionThemeId", "Title");
-            ViewBag.SkillList = new  SelectList(skills, "SkillId", "SkillName");
 
+                ViewData["CityList"] = new SelectList(cities, "CityId", "Name");
+                ViewData["CountryList"] = new SelectList(countries, "CountryId", "Name");
+                ViewData["ThemeList"] = new SelectList(themes, "MissionThemeId", "Title");
+                ViewData["SkillList"] = new SelectList(skills, "SkillId", "SkillName");
+            } 
 
             if (User.Identity.IsAuthenticated)
             {
