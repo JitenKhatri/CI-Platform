@@ -1,5 +1,4 @@
-﻿using CI_Platform.DataAccess.Repository;
-using CI_Platform.DataAccess.Repository.IRepository;
+﻿using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
 using CI_Platform.Models.InputModels;
 using CI_Platform.Models.ViewModels;

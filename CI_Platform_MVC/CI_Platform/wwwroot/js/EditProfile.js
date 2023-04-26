@@ -60,7 +60,7 @@ function validate() {
         $(".m-pass").addClass("d-block").removeClass("d-none");
     }
     else {
-        $(".m-pass").addClass("d-block").removeClass("d-none");
+        $(".m-pass").addClass("d-none").removeClass("d-block");
     }
 
 }
@@ -115,9 +115,16 @@ function saveskills() {
 
 function upload_profile_image() {
     var image = document.getElementById('profile-image').files[0]
-    var fr = new FileReader()
-    fr.onload = () => {
-        $('#old-profile-image').attr('src', fr.result)
+    console.log('file type', image.type)
+    if (image.type.startsWith('image/')) {
+        var fr = new FileReader()
+        fr.onload = () => {
+            $('#old-profile-image').attr('src', fr.result)
+        }
+        fr.readAsDataURL(image)
     }
-    fr.readAsDataURL(image)
+    else {
+        showAlert("Please only upload an image");
+    }
+    
 }

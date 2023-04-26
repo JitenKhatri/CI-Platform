@@ -13,7 +13,8 @@ const goaldata = () => {
     var type = "goal"
     validate(type)
     if ($(`#mission_goal`).is(":disabled")) {
-        if (mission != 0 && actions.toString() != "NaN" && actions > 0 && date != "" && message.trim().length > 20) {
+        if (mission != 0 && actions.toString() != "NaN" && actions > 0 && date != "" && message.trim().length > 20 &&
+            !(dateObj.getTime() < startDateObj.getTime() || dateObj.getTime() > endDateObj.getTime())) {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
                 type: 'POST',
@@ -25,7 +26,6 @@ const goaldata = () => {
                     Type: "goal-edit",
                     Timesheet_id: parseInt(document.getElementById("timesheet-id").value)
                 },
-                /* data: { mission_id: mission_id, date: date.toString(), actions: actions, message: message, type: "goal-edit", timesheet_id: parseInt(document.getElementById("timesheet-id").value) },*/
                 success: function (result) {
                     if (result.view) {
                         $(`#timesheet-${parseInt(document.getElementById("timesheet-id").value)}`).replaceWith(result.view.result)
@@ -39,7 +39,8 @@ const goaldata = () => {
         }
     }
     else {
-        if (mission != 0 && actions.toString() != "NaN" && actions > 0 && date != "" && message.trim().length > 20) {
+        if (mission != 0 && actions.toString() != "NaN" && actions > 0 && date != "" && message.trim().length > 20 &&
+            !(dateObj.getTime() < startDateObj.getTime() || dateObj.getTime() > endDateObj.getTime())) {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
                 type: 'POST',
@@ -51,7 +52,6 @@ const goaldata = () => {
                     Type: "goal"
 
                 },
-                /*data: { mission_id: mission_id, date: date.toString(), actions: actions, message: message, type: "goal" },*/
                 success: function (result) {
                     if (result.view) {
                         $(".goal-timesheets").append(result.view.result)
@@ -75,7 +75,6 @@ const timedata = () => {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
                 type: 'POST',
-                /*data: { mission_id: time_mission, date: time_date.toString(), hours: hours, minutes: mins, message: time_message, type: "time-edit", timesheet_id: parseInt(document.getElementById("timesheet-id").value) },*/
                 data: {
                     Mission_id: time_mission,
                     Date: time_date.toString(),
@@ -103,7 +102,6 @@ const timedata = () => {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
                 type: 'POST',
-                /*data: { mission_id: time_mission, date: time_date.toString(), hours: hours, minutes: mins, message: time_message, type: "time" },*/
                 data: {
                     Mission_id: time_mission,
                     Date: time_date.toString(),
@@ -132,6 +130,11 @@ const validate = (type) => {
         actions = parseInt(document.getElementById("action").value)
         date = document.getElementById("goal-date").value
         message = document.getElementById("goal-message").value
+        var startdate = $('#mission-' + mission_id + '-startdate').val();
+        var enddate = $('#mission-' + mission_id + '-enddate').val();
+        endDateObj = new Date(enddate);
+        startDateObj = new Date(startdate);
+        dateObj = new Date(date);
         if (mission == 0) {
             $(".goal-mission").addClass("d-block").removeClass("d-none")
         }
@@ -161,6 +164,13 @@ const validate = (type) => {
         else {
             $(".message-empty").addClass("d-none").removeClass("d-block")
         }
+        if (dateObj.getTime() < startDateObj.getTime() || dateObj.getTime() > endDateObj.getTime()) {
+            $(".goal-date-invalid").text("Invalid Date input (must be between mission's " + startdate + " " + "and " + enddate)
+            $(".goal-date-invalid").addClass("d-block").removeClass("d-none")
+        }
+        else {
+            $(".goal-date-invalid").addClass("d-none").removeClass("d-block")
+        }
     }
     else {
         date = $('#time').find('#dateOfTimeStory').val();
@@ -181,10 +191,11 @@ const validate = (type) => {
             $(".time-mission-empty").addClass("d-none").removeClass("d-block")
         }
         if (dateObj.getTime() < startDateObj.getTime() || dateObj.getTime() > endDateObj.getTime()) {
+            $(".time-date-invalid").text("Invalid Date input (must be between mission's "+ startdate + " " + "and " + enddate )
             $(".time-date-invalid").addClass("d-block").removeClass("d-none")
         }
         else {
-            $(".time-date-invalid").addClass("d-block").removeClass("d-none")
+            $(".time-date-invalid").addClass("d-none").removeClass("d-block")
         }
         if (time_date.length > 0) {
             $(".time-date-empty").addClass("d-none").removeClass("d-block")
@@ -216,14 +227,28 @@ const validate = (type) => {
 const clear_modal = (type) => {
     if (type == 'time') {
         $(`.time-mission`).removeAttr("disabled", "disabled")
-        document.getElementsByClassName('time-hours')[0].value = ""
-        document.getElementsByClassName('time-min')[0].value = ""
-        document.getElementsByClassName('time-message')[0].value = ""
+        $('.time-hours')[0].value = ""
+        $('.time-min')[0].value = ""
+        $('.time-message')[0].value = ""
+        $('.time-date')[0].value = ""
+        $(".time-mission-empty").addClass("d-none").removeClass("d-block")
+        $(".time-date-invalid").addClass("d-none").removeClass("d-block")
+        $(".time-date-empty").addClass("d-none").removeClass("d-block")
+        $(".time-hours-valid").addClass("d-none").removeClass("d-block")
+        $(".time-min-valid").addClass("d-none").removeClass("d-block")
+        $(".time-message-empty").addClass("d-none").removeClass("d-block")
     }
     else {
         $(`#mission_goal`).removeAttr("disabled", "disabled")
-        document.getElementById('action').value = ""
-        document.getElementById('goal-message').value = ""
+        $('#action').value = ""
+        $('#goal-message').value = ""
+        $('#goal-date').value = ""
+        $(".goal-mission").addClass("d-none").removeClass("d-block")
+        $(".action-empty").addClass("d-none").removeClass("d-block")
+        $(".action-notvalid").addClass("d-none").removeClass("d-block")
+        $(".date-empty").addClass("d-none").removeClass("d-block")
+        $(".message-empty").addClass("d-none").removeClass("d-block")
+        $(".goal-date-invalid").addClass("d-none").removeClass("d-block")
     }
 }
 

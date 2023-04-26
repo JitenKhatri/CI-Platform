@@ -3,12 +3,7 @@ using CI_Platform.Models;
 using CI_Platform.Models.InputModels;
 using CI_Platform.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 
 namespace CI_Platform.DataAccess.Repository
 {
@@ -23,13 +18,14 @@ namespace CI_Platform.DataAccess.Repository
         public (List<MissionViewModel>,int) GetAllMission(int page = 1, int pageSize = 6)
         {
             int skipCount = (page - 1) * pageSize;
-
+            var ratings = _db.MissionRatings.Select(missonrating => decimal.Parse(missonrating.Rating));
             IQueryable<MissionViewModel> query = _db.Missions.Where(Mission => Mission.DeletedAt == null)
                         .Include(m => m.MissionSkills)
                             .ThenInclude(ms => ms.Skill)
                         .Include(m => m.Theme)
                         .Include(m => m.Country)
                         .Include(m => m.City)
+                        .Include(m => m.MissionRatings)
                         .Select(m => new MissionViewModel
                         {
                             image = m.MissionMedia.FirstOrDefault(),
@@ -53,8 +49,9 @@ namespace CI_Platform.DataAccess.Repository
                             {
                                 CityId = m.CityId,
                                 CityName = m.City.Name
-                            }
-                        });
+                            },
+                            Avg_ratings = m.MissionRatings.Select(missionrating => decimal.Parse(missionrating.Rating))
+                        }); ;
 
 
             List<MissionViewModel> missions = query.Skip(skipCount).Take(pageSize).ToList();
@@ -131,7 +128,8 @@ namespace CI_Platform.DataAccess.Repository
                                        {
                                            ThemeId = m.Theme.MissionThemeId,
                                            ThemeName = m.Theme.Title
-                                       }
+                                       },
+                                       Avg_ratings = m.MissionRatings.Select(missionrating => decimal.Parse(missionrating.Rating))
                                    }).ToList();
 
             return Missions;
@@ -313,6 +311,7 @@ namespace CI_Platform.DataAccess.Repository
                           where r.UserId.Equals(user_id) && r.MissionId.Equals(id)
                           select r).ToList();
             bool applied_or_not = false;
+            string approval_status = string.Empty;
             if (Rating.Count > 0)
             {
                 rating = int.Parse(Rating.ElementAt(0).Rating);
@@ -371,6 +370,7 @@ namespace CI_Platform.DataAccess.Repository
             if (applied.Count > 0)
             {
                 applied_or_not = true;
+                approval_status = applied.FirstOrDefault().ApprovalStatus;
             }
             var favouritemission = (from fm in favoriteMissions
                                     where fm.UserId.Equals(user_id) && fm.MissionId.Equals(id)
@@ -399,6 +399,7 @@ namespace CI_Platform.DataAccess.Repository
                 Rating_count = rating_count,
                 relatedMissions = related_mission,
                 Applied_or_not = applied_or_not,
+                ApprovalStatus = approval_status,
                 Recent_volunteers = volunteers.Take(1).ToList(),
                 Total_volunteers = volunteers.Count,
                 documents = missiondocuments,

@@ -17,7 +17,7 @@ namespace CI_Platform.Models.ViewModels
 
         public string Mission_city { get; set; } = String.Empty;
         public string Mission_theme { get; set; } = String.Empty;
-        public int Favorite_mission { get; set; }
+        public IEnumerable<decimal> Avg_ratings { get; set; }
 
         public CountryViewModel Country { get; set; } = new CountryViewModel();
 

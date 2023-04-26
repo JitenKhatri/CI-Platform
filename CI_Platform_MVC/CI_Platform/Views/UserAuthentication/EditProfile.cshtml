@@ -30,26 +30,25 @@
                     <div class="row mb-3">
 
                         <div class="col-6">
-                            <span asp-validation-for="FirstName" class="text-danger d-block"></span>
                             <label class="form-label">Name</label>
                             <input type="text" asp-for="FirstName" name="FirstName" class="form-control" value=@Model.FirstName placeholder="Enter your name" />
+                            <span asp-validation-for="FirstName" class="text-danger d-block"></span>
                         </div>
 
                         <div class="col-6">
-                            <span asp-validation-for="LastName" class="text-danger d-block"></span>
                             <label asp-for="LastName" class="form-label">Surname</label>
                             <input type="text" asp-for="LastName" name="LastName" class="form-control" value=@Model.LastName placeholder="Enter your surname" />
+                            <span asp-validation-for="LastName" class="text-danger d-block"></span>
                         </div>
 
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
-                            <span asp-validation-for="EmployeeId" class="text-danger d-block"></span>
                             <label asp-for="EmployeeId" class="form-label">Employee ID</label>
                             <input type="text" asp-for="EmployeeId" name="EmployeeId" class="form-control" value=@Model.EmployeeId />
+                            <span asp-validation-for="EmployeeId" class="text-danger d-block"></span>
                         </div>
                         <div class="col-6">
-                            @*<span asp-validation-for="Manager" class="text-danger d-block"></span>*@
                             <label asp-for="Manager" class="form-label">Manager</label>
                             <input asp-for="Manager" type="text" name="Manager" class="form-control"
                                    placeholder="Enter your manager details" />
@@ -57,36 +56,33 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
-                            <span asp-validation-for="Title" class="text-danger d-block"></span>
                             <label asp-for="Title" class="form-label">Title</label>
                             <input asp-for="Title" type="text" class="form-control" value=@Model.Title placeholder="Enter title" />
+                            <span asp-validation-for="Title" class="text-danger d-block"></span>
                         </div>
                         <div class="col-6">
-                            <span asp-validation-for="Department" class="text-danger d-block"></span>
                             <label asp-for="Department" class="form-label">Department</label>
                             <input asp-for="Department" type="text" class="form-control" value=@Model.Department placeholder="Enter Department" />
+                            <span asp-validation-for="Department" class="text-danger d-block"></span>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col">
-                            <span asp-validation-for="ProfileText" class="text-danger d-block"></span>
                             <label asp-for="ProfileText" class="form-label">My Profile</label>
                             <textarea id="userprofile" value=@Model.ProfileText asp-for="ProfileText" class="form-control d-block" placeholder="Enter your comments"> @Model.ProfileText</textarea>
-
+                            <span asp-validation-for="ProfileText" class="text-danger d-block"></span>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col">
-                            <span asp-validation-for="WhyIVolunteer" class="text-danger d-block"></span>
                             <label asp-for="WhyIVolunteer" class="form-label">Why I Volunteer?</label>
                             <textarea asp-for="WhyIVolunteer" id="whyivolunteer" class="form-control d-block"> @Model.WhyIVolunteer</textarea>
-
+                            <span asp-validation-for="WhyIVolunteer" class="text-danger d-block"></span>
                         </div>
                     </div>
                     <h2 class="Userheading mt-5">Address Information</h2>
                     <div class="row mb-3">
                         <div class="col-6">
-                            <span asp-validation-for="CityId" class="text-danger d-block"></span>
                             <label asp-for="CityId" class="form-label">City</label>
                             <select asp-for="CityId" id='city' class="form-select city me-3" aria-label="Select City">
                                 <option disabled selected>Select Your City</option>
@@ -101,9 +97,9 @@
                                     }
                                 }
                             </select>
+                            <span asp-validation-for="CityId" class="text-danger d-block"></span>
                         </div>
                         <div class="col-6">
-                            <span asp-validation-for="CountryId" class="text-danger d-block"></span>
                             <label asp-for="CountryId" class="form-label">Country</label>
                             <select id='country' asp-for="CountryId" onchange="CascadeCity()" class="form-select country me-3" aria-label="Select Country">
                                 <option disabled selected>Select Your Country</option>
@@ -124,12 +120,12 @@
                                 }
 
                             </select>
+                            <span asp-validation-for="CountryId" class="text-danger d-block"></span>
                         </div>
                     </div>
                     <h2 class="Userheading mt-5">Professional Information</h2>
                     <div class="row mb-3">
                         <div class="col-6">
-                            <span asp-validation-for="Availablity" class="text-danger d-block"></span>
                             <label asp-for="Availablity" class="form-label">Availability</label>
                             <select id="mission" asp-for="Availablity" class="form-select" required>
                                 <option>Select your availablity</option>
@@ -137,15 +133,15 @@
                                 <option>Weekend</option>
                                 <option>Monthly</option>
                             </select>
+                            <span asp-validation-for="Availablity" class="text-danger d-block"></span>
                         </div>
                         <div class="col-6">
-                            <span asp-validation-for="LinkedInUrl" class="text-danger d-block"></span>
                             <label asp-for="LinkedInUrl" class="form-label">Linkedin</label>
                             <input asp-for="LinkedInUrl" type="text" class="form-control" placeholder="Enter linkedin url" value=@Model.LinkedInUrl />
+                            <span asp-validation-for="LinkedInUrl" class="text-danger d-block"></span>
                         </div>
                     </div>
                     <h2 class="Userheading mt-5">My Skills</h2>
-                    @*<span asp-validation-for="Selected_Skills" class="text-danger d-block"></span>*@
                     <input asp-for="Selected_Skills" value="@Model.Selected_Skills" type="hidden" id="selected_skills" />
                     <input type="hidden" value="@Model.Selected_skill_names" id="selected_skill_names" />
                     <div class="mt-4 w-100 saved-skills d-flex flex-column border border-1" style="height:200px;">

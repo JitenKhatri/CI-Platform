@@ -20,7 +20,8 @@ namespace CI_Platform.Models.ViewModels
         public decimal? Avg_ratings { get; set; } 
         public int? Rating_count { get; set; } 
         public List<Mission>? relatedMissions { get; set; } = new List<Mission>(); 
-        public bool Applied_or_not { get; set; } 
+        public bool Applied_or_not { get; set; }
+        public string ApprovalStatus { get; set; } = string.Empty;
         public List<User>? Recent_volunteers { get; set; } = new List<User>(); 
         public List<User>? All_volunteers { get; set; } = new List<User>(); 
         public int? Total_volunteers { get; set; } 

@@ -37,7 +37,7 @@ namespace CI_Platform.Models.ViewModels
         [Required]
         public long? CountryId { get; set; }
         [Required]
-        [MinLength(20, ErrorMessage = "Bio Is Too Short")]
+        [MinLength(20, ErrorMessage = "Required minimum length is 20")]
         public string ProfileText { get; set; } = string.Empty;
 
         [RegularExpression(@"^(https:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9\-]+\/?$", ErrorMessage = "Please enter a valid LinkedIn URL.")]
@@ -46,8 +46,8 @@ namespace CI_Platform.Models.ViewModels
         public string? Manager { get; set; } = string.Empty;
 
         [Required]
-        [MinLength(3, ErrorMessage = "Title is too short")]
-        [MaxLength(16, ErrorMessage = "Title is too big")]
+        [MinLength(3, ErrorMessage = "Title has to have at least 3 characters")]
+        [MaxLength(16, ErrorMessage = "Title can have maximum 16 characters ")]
         public string Title { get; set; } = string.Empty;
 
         
@@ -55,7 +55,6 @@ namespace CI_Platform.Models.ViewModels
 
         
         public string Email { get; set; } = string.Empty;
-        //public User User { get; set; } = new User();
 
         public string? Selected_Skills { get; set; } = string.Empty;
 

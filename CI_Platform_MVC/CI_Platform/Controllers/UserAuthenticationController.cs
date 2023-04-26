@@ -27,8 +27,21 @@ namespace CI_Platform.Controllers
         [Route("login")]
         public IActionResult login()
         {
-            ViewBag.banners = db.AdminRepository.GetBanners();
-            return View();
+            if(User.Identity.IsAuthenticated)
+            {
+                if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "user")
+                {
+                    return RedirectToAction("Index", "Mission");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+            }
+            
+             else {
+                    ViewBag.banners = db.AdminRepository.GetBanners();
+                    return View(); }
         }
 
         [HttpPost]
@@ -133,20 +146,19 @@ namespace CI_Platform.Controllers
                     };
                     db.UserAuthentication.Add(user);
                     db.save();
-                    TempData["SuccessMessage"] = "Registration successful. Please login to continue.";
                     return RedirectToAction("login");
                 }
                 else
                 {
-                    return BadRequest("User with specified credentials already exists");
-                }
-
-               
-
-               
+                    return Json(new { success = true, message = "Email exists" });
+                }   
+            }
+            else
+            {
+                return BadRequest();
             }
 
-            return View(model);
+            
         }
 
 
@@ -215,9 +227,6 @@ namespace CI_Platform.Controllers
                     {
                         smtp.Send(mess);
                     }
-
-                    //return RedirectToAction("ResetPassword", new { id = myuser.UserId });
-                    //return RedirectToAction("resetPassword");
                     ViewBag.EmailSent = "Mail Is Sent Successfully, Check Your Inbox!";
                 }
             }

@@ -13,20 +13,18 @@ namespace CI_Platform.Models.ViewModels
     {
 
         [Required]
-        [MinLength(3, ErrorMessage = "FirstName is too short")]
-        [MaxLength(16, ErrorMessage = "FirstName is too big")]
+        [MinLength(3, ErrorMessage = "FirstName has to have at least 3 characters")]
+        [MaxLength(16, ErrorMessage = "FirstName can have maximum 16 characters")]
         public string FirstName { get; set; } = string.Empty;
         [Required]
-        [MinLength(3, ErrorMessage = "LastName is too short")]
-        [MaxLength(16, ErrorMessage = "LastName is too big")]
+        [MinLength(3, ErrorMessage = "LastName has to have at least 3 characters")]
+        [MaxLength(16, ErrorMessage = "LastName can have maximum 16 characters")]
         public string LastName { get; set; } = string.Empty;
 
         public IFormFile? Avatar { get; set; }
 
-        [Required]
         public string EmployeeId { get; set; } = string.Empty;
 
-        [Required]
         public string Department { get; set; } = string.Empty;
 
         [Required]
@@ -34,20 +32,20 @@ namespace CI_Platform.Models.ViewModels
         [Required]
         public long? CountryId { get; set; }
         [Required]
-        [MinLength(20, ErrorMessage = "Bio Is Too Short")]
+        [MinLength(20, ErrorMessage = "Bio has to have minimum 20 characters")]
+        [MaxLength(70, ErrorMessage = "LastName can have maximum 70 characters")]
         public string ProfileText { get; set; } = string.Empty;
 
 
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage="Please enter a valid email")]
         public string Email { get; set; } = string.Empty;
 
         [Required]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", ErrorMessage = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number")]
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,15}$", ErrorMessage = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character")]
         public string Password { get; set; } = string.Empty;
 
         public string? Manager { get; set; } = string.Empty;
-        //public User User { get; set; } = new User();
 
         public List<Country> Countries { get; set; } = new List<Country>();
 

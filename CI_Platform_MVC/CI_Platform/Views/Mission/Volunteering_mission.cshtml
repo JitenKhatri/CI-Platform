@@ -362,7 +362,18 @@
                             {
                                 @if (@Model.Applied_or_not)
                                 {
-                                    <button class="btn apply-btn" disabled>Already Applied<span> <img src=~/images/right-arrow.png /></span></button>
+                                    @if (@Model.ApprovalStatus == "APPROVE")
+                                    {
+                                        <button class="btn btn-success" disabled>Approved</button>
+                                    }
+                                    else if (@Model.ApprovalStatus == "DECLINE")
+                                    {
+                                        <button class="btn btn-danger" disabled>Declined</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn apply-btn" disabled>Already Applied<span> <img src=~/images/right-arrow.png /></span></button>
+                                    }
                                 }
 
                                 else
@@ -375,9 +386,20 @@
                         else
                         {
                             @if (@Model.Applied_or_not)
-                            {
-                                <button class="btn apply-btn" disabled>Already Applied<span> <img src=~/images/right-arrow.png /></span></button>
-                            }
+                                {
+                                    @if (@Model.ApprovalStatus == "APPROVE")
+                                    {
+                                        <button class="btn btn-success" disabled>Approved</button>
+                                    }
+                                    else if (@Model.ApprovalStatus == "DECLINE")
+                                    {
+                                        <button class="btn btn-danger" disabled>Declined</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn apply-btn" disabled>Already Applied<span> <img src=~/images/right-arrow.png /></span></button>
+                                    }
+                                }
 
                             else
                             {

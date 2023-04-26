@@ -15,10 +15,11 @@ namespace CI_Platform.ViewModels
         public string Email { get; set; } = null!;
 
         [Required(ErrorMessage = "Password is required")]
-        [DataType(DataType.Password)]
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,15}$", ErrorMessage = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character and not longer than 15")]
         public string Password { get; set; }= null!;
 
         [Required(ErrorMessage = "Phone number is required")]
+        [MaxLength(10, ErrorMessage = "Phone number can have maximum 10 numbers")]
         public int PhoneNumber { get; set; }
         
         [Required(ErrorMessage = "Confirm password is required")]
