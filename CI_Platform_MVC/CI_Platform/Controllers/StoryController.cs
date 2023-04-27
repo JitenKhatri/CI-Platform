@@ -19,7 +19,7 @@ namespace CI_Platform.Controllers
         {
             db = _db;
         }
-        public IActionResult Story(int page = 1, int pageSize = 6)
+        public IActionResult Story(int page = 1, int pageSize = 3)
         {
             List<City> cities = new List<City>();
             List<Skill> skills = new List<Skill>();
@@ -66,7 +66,13 @@ namespace CI_Platform.Controllers
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
             model.UserId = user_id;
-            List<StoryViewModel> stories = db.StoryRepository.GetFilteredStories(model);
+            var result = db.StoryRepository.GetFilteredStories(model);
+            List<StoryViewModel> stories = result.Item1;
+            int totalItemCount = result.Item2;
+            // Generate pagination links
+            int pageCount = (int)Math.Ceiling((double)totalItemCount / model.PageSize);
+            ViewBag.PageCount = pageCount;
+            ViewBag.CurrentPage = model.Page;
             return PartialView("_stories", stories);
         }
 

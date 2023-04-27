@@ -13,7 +13,7 @@ namespace CI_Platform.Models.InputModels
         public List<string> Themes { get; set; } = new List<string>();
         public List<string> Skills { get; set; } = new List<string>();
         public string SearchText { get; set; } = string.Empty;
-        public int PageSize { get; set; } = 6;
+        public int PageSize { get; set; } = 3;
         public int Page { get; set; } = 1;
         public string SortOrder { get; set; } = string.Empty;
     }

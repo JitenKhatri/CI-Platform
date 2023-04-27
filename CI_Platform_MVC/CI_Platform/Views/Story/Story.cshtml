@@ -131,30 +131,6 @@
                 </button>
             </div>
         </div>
-        @*Pagination*@
-        <nav aria-label="Page navigation" class="pagination-link">
-            @{
-                int pageSize = 6;
-            }
-            <ul class="pagination justify-content-center">
-                <li class="page-item @if (ViewBag.CurrentPage <= 1) {
-                @Html.Raw("disabled")
-; }">
-                    <a class="page-link" href="@Url.Action("Story", "Story", new { page = ViewBag.CurrentPage - 1, pageSize = pageSize })">Previous</a>
-                </li>
-                @for (int i = 1; i <= ViewBag.PageCount; i++)
-                {
-                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
-                        <a class="page-link" href="@Url.Action("Story", "Story", new { page = i, pageSize = pageSize })">@i</a>
-                    </li>
-                }
-                <li class="page-item @if (ViewBag.CurrentPage >= ViewBag.PageCount) {
-                @Html.Raw("disabled")
-; }">
-                    <a class="page-link" href="@Url.Action("Story", "Story", new { page = ViewBag.CurrentPage + 1, pageSize = pageSize })">Next</a>
-                </li>
-            </ul>
-        </nav>
 
         @{
             foreach (var item in Model)

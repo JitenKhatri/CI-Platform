@@ -8,7 +8,13 @@ let theme_count = 0;
 let skill_count = 0;
 var count = 1;
 var co_workers = []
-
+var sortorder;
+var input = '';
+$(document).bind("ajaxSend", function () {
+    $('.loader').addClass('d-block').removeClass('d-none');
+}).bind("ajaxComplete", function () {
+    $('.loader').addClass('d-none').removeClass('d-block');
+});
 // for grid view list view
 function showList(e) {
     var $gridCont = $('.grid-container');
@@ -63,22 +69,17 @@ $('.form-check-input').on('change', function () {
         // If checkbox is unchecked, remove its corresponding badge
         const badge = selectedItemsRow.find(`span:contains(${value})`);
         badge.remove();
-    }
-    
-
- 
-
-    
+    }  
 });
 
 function search() {
-    var input = document.getElementById("search-input").value.toLowerCase();
+    input = document.getElementById("search-input").value.toLowerCase();
     $('.missions').empty()
     $.ajax(
         {
             url: '/Mission',
             type: 'POST',
-            data: { SearchText: input, Cities: cities, Themes: themes, Skills: skills },
+            data: { SearchText: input, Cities: cities, Themes: themes, Skills: skills, SortOrder : sortorder},
             success: function (result) {
                 if (result == "") {
                     $('.page-not-found').css('display', 'block');
@@ -87,19 +88,21 @@ function search() {
                     $('.page-not-found').css('display', 'none');
                 }
                 $('.missions').html(result);
-                $('.pagination-link').css('display', 'none');
             },
             error: function () {
                 console.log("Error updating variable");
             }
         })
 }
+
 function sortby(order) {
+    input = document.getElementById("search-input").value.toLowerCase();
+    sortorder = order;
     $('.missions').empty()
     $.ajax({
         url: '/Mission',
         type: 'Post',
-        data: { SortOrder: order},
+        data: { SearchText: input,Countries: countries, Cities: cities, Themes: themes, Skills: skills, SortOrder: order},
         success: function (result) {
             $('.missions').html(result);
         },
@@ -110,16 +113,16 @@ function sortby(order) {
 }
 
 function clear_all() {
-
     countries = []
     cities = []
     themes = []
     skills = []
+    $('#search-input').val= '';
     $('.missions').empty()
     $.ajax({
         url: '/Mission',
         type: 'POST',
-        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills},
+        data: { SearchText:"",Countries: countries, Cities: cities, Themes: themes, Skills: skills},
         success: function (result) {
             $('.missions').html(result);
             $('.page-not-found').css('display', 'none');
@@ -132,6 +135,7 @@ function clear_all() {
 }
 
 function remove_badges(input) {
+    searchinput = document.getElementById("search-input").value.toLowerCase();
     const id = input.attr('id');
     console.log(id)
         if (cities.includes(id)) {
@@ -151,7 +155,7 @@ function remove_badges(input) {
     $.ajax({
         url: '/Mission',
         type: 'POST',
-        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills},
+        data: { SearchText: searchinput,Countries: countries, Cities: cities, Themes: themes, Skills: skills, SortOrder: sortorder},
         success: function (result) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
@@ -184,7 +188,7 @@ function addcities(name) {
     $.ajax({
         url: '/Mission',
         type: 'POST',
-        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
+        data: { SearchText: input,Countries: countries, Cities: cities, Themes: themes, Skills: skills, SortOrder: sortorder },
         success: function (result) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
@@ -193,7 +197,6 @@ function addcities(name) {
                 $('.page-not-found').css('display', 'none');
             }
             $('.missions').html(result);
-            $('.pagination-link').css('display', 'none');
         },
         error: function () {
             console.log("Error updating variable");
@@ -228,12 +231,11 @@ function addcountries(name,dataid) {
             }
             else {
                 loadcities(result.cities)
-
             }
             $.ajax({
                 url: '/Mission',
                 type: 'POST',
-                data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills},
+                data: { SearchText: input,Countries: countries, Cities: cities, Themes: themes, Skills: skills, SortOrder: sortorder},
                 success: function (result) {
                     if (result == "") {
                         $('.page-not-found').css('display', 'block'); 
@@ -242,7 +244,6 @@ function addcountries(name,dataid) {
                         $('.page-not-found').css('display', 'none');
                     }
                     $('.missions').html(result);
-                    $('.pagination-link').css('display', 'none');
                 },
                 error: function () {
                     console.log("Error updating variable");
@@ -289,7 +290,7 @@ const addthemes = (name) => {
     $.ajax({
         url: '/Mission',
         type: 'POST',
-        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
+        data: { SearchText: input,Countries: countries, Cities: cities, Themes: themes, Skills: skills, SortOrder: sortorder },
         success: function (result) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
@@ -298,7 +299,6 @@ const addthemes = (name) => {
                 $('.page-not-found').css('display', 'none');
             }
             $('.missions').html(result);
-            $('.pagination-link').css('display', 'none');
         },
         error: function () {
             console.log("Error updating variable");
@@ -321,7 +321,7 @@ const addskills = (name) => {
     $.ajax({
         url: '/Mission',
         type: 'POST',
-        data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills},
+        data: { SearchText: input,Countries: countries, Cities: cities, Themes: themes, Skills: skills, SortOrder: sortorder},
         success: function (result) {
             if (result == "") {
                 $('.page-not-found').css('display', 'block');
@@ -330,14 +330,33 @@ const addskills = (name) => {
                 $('.page-not-found').css('display', 'none');
             }
             $('.missions').html(result);
-            $('.pagination-link').css('display', 'none');
         },
         error: function () {
             console.log("Error updating variable");
         }
     })
 }
-
+function Pagination(page, pageSize) {
+    $('.missions').empty()
+    $.ajax({
+        url: '/Mission',
+        type: 'POST',
+        data: { SearchText: input,Countries: countries, Cities: cities, Themes: themes, Skills: skills, PageSize: pageSize, Page: page, SortOrder: sortorder },
+        success: function (result) {
+            if (result == "") {
+                $('.page-not-found').css('display', 'block');
+            }
+            else {
+                $('.page-not-found').css('display', 'none');
+            }
+            $('.missions').html(result);
+        },
+        error: function (error) {
+            console.log(error)
+            console.log("Error updating variable");
+        }
+    })
+}
 
 /*volunteering mission js starts*/
 /*recent volunteers*/
@@ -533,13 +552,13 @@ const recommend = (user_id, mission_id,email,to_user_id) => {
         $.ajax({
             url: `/volunteering_mission/${mission_id}`,
             type: 'POST',
-            data: { co_workers: co_workers, user_id: user_id, mission_id: mission_id, request_for: "recommend",email: email },
+            data: { co_workers: co_workers, user_id: user_id, mission_id: mission_id, request_for: "recommend", email: email },
             success: function (result) {
                 console.log(result)
                
                     var recommend = $('#recommend-'+to_user_id)
 
-                recommend.prop('disabled',true)
+                recommend.prop('disabled', true)
 
                 Swal.fire({
                     title: 'Invitation sent!!',

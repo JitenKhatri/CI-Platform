@@ -22,7 +22,7 @@ namespace CI_Platform.Controllers
         }
 
         
-        public IActionResult Index(int page = 1, int pageSize = 6)
+        public IActionResult Index(int page = 1, int pageSize = 3)
         {
             List<City> cities = new List<City>();
             List<Skill> skills = new List<Skill>();
@@ -59,8 +59,13 @@ namespace CI_Platform.Controllers
 
         [HttpPost]
         public IActionResult Index(MissionInputModel model)
-        {
-            List<MissionViewModel> missions = db.MissionRepository.GetFilteredMissions(model);
+       {
+            var result = db.MissionRepository.GetFilteredMissions(model);
+            List<MissionViewModel> missions = result.Item1;
+            int totalitemcount = result.Item2;
+            int pageCount = (int)Math.Ceiling((double)totalitemcount / model.PageSize);
+            ViewBag.PageCount = pageCount;
+            ViewBag.CurrentPage = model.Page;
             return PartialView("_Mission", missions);
         }
 

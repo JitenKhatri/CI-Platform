@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "HSyXhhu2480Ti4aENeXgGNZZpF3TwEkKCme8hBAFbjc=",
+  "Hash": "brazF7hA6FbBZ5/TlMyvJfu0cdFWNFlepmx8REbaxAA=",
   "Source": "CI_Platform",
   "BasePath": "_content/CI_Platform",
   "Mode": "Default",
@@ -2465,6 +2465,23 @@
       "OriginalItemSpec": "wwwroot\\documents\\447I_SampleDocs.docx"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\documents\\H8KI_LWH1_447I_SampleDocs.docx",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "documents/H8KI_LWH1_447I_SampleDocs.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\documents\\H8KI_LWH1_447I_SampleDocs.docx"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\documents\\JYJS_sample-pdf-file.pdf",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -2567,6 +2584,23 @@
       "OriginalItemSpec": "wwwroot\\documents\\sample-pdf-file.pdf"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\documents\\TPZM_H8KI_LWH1_447I_SampleDocs.docx",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "documents/TPZM_H8KI_LWH1_447I_SampleDocs.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\documents\\TPZM_H8KI_LWH1_447I_SampleDocs.docx"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\favicon.ico",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -2616,6 +2650,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\1e25b3fc-2d1a-4e26-94e4-6d069dd55fb5_volunteer3.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\263bd9ae-ea9e-44c2-af2e-b7f725e83cab_e8cbd98e-4a25-438f-a48f-186b091c99ed_image.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/263bd9ae-ea9e-44c2-af2e-b7f725e83cab_e8cbd98e-4a25-438f-a48f-186b091c99ed_image.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\263bd9ae-ea9e-44c2-af2e-b7f725e83cab_e8cbd98e-4a25-438f-a48f-186b091c99ed_image.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\2CP7_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
@@ -3126,6 +3177,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\73db6508-03df-470b-a538-8547c860f336_image.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\747721f6-f8d6-45dc-9b48-43c16e700afc_350d429c-2f0f-4b5e-979b-9b87dd989456_CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/747721f6-f8d6-45dc-9b48-43c16e700afc_350d429c-2f0f-4b5e-979b-9b87dd989456_CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\747721f6-f8d6-45dc-9b48-43c16e700afc_350d429c-2f0f-4b5e-979b-9b87dd989456_CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\795I_PVJV_pexels-arthouse-studio-4338092.jpg",
@@ -4692,6 +4760,23 @@
       "OriginalItemSpec": "wwwroot\\images\\ea8994db-5b05-458d-8e3d-6c90bffe0cab_volunteer7.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\ECEX_SNXO_CM3I_AVMW_6GBE_f58fc421-19ff-4100-84ae-2641348910dd_img.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/ECEX_SNXO_CM3I_AVMW_6GBE_f58fc421-19ff-4100-84ae-2641348910dd_img.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\ECEX_SNXO_CM3I_AVMW_6GBE_f58fc421-19ff-4100-84ae-2641348910dd_img.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\editing.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -4862,6 +4947,23 @@
       "OriginalItemSpec": "wwwroot\\images\\eye.png"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\F2O0_QZBR_GP7O_6E03_2F3Y_T01A_6ec507b9-147d-4d0f-b3da-6ba4a50a4891_image2.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/F2O0_QZBR_GP7O_6E03_2F3Y_T01A_6ec507b9-147d-4d0f-b3da-6ba4a50a4891_image2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\F2O0_QZBR_GP7O_6E03_2F3Y_T01A_6ec507b9-147d-4d0f-b3da-6ba4a50a4891_image2.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\f58fc421-19ff-4100-84ae-2641348910dd_img.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -4877,6 +4979,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\f58fc421-19ff-4100-84ae-2641348910dd_img.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\f85d9568-40b2-4cc2-af53-74f919d19267_7f2591d4-03ff-4ca8-a56d-88ea2a44f141_image.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/f85d9568-40b2-4cc2-af53-74f919d19267_7f2591d4-03ff-4ca8-a56d-88ea2a44f141_image.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\f85d9568-40b2-4cc2-af53-74f919d19267_7f2591d4-03ff-4ca8-a56d-88ea2a44f141_image.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\facebook - Copy.png",
@@ -4996,6 +5115,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\file-earmark-fill.svg"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\Filled fading balls.gif",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/Filled fading balls.gif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Filled fading balls.gif"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\filter - Copy.png",
@@ -6868,6 +7004,23 @@
       "OriginalItemSpec": "wwwroot\\images\\PVJV_pexels-arthouse-studio-4338092.jpg"
     },
     {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\QBQ8_ECEX_SNXO_CM3I_AVMW_6GBE_f58fc421-19ff-4100-84ae-2641348910dd_img.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/QBQ8_ECEX_SNXO_CM3I_AVMW_6GBE_f58fc421-19ff-4100-84ae-2641348910dd_img.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\QBQ8_ECEX_SNXO_CM3I_AVMW_6GBE_f58fc421-19ff-4100-84ae-2641348910dd_img.png"
+    },
+    {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\QHZB_C5V3_Education-Supplies-for-Every--Pair-of-Shoes-Sold.png",
       "SourceId": "CI_Platform",
       "SourceType": "Discovered",
@@ -6900,6 +7053,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\QTUD_pexels-felix-mittermeier-957024.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\QZBR_GP7O_6E03_2F3Y_T01A_6ec507b9-147d-4d0f-b3da-6ba4a50a4891_image2.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/QZBR_GP7O_6E03_2F3Y_T01A_6ec507b9-147d-4d0f-b3da-6ba4a50a4891_image2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\QZBR_GP7O_6E03_2F3Y_T01A_6ec507b9-147d-4d0f-b3da-6ba4a50a4891_image2.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\red-heart.png",

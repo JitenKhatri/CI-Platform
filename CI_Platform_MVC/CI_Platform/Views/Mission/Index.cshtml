@@ -14,9 +14,6 @@
 
 
 <div class="container-fluid p-0">
-
-
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -157,59 +154,17 @@
 </div>
 @* no mission found*@
 <div class="page-not-found text-center" style="display:none;">
-    <!-- <img src="images/404-Page-image.png" alt="" class="w-25"> -->
     <h4 class="pt-2">No mission found</h4>
-    <!-- <p class="description" style="font-size: 2rem !important;"><strong>Oops! </strong> The page you were looking for doesn't exist.</p>
-    <p style="font-size: 1.2rem;">you may have misstyped the address or the page have moved.</p>-->
     <div class="d-flex justify-content-center mt-4">
         <button class="apply-btn btn" style="width:12%">
             Submit new mission <img src="images/right-arrow.png" alt="">
         </button>
     </div>
 </div>
-@*Pagination*@
-@*<nav aria-label="Page navigation" class="pagination-link">
-    <ul class="pagination justify-content-center">
-    <li class="page-item pe-2">
-    <a class="page-link" href="@Url.Action("Index", "Mission", new { page = 1, pageSize = 6 })">Previous</a>
-    </li>
-    <li class="page-item pe-2">
-    <a class="page-link" href="@Url.Action("Index", "Mission", new { page = 1, pageSize = 6 })">1</a>
-    </li>
-    <li class="page-item pe-2">
-    <a class="page-link" href="@Url.Action("Index", "Mission", new { page = 2, pageSize = 6 })">2</a>
-    </li>
-    <li class="page-item pe-2">
-    <a class="page-link" href="@Url.Action("Index", "Mission", new { page = 2, pageSize = 6 })">Next</a>
-    </li>
-    </ul>
-    </nav>*@
-<nav aria-label="Page navigation" class="pagination-link">
-    @{
-        int pageSize = 6;
-    }
-    <ul class="pagination justify-content-center">
-        <li class="page-item @if (ViewBag.CurrentPage <= 1) {
-                @Html.Raw("disabled")
-; }">
-            <a class="page-link" href="@Url.Action("Index", "Mission", new { page = ViewBag.CurrentPage - 1, pageSize = pageSize })">Previous</a>
-        </li>
-        @for (int i = 1; i <= ViewBag.PageCount; i++)
-        {
-            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
-                <a class="page-link" href="@Url.Action("Index", "Mission", new { page = i, pageSize = pageSize })">@i</a>
-            </li>
-        }
-        <li class="page-item @if (ViewBag.CurrentPage >= ViewBag.PageCount) {
-                @Html.Raw("disabled")
-; }">
-            <a class="page-link" href="@Url.Action("Index", "Mission", new { page = ViewBag.CurrentPage + 1, pageSize = pageSize })">Next</a>
-        </li>
-    </ul>
-</nav>
 
 
-@*mission not found*@
+
+
 
 
 

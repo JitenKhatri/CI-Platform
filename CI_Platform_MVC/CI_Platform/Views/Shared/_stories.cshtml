@@ -48,3 +48,27 @@
         </div>
     </div> @*col-12 col-md-6 col-lg-4*@
 }
+@*Pagination*@
+<nav aria-label="Page navigation" class="pagination-link">
+    @{
+        int pageSize = 3;
+    }
+    <ul class="pagination justify-content-center">
+        <li class="page-item @if (ViewBag.CurrentPage <= 1) {
+                @Html.Raw("disabled")
+; }">
+            <button class="page-link" onclick="StoryPagination(@ViewBag.CurrentPage - 1,@pageSize)"">Previous</button>
+        </li>
+        @for (int i = 1; i <= ViewBag.PageCount; i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <button class="page-link" onclick="StoryPagination(@i,@pageSize)">@i</button>
+            </li>
+        }
+        <li class="page-item @if (ViewBag.CurrentPage >= ViewBag.PageCount) {
+                @Html.Raw("disabled")
+; }">
+            <button class="page-link" onclick="StoryPagination(@ViewBag.CurrentPage + 1,@pageSize)">Next</button>
+        </li>
+    </ul>
+</nav>

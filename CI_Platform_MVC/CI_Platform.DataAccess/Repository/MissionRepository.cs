@@ -15,7 +15,7 @@ namespace CI_Platform.DataAccess.Repository
             _db = db;
         }
 
-        public (List<MissionViewModel>,int) GetAllMission(int page = 1, int pageSize = 6)
+        public (List<MissionViewModel>,int) GetAllMission(int page = 1, int pageSize = 3)
         {
             int skipCount = (page - 1) * pageSize;
             var ratings = _db.MissionRatings.Select(missonrating => decimal.Parse(missonrating.Rating));
@@ -60,7 +60,7 @@ namespace CI_Platform.DataAccess.Repository
             return (missions,totalmissions);
         }
 
-        public List<MissionViewModel> GetFilteredMissions(MissionInputModel model)
+        public (List<MissionViewModel>,int) GetFilteredMissions(MissionInputModel model)
         {
             int skipCount = (model.Page - 1) * model.PageSize;
 
@@ -107,7 +107,7 @@ namespace CI_Platform.DataAccess.Repository
                     m.Title.ToLower().Replace(" ", "").Contains(model.SearchText.ToLower().Replace(" ", "")) ||
                     m.Description.ToLower().Replace(" ", "").Contains(model.SearchText.ToLower().Replace(" ", "")));
             }
-
+            int totalmissions = missions.Count();
             // Create a projection of the required data
             var Missions = missions.Skip(skipCount).Take(model.PageSize)
                                    .Select(m => new MissionViewModel
@@ -131,8 +131,8 @@ namespace CI_Platform.DataAccess.Repository
                                        },
                                        Avg_ratings = m.MissionRatings.Select(missionrating => decimal.Parse(missionrating.Rating))
                                    }).ToList();
-
-            return Missions;
+            
+            return (Missions,totalmissions);
         }
 
 
@@ -300,7 +300,7 @@ namespace CI_Platform.DataAccess.Repository
             List<User> users = _db.Users.ToList();
             List<Mission> related_mission = _db.Missions.ToList();
             List<MissionApplication> missionApplications = _db.MissionApplications.ToList();
-            List<User> all_volunteers = _db.Users.ToList();
+            List<User> all_volunteers = _db.Users.Where(user => user.DeletedAt == null).ToList();
             List<User> already_recommended = new List<User>();
             List<MissionInvite> already_recommended_users = new List<MissionInvite>();
 
@@ -376,16 +376,7 @@ namespace CI_Platform.DataAccess.Repository
                                     where fm.UserId.Equals(user_id) && fm.MissionId.Equals(id)
                                     select fm).ToList();
 
-            if (volunteers.Count > 0)
-            {
-                foreach (var item in volunteers)
-                {
-                    if (!already_recommended.Contains(item))
-                    {
-                        all_volunteers.Add(item);
-                    }
-                }
-            }
+          
             return new VolunteeringMissionVM
             {
                 Missions = mission,

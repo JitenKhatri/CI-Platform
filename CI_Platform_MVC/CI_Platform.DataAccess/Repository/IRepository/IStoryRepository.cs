@@ -13,7 +13,7 @@ namespace CI_Platform.DataAccess.Repository.IRepository
     public interface IStoryRepository : IRepository<Story>
     {
         (List<StoryViewModel>, int) GetAllStories(long user_id,int page, int pageSize);
-        List<StoryViewModel> GetFilteredStories(StoryInputModel model);
+        (List<StoryViewModel>, int) GetFilteredStories(StoryInputModel model);
         List<City> CityCascade(long countryid);
 
         List<Mission> GetMissionApplications(long user_id);

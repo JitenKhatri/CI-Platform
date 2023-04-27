@@ -385,7 +385,7 @@ namespace CI_Platform.Controllers
                 }
                 else
                 {
-                    return BadRequest();
+                    return View(model);
                 }
             }
             

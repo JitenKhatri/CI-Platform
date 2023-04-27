@@ -20,12 +20,12 @@ namespace CI_Platform.DataAccess.Repository
         }
 
 
-        public (List<StoryViewModel>, int) GetAllStories(long user_id, int page = 1, int pageSize = 6)
+        public (List<StoryViewModel>, int) GetAllStories(long user_id, int page = 1, int pageSize = 3)
         {
             int skipCount = (page - 1) * pageSize;
 
             var storiesQuery = _db.Stories.Where(story => story.DeletedAt == null && (story.UserId == user_id || story.Status == "PUBLISHED"));
-
+            int totalStories = storiesQuery.Count();
             var storyQuery = storiesQuery
                 .OrderByDescending(s => s.Status == "DRAFT")
                 .Skip(skipCount)
@@ -49,12 +49,12 @@ namespace CI_Platform.DataAccess.Repository
 
                 }) ; ;
 
-            var stories = storyQuery.Skip(skipCount).Take(pageSize).ToList();
-            int totalStories = storyQuery.Count();
+            var stories = storyQuery.ToList();
+            
 
             return (stories, totalStories);
         }
-        public List<StoryViewModel> GetFilteredStories(StoryInputModel model)
+        public (List<StoryViewModel>,int) GetFilteredStories(StoryInputModel model)
         {
             int skipCount = (model.Page - 1) * model.PageSize;
 
@@ -82,8 +82,8 @@ namespace CI_Platform.DataAccess.Repository
                                                             .Where(ms => ms.MissionId == s.MissionId)
                                                             .Select(ms => ms.Skill.SkillName)
                                                             .All(sn => model.Skills.Contains(sn)));
-                //.Where(s => Skills.Count == 0 || Skills.All(sm => s.Mission.MissionSkills.Any(k => k.Skill.SkillName == sm)));
-
+            //.Where(s => Skills.Count == 0 || Skills.All(sm => s.Mission.MissionSkills.Any(k => k.Skill.SkillName == sm)));
+            int totalcount = storyQuery.Count();
             var stories = storyQuery
                 .OrderBy(s => s.Status)
                 .Skip(skipCount)
@@ -104,7 +104,7 @@ namespace CI_Platform.DataAccess.Repository
                 })
                 .ToList();
 
-            return stories;
+            return (stories, totalcount);
         }
 
         public List<City> CityCascade(long countryid)

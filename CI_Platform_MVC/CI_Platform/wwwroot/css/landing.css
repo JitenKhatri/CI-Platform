@@ -888,6 +888,27 @@ label {
     .add-btn img {
         filter: invert(72%) sepia(35%) saturate(4855%) hue-rotate(336deg) brightness(99%) contrast(97%);
     }
+
+.loading-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 10000;
+}
+
+.loader {
+    width: 200px;
+    height: 200px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    margin-left: -50px;
+    margin-top: -100px;
+    z-index: 10000;
+    overflow: auto;
+}
+
 @media (max-width: 575.98px) {
     .list-view .card {
         flex-direction: column;

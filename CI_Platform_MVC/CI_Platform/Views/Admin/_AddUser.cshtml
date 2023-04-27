@@ -91,24 +91,6 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         
-                        <label asp-for="CityId" class="form-label">City</label>
-                        <select asp-for="CityId" id='city' class="form-select city me-3" aria-label="Select City">
-                            <option disabled selected>Select Your City</option>
-                            @{
-                                foreach (var item in Model.Cities)
-                                {
-                                    bool isexist = (item.CityId == @Model.CityId);
-                                    if (isexist)
-                                    {
-                                        <option value=@item.CityId selected>@item.Name</option>
-                                    }
-                                }
-                            }
-                        </select>
-                        <span asp-validation-for="CityId" class="text-danger d-block"></span>
-                    </div>
-                    <div class="col-6">
-                        
                         <label asp-for="CountryId" class="form-label">Country</label>
                         <select id='country' asp-for="CountryId" onchange="CascadeCity()" class="form-select country me-3" aria-label="Select Country">
                             <option disabled selected>Select Your Country</option>
@@ -131,8 +113,26 @@
                         </select>
                         <span asp-validation-for="CountryId" class="text-danger d-block"></span>
                     </div>
+                    <div class="col-6">
+                        
+                        <label asp-for="CityId" class="form-label">City</label>
+                        <select asp-for="CityId" id='city' class="form-select city me-3" aria-label="Select City">
+                            <option disabled selected>Select Your City</option>
+                            @{
+                                foreach (var item in Model.Cities)
+                                {
+                                    bool isexist = (item.CityId == @Model.CityId);
+                                    if (isexist)
+                                    {
+                                        <option value=@item.CityId selected>@item.Name</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="CityId" class="text-danger d-block"></span>
+                    </div>
                 </div>
-                <div class="d-flex flex-row mt-3">
+                <div class="d-flex flex-row">
                     <button type="submit" class="btn add-btn">Save</button>
                 </div>
             </div>

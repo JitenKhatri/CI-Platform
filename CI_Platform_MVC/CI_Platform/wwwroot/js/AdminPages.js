@@ -12,6 +12,15 @@ $(".sidebar ul li.nav-item").each(function () {
         menuItem.removeClass("active");
     }
 });
+$(document).bind("ajaxSend", function () {
+    $('.loader').addClass('d-block').removeClass('d-none');
+}).bind("ajaxComplete", function () {
+    $('.loader').addClass('d-none').removeClass('d-block');
+});
+
+$(window).on('popstate', function (event) {
+    window.location.reload();
+});
 var MissionThemeTable
 var MissionApplicationTable
 $(document).ready(function () {
@@ -599,6 +608,7 @@ function DeleteStory(StoryId,Action) {
     });
 }
 
+
 function AddUserModal(UserId) {
     $.ajax({
         url: '/Admin/AddUserPartial',
@@ -609,6 +619,7 @@ function AddUserModal(UserId) {
         success: function (result) {
             $('.crud-container').empty();
             $('.crud-container').append(result);
+            history.pushState({ page: 'add-user' }, '', '/Admin');
         },
         error: function () {
             console.log("Error updating variable");
@@ -681,11 +692,21 @@ function CascadeCity() {
 
 function upload_profile_image() {
     var image = document.getElementById('profile-image').files[0]
-    var fr = new FileReader()
-    fr.onload = () => {
-        $('#old-profile-image').attr('src', fr.result)
+    if (image.type.startsWith('image/')) {
+        var fr = new FileReader()
+        fr.onload = () => {
+            $('#old-profile-image').attr('src', fr.result)
+        }
+        fr.readAsDataURL(image)
     }
-    fr.readAsDataURL(image)
+    else {
+        toastr.error('Please Upload an Image file only!', {
+            "positionClass": "toast-top-center",
+            progressBar: true,
+            timeOut: 3000,
+            closeButton: true,
+        });
+    }
 }
 
 function DeleteUser(id){
@@ -740,6 +761,7 @@ function DeleteUser(id){
     });
 }
 
+
 function AddCMSModel(CMSPageId) {
     $.ajax({
         url: '/Admin/AddCMSPartial',
@@ -750,6 +772,7 @@ function AddCMSModel(CMSPageId) {
         success: function (result) {
             $('.crud-container').empty();
             $('.crud-container').append(result);
+            history.pushState({ page: 'add-cms' }, '', '/Admin/CMSCrud');
         },
         error: function () {
             console.log("Error updating variable");
@@ -851,6 +874,7 @@ function AddMissionModel(MissionId) {
         success: function (result) {
             $('.crud-container').empty();
             $('.crud-container').append(result);
+            history.pushState({ page: 'add-mission' }, '', '/Admin/MissionCrud');
         },
         error: function () {
             console.log("Error updating variable");
@@ -921,6 +945,7 @@ function AddBannerModel(BannerId) {
         success: function (result) {
             $('.crud-container').empty();
             $('.crud-container').append(result);
+            history.pushState({ page: 'add-banner' }, '', '/Admin/BannerCrud');
         },
         error: function () {
             console.log("Error updating variable");

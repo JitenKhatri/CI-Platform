@@ -38,7 +38,7 @@ namespace CI_Platform.Models.ViewModels
 
 
         [Required]
-        [EmailAddress(ErrorMessage="Please enter a valid email")]
+        [RegularExpression(@"^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$", ErrorMessage = "Please enter a valid Email")]
         public string Email { get; set; } = string.Empty;
 
         [Required]

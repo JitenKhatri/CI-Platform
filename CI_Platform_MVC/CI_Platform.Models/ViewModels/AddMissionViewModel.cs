@@ -32,10 +32,14 @@ namespace CI_Platform.Models.ViewModels
         public DateTime? StartDate { get; set; }
 
         [Required]
+        [GreaterThanStartDate(ErrorMessage = "End date must be greater than start date")]
         public DateTime? EndDate { get; set; }
         [Required]
         public string MissionType { get; set; } = string.Empty;
         public long SeatsLeft { get; set; }
+
+        [Required]
+        [DeadlineBeforeEndDate(ErrorMessage = "Deadline must be before end date and after start date")]
         public DateTime? Deadline { get; set; }
 
         [Required]
@@ -53,9 +57,8 @@ namespace CI_Platform.Models.ViewModels
 
         public string? Goal_Motto { get; set; } = string.Empty;
         public string Selected_skill_names { get; set; } = string.Empty;
-        [Required]
+
         public List<IFormFile>? Media { get; set; }
-        [Required]
         public List<IFormFile>? MissionDocuments { get; set; }
         public List<string>? VideoUrls { get; set; } = new List<string>();
         public List<MissionSkill> MissionSkills { get; set; } = new List<MissionSkill>();
@@ -67,5 +70,36 @@ namespace CI_Platform.Models.ViewModels
         [RegularExpression(@"^https?:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})$", ErrorMessage = "Please enter a valid YouTube video URL.")]
         public string YoutubeUrl { get; set; } = string.Empty;
 
+
+        public class GreaterThanStartDateAttribute : ValidationAttribute
+        {
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                var model = (AddMissionViewModel)validationContext.ObjectInstance;
+
+                if (value != null && model.StartDate != null && (DateTime)value < model.StartDate)
+                {
+                    return new ValidationResult(this.ErrorMessage);
+                }
+
+                return ValidationResult.Success;
+            }
+        }
+
+        public class DeadlineBeforeEndDateAttribute : ValidationAttribute
+        {
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                var model = (AddMissionViewModel)validationContext.ObjectInstance;
+
+                if (value != null && model.StartDate != null && model.EndDate != null &&
+                    ((DateTime)value > model.EndDate || (DateTime)value < model.StartDate))
+                {
+                    return new ValidationResult(this.ErrorMessage);
+                }
+
+                return ValidationResult.Success;
+            }
+        }
     }
 }

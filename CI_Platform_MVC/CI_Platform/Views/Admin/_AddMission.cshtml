@@ -110,7 +110,7 @@
                 </select>
                 <span asp-validation-for="MissionType" class="text-danger d-block"></span>
             </div>
-            <div class="col-6 d-none" id="SeatsLeft">
+            <div class="col-6" id="SeatsLeft">
                 
                 <label class="form-label">TotalSeats</label>
                 <input type="number" asp-for="SeatsLeft" name="SeatsLeft" class="form-control" value="@Model.SeatsLeft" placeholder="Enter TotalSeats" />
@@ -118,10 +118,10 @@
             </div>
 
         </div>
-        <div class="mb-3 d-none" id="Deadline">
+        <div class="mb-3" id="Deadline">
             
             <label class="form-label">Deadline</label>
-            <input type="date" asp-for="Deadline" name="Deadline" class="form-control" value="@Model.Deadline" placeholder="Enter Deadline" />
+            <input type="date" asp-for="Deadline" name="Deadline" class="form-control" placeholder="Enter Deadline" />
             <span asp-validation-for="Deadline" class="text-danger d-block"></span>
         </div>
         <div class="mb-3 d-none" id="Goal_Motto">
@@ -287,10 +287,9 @@ missionTypeSelect.addEventListener('change', (event) => {
     const selectedValue = event.target.value;
 
     // Hide both mission sections initially
-    $('#Deadline').addClass('d-none').removeClass('d-block');
-    $('#SeatsLeft').addClass('d-none').removeClass('d-block');
     $('#Goal_Motto').addClass('d-none').removeClass('d-block');
-
+    $('#Deadline').addClass('d-none').removeClass('d-block');
+        $('#SeatsLeft').addClass('d-block').removeClass('d-none');
     // Show the appropriate mission section based on the selected value
     if (selectedValue === 'Time') {
         $('#Deadline').addClass('d-block').removeClass('d-none');

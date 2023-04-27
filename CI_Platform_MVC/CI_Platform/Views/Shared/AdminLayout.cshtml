@@ -102,9 +102,9 @@
                 </button>
                 <span class="ms-3">
                     @{
-                        var time = DateTime.Now.ToString("dddd, MMMM d, yyyy, h:mm tt");
-                    }
-                    @time
+                            var time = DateTime.Now.ToString("dddd, MMMM d, yyyy, h:mm tt");
+                        }
+                        @time
                 </span>
             </div>
             <div>
@@ -127,18 +127,22 @@
 
         </div>
 
-      @RenderBody()
-        
+            @RenderBody()
 
+      <div class="loader d-none">
+           <center>
+       <img class="loading-image" src="~/images/Filled fading balls.gif" alt="loading..">
+         </center>
+      </div>
         </main>
-      
+
 
     </div>
 
 
 
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-    
+
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
@@ -204,12 +208,12 @@
                             <input type="radio" name="skill-edit-status" value="0">
                             In-Active (0)
                         </label>
-           @*<label class="form-label mt-3">Status</label>
-                       <select class="form-select me-3 skill-status" aria-label="Select Status">
+                    @*<label class="form-label mt-3">Status</label>
+                        <select class="form-select me-3 skill-status" aria-label="Select Status">
                         <option value="2" disabled  selected>Select Status Active(1)/In-Active(0)</option>
                         <option value="1" >1</option>
                         <option value="0" >0</option>
-              </select>*@
+                        </select>*@
               <span class="text-danger d-none skill-status-empty">skill Status Is Required</span>
         </div>
       </div>
@@ -243,12 +247,12 @@
                             <input type="radio" name="status" value="0">
                             In-Active (0)
                         </label>
-                        @*<label class="form-label mt-3">Status</label>
-                            <select class="form-select me-3 theme-status" aria-label="Select Status">
-                            <option value="2" disabled  selected>Select Status Active(1)/In-Active(0)</option>
-                            <option value="1" >1</option>
-                            <option value="0" >0</option>
-                            </select>*@
+                    @*<label class="form-label mt-3">Status</label>
+                        <select class="form-select me-3 theme-status" aria-label="Select Status">
+                        <option value="2" disabled  selected>Select Status Active(1)/In-Active(0)</option>
+                        <option value="1" >1</option>
+                        <option value="0" >0</option>
+                        </select>*@
                         <span class="text-danger d-none theme-status-empty">Theme Status Is Required</span>
                     </div>
                 </div>
@@ -281,12 +285,12 @@
                             <input type="radio" name="theme-edit-status" value="0">
                             In-Active (0)
                         </label>
-                        @*<label class="form-label mt-3">Status</label>
-                            <select class="form-select me-3 theme-status" aria-label="Select Status">
-                            <option value="2" disabled selected>Select Status Active(1)/In-Active(0)</option>
-                            <option value="1">1</option>
-                            <option value="0">0</option>
-                            </select>*@
+                    @*<label class="form-label mt-3">Status</label>
+                        <select class="form-select me-3 theme-status" aria-label="Select Status">
+                        <option value="2" disabled selected>Select Status Active(1)/In-Active(0)</option>
+                        <option value="1">1</option>
+                        <option value="0">0</option>
+                        </select>*@
                         <span class="text-danger d-none theme-status-empty">Theme Status Is Required</span>
                     </div>
                 </div>

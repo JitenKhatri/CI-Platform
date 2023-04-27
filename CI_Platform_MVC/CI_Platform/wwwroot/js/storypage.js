@@ -1,44 +1,4 @@
-﻿////let cities = []
-////let countries = []
-////let themes = []
-////let skills = []
-
-//$('.form-check-input').on('change', function () {
-//    const dropdown = $(this).closest('.dropdown');
-//    const dropdownTitle = dropdown.find('.dropdown-toggle').text();
-//    const value = $(this).data('value');
-//    const selectedItemsRow = $('#selected-items-row');
-//    const itemId = $(this).attr('id');
-
-//    // Create a badge element to display the selected item
-//    const badge = $('<span class="badge text-bg-light ml-2 "></span>').text(value);
-//    const cross = $('<span class="badge text-bg-light ml-2 d-inline" id="cross-btn"></span>').html('&times;');
-
-//    if ($(this).is(':checked')) {
-//          cross.addClass('d-inline');
-//        badge.append(cross);
-//        selectedItemsRow.append(badge);
-//        // Cross button click event listener
-//        cross.on('click', function () {
-//            //    $(this).closest('.badge').remove();
-//            dropdown.find(`input[data-value="${value}"]`).prop('checked', false);
-//            badge.remove();
-//            remove_badges(dropdown.find(`input[id="${itemId}"]`));
-
-//        });
-//        // Clear all button click event listener
-//        $('#clear-all-btn').on('click', function () {
-//            $('.form-check-input').prop('checked', false);
-//            selectedItemsRow.empty();
-//            clear_all();
-//        });
-//    } else {
-//        // Checkbox is unchecked, remove its corresponding badge
-//        // If checkbox is unchecked, remove its corresponding badge
-//        const badge = selectedItemsRow.find(`span:contains(${value})`);
-//        badge.remove();
-//    }
-//});
+﻿
 function Cityfilter(name) {
     $('.Stories').empty()
     if (document.getElementById(name).checked) {
@@ -56,14 +16,15 @@ function Cityfilter(name) {
         type: 'POST',
         data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
         success: function (result) {
-            if (result == "") {
+            if (result.startsWith("<nav")) {
                 $('.page-not-found').css('display', 'block');
+                $('.pagination-link').css('display', 'none');
             }
             else {
                 $('.page-not-found').css('display', 'none');
+                $('.Stories').html(result);
             }
-            $('.Stories').html(result);
-            $('.pagination-link').css('display', 'none');
+            
         },
         error: function () {
             console.log("Error updating variable");
@@ -105,14 +66,15 @@ function Countryfilter(name, dataid) {
                 type: 'POST',
                 data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
                 success: function (result) {
-                    if (result == "") {
+                    if (result.startsWith("<nav")) {
                         $('.page-not-found').css('display', 'block');
+                        $('.pagination-link').css('display', 'none');
                     }
                     else {
                         $('.page-not-found').css('display', 'none');
+                        $('.Stories').html(result);
                     }
-                    $('.Stories').html(result);
-                    $('.pagination-link').css('display', 'none');
+                    
                 },
                 error: function () {
                     console.log("Error updating variable");
@@ -161,14 +123,15 @@ const Themefilter = (name) => {
         type: 'POST',
         data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
         success: function (result) {
-            if (result == "") {
+            if (result.startsWith("<nav")) {
                 $('.page-not-found').css('display', 'block');
+                $('.pagination-link').css('display', 'none');
             }
             else {
                 $('.page-not-found').css('display', 'none');
+                $('.Stories').html(result);
             }
-            $('.Stories').html(result);
-            $('.pagination-link').css('display', 'none');
+            
         },
         error: function () {
             console.log("Error updating variable");
@@ -193,14 +156,15 @@ const Skillfilter = (name) => {
         type: 'POST',
         data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
         success: function (result) {
-            if (result == "") {
+            if (result.startsWith("<nav")) {
                 $('.page-not-found').css('display', 'block');
+                $('.pagination-link').css('display', 'none');
             }
             else {
                 $('.page-not-found').css('display', 'none');
+                $('.Stories').html(result);
             }
-            $('.Stories').html(result);
-            $('.pagination-link').css('display', 'none');
+            
         },
         error: function () {
             console.log("Error updating variable");
@@ -209,7 +173,7 @@ const Skillfilter = (name) => {
 }
 
 function search() {
-    var input = document.getElementById("search-input").value.toLowerCase();
+    input = document.getElementById("search-input").value.toLowerCase();
     $('.Stories').empty()
     $.ajax(
         {
@@ -217,14 +181,16 @@ function search() {
             type: 'POST',
             data: { SearchText :input, Cities: cities, Themes: themes, Skills: skills },
             success: function (result) {
-                if (result == "") {
+                if (result.startsWith("<nav")) {
                     $('.page-not-found').css('display', 'block');
+                    $('.pagination-link').css('display', 'none');
                 }
                 else {
                     $('.page-not-found').css('display', 'none');
+                    $('.Stories').html(result);
                 }
-                $('.Stories').html(result);
-                $('.pagination-link').css('display', 'none');
+                
+                
             },
             error: function () {
                 console.log("Error updating variable");
@@ -269,23 +235,45 @@ function remove_badges(input) {
         skills.splice(skills.indexOf(id), 1)
 
     }
-    $('.missions').empty()
+    $('.Stories').empty()
     $.ajax({
         url: '/Story/Story',
         type: 'POST',
         data: { Countries: countries, Cities: cities, Themes: themes, Skills: skills },
         success: function (result) {
-            if (result == "") {
+            if (result.startsWith("<nav")) {
                 $('.page-not-found').css('display', 'block');
                 $('.pagination-link').css('display', 'none');
             }
             else {
                 $('.page-not-found').css('display', 'none');
                 $('.pagination-link').css('display', 'block');
+                $('.Stories').html(result);
+            }
+            
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+}
+function StoryPagination(page, pageSize) {
+    $('.Stories').empty()
+    $.ajax({
+        url: '/Story/Story',
+        type: 'POST',
+        data: { SearchText: input, Countries: countries, Cities: cities, Themes: themes, Skills: skills, PageSize: pageSize, Page: page, SortOrder: sortorder },
+        success: function (result) {
+            if (result == "") {
+                $('.page-not-found').css('display', 'block');
+            }
+            else {
+                $('.page-not-found').css('display', 'none');
             }
             $('.Stories').html(result);
         },
-        error: function () {
+        error: function (error) {
+            console.log(error)
             console.log("Error updating variable");
         }
     })
@@ -296,67 +284,6 @@ const editor = (StoryId) => {
         removeButtons: ['About', 'Cut', 'Copy', 'Paste', 'Link', 'Unlink', 'Anchor', 'Indent', 'Outdent', 'NumberedList', 'BulletedList']
     });
 }
-//Dropzone.autoDiscover = false;
-//const DRopzone = (StoryId) => {
-//    var myDropzone = new Dropzone(`#myDropzone-${StoryId}`, {
-//        url: "/Story/ShareStory",
-//        maxFiles: 20,
-//        maxFilesize: 4,
-//        acceptedFiles: ".jpeg,.jpg,.png",
-//        addRemoveLinks: false,
-//        uploadMultiple: true,
-//        parallelUploads: 20,
-//        dictRemoveFile: "Remove",
-//        autoProcessQueue: false,
-//        dictDefaultMessage: "Drop files here or click to upload",
-//        dictInvalidFileType: "Invalid file type. Only JPEG, JPG and PNG are allowed.",
-//        dictFileTooBig: "File size is too big. Maximum file size allowed is 4MB.",
-//        dictMaxFilesExceeded: "You can only upload a maximum of 20 files.",
-//        previewTemplate: $("#imagePreview").html(),
-//        init: function () {
-//            this.on("addedfile", function (file) {
-//                // Show the remove button when a file is added
-//                file.previewElement.querySelector(".btn-remove").style.display = "block";
-//                file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
-//                    // Remove the file from Dropzone
-//                    myDropzone.removeFile(file);
-//                });
-//            });
-//            this.on("maxfilesexceeded", function (file) {
-//                this.removeFile(file);
-//                showAlert("You can only upload a maximum of 20 files.");
-//            });
-
-//            let myDropzone = this;
-//            var imageurls = $(".imageurl").get();
-//            imageurls.forEach(i => {
-//                //let mockFile = { name: "Filename 2", size: 12345 };
-//                //myDropzone.displayExistingFile(mockFile, i.value);
-//                console.log(i.value);
-//                fetch(i.value)
-//                    .then(response => response.blob())
-//                    .then(blob => {
-//                        var file = new File([blob], i.value, { type: blob.type });
-//                        var files = myDropzone.getAcceptedFiles();
-//                        files.push(file);
-//                        myDropzone.addFile(file); // add the file to the upload queue
-//                    })
-//                    .catch(error => console.error(error));
-//            });// manually trigger processing of the preselected file
-//            myDropzone.on("addedfile", function (file) {
-//                console.log("Added file:", file);
-//                file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
-//                    // Remove the file from Dropzone
-//                    myDropzone.removeFile(file);
-//                });
-//                myDropzone.on("removedfile", function (file) {
-//                    console.log("Removed file:", file)
-
-//                });
-        
-//        }
-//    });
-//}
 Dropzone.autoDiscover = false;
 
 const DRopzone = (StoryId) => {

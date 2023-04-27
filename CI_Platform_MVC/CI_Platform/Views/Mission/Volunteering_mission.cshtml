@@ -273,7 +273,7 @@
                                     {
                                         <li class="list-group-item">
                                             <div class="d-flex align-items-center">
-                                                <img class="rounded-circle img-fluid me-2" src=@item.Avatar alt="" />
+                                                <img class="rounded-circle img-fluid me-2" style="height:81px;width:81px;" src=@item.Avatar alt="" />
                                                 <span class="me-auto">@item.FirstName @item.LastName</span>
                                                 <button id="recommend-@item.UserId" type="button" class="btn btn-primary recommend-button" onclick="recommend(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions?.MissionId,'@item.Email',@item.UserId);add_coworkers('coworker-@item.UserId'); ">Recommend</button>
                                             </div>
