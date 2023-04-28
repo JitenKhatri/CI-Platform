@@ -1,4 +1,7 @@
 ﻿@using System.Security.Claims
+@{
+var avatar = User.FindFirst("Avatar")?.Value;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,7 +43,7 @@
                         <button class="dropdown-toggle profile"
                                 type="button"
                                 data-bs-toggle="dropdown">
-                            <img src="~/images/user-img.png" class="profileimg" />
+                            <img src=@avatar class="profileimg" />
                             <span class="mx-2 d-none d-sm-block">@Context.User.Identity.Name</span>
                             <img src="~/images/drop-down.png"
                                  class="mx-1 drop-down d-none d-sm-block" />

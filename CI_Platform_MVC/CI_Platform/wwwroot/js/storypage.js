@@ -289,7 +289,7 @@ Dropzone.autoDiscover = false;
 const DRopzone = (StoryId) => {
     var myDropzone = new Dropzone(`#myDropzone-${StoryId}`, {
         url: "/Story/ShareStory",
-        maxFiles: 20,
+        maxFiles: 10,
         maxFilesize: 4,
         acceptedFiles: ".jpeg,.jpg,.png",
         addRemoveLinks: false,
@@ -300,21 +300,25 @@ const DRopzone = (StoryId) => {
         dictDefaultMessage: "Drop files here or click to upload",
         dictInvalidFileType: "Invalid file type. Only JPEG, JPG and PNG are allowed.",
         dictFileTooBig: "File size is too big. Maximum file size allowed is 4MB.",
-        dictMaxFilesExceeded: "You can only upload a maximum of 20 files.",
+        dictMaxFilesExceeded: "You can only upload a maximum of 10 files.",
         previewTemplate: $("#imagePreview").html(),
         init: function () {
             this.on("addedfile", function (file) {
-                // Show the remove button when a file is added
-                file.previewElement.querySelector(".btn-remove").style.display = "block";
-                file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
-                    // Remove the file from Dropzone
-                    myDropzone.removeFile(file);
-                });
+                if (file.type.startsWith('image/')) {
+                    // Show the remove button when a file is added
+                    file.previewElement.querySelector(".btn-remove").style.display = "block";
+                    file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
+                        // Remove the file from Dropzone
+                        myDropzone.removeFile(file);
+                    });
+                    $('.mediarequired').addClass('d-none').removeClass('d-inline');
+                }
             });
             this.on("maxfilesexceeded", function (file) {
                 this.removeFile(file);
-                showAlert("You can only upload a maximum of 20 files.");
+                showAlert("You can only upload a maximum of 10 files.");
             });
+            
 
             let myDropzone = this;
             var imageurls = $(".imageurl").get();
@@ -343,6 +347,16 @@ const DRopzone = (StoryId) => {
             });
             myDropzone.on("removedfile", function (file) {
                 console.log("Removed file:", file);
+                var files = myDropzone.getAcceptedFiles();
+                if (files.length < 1) {
+                    $('.mediarequired').removeClass('d-none').addClass('d-inline')
+                }
+            });
+            myDropzone.on('error', function (file, errorMessage) {
+
+                     showAlert(errorMessage);
+                    this.removeFile(file);
+                
             });
         }
     });
@@ -375,8 +389,8 @@ var Video_url
 function editstory(type,storyId,missionId) {
     validateEdit(storyId);
 
-    if (edit_title.trim().length > 50 && edit_title.trim().length < 80 && edit_date.length != 0
-        && Date.parse(Current_date) >= Date.parse(Comparedate) && edit_mystory.trim().length > 70 && edit_mystory.trim().length < 40000 && validateYouTubeUrls(Video_url)) {
+    if (edit_title.trim().length > 20 && edit_title.trim().length < 80 && edit_date.length != 0
+        && Date.parse(Current_date) >= Date.parse(Comparedate) && edit_mystory.trim().length > 70 && edit_mystory.trim().length < 400 && validateYouTubeUrls(Video_url)) {
 
         var formData = new FormData();
 
@@ -420,11 +434,11 @@ function validateEdit(storyId) {
 /*    Video_url = $(`#edit-${storyId}`).find('.video-url').val().split("\n");*/
     // Define validation conditions
     const conditions = [
-        { message: "Title should be at least 50 characters long", test: edit_title.trim().length < 50 },
+        { message: "Title should be at least 20 characters long", test: edit_title.trim().length < 20 },
         { message: "Title can have maximum 80 characters", test: edit_title.trim().length > 80 },
         { message: "Please enter a valid date", test: edit_date.length == 0 || Date.parse(Current_date) <= Date.parse(Comparedate) },
         { message: "Story description should be at least have 70 character", test: edit_mystory.trim().length < 70 },
-        { message: "Story description is too big", test: edit_mystory.trim().length > 40000 },
+        { message: "Story description can have 200 characters", test: edit_mystory.trim().length > 400 },
         { message: "Please enter youtube video urls only, enter different urls in new line and maximum 20 urls are allowed", test: !validateYouTubeUrls(Video_url)}
     ];
 
@@ -460,7 +474,7 @@ if (window.location.href === 'https://localhost:7064/Story/ShareStory') {
     $(function () {
         var myDropzone = new Dropzone("#myDropzone", {
             url: "/Story/ShareStory",
-            maxFiles: 20,
+            maxFiles: 10,
             maxFilesize: 4,
             uploadMultiple: true,
             acceptedFiles: ".jpeg,.jpg,.png",
@@ -470,20 +484,50 @@ if (window.location.href === 'https://localhost:7064/Story/ShareStory') {
             dictDefaultMessage: "Drop files here or click to upload",
             dictInvalidFileType: "Invalid file type. Only JPEG, JPG and PNG are allowed.",
             dictFileTooBig: "File size is too big. Maximum file size allowed is 4MB.",
-            dictMaxFilesExceeded: "You can only upload a maximum of 20 files.",
+            dictMaxFilesExceeded: "You can only upload a maximum of 10 files.",
             previewTemplate: $("#imagePreview").html(),
             init: function () {
                 this.on("addedfile", function (file) {
-                    // Show the remove button when a file is added
-                    file.previewElement.querySelector(".btn-remove").style.display = "block";
+                    if (file.type.startsWith('image/')) {
+                        // Show the remove button when a file is added
+                        file.previewElement.querySelector(".btn-remove").style.display = "block";
+                        file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
+                            // Remove the file from Dropzone
+                            myDropzone.removeFile(file);
+                        });
+                        $('.mediarequired').addClass('d-none').removeClass('d-inline');
+                    }
+                });
+                this.on('error', function (file, errorMessage) {
+                    if (errorMessage.indexOf('accept') !== -1) {
+                        showAlert('Please select an image file.');
+                        this.removeFile(file);
+                    }
+                });
+                this.on("maxfilesexceeded", function (file) {
+                    this.removeFile(file);
+                    showAlert("You can only upload a maximum of 10 files.");
+                });
+                let myDropzone = this;
+                myDropzone.on('error', function (file, errorMessage) {
+
+                    showAlert(errorMessage);
+                    this.removeFile(file);
+
+                });
+                myDropzone.on("addedfile", function (file) {
+                    console.log("Added file:", file);
                     file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
                         // Remove the file from Dropzone
                         myDropzone.removeFile(file);
                     });
                 });
-                this.on("maxfilesexceeded", function (file) {
-                    this.removeFile(file);
-                    showAlert("You can only upload a maximum of 20 files.");
+                myDropzone.on("removedfile", function (file) {
+                    console.log("Removed file:", file);
+                    var files = myDropzone.getAcceptedFiles();
+                    if (files.length < 1) {
+                        $('.mediarequired').removeClass('d-none').addClass('d-inline')
+                    }
                 });
              
             }
@@ -495,8 +539,8 @@ if (window.location.href === 'https://localhost:7064/Story/ShareStory') {
 function sharestory(type) {
     validate();
 
-    if (mission != 0 && title.trim().length > 50 && title.trim().length < 80 && $('#datepicker').datepicker().val().length != 0
-        && Date.parse(current_date) >= Date.parse(comparedate) && mystory.trim().length > 70 && mystory.trim().length < 40000 && validateYouTubeUrls(video_url)){
+    if (mission != 0 && title.trim().length > 20 && title.trim().length < 80 && $('#datepicker').datepicker().val().length != 0
+        && Date.parse(current_date) >= Date.parse(comparedate) && mystory.trim().length > 70 && mystory.trim().length < 400 && validateYouTubeUrls(video_url)){
 
         var formData = new FormData();
 
@@ -521,9 +565,9 @@ function sharestory(type) {
         // Send the AJAX request with the FormData object after the files have been uploaded
         myDropzone.on("success", function (file, response) {
             showAlert("Story added !!")
-            setTimeout(function () {
+
                 window.location.href = "https://localhost:7064/Story/Story";
-            }, 5000);
+
         });
 
         
@@ -542,11 +586,11 @@ function validate() {
     // Define validation conditions
     const conditions = [
         { message: "Please select a mission", test: mission === 0 },
-        { message: "Title should be at least 50 characters long", test: title.trim().length < 50 },
+        { message: "Title should be at least 20 characters long", test: title.trim().length < 20 },
         { message: "Title can have maximum 80 characters", test: title.trim().length > 80 },
         { message: "Please enter a valid date", test: $('#datepicker').datepicker().val().length == 0 || Date.parse(current_date) <= Date.parse(comparedate) },
         { message: "Story description should be at least have 70 character", test: mystory.trim().length < 70 },
-        { message: "Story description is too big", test: mystory.trim().length > 40000 },
+        { message: "Story description is can have maximum 400 characters", test: mystory.trim().length > 400 },
         { message: "Please enter youtube video urls only, enter different urls in new line and maximum 20 urls are allowed", test: !validateYouTubeUrls(video_url) }
     ];
 

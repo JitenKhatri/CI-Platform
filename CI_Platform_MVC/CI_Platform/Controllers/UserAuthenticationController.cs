@@ -4,17 +4,14 @@ using CI_Platform.Models.ViewModels;
 using CI_Platform.ViewModels;
 using Controllers;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
-using System.Text.Encodings.Web;
 
 namespace CI_Platform.Controllers
 {
-    
+
     [Route("UserAuthentication")]
     public class UserAuthenticationController : Controller
     {
@@ -53,7 +50,7 @@ namespace CI_Platform.Controllers
             {
                 // Check if a user with the provided email and password exists in the database
                User userExists = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(model.Email.ToLower()) &&
-    c.Password.Equals(model.Password));
+    c.Password.Equals(model.Password) && c.DeletedAt == null);
 
                 if (userExists == null)
                 {
@@ -68,7 +65,8 @@ namespace CI_Platform.Controllers
                                   new Claim(ClaimTypes.Name, $"{userExists.FirstName} {userExists.LastName}"),
                                   new Claim(ClaimTypes.Email, userExists.Email),
                                   new Claim(ClaimTypes.Sid, userExists.UserId.ToString()),
-                                  new Claim(ClaimTypes.Role, userExists.Role.TrimEnd())
+                                  new Claim(ClaimTypes.Role, userExists.Role.TrimEnd()),
+                                  new Claim("Avatar",userExists.Avatar)
                                };
                     var identity = new ClaimsIdentity(claims, "AuthCookie");
                     var Principle = new ClaimsPrincipal(identity);
@@ -142,7 +140,8 @@ namespace CI_Platform.Controllers
                         Email = model.Email,
                         PhoneNumber = model.PhoneNumber,
                         Password = model.Password,
-                        Role = "user"
+                        Role = "user",
+                        Avatar = "/images/user-img.png"
                     };
                     db.UserAuthentication.Add(user);
                     db.save();

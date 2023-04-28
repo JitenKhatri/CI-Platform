@@ -10,9 +10,9 @@ namespace CI_Platform.Models.ViewModels
     {
         public string? Title { get; set; }
         public long Mission_id { get; set; }
-        public string? Mission_type { get; set; }
+        public string? Mission_type { get; set; } = string.Empty;
 
-        public string? Goal_object { get; set; }
+        public string? Goal_object { get; set; } = string.Empty;
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
     }

@@ -425,3 +425,10 @@ C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\ne
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\System.Web.Mvc.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\System.Web.Razor.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\System.Web.Helpers.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\System.Web.WebPages.dll
+C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll

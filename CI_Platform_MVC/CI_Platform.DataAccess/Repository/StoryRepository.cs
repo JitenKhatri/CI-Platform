@@ -152,9 +152,15 @@ namespace CI_Platform.DataAccess.Repository
                     {
                         // Get the uploaded file name
                         string fileName = Path.GetFileName(item.FileName);
+                        Random random = new Random();
+                        string randomString = new string(
+                            Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
+                                      .Select(s => s[random.Next(s.Length)])
+                                      .ToArray()
+                        );
 
                         // Create a unique file name to avoid overwriting existing files
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+                        uniqueFileName = randomString + "_" + fileName;
 
                         // Set the file path where the uploaded file will be saved
                         string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
@@ -215,9 +221,15 @@ namespace CI_Platform.DataAccess.Repository
                     {
                         // Get the uploaded file name
                         string fileName = Path.GetFileName(item.FileName);
+                        Random random = new Random();
+                        string randomString = new string(
+                            Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
+                                      .Select(s => s[random.Next(s.Length)])
+                                      .ToArray()
+                        );
 
                         // Create a unique file name to avoid overwriting existing files
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+                        uniqueFileName = randomString + "_" + fileName;
 
                         // Set the file path where the uploaded file will be saved
                         string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);

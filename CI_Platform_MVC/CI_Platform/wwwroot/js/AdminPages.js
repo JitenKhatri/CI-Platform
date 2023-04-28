@@ -659,10 +659,7 @@ function AddUser(form, e) {
                 });
                 $("#AddUserForm")[0].reset();
                 if (formData.UserId != 0) {
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 4000);
-
+                        window.location.reload()
                 }
             }
             
@@ -706,6 +703,8 @@ function upload_profile_image() {
             timeOut: 3000,
             closeButton: true,
         });
+        var fileInput = document.getElementById('profile-image');
+        fileInput.value = '';
     }
 }
 
@@ -800,10 +799,7 @@ function AddCMS(form, e) {
             });
             $("#cmsform")[0].reset();
             if (formData.CMSPageId != 0) {
-                setTimeout(function () {
-                    window.location.reload();
-                }, 5000);
-               
+                window.location.reload();
             }
         },
         error: function (error) {

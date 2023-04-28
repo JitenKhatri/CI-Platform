@@ -5,13 +5,15 @@ namespace CI_Platform.ViewModels
     public class RegistrationViewModel
     {
         [Required(ErrorMessage = "First name is required")]
+        [RegularExpression(@"^[^\s]{3,20}$", ErrorMessage = "First name must have between 3 and 20 characters and no spaces.")]
         public string? FirstName { get; set; }
 
         [Required(ErrorMessage = "Last name is required")]
+        [RegularExpression(@"^[^\s]{3,20}$", ErrorMessage = "Last name must have between 3 and 20 characters and no spaces.")]
         public string? LastName { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Invalid email address")]
+        [RegularExpression(@"^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$", ErrorMessage = "Please enter a valid Email")]
         public string Email { get; set; } = null!;
 
         [Required(ErrorMessage = "Password is required")]
@@ -19,6 +21,7 @@ namespace CI_Platform.ViewModels
         public string Password { get; set; }= null!;
 
         [Required(ErrorMessage = "Phone number is required")]
+        [MinLength(10, ErrorMessage = "Phone number has to have 10 numbers")]
         [MaxLength(10, ErrorMessage = "Phone number can have maximum 10 numbers")]
         public int PhoneNumber { get; set; }
         

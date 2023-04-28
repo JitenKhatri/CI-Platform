@@ -517,7 +517,7 @@ namespace CI_Platform.DataAccess.Repository
 
         public bool AddMission(AddMissionViewModel addMissionViewModel)
         {
-            if (addMissionViewModel.MissionId == 0)
+            if (addMissionViewModel.MissionId == 0) //Add Mission
             {
                 if (addMissionViewModel.MissionType == "Time")
                 {
@@ -572,7 +572,7 @@ namespace CI_Platform.DataAccess.Repository
                             MediaName = fileName,
                             // set the first instance of item in Media as default and for remaining set default as 0
                         });
-                
+
                     }
                     _db.MissionMedia.Add(new MissionMedium
                     {
@@ -602,104 +602,108 @@ namespace CI_Platform.DataAccess.Repository
                             }
                         }
                     }
-                    foreach(var item in addMissionViewModel.MissionDocuments)
+                    if (addMissionViewModel.MissionDocuments.Count > 0)
                     {
-                        string uniqueFileName = null;
-                        // Get the uploaded file name
-                        string fileName = Path.GetFileName(item.FileName);
-                        string filetype = Path.GetExtension(item.FileName);
-
-                        Random random = new Random();
-                        string randomString = new string(
-                            Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
-                                      .Select(s => s[random.Next(s.Length)])
-                                      .ToArray()
-                        );
-                        // Create a unique file name to avoid overwriting existing files
-                        uniqueFileName = randomString + "_" + fileName;
-
-                        // Set the file path where the uploaded file will be saved
-                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", uniqueFileName);
-
-                        // Save the uploaded file to the specified directory
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        foreach (var item in addMissionViewModel.MissionDocuments)
                         {
-                            item.CopyTo(fileStream);
+                            string uniqueFileName = null;
+                            // Get the uploaded file name
+                            string fileName = Path.GetFileName(item.FileName);
+                            string filetype = Path.GetExtension(item.FileName);
+
+                            Random random = new Random();
+                            string randomString = new string(
+                                Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
+                                          .Select(s => s[random.Next(s.Length)])
+                                          .ToArray()
+                            );
+                            // Create a unique file name to avoid overwriting existing files
+                            uniqueFileName = randomString + "_" + fileName;
+
+                            // Set the file path where the uploaded file will be saved
+                            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", uniqueFileName);
+
+                            // Save the uploaded file to the specified directory
+                            using (var fileStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                item.CopyTo(fileStream);
+                            }
+                            _db.MissionDocuments.Add(new MissionDocument
+                            {
+                                MissionId = NewMissionId,
+                                DocumentType = filetype,
+                                DocumentPath = "/documents/" + uniqueFileName, // Save the unique file name in the database
+                                DocumentName = fileName,
+                                // set the first instance of item in Media as default and for remaining set default as 0
+                            });
                         }
-                        _db.MissionDocuments.Add(new MissionDocument
-                        {
-                            MissionId = NewMissionId,
-                            DocumentType = filetype,
-                            DocumentPath = "/documents/" + uniqueFileName, // Save the unique file name in the database
-                            DocumentName = fileName,
-                            // set the first instance of item in Media as default and for remaining set default as 0
-                        }); 
-                }
+                    }
                     Save();
                     return true;
                 }
-                else if (addMissionViewModel.MissionType == "Goal")
+            
+            else if (addMissionViewModel.MissionType == "Goal")
+            {
+                Mission NewMission = new Mission
                 {
-                    Mission NewMission = new Mission
+                    MissionType = "GO",
+                    Title = addMissionViewModel.Title,
+                    ShortDescription = addMissionViewModel.ShortDescription,
+                    Description = addMissionViewModel.Description,
+                    Deadline = addMissionViewModel.Deadline,
+                    CityId = addMissionViewModel.CityId,
+                    CountryId = addMissionViewModel.CountryId,
+                    ThemeId = addMissionViewModel.ThemeId,
+                    Availability = addMissionViewModel.Availability,
+                    OrganizationName = addMissionViewModel.OrganizationName,
+                    OrganizationDetail = addMissionViewModel.OrganizationDetail,
+                    GoalMotto = addMissionViewModel.Goal_Motto,
+                    StartDate = addMissionViewModel.StartDate,
+                    EndDate = addMissionViewModel.EndDate,
+                };
+                _db.Missions.Add(NewMission);
+                Save();
+                long NewMissionId = NewMission.MissionId;
+                foreach (var item in addMissionViewModel.Media)
+                {
+                    string uniqueFileName = null;
+                    // Get the uploaded file name
+                    string fileName = Path.GetFileName(item.FileName);
+
+                    Random random = new Random();
+                    string randomString = new string(
+                        Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
+                                  .Select(s => s[random.Next(s.Length)])
+                                  .ToArray()
+                    );
+                    // Create a unique file name to avoid overwriting existing files
+                    uniqueFileName = randomString + "_" + fileName;
+
+                    // Set the file path where the uploaded file will be saved
+                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
+
+                    // Save the uploaded file to the specified directory
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
-                        MissionType = "GO",
-                        Title = addMissionViewModel.Title,
-                        ShortDescription = addMissionViewModel.ShortDescription,
-                        Description = addMissionViewModel.Description,
-                        Deadline = addMissionViewModel.Deadline,
-                        CityId = addMissionViewModel.CityId,
-                        CountryId = addMissionViewModel.CountryId,
-                        ThemeId = addMissionViewModel.ThemeId,
-                        Availability = addMissionViewModel.Availability,
-                        OrganizationName = addMissionViewModel.OrganizationName,
-                        OrganizationDetail = addMissionViewModel.OrganizationDetail,
-                        GoalMotto = addMissionViewModel.Goal_Motto,
-                        StartDate = addMissionViewModel.StartDate,
-                        EndDate = addMissionViewModel.EndDate,
-                    };
-                    _db.Missions.Add(NewMission);
-                    Save();
-                    long NewMissionId = NewMission.MissionId;
-                    foreach (var item in addMissionViewModel.Media)
-                    {
-                        string uniqueFileName = null;
-                        // Get the uploaded file name
-                        string fileName = Path.GetFileName(item.FileName);
-
-                        Random random = new Random();
-                        string randomString = new string(
-                            Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
-                                      .Select(s => s[random.Next(s.Length)])
-                                      .ToArray()
-                        );
-                        // Create a unique file name to avoid overwriting existing files
-                        uniqueFileName = randomString + "_" + fileName;
-
-                        // Set the file path where the uploaded file will be saved
-                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
-
-                        // Save the uploaded file to the specified directory
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            item.CopyTo(fileStream);
-                        }
-                        _db.MissionMedia.Add(new MissionMedium
-                        {
-                            MissionId = NewMissionId,
-                            MediaType = "img",
-                            MediaPath = "/images/" + uniqueFileName, // Save the unique file name in the database
-                            MediaName = fileName,
-                            // set the first instance of item in Media as default and for remaining set default as 0
-                        });
-                       
+                        item.CopyTo(fileStream);
                     }
                     _db.MissionMedia.Add(new MissionMedium
                     {
                         MissionId = NewMissionId,
-                        MediaType = "vid",
-                        MediaPath = addMissionViewModel.YoutubeUrl,
-                        MediaName = "youtubevideo"
+                        MediaType = "img",
+                        MediaPath = "/images/" + uniqueFileName, // Save the unique file name in the database
+                        MediaName = fileName,
+                        // set the first instance of item in Media as default and for remaining set default as 0
                     });
+
+                }
+                _db.MissionMedia.Add(new MissionMedium
+                {
+                    MissionId = NewMissionId,
+                    MediaType = "vid",
+                    MediaPath = addMissionViewModel.YoutubeUrl,
+                    MediaName = "youtubevideo"
+                });
                     if (addMissionViewModel.Selected_Skills != null && addMissionViewModel.Selected_Skills != "")
                     {
                         List<MissionSkill> mission_skills = _db.MissionSkills.Where(c => c.MissionId == NewMissionId).ToList();
@@ -721,38 +725,41 @@ namespace CI_Platform.DataAccess.Repository
                             }
                         }
                     }
-                    foreach (var item in addMissionViewModel.MissionDocuments)
+                    if (addMissionViewModel.MissionDocuments.Count > 0)
                     {
-                        string uniqueFileName = null;
-                        // Get the uploaded file name
-                        string fileName = Path.GetFileName(item.FileName);
-                        string filetype = Path.GetExtension(item.FileName);
-
-                        Random random = new Random();
-                        string randomString = new string(
-                            Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
-                                      .Select(s => s[random.Next(s.Length)])
-                                      .ToArray()
-                        );
-                        // Create a unique file name to avoid overwriting existing files
-                        uniqueFileName = randomString + "_" + fileName;
-
-                        // Set the file path where the uploaded file will be saved
-                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", uniqueFileName);
-
-                        // Save the uploaded file to the specified directory
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        foreach (var item in addMissionViewModel.MissionDocuments)
                         {
-                            item.CopyTo(fileStream);
+                            string uniqueFileName = null;
+                            // Get the uploaded file name
+                            string fileName = Path.GetFileName(item.FileName);
+                            string filetype = Path.GetExtension(item.FileName);
+
+                            Random random = new Random();
+                            string randomString = new string(
+                                Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
+                                          .Select(s => s[random.Next(s.Length)])
+                                          .ToArray()
+                            );
+                            // Create a unique file name to avoid overwriting existing files
+                            uniqueFileName = randomString + "_" + fileName;
+
+                            // Set the file path where the uploaded file will be saved
+                            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", uniqueFileName);
+
+                            // Save the uploaded file to the specified directory
+                            using (var fileStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                item.CopyTo(fileStream);
+                            }
+                            _db.MissionDocuments.Add(new MissionDocument
+                            {
+                                MissionId = NewMissionId,
+                                DocumentType = filetype,
+                                DocumentPath = "/documents/" + uniqueFileName, // Save the unique file name in the database
+                                DocumentName = fileName,
+                                // set the first instance of item in Media as default and for remaining set default as 0
+                            });
                         }
-                        _db.MissionDocuments.Add(new MissionDocument
-                        {
-                            MissionId = NewMissionId,
-                            DocumentType = filetype,
-                            DocumentPath = "/documents/" + uniqueFileName, // Save the unique file name in the database
-                            DocumentName = fileName,
-                            // set the first instance of item in Media as default and for remaining set default as 0
-                        });
                     }
                     Save();
                     return true;
@@ -785,17 +792,28 @@ namespace CI_Platform.DataAccess.Repository
                     long EditMissionId = addMissionViewModel.MissionId;
                     //Deleting existing media 
                     List<MissionMedium> mission_media = _db.MissionMedia.Where(c => c.MissionId == EditMissionId).ToList();
-                    if (mission_media.Count > 0)
+                    foreach (var medium in mission_media)
                     {
-                        _db.RemoveRange(mission_media);
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", medium.MediaPath);
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
+                        }
+                        _db.MissionMedia.Remove(medium);
                     }
                     List<MissionDocument> missionDocuments = _db.MissionDocuments.Where(c => c.MissionId == EditMissionId).ToList();
-                    if (missionDocuments.Count > 0)
+                    foreach (var medium in missionDocuments)
                     {
-                        _db.RemoveRange(missionDocuments);
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", medium.DocumentPath);
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
+                        }
+                        _db.MissionDocuments.Remove(medium);
                     }
+
                     foreach (var item in addMissionViewModel.Media)
-                       {
+                    {
                         string uniqueFileName = null;
                         // Get the uploaded file name
                         string fileName = Path.GetFileName(item.FileName);
@@ -853,38 +871,41 @@ namespace CI_Platform.DataAccess.Repository
                             }
                         }
                     }
-                    foreach (var item in addMissionViewModel.MissionDocuments)
+                    if (addMissionViewModel.MissionDocuments.Count > 0)
                     {
-                        string uniqueFileName = null;
-                        // Get the uploaded file name
-                        string fileName = Path.GetFileName(item.FileName);
-                        string filetype = Path.GetExtension(item.FileName);
-
-                        Random random = new Random();
-                        string randomString = new string(
-                            Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
-                                      .Select(s => s[random.Next(s.Length)])
-                                      .ToArray()
-                        );
-                        // Create a unique file name to avoid overwriting existing files
-                        uniqueFileName = randomString + "_" + fileName;
-
-                        // Set the file path where the uploaded file will be saved
-                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", uniqueFileName);
-
-                        // Save the uploaded file to the specified directory
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        foreach (var item in addMissionViewModel.MissionDocuments)
                         {
-                            item.CopyTo(fileStream);
+                            string uniqueFileName = null;
+                            // Get the uploaded file name
+                            string fileName = Path.GetFileName(item.FileName);
+                            string filetype = Path.GetExtension(item.FileName);
+
+                            Random random = new Random();
+                            string randomString = new string(
+                                Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
+                                          .Select(s => s[random.Next(s.Length)])
+                                          .ToArray()
+                            );
+                            // Create a unique file name to avoid overwriting existing files
+                            uniqueFileName = randomString + "_" + fileName;
+
+                            // Set the file path where the uploaded file will be saved
+                            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", uniqueFileName);
+
+                            // Save the uploaded file to the specified directory
+                            using (var fileStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                item.CopyTo(fileStream);
+                            }
+                            _db.MissionDocuments.Add(new MissionDocument
+                            {
+                                MissionId = EditMissionId,
+                                DocumentType = filetype,
+                                DocumentPath = "/documents/" + uniqueFileName, // Save the unique file name in the database
+                                DocumentName = fileName,
+                                // set the first instance of item in Media as default and for remaining set default as 0
+                            });
                         }
-                        _db.MissionDocuments.Add(new MissionDocument
-                        {
-                            MissionId = EditMissionId,
-                            DocumentType = filetype,
-                            DocumentPath = "/documents/" + uniqueFileName, // Save the unique file name in the database
-                            DocumentName = fileName,
-                            // set the first instance of item in Media as default and for remaining set default as 0
-                        });
                     }
                     Save();
                     return true;
@@ -910,14 +931,24 @@ namespace CI_Platform.DataAccess.Repository
                     long EditMissionId = editGoalMission.MissionId;
                     //Deleting existing media 
                     List<MissionMedium> mission_media = _db.MissionMedia.Where(c => c.MissionId == EditMissionId).ToList();
-                    if (mission_media.Count > 0)
+                    foreach (var medium in mission_media)
                     {
-                        _db.RemoveRange(mission_media);
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", medium.MediaPath);
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
+                        }
+                        _db.MissionMedia.Remove(medium);
                     }
                     List<MissionDocument> missionDocuments = _db.MissionDocuments.Where(c => c.MissionId == EditMissionId).ToList();
-                    if (missionDocuments.Count > 0)
+                    foreach (var medium in missionDocuments)
                     {
-                        _db.RemoveRange(missionDocuments);
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", medium.DocumentPath);
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
+                        }
+                        _db.MissionDocuments.Remove(medium);
                     }
                     foreach (var item in addMissionViewModel.Media)
                     {
@@ -975,42 +1006,45 @@ namespace CI_Platform.DataAccess.Repository
                             string[] skills = addMissionViewModel.Selected_Skills.Split(',');
                             foreach (var skill in skills)
                             {
-                                _db.MissionSkills.Add(new MissionSkill { SkillId = int.Parse(skill), MissionId = EditMissionId});
+                                _db.MissionSkills.Add(new MissionSkill { SkillId = int.Parse(skill), MissionId = EditMissionId });
                             }
                         }
                     }
-                    foreach (var item in addMissionViewModel.MissionDocuments)
+                    if (addMissionViewModel.MissionDocuments.Count > 0)
                     {
-                        string uniqueFileName = null;
-                        // Get the uploaded file name
-                        string fileName = Path.GetFileName(item.FileName);
-                        string filetype = Path.GetExtension(item.FileName);
-
-                        Random random = new Random();
-                        string randomString = new string(
-                            Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
-                                      .Select(s => s[random.Next(s.Length)])
-                                      .ToArray()
-                        );
-                        // Create a unique file name to avoid overwriting existing files
-                        uniqueFileName = randomString + "_" + fileName;
-
-                        // Set the file path where the uploaded file will be saved
-                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", uniqueFileName);
-
-                        // Save the uploaded file to the specified directory
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        foreach (var item in addMissionViewModel.MissionDocuments)
                         {
-                            item.CopyTo(fileStream);
+                            string uniqueFileName = null;
+                            // Get the uploaded file name
+                            string fileName = Path.GetFileName(item.FileName);
+                            string filetype = Path.GetExtension(item.FileName);
+
+                            Random random = new Random();
+                            string randomString = new string(
+                                Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
+                                          .Select(s => s[random.Next(s.Length)])
+                                          .ToArray()
+                            );
+                            // Create a unique file name to avoid overwriting existing files
+                            uniqueFileName = randomString + "_" + fileName;
+
+                            // Set the file path where the uploaded file will be saved
+                            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", uniqueFileName);
+
+                            // Save the uploaded file to the specified directory
+                            using (var fileStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                item.CopyTo(fileStream);
+                            }
+                            _db.MissionDocuments.Add(new MissionDocument
+                            {
+                                MissionId = EditMissionId,
+                                DocumentType = filetype,
+                                DocumentPath = "/documents/" + uniqueFileName, // Save the unique file name in the database
+                                DocumentName = fileName,
+                                // set the first instance of item in Media as default and for remaining set default as 0
+                            });
                         }
-                        _db.MissionDocuments.Add(new MissionDocument
-                        {
-                            MissionId = EditMissionId,
-                            DocumentType = filetype,
-                            DocumentPath = "/documents/" + uniqueFileName, // Save the unique file name in the database
-                            DocumentName = fileName,
-                            // set the first instance of item in Media as default and for remaining set default as 0
-                        });
                     }
                     Save();
                     return true;
@@ -1020,6 +1054,7 @@ namespace CI_Platform.DataAccess.Repository
                     return false;
                 }
             }
+            
         }
 
 

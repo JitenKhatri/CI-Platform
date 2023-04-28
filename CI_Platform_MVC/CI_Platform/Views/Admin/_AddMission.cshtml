@@ -96,7 +96,7 @@
             </div>
             <div class="col-6">
                 <label asp-for="EndDate" class="form-label">EndDate</label>
-                <input type="date" asp-for="EndDate" name="EndDate" class="form-control" placeholder="Enter EndDate" />
+                <input type="date" asp-for="EndDate" name="EndDate" class="form-control" data-val-greaterthanstartdate="End date must be greater than start date" placeholder="Enter EndDate" />
                 <span asp-validation-for="EndDate" class="text-danger d-block"></span>
             </div>
         </div>
@@ -106,7 +106,7 @@
                 <select id="mission-type" asp-for="MissionType" class="form-select missiontype me-3" aria-label="Select MissionType">
                     <option disabled selected>Select Mission Type</option>
                     <option value="Time">Time</option>
-                    <option value="Goal">Goal</option>
+                    <option value="Go">Goal</option>
                 </select>
                 <span asp-validation-for="MissionType" class="text-danger d-block"></span>
             </div>
@@ -121,7 +121,7 @@
         <div class="mb-3" id="Deadline">
             
             <label class="form-label">Deadline</label>
-            <input type="date" asp-for="Deadline" name="Deadline" class="form-control" placeholder="Enter Deadline" />
+            <input type="date" asp-for="Deadline" name="Deadline" class="form-control" data-val-deadlinebeforeenddate="Deadline must be before end date and start date" placeholder="Enter Deadline" />
             <span asp-validation-for="Deadline" class="text-danger d-block"></span>
         </div>
         <div class="mb-3 d-none" id="Goal_Motto">
@@ -196,7 +196,7 @@
 
  </div> 
         <div class="mb-3">
-            <label asp-for="Media" class="form-label">Mission Images</label>
+            <label asp-for="Media" class="form-label">Mission Images</label> <span class="text-danger mediarequired">*Required</span>
             <div class="dropzone d-flex flex-row" id="myDropzone">
                 <div id="imagePreview" class="dz-preview">
                     <div id="previewTemplate" class="preview-container" style="margin-right:30px;">
@@ -245,6 +245,30 @@
 </div>
 
 <script>
+    $.validator.addMethod('greaterthanstartdate', function (value, element, params) {
+    var startDate = new Date($('#StartDate').val());
+    var endDate = new Date(value);
+    return endDate > startDate;
+});
+
+$.validator.unobtrusive.adapters.add('greaterthanstartdate', [], function (options) {
+    options.rules['greaterthanstartdate'] = {};
+    options.messages['greaterthanstartdate'] = options.message;
+});
+
+$.validator.addMethod("deadlinebeforeenddate", function (value, element, params) {
+            var startdate = new Date($('#StartDate').val());
+            var enddate = new Date($('#EndDate').val());
+            var deadline = new Date(value);
+            return deadline < enddate && deadline <= startdate;
+        });
+        $.validator.unobtrusive.adapters.add("deadlinebeforeenddate", ["startdate", "enddate"], function (options) {
+            options.rules["deadlinebeforeenddate"] = {
+                startdate: "#" + options.params.startdate,
+                enddate: "#" + options.params.enddate
+            };
+            options.messages["deadlinebeforeenddate"] = options.message;
+        });
     var Skills = [];
 var skills_name = [];
 var selectedSkillsInput = document.getElementById('selected_skills');
@@ -282,6 +306,13 @@ function saveskills() {
     })
 }
 const missionTypeSelect = document.querySelector('#mission-type');
+if(missionTypeSelect.value == "Go")
+{
+$('#Goal_Motto').addClass('d-block').removeClass('d-none');
+}
+else{
+    $('#Goal_Motto').addClass('d-none').removeClass('d-block');
+}
 missionTypeSelect.addEventListener('change', (event) => {
     // Get the value of the selected option
     const selectedValue = event.target.value;
@@ -294,8 +325,9 @@ missionTypeSelect.addEventListener('change', (event) => {
     if (selectedValue === 'Time') {
         $('#Deadline').addClass('d-block').removeClass('d-none');
         $('#SeatsLeft').addClass('d-block').removeClass('d-none');
-    } else if (selectedValue === 'Goal') {
+    } else if (selectedValue === 'Go') {
         $('#Goal_Motto').addClass('d-block').removeClass('d-none');
+        $('#Deadline').addClass('d-block').removeClass('d-none');
     }
 });
 
@@ -303,7 +335,7 @@ Dropzone.autoDiscover = false;
 $(function () {
     var myDropzone = new Dropzone("#myDropzone", {
         url: "/Story/ShareStory",
-        maxFiles: 20,
+        maxFiles: 10,
         maxFilesize: 10000,
         uploadMultiple: true,
         acceptedFiles: ".jpeg,.jpg,.png",
@@ -314,20 +346,27 @@ $(function () {
         dictDefaultMessage: "Drop files here or click to upload",
         dictInvalidFileType: "Invalid file type. Only JPEG, JPG and PNG are allowed.",
         dictFileTooBig: "File size is too big. Maximum file size allowed is 4MB.",
-        dictMaxFilesExceeded: "You can only upload a maximum of 20 files.",
+        dictMaxFilesExceeded: "You can only upload a maximum of 10 files.",
         previewTemplate: $("#imagePreview").html(),
         init: function () {
             this.on("addedfile", function (file) {
+                if (file.type.startsWith('image/')) {
                 // Show the remove button when a file is added
                 file.previewElement.querySelector(".btn-remove").style.display = "block";
                 file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
                     // Remove the file from Dropzone
                     myDropzone.removeFile(file);
-                });
+                }); }
+                $('.mediarequired').addClass('d-none').removeClass('d-inline');
             });
             this.on("maxfilesexceeded", function (file) {
                 this.removeFile(file);
-                showAlert("You can only upload a maximum of 20 files.");
+                toastr.error('You can only upload a maximum of 10 images!', {
+                "positionClass": "toast-top-center",
+                progressBar: true,
+                timeOut: 3000,
+                closeButton: true,
+            });
             });
             let myDropzone = this;
             var imageurls = $(".imageurl").get();
@@ -347,6 +386,23 @@ $(function () {
             });// manually trigger processing of the preselected file
             myDropzone.on("addedfile", function (file) {
                 console.log("Added file:", file);
+            });
+                myDropzone.on('error', function (file, errorMessage) {
+
+                    toastr.error('You can only upload images!', {
+                "positionClass": "toast-top-center",
+                progressBar: true,
+                timeOut: 3000,
+                closeButton: true,
+            });
+                    this.removeFile(file);
+
+                });
+            this.on("removedfile", function (file) {
+                console.log("File removed:", file);
+                var files = myDropzone.getAcceptedFiles();
+                if(files.length < 1) {
+                $('.mediarequired').removeClass('d-none').addClass('d-inline') }
             });
         }
 
@@ -373,7 +429,12 @@ $(function () {
         init: function () {
             this.on("maxfilesexceeded", function (file) {
                 this.removeFile(file);
-                showAlert("You can only upload a maximum of 4 files.");
+                toastr.error('You can only upload a maximum of 4 images!', {
+                "positionClass": "toast-top-center",
+                progressBar: true,
+                timeOut: 3000,
+                closeButton: true,
+            });
             });
             this.on("removedfile", function (file) {
                 console.log("File removed:", file);

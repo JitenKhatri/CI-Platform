@@ -11,7 +11,7 @@ namespace CI_Platform.Models.ViewModels
         public List<SelectMissionViewModel> Missions { get; set; } = new List<SelectMissionViewModel>();
         public List<Timesheet> Timesheets { get; set; } = new List<Timesheet>();
         public long Mission_id { get; set; }
-        public string? Volunteered_date { get; set; }
+        public string? Volunteered_date { get; set; } = String.Empty;
         public int Hours { get; set; }
         public int Minutes { get; set; }
         public int Actions { get; set; }

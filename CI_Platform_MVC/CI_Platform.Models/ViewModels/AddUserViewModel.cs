@@ -13,12 +13,10 @@ namespace CI_Platform.Models.ViewModels
     {
 
         [Required]
-        [MinLength(3, ErrorMessage = "FirstName has to have at least 3 characters")]
-        [MaxLength(16, ErrorMessage = "FirstName can have maximum 16 characters")]
+        [RegularExpression(@"^[^\s]{3,20}$", ErrorMessage = "First name must have between 3 and 20 characters and no spaces.")]
         public string FirstName { get; set; } = string.Empty;
         [Required]
-        [MinLength(3, ErrorMessage = "LastName has to have at least 3 characters")]
-        [MaxLength(16, ErrorMessage = "LastName can have maximum 16 characters")]
+        [RegularExpression(@"^[^\s]{3,20}$", ErrorMessage = "Last name must have between 3 and 20 characters and no spaces.")]
         public string LastName { get; set; } = string.Empty;
 
         public IFormFile? Avatar { get; set; }

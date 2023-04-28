@@ -125,6 +125,7 @@ function upload_profile_image() {
     }
     else {
         showAlert("Please only upload an image");
+        var fileInput = document.getElementById('profile-image');
+        fileInput.value = '';
     }
-    
 }

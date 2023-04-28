@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace CI_Platform.Models.ViewModels
 {
@@ -39,7 +40,7 @@ namespace CI_Platform.Models.ViewModels
         public long SeatsLeft { get; set; }
 
         [Required]
-        [DeadlineBeforeEndDate(ErrorMessage = "Deadline must be before end date and after start date")]
+        [DeadlineBeforeEndDate(ErrorMessage = "Deadline must be before end date and start date")]
         public DateTime? Deadline { get; set; }
 
         [Required]
@@ -58,7 +59,9 @@ namespace CI_Platform.Models.ViewModels
         public string? Goal_Motto { get; set; } = string.Empty;
         public string Selected_skill_names { get; set; } = string.Empty;
 
+        [Required]
         public List<IFormFile>? Media { get; set; }
+
         public List<IFormFile>? MissionDocuments { get; set; }
         public List<string>? VideoUrls { get; set; } = new List<string>();
         public List<MissionSkill> MissionSkills { get; set; } = new List<MissionSkill>();
@@ -73,6 +76,7 @@ namespace CI_Platform.Models.ViewModels
 
         public class GreaterThanStartDateAttribute : ValidationAttribute
         {
+
             protected override ValidationResult IsValid(object value, ValidationContext validationContext)
             {
                 var model = (AddMissionViewModel)validationContext.ObjectInstance;
@@ -93,7 +97,7 @@ namespace CI_Platform.Models.ViewModels
                 var model = (AddMissionViewModel)validationContext.ObjectInstance;
 
                 if (value != null && model.StartDate != null && model.EndDate != null &&
-                    ((DateTime)value > model.EndDate || (DateTime)value < model.StartDate))
+                    ((DateTime)value > model.EndDate || (DateTime)value > model.StartDate))
                 {
                     return new ValidationResult(this.ErrorMessage);
                 }

@@ -20,12 +20,6 @@ namespace CI_Platform.DataAccess.Repository
             int skipCount = (page - 1) * pageSize;
             var ratings = _db.MissionRatings.Select(missonrating => decimal.Parse(missonrating.Rating));
             IQueryable<MissionViewModel> query = _db.Missions.Where(Mission => Mission.DeletedAt == null)
-                        .Include(m => m.MissionSkills)
-                            .ThenInclude(ms => ms.Skill)
-                        .Include(m => m.Theme)
-                        .Include(m => m.Country)
-                        .Include(m => m.City)
-                        .Include(m => m.MissionRatings)
                         .Select(m => new MissionViewModel
                         {
                             image = m.MissionMedia.FirstOrDefault(),
