@@ -20,13 +20,16 @@ namespace CI_Platform.Models.ViewModels
         [Required]
         public string ShortDescription { get; set; } = string.Empty;
         [Required]
+        [MinLength(20, ErrorMessage = "Mission Description has to have at least 20 characters")]
         public string Description { get; set; } = string.Empty;
 
         [Required]
         public long CityId { get; set; }
         [Required]
         public long CountryId { get; set; }
+
         public string OrganizationName { get; set; } = string.Empty;
+
         public string OrganizationDetail { get; set; } = string.Empty;
 
         [Required]

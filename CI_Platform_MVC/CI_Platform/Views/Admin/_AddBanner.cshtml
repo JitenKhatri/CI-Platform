@@ -18,7 +18,7 @@
             <span asp-validation-for="SortOrder" class="text-danger d-block"></span>
         </div>
         
-        <label class="form-label">Banner Image</label>
+        <label class="form-label">Banner Image</label><span class="text-danger mediarequired">  *Required</span>
         <span asp-validation-for="BannerImage" class="text-danger d-block"></span>
              <div class="mb-3">
             <div class="dropzone d-flex flex-row" asp-for="BannerImage" id="myDropzone">
@@ -49,7 +49,7 @@ $(function () {
     var myDropzone = new Dropzone("#myDropzone", {
         url: "/Story/ShareStory",
         maxFiles: 1,
-        maxFilesize: 10000,
+        maxFilesize: 4,
         uploadMultiple: true,
         acceptedFiles: ".jpeg,.jpg,.png",
         addRemoveLinks: false,
@@ -62,13 +62,23 @@ $(function () {
         previewTemplate: $("#imagePreview").html(),
         init: function () {
             this.on("addedfile", function (file) {
-                // Show the remove button when a file is added
-                file.previewElement.querySelector(".btn-remove").style.display = "block";
-                file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
-                    // Remove the file from Dropzone
-                    myDropzone.removeFile(file);
-                });
+            if (file.type.startsWith('image/')) {
+                    // Show the remove button when a file is added
+                    file.previewElement.querySelector(".btn-remove").style.display = "block";
+                    file.previewElement.querySelector(".btn-remove").addEventListener("click", function () {
+                        // Remove the file from Dropzone
+                        myDropzone.removeFile(file);
+                    });
+                    $('.mediarequired').addClass('d-none').removeClass('d-inline');
+            }
+                    
             });
+            this.on("removedfile", function (file) {
+                    console.log("File removed:", file);
+                    var files = myDropzone.getAcceptedFiles();
+                    if(files.length < 1) {
+                    $('.mediarequired').removeClass('d-none').addClass('d-inline') }
+                });
             this.on("maxfilesexceeded", function (file) {
                 this.removeFile(file);
                 toastr.error('You can only upload a maximum of 1 file.', {
@@ -101,13 +111,20 @@ $(function () {
                     // Remove the file from Dropzone
                     myDropzone.removeFile(file);
                 });
+                myDropzone.on('error', function (file, errorMessage) {
+
+                        toastr.error('You can only upload images!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+                        this.removeFile(file);
+
+                    });
+
                 myDropzone.on("removedfile", function (file) {
                      console.log("Removed file:",file)
-                      var formData = new FormData(document.getElementById("AddBannerForm"));
-  for (var i = 0; i < myDropzone.files.length; i++) {
-    formData.append("BannerImage", myDropzone.files[i]);
-  }
-  document.getElementById("AddBannerForm").formData = formData;
                 });
         });
         }
@@ -120,7 +137,7 @@ $(function () {
         e.preventDefault();
         var formData = new FormData(form);
         var myDropzone = Dropzone.forElement("#myDropzone");
-        var files = myDropzone.files;
+        var files = myDropzone.getAcceptedFiles();
         for (var i = 0; i < files.length; i++) {
                     formData.append('BannerImage', files[i]);
                 }

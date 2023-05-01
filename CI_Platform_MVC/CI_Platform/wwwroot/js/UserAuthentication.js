@@ -24,6 +24,7 @@
             }
         },
         error: function (error) {
+            console.log(error)
             console.log("Error updating variable");
         }
     });      

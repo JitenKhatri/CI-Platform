@@ -1,5 +1,6 @@
 ﻿@using CI_Platform.Models.ViewModels
 @using System.Security.Claims
+@using System.Globalization
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -48,6 +49,7 @@
         </div>
     </div> @*col-12 col-md-6 col-lg-4*@
 }
+
 @*Pagination*@
 <nav aria-label="Page navigation" class="pagination-link">
     @{
@@ -72,3 +74,91 @@
         </li>
     </ul>
 </nav>
+
+
+
+
+
+@{
+            foreach (var item in Model)
+            {
+
+                if (item.Stories.UserId == long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value) && @item.Stories.Status == "DRAFT")
+                {
+
+                    <div class="modal fade" id="edit-@item.Stories.StoryId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        @foreach (var urls in item.Images)
+                        {
+                            <input type="hidden" value="@urls.Path" class="imageurl" data-story-id="@item.Stories.StoryId">
+                        }
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Edit Your Saved Story</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="page-1">
+                                        <select class="form-select" aria-label="Select mission">
+                                            <option value=@item.MissionId selected>@item.Missiontitle</option>
+                                        </select>
+                                        <div class=" mt-2">
+                                            <label class="form-label">My Story Title</label>
+                                            <input class="form-control story_title" value="@item.Stories.Title" type="text" placeholder="Enter Story Title" />
+                                        </div>
+                                        <div class="mt-2 w-100">
+                                            <label class="form-label">Select Date</label>
+                                            @{
+                                                string dateStr = @item.Stories.CreatedAt.ToString();
+                                                DateTime date = DateTime.ParseExact(dateStr, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                                                string formattedDate = date.ToString("yyyy-MM-dd");
+                                                <input class="form-control" type="date" id="publish_date" placeholder="Select Date" value="@formattedDate">
+                                            }
+
+                                        </div>
+
+                                        @*ckeditor*@
+                                        <div class="ck-editor w-100 mt-3">
+                                            <label class="form-label">My Story</label>
+                                            <textarea class="form-control" rows=8 id="editor-@item.Stories.StoryId">@item.Stories.Description</textarea>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class=" w-100 mt-4">
+                                            <label class="form-label">Enter Youtube video urls</label>
+                                            <textarea rows="3" class="form-control video-url" type="url" placeholder="Enter Your URL">
+                                                @foreach (var url in item.Vidmedia)
+                                                {
+                                                    @url.Path
+                                                    @Html.Raw('\n')
+                                                }
+                                                        </textarea>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                        <label for="mediadropzone mb-2" >Story Media</label><span class="text-danger mediarequired">*Required</span>
+                                            <div class="dropzone d-flex flex-row" id="myDropzone-@item.Stories.StoryId">
+                                                <div id="imagePreview" class="dz-preview">
+                                                    <div id="previewTemplate" class="preview-container mr-3">
+                                                        <button type="button" class="btn-remove" style="display:none" data-dz-remove>
+                                                            <img src="/images/cross.png" />
+                                                        </button>
+                                                        <img class="preview" data-dz-thumbnail />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn applyButton" data-bs-dismiss="modal">Close</button>
+                                    <a asp-action="StoryDetail" asp-route-id="@item.Stories.StoryId" target="_blank" class="btn preview-link" style="display:none">Preview</a>
+                                    <button onclick="editstory('DRAFT',@item.Stories.StoryId,@item.MissionId)" class="submitbtn me-2">Save</button>
+                                    <button onclick="editstory('PUBLISHED',@item.Stories.StoryId,@item.MissionId)" class="submitbtn">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }

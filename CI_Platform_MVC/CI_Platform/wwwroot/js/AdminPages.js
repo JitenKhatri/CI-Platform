@@ -783,29 +783,37 @@ function AddCMSModel(CMSPageId) {
 function AddCMS(form, e) {
     e.preventDefault();
     var formData = new FormData(form);
-    formData.set('Description', CKEDITOR.instances.cmseditorhtml.getData());
-    $.ajax({
-        type: 'POST',
-        url: "/Admin/CMSCrud",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function () {
-            toastr.success('CMS Page Saved Successfully!', {
-                "positionClass": "toast-top-center",
-                progressBar: true,
-                timeOut: 3000,
-                closeButton: true,
-            });
-            $("#cmsform")[0].reset();
-            if (formData.CMSPageId != 0) {
-                window.location.reload();
+    var description = CKEDITOR.instances.cmseditorhtml.getData();
+    if (description.length < 20) {
+        $(".cms-description-required").addClass("d-block").removeClass("d-none")
+    }
+    else {
+        $(".cms-description-required").addClass("d-none").removeClass("d-block")
+        formData.set('Description', CKEDITOR.instances.cmseditorhtml.getData());
+        $.ajax({
+            type: 'POST',
+            url: "/Admin/CMSCrud",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function () {
+                toastr.success('CMS Page Saved Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+                $("#cmsform")[0].reset();
+                if (formData.CMSPageId != 0) {
+                    window.location.reload();
+                }
+            },
+            error: function (error) {
+                console.log("Error updating variable");
             }
-        },
-        error: function (error) {
-            console.log("Error updating variable");
-        }
-    });
+        });
+    }
+    
 }
 
 function DeleteCMS(id) {

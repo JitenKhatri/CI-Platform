@@ -74,15 +74,21 @@ namespace CI_Platform.DataAccess.Repository
                 cityQuery = cityQuery.Where(c => model.Countries.Contains(c.Country.Name));
             }
 
+
             var storyQuery = storiesQuery
                 .Where(s => model.Cities.Count == 0 || model.Cities.Contains(s.Mission.City.Name))
                 .Where(s => model.Countries.Count == 0 || model.Countries.Contains(s.Mission.Country.Name))
-                .Where(s => model.Themes.Count == 0 || model.Themes.Contains(s.Mission.Theme.Title))
-                .Where(s => model.Skills.Count == 0 || _db.MissionSkills
-                                                            .Where(ms => ms.MissionId == s.MissionId)
-                                                            .Select(ms => ms.Skill.SkillName)
-                                                            .All(sn => model.Skills.Contains(sn)));
-            //.Where(s => Skills.Count == 0 || Skills.All(sm => s.Mission.MissionSkills.Any(k => k.Skill.SkillName == sm)));
+                .Where(s => model.Themes.Count == 0 || model.Themes.Contains(s.Mission.Theme.Title));
+
+            if (model.Skills.Count > 0)
+            {
+                var missionIds = _db.MissionSkills
+                    .Where(ms => model.Skills.Contains(ms.Skill.SkillName))
+                    .Select(ms => ms.MissionId)
+                    .Distinct();
+                storyQuery = storyQuery.Where(s => missionIds.Contains(s.MissionId));
+            }
+
             int totalcount = storyQuery.Count();
             var stories = storyQuery
                 .OrderBy(s => s.Status)
@@ -100,6 +106,10 @@ namespace CI_Platform.DataAccess.Repository
                     User_id = s.User.UserId,
                     User_firstname = s.User.FirstName,
                     User_lastname = s.User.LastName,
+                    Images = s.StoryMedia.Where(sm => sm.Type == "img").ToList(),
+                    MissionId = s.Mission.MissionId,
+                    Missiontitle = s.Mission.Title,
+                    Vidmedia = s.StoryMedia.Where(sm => sm.Type == "vid").ToList()
 
                 })
                 .ToList();
@@ -109,11 +119,19 @@ namespace CI_Platform.DataAccess.Repository
 
         public List<City> CityCascade(long countryid)
         {
-            var cities = _db.Cities
-                .Where(c => c.CountryId == countryid)
-                .ToList();
+            if (countryid != 0)
+            {
+                var cities = _db.Cities
+                 .Where(c => c.CountryId == countryid)
+                 .ToList();
 
-            return cities;
+                return cities;
+            }
+            else
+            {
+                var Cities = _db.Cities.ToList();
+                return Cities;
+            }
         }
         public List<Mission> GetMissionApplications(long user_id)
         {

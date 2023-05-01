@@ -86,15 +86,20 @@ namespace CI_Platform.DataAccess.Repository
             }
 
             // Apply filtering based on the input parameters
+ 
             missions = missions.Where(m =>
-                (model.Cities.Count == 0 || model.Cities.Contains(m.City.Name)) &&
-                (model.Countries.Count == 0 || model.Countries.Contains(m.Country.Name)) &&
-                (model.Themes.Count == 0 || model.Themes.Contains(m.Theme.Title)) &&
-                (model.Skills.Count == 0 ||
-                    _db.MissionSkills
-                        .Where(ms => ms.MissionId == m.MissionId)
-                        .All(ms => model.Skills.Contains(ms.Skill.SkillName))));
+                    (model.Cities.Count == 0 || model.Cities.Contains(m.City.Name)) &&
+                    (model.Countries.Count == 0 || model.Countries.Contains(m.Country.Name)) &&
+                    (model.Themes.Count == 0 || model.Themes.Contains(m.Theme.Title)));
 
+            if (model.Skills.Count > 0)
+            {
+                var missionIds = _db.MissionSkills
+                    .Where(ms => model.Skills.Contains(ms.Skill.SkillName))
+                    .Select(ms => ms.MissionId)
+                    .Distinct();
+                missions = missions.Where(m => missionIds.Contains(m.MissionId));
+            }
             if (!String.IsNullOrEmpty(model.SearchText))
             {
                 missions = missions.Where(m =>
@@ -133,11 +138,19 @@ namespace CI_Platform.DataAccess.Repository
 
         public List<City> GetCitiesForCountry(long countryid)
         {
-            var cities = _db.Cities
-                .Where(c => c.CountryId == countryid)
-                .ToList();
+            if(countryid !=0)
+            {
+                var cities = _db.Cities
+                 .Where(c => c.CountryId == countryid)
+                 .ToList();
 
-            return cities;
+                return cities;
+            }
+            else
+            {
+                var Cities = _db.Cities.ToList();
+                return Cities;
+            }
         }
 
 
@@ -285,14 +298,14 @@ namespace CI_Platform.DataAccess.Repository
         {
             List<MissionRating> ratings = _db.MissionRatings.ToList();
             List<FavoriteMission> favoriteMissions = _db.FavoriteMissions.ToList();
-            List<Mission> missions = _db.Missions.ToList();
+            List<Mission> missions = _db.Missions.Where(Mission => Mission.DeletedAt == null).ToList();
             List<MissionTheme> themes = _db.MissionThemes.ToList();
             List<Country> countries = _db.Countries.ToList();
             List<City> cities = _db.Cities.ToList();
             List<MissionMedium> images = _db.MissionMedia.ToList();
             List<MissionDocument> documents = _db.MissionDocuments.ToList();
             List<User> users = _db.Users.ToList();
-            List<Mission> related_mission = _db.Missions.ToList();
+            List<Mission> related_mission = _db.Missions.Where(Mission => Mission.DeletedAt == null).ToList();
             List<MissionApplication> missionApplications = _db.MissionApplications.ToList();
             List<User> all_volunteers = _db.Users.Where(user => user.DeletedAt == null).ToList();
             List<User> already_recommended = new List<User>();

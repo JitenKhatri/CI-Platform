@@ -182,9 +182,10 @@ namespace CI_Platform.Controllers
             ViewBag.banners = db.AdminRepository.GetBanners();
             if (ModelState.IsValid)
             {
-                User myuser = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
+                User myuser = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()) && c.DeletedAt == null);
                 if (myuser == null)
                 {
+                    ViewBag.EmailSent = "Invalid Email Address";
                     return View();
                 }
                 else
@@ -235,12 +236,24 @@ namespace CI_Platform.Controllers
         [Route("resetPassword", Name = "UserResetPassword")]
         public IActionResult resetPassword(string email, string token)
         {
-            ViewBag.banners = db.AdminRepository.GetBanners();
-            return View(new ResetPasswordViewModel
+            CiPlatformContext context = new CiPlatformContext();
+            PasswordReset ResetPasswordData = context.PasswordResets.Where(p => p.Token == token && p.CreatedAt.AddHours(4) >= DateTime.Now).FirstOrDefault();
+            if(ResetPasswordData != null)
             {
-                Email = email,
-                token = token
-            });
+                ViewBag.banners = db.AdminRepository.GetBanners();
+                return View(new ResetPasswordViewModel
+                {
+                    Email = email,
+                    token = token
+                });
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Token has expired";
+                return RedirectToAction("Error", "Home");
+               
+            }
+           
         }
 
 

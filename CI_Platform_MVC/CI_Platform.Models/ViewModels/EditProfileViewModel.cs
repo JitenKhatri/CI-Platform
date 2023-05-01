@@ -11,12 +11,10 @@ namespace CI_Platform.Models.ViewModels
     public class EditProfileViewModel
     {
         [Required]
-        [MinLength(3, ErrorMessage = "FirstName is too short")]
-        [MaxLength(16, ErrorMessage = "FirstName is too big")]
+        [RegularExpression(@"^[^\s]{3,20}$", ErrorMessage = "First name must have between 3 and 20 characters and no spaces.")]
         public string FirstName { get; set; } = string.Empty;
         [Required]
-        [MinLength(3, ErrorMessage = "LastName is too short")]
-        [MaxLength(16, ErrorMessage = "LastName is too big")]
+        [RegularExpression(@"^[^\s]{3,20}$", ErrorMessage = "Last name must have between 3 and 20 characters and no spaces.")]
         public string LastName { get; set; }   = string.Empty;
 
         public IFormFile? Avatar { get; set; }
@@ -46,8 +44,7 @@ namespace CI_Platform.Models.ViewModels
         public string? Manager { get; set; } = string.Empty;
 
         [Required]
-        [MinLength(3, ErrorMessage = "Title has to have at least 3 characters")]
-        [MaxLength(16, ErrorMessage = "Title can have maximum 16 characters ")]
+        [RegularExpression(@"^[^\s]{3,16}$", ErrorMessage = "Last name must have between 3 and 16 characters and no spaces.")]
         public string Title { get; set; } = string.Empty;
 
         

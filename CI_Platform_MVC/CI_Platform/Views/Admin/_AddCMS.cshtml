@@ -26,14 +26,15 @@
 
         <div class="row mb-2">
             <div class="col">
-                <label for="Title" class="form-label">Description</label>
+                <label for="Description" class="form-label">Description</label>
                 <textarea id="cmseditorhtml" class="form-control"
-                          placeholder="Write your description here" asp-for="Description" name="Description"></textarea>
-
+                          placeholder="Write your description here" asp-for="Description" name="Description" data-val="true" data-val-ckeditorrequired="Please enter some content"></textarea>
+                    <span class="text-danger d-none cms-description-required">Cms page description has to have at least 20 characters</span>
             </div>
 
         </div>
-        <span asp-validation-for="Description" class="text-danger"></span>
+        @*<span asp-validation-for="Description" class="text-danger"></span> *@
+            
 
         <div class="row mb-2">
             <div class="col">
@@ -79,10 +80,6 @@
                             );
         // Get the CKEditor instance
             var editor = CKEDITOR.instances['cmseditorhtml'];
-
-            // Add validation attributes to the CKEditor instance
-            editor.element.setAttribute('data-val', 'true');
-            editor.element.setAttribute('data-val-required', 'The Description field is required.');
     </script>
     @section scripts{
     @{

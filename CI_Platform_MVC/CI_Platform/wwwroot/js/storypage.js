@@ -222,11 +222,31 @@ function clear_all() {
 function remove_badges(input) {
     const id = input.attr('id');
     console.log(id)
+    const dataid = input.attr('data-id');
     if (cities.includes(id)) {
         cities.splice(cities.indexOf(id), 1)
     }
     if (countries.includes(id)) {
         countries.splice(countries.indexOf(id), 1)
+        $.ajax({
+            url: '/Story/CityCascade',
+            type: 'Post',
+            data: { countryid: 0 },
+            success: function (result) {
+                console.log(result);
+                if (result.cities.length > 0) {
+                    Loadcities(result.cities);
+                }
+                else {
+                    Loadcities(result.cities)
+
+                }
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+
+        });
     }
     if (themes.includes(id)) {
         themes.splice(themes.indexOf(id), 1)
@@ -280,7 +300,7 @@ function StoryPagination(page, pageSize) {
 }
 const editor = (StoryId) => {
     CKEDITOR.replace(`editor-${StoryId}`, {
-        maxLength: 40000,
+        height: 200,
         removeButtons: ['About', 'Cut', 'Copy', 'Paste', 'Link', 'Unlink', 'Anchor', 'Indent', 'Outdent', 'NumberedList', 'BulletedList']
     });
 }
@@ -545,13 +565,11 @@ function sharestory(type) {
         var formData = new FormData();
 
         var myDropzone = Dropzone.getElement("#myDropzone").dropzone;
-
-        // Append the file(s) to the formData object
-        myDropzone.on("sendingmultiple", function (files, xhr, formData) {
-            for (var i = 0; i < files.length; i++) {
-                formData.append('media', files[i]);
-            }
-            formData.append('MissionId', mission);
+        var files = myDropzone.files;
+        for (var i = 0; i < files.length; i++) {
+            formData.append('media', files[i]);
+        }
+        formData.append('MissionId', mission);
             formData.append('Title', title);
             formData.append('PublishedDate', date.toString());
             formData.append('StoryDescription', mystory);
@@ -559,17 +577,22 @@ function sharestory(type) {
             for (var j = 0; j < video_url.length; j++) {
                 formData.append('VideoUrls', video_url[j])
             }
-        });
-        // Manually process queue to upload files
-        myDropzone.processQueue();
-        // Send the AJAX request with the FormData object after the files have been uploaded
-        myDropzone.on("success", function (file, response) {
-            showAlert("Story added !!")
+
+        $.ajax({
+            url: '/Story/ShareStory',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function () {
+                showAlert("Story added !!")
 
                 window.location.href = "https://localhost:7064/Story/Story";
-
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
         });
-
         
     }
 }
@@ -583,23 +606,49 @@ function validate() {
     const urlString = $('.videourl').val();
     const urls = urlString.trim().split(/\r?\n/);
     video_url = urls;
-    // Define validation conditions
-    const conditions = [
-        { message: "Please select a mission", test: mission === 0 },
-        { message: "Title should be at least 20 characters long", test: title.trim().length < 20 },
-        { message: "Title can have maximum 80 characters", test: title.trim().length > 80 },
-        { message: "Please enter a valid date", test: $('#datepicker').datepicker().val().length == 0 || Date.parse(current_date) <= Date.parse(comparedate) },
-        { message: "Story description should be at least have 70 character", test: mystory.trim().length < 70 },
-        { message: "Story description is can have maximum 400 characters", test: mystory.trim().length > 400 },
-        { message: "Please enter youtube video urls only, enter different urls in new line and maximum 20 urls are allowed", test: !validateYouTubeUrls(video_url) }
-    ];
+    if (mission === 0) {
+        $(".story-mission-empty").addClass("d-block").removeClass("d-none")
+    }
+    else {
+        $(".story-mission-empty").addClass("d-none").removeClass("d-block")
+    }
+    if (title.trim().length < 20) {
+        $(".story-title-empty").addClass("d-block").removeClass("d-none")
+    }
+    else {
+        $(".story-title-empty").addClass("d-none").removeClass("d-block")
+    }
+    if (title.trim().length > 80) {
+        $(".story-title-full").addClass("d-block").removeClass("d-none")
+    }
+    else {
+        $(".story-title-full").addClass("d-none").removeClass("d-block")
+    }
+    if ($('#datepicker').datepicker().val().length == 0 || Date.parse(current_date) <= Date.parse(comparedate)) {
+        $(".story-date-empty").addClass("d-block").removeClass("d-none")
+    }
+    else {
+        $(".story-date-empty").addClass("d-none").removeClass("d-block")
+    }
+    if (mystory.trim().length < 70) {
+        $(".story-description-empty").addClass("d-block").removeClass("d-none")
+    }
+    else {
+        $(".story-description-empty").addClass("d-none").removeClass("d-block")
+    }
+    if (mystory.trim().length > 400) {
+        $(".story-description-full").addClass("d-block").removeClass("d-none")
+    }
+    else {
+        $(".story-description-full").addClass("d-none").removeClass("d-block")
+    }
+    if (!validateYouTubeUrls(video_url)) {
+        $(".story-url-empty").addClass("d-block").removeClass("d-none")
+    }
+    else {
+        $(".story-url-empty").addClass("d-none").removeClass("d-block")
+    }
 
-    // Loop through validation conditions and display alert if test fails
-    conditions.forEach(condition => {
-        if (condition.test) {
-            showAlert(condition.message);
-        }
-    });
 }
 function convertDate(inputFormat) {
     function pad(s) { return (s < 10) ? '0' + s : s; }

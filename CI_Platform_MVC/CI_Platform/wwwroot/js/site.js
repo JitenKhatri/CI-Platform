@@ -137,12 +137,31 @@ function clear_all() {
 function remove_badges(input) {
     searchinput = document.getElementById("search-input").value.toLowerCase();
     const id = input.attr('id');
+    const dataid = input.attr('data-id');
     console.log(id)
         if (cities.includes(id)) {
             cities.splice(cities.indexOf(id), 1)
         }
         if (countries.includes(id)) {
-            countries.splice(countries.indexOf(id), 1)  
+            countries.splice(countries.indexOf(id), 1)
+            $.ajax({
+                url: 'Mission/GetCitiesForCountry',
+                type: 'Post',
+                data: { countryid: 0 },
+                success: function (result) {
+                    console.log(result);
+                    if (result.cities.length > 0) {
+                        loadcities(result.cities);
+                    }
+                    else {
+                        loadcities(result.cities)
+                    }
+                },
+                error: function () {
+                    console.log("Error updating variable");
+                }
+
+            });
         }
         if (themes.includes(id)) {
             themes.splice(themes.indexOf(id), 1)  
@@ -171,6 +190,7 @@ function remove_badges(input) {
             console.log("Error updating variable");
         }
     })
+    
 }
 
 function addcities(name) {
@@ -269,8 +289,6 @@ const loadcities = (cities) => {
             $('.city span').eq(i).find('label').attr('for', item.name)
             $('.city span').eq(i).find('input').attr('data-value', item.name)
             $('.city span').eq(i).find('input').attr('onchange', `addcities('${item.name}')`)
-            
-           
         })
     })
 }

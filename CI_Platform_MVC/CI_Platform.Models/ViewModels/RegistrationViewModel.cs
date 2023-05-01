@@ -21,9 +21,8 @@ namespace CI_Platform.ViewModels
         public string Password { get; set; }= null!;
 
         [Required(ErrorMessage = "Phone number is required")]
-        [MinLength(10, ErrorMessage = "Phone number has to have 10 numbers")]
-        [MaxLength(10, ErrorMessage = "Phone number can have maximum 10 numbers")]
-        public int PhoneNumber { get; set; }
+        [Range(1000000000, 9999999999, ErrorMessage = "Phone number has to have only 10 positive numbers")]
+        public long PhoneNumber { get; set; }
         
         [Required(ErrorMessage = "Confirm password is required")]
         [DataType(DataType.Password)]

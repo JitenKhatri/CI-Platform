@@ -184,7 +184,7 @@ namespace CI_Platform.DataAccess.Repository
 
         public bool AddUser(AddUserViewModel model)
         {
-            User? User = _db.Users.FirstOrDefault(c => c.Email == model.Email);
+            User? User = _db.Users.FirstOrDefault(c => c.UserId == model.UserId);
             if (User is null)
             {
                 var user = new User();
