@@ -2,12 +2,6 @@
 using CI_Platform.Models;
 using CI_Platform.Models.InputModels;
 using CI_Platform.Models.ViewModels;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CI_Platform.DataAccess.Repository
 {
@@ -286,7 +280,7 @@ namespace CI_Platform.DataAccess.Repository
         {
             var storyQuery = _db.Stories.Where(c => c.StoryId == id);
             var storyMediaQuery = _db.StoryMedia.Where(sm => sm.StoryId == id);
-            var userQuery = _db.Users;
+            var userQuery = _db.Users.Where(User => User.DeletedAt == null);
 
             var story = storyQuery.FirstOrDefault();
             var storyMedia = storyMediaQuery.ToList();

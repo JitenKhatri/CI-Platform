@@ -25,7 +25,7 @@
                 
                 <div class="mb-4">
                     <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
-                    <input asp-for="PhoneNumber" type="number" class="form-control" id="phonenumber" >
+                    <input asp-for="PhoneNumber"  type="number" min="1" class="form-control" id="phonenumber" >
                     <span asp-validation-for="PhoneNumber" class="text-danger d-block"></span>
                     
                 </div>

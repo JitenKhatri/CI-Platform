@@ -354,7 +354,8 @@ namespace CI_Platform.Controllers
                         MissionMedia = Mission.MissionMedia,
                         MissionId = Mission.MissionId,
                         YoutubeUrl = Mission.YoutubeUrl,
-                        ExistingDocuments = Mission.ExistingDocuments
+                        ExistingDocuments = Mission.ExistingDocuments,
+                        Goal_Achieved = Mission.Goal_Achieved
                     };
                     return View("_AddMission", model);
                 }

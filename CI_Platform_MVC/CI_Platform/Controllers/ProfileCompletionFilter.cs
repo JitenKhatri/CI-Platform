@@ -3,7 +3,6 @@
     using CI_Platform.Models;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
-    using Microsoft.AspNetCore.Routing;
     using System.Security.Claims;
 
     public class ProfileCompletionFilter : ActionFilterAttribute

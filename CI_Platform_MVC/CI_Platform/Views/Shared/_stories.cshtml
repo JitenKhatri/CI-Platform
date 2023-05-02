@@ -4,7 +4,9 @@
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
+@{ 
+    int pageCount = (int)ViewData["PageCount"];
+    int currentPage = (int)ViewData["CurrentPage"];
 }
 @model List<StoryViewModel>
 @foreach (var story in Model)
@@ -56,21 +58,21 @@
         int pageSize = 3;
     }
     <ul class="pagination justify-content-center">
-        <li class="page-item @if (ViewBag.CurrentPage <= 1) {
+        <li class="page-item @if (@currentPage <= 1) {
                 @Html.Raw("disabled")
 ; }">
-            <button class="page-link" onclick="StoryPagination(@ViewBag.CurrentPage - 1,@pageSize)"">Previous</button>
+            <button class="page-link" onclick="StoryPagination(@currentPage - 1,@pageSize)"">Previous</button>
         </li>
-        @for (int i = 1; i <= ViewBag.PageCount; i++)
+        @for (int i = 1; i <= @pageCount; i++)
         {
-            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+            <li class="page-item @(i == @currentPage ? "active" : "")">
                 <button class="page-link" onclick="StoryPagination(@i,@pageSize)">@i</button>
             </li>
         }
-        <li class="page-item @if (ViewBag.CurrentPage >= ViewBag.PageCount) {
+        <li class="page-item @if (@currentPage >= @pageCount) {
                 @Html.Raw("disabled")
 ; }">
-            <button class="page-link" onclick="StoryPagination(@ViewBag.CurrentPage + 1,@pageSize)">Next</button>
+            <button class="page-link" onclick="StoryPagination(@currentPage + 1,@pageSize)">Next</button>
         </li>
     </ul>
 </nav>
@@ -111,7 +113,7 @@
                                                 string dateStr = @item.Stories.CreatedAt.ToString();
                                                 DateTime date = DateTime.ParseExact(dateStr, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                                                 string formattedDate = date.ToString("yyyy-MM-dd");
-                                                <input class="form-control" type="date" id="publish_date" placeholder="Select Date" value="@formattedDate">
+                                                <input class="form-control" type="date" min=@DateTime.Now.ToString("yyyy-MM-dd") max=@DateTime.Now.ToString("yyyy-MM-dd") id="publish_date" placeholder="Select Date" value="@formattedDate">
                                             }
 
                                         </div>
@@ -152,7 +154,7 @@
                                 </div>
                                 <div class="modal-footer justify-content-between">
                                     <button type="button" class="btn applyButton" data-bs-dismiss="modal">Close</button>
-                                    <a asp-action="StoryDetail" asp-route-id="@item.Stories.StoryId" target="_blank" class="btn preview-link" style="display:none">Preview</a>
+                                    <a  href="/Story/StoryDetail/@item.Stories.StoryId" target="_blank" class="btn preview-link" style="display:none;">Preview</a>
                                     <button onclick="editstory('DRAFT',@item.Stories.StoryId,@item.MissionId)" class="submitbtn me-2">Save</button>
                                     <button onclick="editstory('PUBLISHED',@item.Stories.StoryId,@item.MissionId)" class="submitbtn">Submit</button>
                                 </div>

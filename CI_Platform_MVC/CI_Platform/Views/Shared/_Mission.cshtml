@@ -1,7 +1,9 @@
 ﻿@using System.Security.Claims
 @using CI_Platform.Models.ViewModels
 
-@{
+@{ 
+    int pageCount = (int)ViewData["PageCount"];
+    int currentPage = (int)ViewData["CurrentPage"];
 }
 @model List<MissionViewModel>
 @foreach (var mission in Model)
@@ -97,7 +99,7 @@
 
                             <div class="ms-2 p-bar">
 
-                                @if (mission.Missions?.Deadline != null)
+                                @if (mission.Missions?.Deadline != null && mission.Missions?.MissionType == "TIME")
                                 {
                                     <span>@mission.Missions?.Deadline.ToString().Substring(0,10) <br> Deadline </span>
                                 }
@@ -142,21 +144,21 @@
         int pageSize = 3;
     }
     <ul class="pagination justify-content-center">
-        <li class="page-item @if (ViewBag.CurrentPage <= 1) {
+        <li class="page-item @if (@currentPage <= 1) {
                 @Html.Raw("disabled")
 ; }">
-            <button class="page-link" onclick="Pagination(@ViewBag.CurrentPage - 1,@pageSize)"">Previous</button>
+            <button class="page-link" onclick="Pagination(@currentPage - 1,@pageSize)"">Previous</button>
         </li>
-        @for (int i = 1; i <= ViewBag.PageCount; i++)
+        @for (int i = 1; i <= @pageCount; i++)
         {
-            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+            <li class="page-item @(i == @currentPage ? "active" : "")">
                 <button class="page-link" onclick="Pagination(@i,@pageSize)">@i</button>
             </li>
         }
-        <li class="page-item @if (ViewBag.CurrentPage >= ViewBag.PageCount) {
+        <li class="page-item @if (@currentPage >= ViewBag.PageCount) {
                 @Html.Raw("disabled")
 ; }">
-            <button class="page-link" onclick="Pagination(@ViewBag.CurrentPage + 1,@pageSize)">Next</button>
+            <button class="page-link" onclick="Pagination(@currentPage + 1,@pageSize)">Next</button>
         </li>
     </ul>
 </nav>

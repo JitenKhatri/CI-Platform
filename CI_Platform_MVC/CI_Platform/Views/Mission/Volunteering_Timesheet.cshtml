@@ -101,6 +101,11 @@
                                         <input type="hidden" id="mission-@date.Mission_id-startdate" value='@date.StartDate?.ToString("yyyy-MM-dd")'>
                                         <input type="hidden" id="mission-@date.Mission_id-enddate" value='@date.EndDate?.ToString("yyyy-MM-dd")'>
                                     }
+@foreach(var mission in Model.Missions)
+{
+    <input type="hidden" id="mission-@mission.Mission_id-goalachieved" value="@mission.Goal_Achieved">
+}
+
 @*Modals*@
 
 <div class="modal fade" id="time" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -137,19 +142,19 @@
        <div class="d-flex justify-content-between w-100">
            <div style="width:48%;">
            <label class="form-label mt-3">Hours</label>
-            <input type="number" placeholder="Enter Spent Hours"  class="form-control time-hours" />
+            <input type="number" min="1" placeholder="Enter Spent Hours"  class="form-control time-hours" />
             <span class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
             </div>
             <div style="width:48%;">
            <label class="form-label mt-3">Minutes</label>
-            <input type="number" placeholder="Enter Spent Minutes" class="form-control time-min"/>
+            <input type="number" min="1" placeholder="Enter Spent Minutes" class="form-control time-min"/>
             <span class="text-danger d-none time-min-valid">Enter Valid mins</span>
             </div>
        </div>
        <div>
            <label class="form-label mt-3">Message</label>
             <textarea class="form-control time-message" rows=5 placeholder="Enter Your Message"></textarea>
-            <span class="text-danger d-none time-message-empty">Message Required</span>
+            <span class="text-danger d-none time-message-empty">Message must contain at least 20 characters</span>
             </div>
       </div>
       <div class="modal-footer">
@@ -188,9 +193,9 @@
        </div>
          <div>
            <label class="form-label mt-3">Actions</label>
-            <input type="number" id="action" placeholder="Enter Actions"   class="form-control" />
+            <input type="number" min="1" id="action" placeholder="Enter Actions"   class="form-control" />
             <span class="text-danger d-none action-empty">Actions Required</span>
-            <span class="text-danger d-none action-notvalid">Enter Valid Action</span>
+            <span class="text-danger d-none action-notvalid"></span>
        </div>
        <div>
            <label class="form-label mt-3">Date Volunteered</label>
@@ -201,7 +206,7 @@
        <div>
            <label class="form-label mt-3">Message</label>
             <textarea class="form-control" id="goal-message" rows=5  placeholder="Enter Your Message"></textarea>
-            <span class="text-danger d-none message-empty">Message Required</span>
+            <span class="text-danger d-none message-empty">Message must contain at least 20 characters</span>
             </div>
       </div>
       <div class="modal-footer">

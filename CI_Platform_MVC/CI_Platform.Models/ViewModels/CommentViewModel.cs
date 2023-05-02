@@ -9,8 +9,8 @@ namespace CI_Platform.Models.ViewModels
 {
     public class CommentViewModel
     {
-        public Comment? User_Comment { get; set; }
-     
-        public User? user { get; set; }
+        public Comment? User_Comment { get; set; } = new Comment();
+
+        public User? user { get; set; } = new User();
     }
 }

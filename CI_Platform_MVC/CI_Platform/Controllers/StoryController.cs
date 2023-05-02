@@ -45,8 +45,8 @@ namespace CI_Platform.Controllers
                 int totalItemCount = result.Item2;
                 // Generate pagination links
                 int pageCount = (int)Math.Ceiling((double)totalItemCount / pageSize);
-                ViewBag.PageCount = pageCount;
-                ViewBag.CurrentPage = page;
+                ViewData["PageCount"] = pageCount;
+                ViewData["CurrentPage"] = page;
                 return View(stories);
             }
             else
@@ -71,8 +71,8 @@ namespace CI_Platform.Controllers
             int totalItemCount = result.Item2;
             // Generate pagination links
             int pageCount = (int)Math.Ceiling((double)totalItemCount / model.PageSize);
-            ViewBag.PageCount = pageCount;
-            ViewBag.CurrentPage = model.Page;
+            ViewData["PageCount"] = pageCount;
+            ViewData["CurrentPage"] = model.Page;
             return PartialView("_stories", stories);
         }
 
@@ -91,6 +91,8 @@ namespace CI_Platform.Controllers
             bool success = db.StoryRepository.ShareStory(model);
             return Json(new { success = true });
         }
+
+        
         public IActionResult StoryDetail(long id)
         {
             if (User.Identity.IsAuthenticated)

@@ -1,11 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 
 namespace CI_Platform.Models.ViewModels
 {
@@ -60,12 +54,13 @@ namespace CI_Platform.Models.ViewModels
         public string? Selected_Skills { get; set; } = string.Empty;
 
         public string? Goal_Motto { get; set; } = string.Empty;
+        public long? Goal_Achieved { get; set; }
         public string Selected_skill_names { get; set; } = string.Empty;
 
         [Required]
         public List<IFormFile>? Media { get; set; }
 
-        public List<IFormFile>? MissionDocuments { get; set; }
+        public List<IFormFile>? MissionDocuments { get; set; } = new List<IFormFile>();
         public List<string>? VideoUrls { get; set; } = new List<string>();
         public List<MissionSkill> MissionSkills { get; set; } = new List<MissionSkill>();
         public List<MissionDocument> ExistingDocuments { get; set; } = new List<MissionDocument>();

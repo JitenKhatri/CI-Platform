@@ -52,13 +52,7 @@ namespace CI_Platform.Controllers
                User userExists = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(model.Email.ToLower()) &&
     c.Password.Equals(model.Password) && c.DeletedAt == null);
 
-                if (userExists == null)
-                {
-                    // User does not exist, adding a model error
-                    ViewBag.LoginErrorMessage = "Invalid email or password";
-
-                }
-                else
+                if (userExists != null && (userExists.Password.Equals(model.Password, StringComparison.Ordinal)))
                 {
                     var claims = new List<Claim>
                             {
@@ -89,7 +83,7 @@ namespace CI_Platform.Controllers
                         // Redirect to the storydetail page
                         return RedirectToAction("StoryDetail", "Story", new { id = long.Parse(storyid) });
                     }
-                    else if(Principle.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)!.Value == "admin")
+                    else if (Principle.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)!.Value == "admin")
                     {
                         return RedirectToAction("Index", "Admin");
                     }
@@ -97,6 +91,13 @@ namespace CI_Platform.Controllers
                     {
                         return RedirectToAction("Index", "Mission");
                     }
+                }
+                else
+                {
+                    // User does not exist, adding a model error
+                    ViewBag.LoginErrorMessage = "Invalid email or password";
+
+                    
                     
                 }
             }

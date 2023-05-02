@@ -4,6 +4,7 @@ var actions
 var date
 var message
 var goal_object
+var goal_achieved
 var time_mission
 var time_date
 var hours
@@ -13,7 +14,7 @@ const goaldata = () => {
     var type = "goal"
     validate(type)
     if ($(`#mission_goal`).is(":disabled")) {
-        if (mission != 0 && actions.toString() != "NaN" && actions > 0 && date != "" && message.trim().length > 20 &&
+        if (mission != 0 && actions.toString() != "NaN" && actions > 0 &&  actions < goal_achieved && date != "" && message.trim().length > 20 &&
             !(dateObj.getTime() < startDateObj.getTime() || dateObj.getTime() > endDateObj.getTime())) {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
@@ -39,7 +40,7 @@ const goaldata = () => {
         }
     }
     else {
-        if (mission != 0 && actions.toString() != "NaN" && actions > 0 && date != "" && message.trim().length > 20 &&
+        if (mission != 0 && actions.toString() != "NaN" && actions > 0 && actions < goal_achieved && date != "" && message.trim().length > 20 &&
             !(dateObj.getTime() < startDateObj.getTime() || dateObj.getTime() > endDateObj.getTime())) {
             $.ajax({
                 url: '/Mission/Volunteering_Timesheet',
@@ -132,6 +133,7 @@ const validate = (type) => {
         message = document.getElementById("goal-message").value
         var startdate = $('#mission-' + mission_id + '-startdate').val();
         var enddate = $('#mission-' + mission_id + '-enddate').val();
+        goal_achieved = $('#mission-' + mission_id + '-goalachieved').val();
         endDateObj = new Date(enddate);
         startDateObj = new Date(startdate);
         dateObj = new Date(date);
@@ -145,7 +147,8 @@ const validate = (type) => {
         if (actions.toString() == "NaN") {
             $(".action-empty").addClass("d-block").removeClass("d-none")
         }
-        else if (actions > goal_object || actions < 0) {
+        else if (actions > goal_achieved || actions < 0) {
+            $(".action-notvalid").text("Invalid Action value cannot be greater than " + goal_achieved + " or less than 0")
             $(".action-notvalid").addClass("d-block").removeClass("d-none")
         }
         else {

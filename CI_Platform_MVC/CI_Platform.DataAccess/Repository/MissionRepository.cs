@@ -3,7 +3,6 @@ using CI_Platform.Models;
 using CI_Platform.Models.InputModels;
 using CI_Platform.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
 
 namespace CI_Platform.DataAccess.Repository
 {
@@ -428,7 +427,8 @@ namespace CI_Platform.DataAccess.Repository
                     Mission_type = m.Mission.MissionType,
                     Goal_object = m.Mission.GoalMotto,
                     StartDate = m.Mission.StartDate,
-                    EndDate = m.Mission.EndDate
+                    EndDate = m.Mission.EndDate,
+                    Goal_Achieved = m.Mission.GoalAcheived
                 });
             return new TimesheetViewModel
             {
@@ -450,6 +450,8 @@ namespace CI_Platform.DataAccess.Repository
                     DateVolunteered = DateTime.Parse(model.Volunteered_date),
                     Notes = model.Message
                 };
+                Mission GoalMission = _db.Missions.FirstOrDefault(Mission => Mission.MissionId == model.Mission_id);
+                GoalMission.GoalAcheived = GoalMission.GoalAcheived - model.Actions;
                 _db.Timesheets.Add(timesheet);
                 Save();
                 return timesheet;
@@ -468,7 +470,6 @@ namespace CI_Platform.DataAccess.Repository
                     Notes = model.Message,
                     Status = "SUBMIT_FOR_APPROVAL"
                 };
-                _db.Timesheets.Add(timesheet);
                 _db.Timesheets.Add(timesheet);
                 Save();
                 return timesheet;
@@ -495,9 +496,12 @@ namespace CI_Platform.DataAccess.Repository
                 }
                 else
                 {
+                    Mission GoalMission = _db.Missions.FirstOrDefault(Mission => Mission.MissionId == model.Mission_id);
+                    GoalMission.GoalAcheived = GoalMission.GoalAcheived + timesheet.Action - model.Actions;
                     timesheet.Action = model.Actions;
                     timesheet.DateVolunteered = DateTime.Parse(model.Volunteered_date);
                     timesheet.Notes = model.Message;
+                    
                     Save();
                     return timesheet;
                 }
@@ -514,6 +518,11 @@ namespace CI_Platform.DataAccess.Repository
             Timesheet timesheet = _db.Timesheets.FirstOrDefault(t => t.TimesheetId == timesheet_id);
             if (timesheet is not null)
             {
+                Mission deleteTimesheetMission = _db.Missions.FirstOrDefault(mission => mission.MissionId == timesheet.MissionId);
+                if(deleteTimesheetMission.MissionType == "GO")
+                {
+                    deleteTimesheetMission.GoalAcheived = deleteTimesheetMission.GoalAcheived + timesheet.Action;
+                }
                 _db.Timesheets.Remove(timesheet);
                 Save();
                 return true;

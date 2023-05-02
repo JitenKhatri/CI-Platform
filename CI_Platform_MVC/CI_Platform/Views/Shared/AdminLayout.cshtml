@@ -123,6 +123,8 @@ var avatar = User.FindFirst("Avatar")?.Value;
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="EditProfile">My Profile</a></li>
                         <li><a class="dropdown-item" asp-controller="Mission" asp-action="Volunteering_Timesheet">Timesheet</a></li>
+                        <li><a class="dropdown-item" asp-controller="Mission" asp-action="Index">Missions</a></li>
+                        <li><a class="dropdown-item" asp-controller="Story" asp-action="Story">Stories</a></li>
                         <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="Logout">Logout</a></li>
                     </ul>
                 </div>
@@ -168,7 +170,7 @@ var avatar = User.FindFirst("Avatar")?.Value;
        <div>
            <label class="form-label mt-3">Skill Name</label>
             <input type="text" class="form-control skill-name"/>
-            <span class="text-danger d-none skill-name-empty">Skill Name Is Required</span>
+            <span class="text-danger d-none skill-name-empty">Skill Name has to have at least 4 characters.</span>
        </div>
          <div>
               <label class="mt-3">
@@ -200,7 +202,7 @@ var avatar = User.FindFirst("Avatar")?.Value;
        <div>
            <label class="form-label mt-3">Skill Name</label>
             <input type="text" class="form-control skill-name"/>
-            <span class="text-danger d-none skill-name-empty">Skill Name Is Required</span>
+            <span class="text-danger d-none skill-name-empty">Skill Name has to have at least 4 characters.</span>
        </div>
          <div>
                  <label class="mt-3">
@@ -211,12 +213,6 @@ var avatar = User.FindFirst("Avatar")?.Value;
                             <input type="radio" name="skill-edit-status" value="0">
                             In-Active (0)
                         </label>
-                    @*<label class="form-label mt-3">Status</label>
-                        <select class="form-select me-3 skill-status" aria-label="Select Status">
-                        <option value="2" disabled  selected>Select Status Active(1)/In-Active(0)</option>
-                        <option value="1" >1</option>
-                        <option value="0" >0</option>
-                        </select>*@
               <span class="text-danger d-none skill-status-empty">skill Status Is Required</span>
         </div>
       </div>
@@ -239,7 +235,7 @@ var avatar = User.FindFirst("Avatar")?.Value;
                     <div>
                         <label class="form-label mt-3">Theme Name</label>
                         <input type="text" class="form-control theme-name" />
-                        <span class="text-danger d-none theme-name-empty">Theme Name Is Required</span>
+                        <span class="text-danger d-none theme-name-empty">Theme Name has to have at least 4 characters.</span>
                     </div>
                     <div>
                         <label class="mt-3">
@@ -250,12 +246,6 @@ var avatar = User.FindFirst("Avatar")?.Value;
                             <input type="radio" name="status" value="0">
                             In-Active (0)
                         </label>
-                    @*<label class="form-label mt-3">Status</label>
-                        <select class="form-select me-3 theme-status" aria-label="Select Status">
-                        <option value="2" disabled  selected>Select Status Active(1)/In-Active(0)</option>
-                        <option value="1" >1</option>
-                        <option value="0" >0</option>
-                        </select>*@
                         <span class="text-danger d-none theme-status-empty">Theme Status Is Required</span>
                     </div>
                 </div>
@@ -277,7 +267,7 @@ var avatar = User.FindFirst("Avatar")?.Value;
                     <div>
                         <label class="form-label mt-3">Theme Name</label>
                         <input id="theme-name" type="text" class="form-control theme-name" />
-                        <span class="text-danger d-none theme-name-empty">Theme Name Is Required</span>
+                        <span class="text-danger d-none theme-name-empty">Theme Name has to have at least 4 characters.</span>
                     </div>
                     <div>
                         <label class="mt-3">
@@ -288,12 +278,6 @@ var avatar = User.FindFirst("Avatar")?.Value;
                             <input type="radio" name="theme-edit-status" value="0">
                             In-Active (0)
                         </label>
-                    @*<label class="form-label mt-3">Status</label>
-                        <select class="form-select me-3 theme-status" aria-label="Select Status">
-                        <option value="2" disabled selected>Select Status Active(1)/In-Active(0)</option>
-                        <option value="1">1</option>
-                        <option value="0">0</option>
-                        </select>*@
                         <span class="text-danger d-none theme-status-empty">Theme Status Is Required</span>
                     </div>
                 </div>

@@ -170,7 +170,7 @@
                 <div class="description col-lg-6">
                     <div class="px-3 mt-5 ms-3 d-flex justify-content-between">
                         <span class="d-flex flex-column align-items-center">
-                            <img class="rounded-circle" src="~/images/volunteer1.png" />
+                            <img class="rounded-circle" src=@Model.Stories.User.Avatar style="height:93px;width:100px;" />
                             <span class="mt-2 lorem ps-3">@Model.Stories.User.FirstName @Model.Stories.User.LastName</span>
                         </span>
                         <div class="views border rounded-pill mt-5 h-25 w-25 d-flex justify-content-center align-items-center border-1">
@@ -229,7 +229,7 @@
                         {
                             <li class="list-group-item">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle img-fluid me-2" src=@item.Avatar alt="" />
+                                    <img class="rounded-circle img-fluid me-2" src=@item.Avatar style="height:81px;width:81px;" alt="" />
                                     <span class="me-auto">@item.FirstName @item.LastName</span>
                                     <button id="recommend-@item.UserId" type="button" class="btn btn-primary recommend-button" onclick="Recommend(@Model?.Stories.StoryId,'@item.Email',@item.UserId)">Recommend</button>
                                 </div>

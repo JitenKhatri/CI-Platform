@@ -1,6 +1,7 @@
 ﻿$(".toggle-sidebar,.overlay").click(function () {
 	$("body").toggleClass("sidebar-open")
 });
+
 var currentPath = window.location.pathname;
 $(".sidebar ul li.nav-item").each(function () {
     var menuItem = $(this);
@@ -162,7 +163,7 @@ function ValidateAddTheme() {
         $(".theme-status-empty").addClass("d-none").removeClass("d-block")
     }
 
-    if (ThemeName.length > 0) {
+    if (ThemeName.trim().length > 4) {
         $(".theme-name-empty").addClass("d-none").removeClass("d-block")
     }
     else {
@@ -171,7 +172,7 @@ function ValidateAddTheme() {
 }
 function AddTheme(action) {
     ValidateAddTheme()
-        if (ThemeStatus != 2 && ThemeName.length > 4) {
+    if (ThemeStatus != 2 && ThemeName.trim().length > 4) {
             $.ajax({
                 url: '/Admin/MissionThemeCrud',
                 type: 'POST',
@@ -201,7 +202,7 @@ function ValidateEditTheme() {
     else {
         modal.find(".theme-status-empty").addClass("d-none").removeClass("d-block")
     }
-    if (ThemeName.length > 0) {
+    if (ThemeName.trim().length > 4) {
         modal.find(".theme-name-empty").addClass("d-none").removeClass("d-block")
     }
     else {
@@ -210,7 +211,7 @@ function ValidateEditTheme() {
 }
 function Edittheme() {
     ValidateEditTheme();
-    if (ThemeStatus != 2 && ThemeName.length > 4) {
+    if (ThemeStatus != 2 && ThemeName.trim().length > 4) {
         $.ajax({
             url: '/Admin/MissionThemeCrud',
             type: 'POST',
@@ -255,7 +256,6 @@ const DeleteTheme = (id) => {
     $(document.body).append(html);
     $('#confirmDeleteModal').modal('show');
     $('#confirmDeleteButton').on('click', () => {
-/*        $(`#theme-${id}`).remove()*/
         $.ajax({
             url: '/Admin/MissionThemeCrud',
             type: 'POST',
@@ -313,7 +313,7 @@ function ValidateAddSkill() {
     else {
         $(".skill-status-empty").addClass("d-none").removeClass("d-block")
     }
-    if (SkillName.length > 0) {
+    if (SkillName.trim().length > 4) {
         $(".skill-name-empty").addClass("d-none").removeClass("d-block")
     }
     else {
@@ -323,7 +323,7 @@ function ValidateAddSkill() {
 function AddSkill(action) {
     ValidateAddSkill()
     if (action == "Add") {
-        if (SkillStatus != 2 && SkillName.length > 4) {
+        if (SkillStatus != 2 && SkillName.trim().length > 4) {
             $.ajax({
                 url: '/Admin/MissionSkillCrud',
                 type: 'POST',
@@ -355,7 +355,7 @@ function ValidateEditSkill() {
     else {
         modal.find(".skill-status-empty").addClass("d-none").removeClass("d-block")
     }
-    if (SkillName.length > 0) {
+    if (SkillName.trim().length > 4) {
         modal.find(".skill-name-empty").addClass("d-none").removeClass("d-block")
     }
     else {
@@ -364,7 +364,7 @@ function ValidateEditSkill() {
 }
 function Editskill(action) {
     ValidateEditSkill();
-    if (SkillStatus != 2 && SkillName.length > 4) {
+    if (SkillStatus != 2 && SkillName.trim().length > 4) {
         $.ajax({
             url: '/Admin/MissionSkillCrud',
             type: 'POST',
@@ -784,7 +784,7 @@ function AddCMS(form, e) {
     e.preventDefault();
     var formData = new FormData(form);
     var description = CKEDITOR.instances.cmseditorhtml.getData();
-    if (description.length < 20) {
+    if (description.trim().length < 20) {
         $(".cms-description-required").addClass("d-block").removeClass("d-none")
     }
     else {
@@ -1010,3 +1010,6 @@ function DeleteBanner(id) {
     });
 }
 
+function Reload() {
+    window.location.reload();
+}

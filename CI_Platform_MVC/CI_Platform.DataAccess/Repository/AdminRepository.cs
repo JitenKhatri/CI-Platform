@@ -519,7 +519,7 @@ namespace CI_Platform.DataAccess.Repository
         {
             if (addMissionViewModel.MissionId == 0) //Add Mission
             {
-                if (addMissionViewModel.MissionType == "Time")
+                if (addMissionViewModel.MissionType == "Time" || addMissionViewModel.MissionType == "TIME")
                 {
                     Mission NewMission = new Mission
                     {
@@ -642,7 +642,7 @@ namespace CI_Platform.DataAccess.Repository
                     return true;
                 }
             
-            else if (addMissionViewModel.MissionType == "Goal")
+            else if (addMissionViewModel.MissionType == "Go" || addMissionViewModel.MissionType == "GO")
             {
                 Mission NewMission = new Mission
                 {
@@ -660,6 +660,7 @@ namespace CI_Platform.DataAccess.Repository
                     GoalMotto = addMissionViewModel.Goal_Motto,
                     StartDate = addMissionViewModel.StartDate,
                     EndDate = addMissionViewModel.EndDate,
+                    GoalAcheived = addMissionViewModel.Goal_Achieved
                 };
                 _db.Missions.Add(NewMission);
                 Save();
@@ -771,7 +772,7 @@ namespace CI_Platform.DataAccess.Repository
             }
             else
             {
-                if (addMissionViewModel.MissionType == "Time")
+                if (addMissionViewModel.MissionType == "Time" || addMissionViewModel.MissionType == "TIME")
                 {
                     Mission editTimeMission = _db.Missions.FirstOrDefault(Mission => Mission.MissionId == addMissionViewModel.MissionId);
                     editTimeMission.MissionType = "TIME";
@@ -910,7 +911,7 @@ namespace CI_Platform.DataAccess.Repository
                     Save();
                     return true;
                 }
-                else if (addMissionViewModel.MissionType == "Goal")
+                else if (addMissionViewModel.MissionType == "Go" || addMissionViewModel.MissionType == "GO")
                 {
                     Mission editGoalMission = _db.Missions.FirstOrDefault(Mission => Mission.MissionId == addMissionViewModel.MissionId);
                     editGoalMission.MissionType = "GO";
@@ -927,6 +928,7 @@ namespace CI_Platform.DataAccess.Repository
                     editGoalMission.OrganizationName = addMissionViewModel.OrganizationName;
                     editGoalMission.OrganizationDetail = addMissionViewModel.OrganizationDetail;
                     editGoalMission.GoalMotto = addMissionViewModel.Goal_Motto;
+                    editGoalMission.GoalAcheived = addMissionViewModel.Goal_Achieved;
                     Save();
                     long EditMissionId = editGoalMission.MissionId;
                     //Deleting existing media 
@@ -1083,6 +1085,7 @@ namespace CI_Platform.DataAccess.Repository
                 OrganizationName = mission.OrganizationName,
                 OrganizationDetail = mission.OrganizationDetail,
                 Goal_Motto = mission.GoalMotto ?? string.Empty,
+                Goal_Achieved = mission.GoalAcheived,
                 Selected_Skills = selectedSkills,
                 Selected_skill_names = Selectedskillnames,
                 MissionSkills = missionskill,

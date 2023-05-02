@@ -611,7 +611,7 @@ function showAlert(message) {
     setTimeout(() => {
         alert.remove();
         alertId = 0;
-    }, 5000);
+    }, 3000);
 }
 function contactUs() {
     var subject = $('#contact-subject').val();

@@ -47,8 +47,9 @@ namespace CI_Platform.Controllers
                 List<MissionViewModel> missions = result.Item1;
                 int totalitemcount = result.Item2;
                 int pageCount = (int)Math.Ceiling((double)totalitemcount / pageSize);
-                ViewBag.PageCount = pageCount;
-                ViewBag.CurrentPage = page;
+                ViewData["PageCount"] = pageCount;
+                ViewData["CurrentPage"] = page;
+
                 return View(missions);
             }
             else
@@ -64,8 +65,8 @@ namespace CI_Platform.Controllers
             List<MissionViewModel> missions = result.Item1;
             int totalitemcount = result.Item2;
             int pageCount = (int)Math.Ceiling((double)totalitemcount / model.PageSize);
-            ViewBag.PageCount = pageCount;
-            ViewBag.CurrentPage = model.Page;
+            ViewData["PageCount"] = pageCount;
+            ViewData["CurrentPage"] = model.Page;
             return PartialView("_Mission", missions);
         }
 
