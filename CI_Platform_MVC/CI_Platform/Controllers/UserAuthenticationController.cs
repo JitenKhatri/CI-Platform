@@ -238,7 +238,7 @@ namespace CI_Platform.Controllers
         public IActionResult resetPassword(string email, string token)
         {
             CiPlatformContext context = new CiPlatformContext();
-            PasswordReset ResetPasswordData = context.PasswordResets.Where(p => p.Token == token && p.CreatedAt.AddHours(4) >= DateTime.Now).FirstOrDefault();
+            PasswordReset ResetPasswordData = context.PasswordResets.Where(p => p.Token == token && p.CreatedAt.AddHours(1) >= DateTime.Now).FirstOrDefault();
             if(ResetPasswordData != null)
             {
                 ViewBag.banners = db.AdminRepository.GetBanners();
@@ -250,7 +250,6 @@ namespace CI_Platform.Controllers
             }
             else
             {
-                ViewBag.ErrorMessage = "Token has expired";
                 return RedirectToAction("Error", "Home");
                
             }
@@ -283,8 +282,11 @@ namespace CI_Platform.Controllers
                     Console.WriteLine(x.Password);
 
                     context.Users.Update(x);
+                    var passwordreset = context.PasswordResets.FirstOrDefault(PasswordReset => PasswordReset.Email == model.Email && PasswordReset.Token == model.token);
+                    passwordreset.CreatedAt = DateTime.Now.AddDays(-1);
                     context.SaveChanges();
                     ViewBag.PassChange = "Password Changed Successfully!";
+
                 }
                 else
                 {

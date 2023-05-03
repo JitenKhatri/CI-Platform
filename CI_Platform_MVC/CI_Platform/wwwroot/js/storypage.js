@@ -410,7 +410,7 @@ function editstory(type,storyId,missionId) {
     validateEdit(storyId);
 
     if (edit_title.trim().length > 20 && edit_title.trim().length < 80 && edit_date.length != 0
-        && Date.parse(Current_date) == Date.parse(Comparedate) && edit_mystory.trim().length > 70 && edit_mystory.trim().length < 400 && validateYouTubeUrls(Video_url)) {
+         && edit_mystory.trim().length > 70 && edit_mystory.trim().length < 400 && validateYouTubeUrls(Video_url)) {
 
         var formData = new FormData();
 
@@ -433,12 +433,12 @@ function editstory(type,storyId,missionId) {
         myDropzone.processQueue();
         // Send the AJAX request with the FormData object after the files have been uploaded
         myDropzone.on("success", function (file, response) {
-            showAlert("Story edited successfully")
+            
             $('.preview-link').css('display', 'block');
         });
 
         // Manually process queue to upload files
-       
+        showAlert("Story edited successfully")
     }
 }
 function validateEdit(storyId) {
@@ -456,9 +456,9 @@ function validateEdit(storyId) {
     const conditions = [
         { message: "Title should be at least 20 characters long", test: edit_title.trim().length < 20 },
         { message: "Title can have maximum 80 characters", test: edit_title.trim().length > 80 },
-        { message: "Please enter a valid date", test: edit_date.length == 0 || Date.parse(Current_date) != Date.parse(Comparedate) },
+        { message: "Please enter a valid date", test: edit_date.length == 0 },
         { message: "Story description should be at least have 70 character", test: edit_mystory.trim().length < 70 },
-        { message: "Story description can have 200 characters", test: edit_mystory.trim().length > 400 },
+        { message: "Story description can have only 400 characters", test: edit_mystory.trim().length > 400 },
         { message: "Please enter youtube video urls only, enter different urls in new line and maximum 20 urls are allowed", test: !validateYouTubeUrls(Video_url)}
     ];
 
@@ -563,7 +563,7 @@ function sharestory(type) {
     validate();
 
     if (mission != 0 && title.trim().length > 20 && title.trim().length < 80 && $('#datepicker').datepicker().val().length != 0
-        && Date.parse(current_date) == Date.parse(comparedate) && mystory.trim().length > 70 && mystory.trim().length < 400 && validateYouTubeUrls(video_url)){
+         && mystory.trim().length > 70 && mystory.trim().length < 400 && validateYouTubeUrls(video_url)){
 
         var formData = new FormData();
 
@@ -627,7 +627,7 @@ function validate() {
     else {
         $(".story-title-full").addClass("d-none").removeClass("d-block")
     }
-    if ($('#datepicker').datepicker().val().length == 0 || Date.parse(current_date) != Date.parse(comparedate)) {
+    if ($('#datepicker').datepicker().val().length == 0) {
         $(".story-date-empty").addClass("d-block").removeClass("d-none")
     }
     else {

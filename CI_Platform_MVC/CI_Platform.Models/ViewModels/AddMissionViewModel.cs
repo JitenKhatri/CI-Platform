@@ -54,6 +54,8 @@ namespace CI_Platform.Models.ViewModels
         public string? Selected_Skills { get; set; } = string.Empty;
 
         public string? Goal_Motto { get; set; } = string.Empty;
+
+        [GoalAchieved (ErrorMessage = "Goal_Achieved is required when MissionType is 'Goal'")]
         public long? Goal_Achieved { get; set; }
         public string Selected_skill_names { get; set; } = string.Empty;
 
@@ -103,5 +105,22 @@ namespace CI_Platform.Models.ViewModels
                 return ValidationResult.Success;
             }
         }
+
+        public class GoalAchievedAttribute : ValidationAttribute
+        {
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                var model = (AddMissionViewModel)validationContext.ObjectInstance;
+                var goalAchieved = value as long?;
+
+                if (model.MissionType == "Go" && (goalAchieved == null || goalAchieved <= 0))
+                {
+                    return new ValidationResult("Goal_Achieved is required when MissionType is 'Goal'");
+                }
+
+                return ValidationResult.Success;
+            }
+        }
+
     }
 }

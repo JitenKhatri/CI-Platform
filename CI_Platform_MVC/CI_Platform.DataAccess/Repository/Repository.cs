@@ -53,6 +53,37 @@ namespace CI_Platform.DataAccess.Repository
             return query.FirstOrDefault();
 
         }
-    }
 
+
+    }
+    public static class LinqHelper
+    {
+        public static IQueryable<T> Randomizer<T>(this IQueryable<T> pCol)
+        {
+            List<T> lResultado = new List<T>();
+            List<T> lLista = pCol.ToList();
+            Random lRandom = new Random();
+            int lintPos = 0;
+
+            while (lLista.Count > 0)
+            {
+                lintPos = lRandom.Next(lLista.Count);
+                lResultado.Add(lLista[lintPos]);
+                lLista.RemoveAt(lintPos);
+            }
+            return lResultado.AsQueryable();
+        }
+
+        //public static IQueryable<T> Randomizer<T>(this IQueryable<T> pCol)
+        //{
+        //    List<T> lLista = pCol.ToList();
+        //    Random lRandom = new Random();
+
+        //    IQueryable<T> lResultado = lLista
+        //        .OrderBy(x => lRandom.Next())
+        //        .AsQueryable();
+
+        //    return lResultado;
+        //}
+    }
 }

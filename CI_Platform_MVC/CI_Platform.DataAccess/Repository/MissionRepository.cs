@@ -79,6 +79,10 @@ namespace CI_Platform.DataAccess.Repository
                 case "deadline":
                     missions = missions.OrderBy(m => m.Deadline);
                     break;
+                case "Random":
+                    // //Random random = new Random();
+                    missions = missions.Randomizer();
+                    break;
                 default:
                     missions = missions.OrderBy(m => m.CreatedAt);
                     break;
@@ -129,7 +133,25 @@ namespace CI_Platform.DataAccess.Repository
                                        },
                                        Avg_ratings = m.MissionRatings.Select(missionrating => decimal.Parse(missionrating.Rating))
                                    }).ToList();
-            
+            if(model.SortOrder == "MostRanked")
+            {
+                Missions = Missions.OrderByDescending(mission => mission.Avg_ratings.Any() ? mission.Avg_ratings.Average() : 0)
+                   .ThenByDescending(mission => mission.Avg_ratings.Count())
+                   .ToList();
+                
+            }
+            if (model.SortOrder == "TopThemes")
+            {
+                var topThemes = _db.MissionThemes
+                  .GroupBy(t => t.Title)
+                  .OrderByDescending(g => g.Count())
+                  .Select(g => g.Key)
+                  .Take(5);
+
+                //Missions = Missions.OrderByDescending(m => topThemes.Count(t => m.Theme.ThemeName.Any(t => t == t)))
+                //                            .ToList();
+
+            }
             return (Missions,totalmissions);
         }
 

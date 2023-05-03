@@ -131,8 +131,9 @@
             <input type="text" asp-for="Goal_Motto" name="Goal_Motto" class="form-control" value="@Model.Goal_Motto" placeholder="Enter Goal_Motto" />
             <span asp-validation-for="Goal_Motto" class="text-danger d-block"></span>
             <label asp-for="Goal_Achieved" class="form-label">Goal Value</label>
-            <input type="number" asp-for="Goal_Achieved" name="Goal_Achieved" class="form-control" value="@Model.Goal_Achieved" placeholder="Enter Goal value" />
+            <input type="number" asp-for="Goal_Achieved" name="Goal_Achieved" class="form-control" id="goalvalue" placeholder="Enter Goal value" />
             <span asp-validation-for="Goal_Achieved" class="text-danger d-block"></span>
+            <span class="goal-required text-danger d-none">Goal value is required when mission type is Goal</span>
         </div>
 
         <div class="row mb-3">
@@ -546,6 +547,15 @@
         var formData = new FormData(form);
         var Missiondescription = CKEDITOR.instances.missiondescription.getData();
         var Organizationdescription = CKEDITOR.instances.organizationdetail.getData();
+        var goalvalue = $("#goalvalue").val();
+        var missiontype = $("#missiontype").val();
+        if(goalvalue < 0 || goalvalue == "" || goalvalue == null)
+        {
+            $(".goal-required").addClass("d-block").removeClass("d-none")
+        }
+        else {
+            $(".goal-required").addClass("d-none").removeClass("d-block")
+        }
         if(Missiondescription.length < 20)
         {
           $(".mission-description-required").addClass("d-block").removeClass("d-none")
