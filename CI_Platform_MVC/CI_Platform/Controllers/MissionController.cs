@@ -49,6 +49,7 @@ namespace CI_Platform.Controllers
                 int pageCount = (int)Math.Ceiling((double)totalitemcount / pageSize);
                 ViewData["PageCount"] = pageCount;
                 ViewData["CurrentPage"] = page;
+                ViewData["TotalMissions"] = totalitemcount;
 
                 return View(missions);
             }
@@ -67,6 +68,7 @@ namespace CI_Platform.Controllers
             int pageCount = (int)Math.Ceiling((double)totalitemcount / model.PageSize);
             ViewData["PageCount"] = pageCount;
             ViewData["CurrentPage"] = model.Page;
+            ViewData["TotalMissions"] = totalitemcount;
             return PartialView("_Mission", missions);
         }
 

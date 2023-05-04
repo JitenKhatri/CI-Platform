@@ -8,6 +8,7 @@
     var countryList = ViewData["CountryList"] as SelectList;
     var themeList = ViewData["ThemeList"] as SelectList;
     var skillList = ViewData["SkillList"] as SelectList;
+     int totalmissions = (int)ViewData["TotalMissions"];
 }
 @model List<MissionViewModel>
 
@@ -109,7 +110,7 @@
     <!-- Explore mission row -->
     <div class="row explore">
         <div class="col">
-            <h2>Explore <strong>Missions</strong></h2>
+            <h2>Explore<strong> Missions</strong></h2>
         </div>
 
         <div class="col d-flex flex-row justify-content-end ">

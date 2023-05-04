@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "pUGPLLyxy0ZBOX94UxrxqY7k8Zs3CwmP5gE6XPMsANM=",
+  "Hash": "bqX+YhgpAu2vk5/BlU7pfLueD5nSNCDN+dwUIcgAnXY=",
   "Source": "CI_Platform",
   "BasePath": "_content/CI_Platform",
   "Mode": "Default",
@@ -6883,6 +6883,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\PVJV_pexels-arthouse-studio-4338092.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\PVYO_M75D_Grow-Trees-On-the-path-to-environment-sustainability.png",
+      "SourceId": "CI_Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\",
+      "BasePath": "_content/CI_Platform",
+      "RelativePath": "images/PVYO_M75D_Grow-Trees-On-the-path-to-environment-sustainability.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\PVYO_M75D_Grow-Trees-On-the-path-to-environment-sustainability.png"
     },
     {
       "Identity": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\wwwroot\\images\\Q225_Z6HZ_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",

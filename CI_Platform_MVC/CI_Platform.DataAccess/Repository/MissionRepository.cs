@@ -14,7 +14,7 @@ namespace CI_Platform.DataAccess.Repository
             _db = db;
         }
 
-        public (List<MissionViewModel>,int) GetAllMission(int page = 1, int pageSize = 3)
+        public (List<MissionViewModel>, int) GetAllMission(int page = 1, int pageSize = 3)
         {
             int skipCount = (page - 1) * pageSize;
             var ratings = _db.MissionRatings.Select(missonrating => decimal.Parse(missonrating.Rating));
@@ -49,11 +49,11 @@ namespace CI_Platform.DataAccess.Repository
 
             List<MissionViewModel> missions = query.Skip(skipCount).Take(pageSize).ToList();
             int totalmissions = query.Count();
-            
-            return (missions,totalmissions);
+
+            return (missions, totalmissions);
         }
 
-        public (List<MissionViewModel>,int) GetFilteredMissions(MissionInputModel model)
+        public (List<MissionViewModel>, int) GetFilteredMissions(MissionInputModel model)
         {
             int skipCount = (model.Page - 1) * model.PageSize;
 
@@ -80,16 +80,44 @@ namespace CI_Platform.DataAccess.Repository
                     missions = missions.OrderBy(m => m.Deadline);
                     break;
                 case "Random":
-                    // //Random random = new Random();
-                    missions = missions.Randomizer();
+                    missions = missions.OrderBy(m => Guid.NewGuid());
                     break;
+                case "TopFavorites":
+                    missions = missions
+                    .GroupJoin(_db.FavoriteMissions, mission => mission.MissionId,
+                    favorite => favorite.MissionId, (mission, favorites) => new { Mission = mission, FavoriteMissions = favorites })
+                    .Select(group => new { Mission = group.Mission, FavoriteCount = group.FavoriteMissions.Count() })
+                    .OrderByDescending(mission => mission.FavoriteCount)
+                    .Select(mission => mission.Mission);
+                    break;
+                case "MostRanked":
+                    missions = missions
+                               .Select(mission => new
+                               {
+                                   Mission = mission,
+                                   AverageRating = _db.MissionRatings
+                                       .Where(rating => rating.MissionId == mission.MissionId && rating.Rating != null)
+                                       .Select(rating => Convert.ToDouble(rating.Rating))
+                                       .DefaultIfEmpty()
+                                       .Average()
+                               })
+                               .OrderByDescending(mission => mission.AverageRating)
+                               .Select(mission => mission.Mission);
+                    break;
+                case "TopThemes":
+                    missions = missions
+                                .OrderByDescending(mission => _db.Missions.Count(m => m.ThemeId == mission.ThemeId))
+                                .ThenBy(mission => mission.MissionId);
+                    break;
+
+
                 default:
                     missions = missions.OrderBy(m => m.CreatedAt);
                     break;
             }
 
             // Apply filtering based on the input parameters
- 
+
             missions = missions.Where(m =>
                     (model.Cities.Count == 0 || model.Cities.Contains(m.City.Name)) &&
                     (model.Countries.Count == 0 || model.Countries.Contains(m.Country.Name)) &&
@@ -133,33 +161,14 @@ namespace CI_Platform.DataAccess.Repository
                                        },
                                        Avg_ratings = m.MissionRatings.Select(missionrating => decimal.Parse(missionrating.Rating))
                                    }).ToList();
-            if(model.SortOrder == "MostRanked")
-            {
-                Missions = Missions.OrderByDescending(mission => mission.Avg_ratings.Any() ? mission.Avg_ratings.Average() : 0)
-                   .ThenByDescending(mission => mission.Avg_ratings.Count())
-                   .ToList();
-                
-            }
-            if (model.SortOrder == "TopThemes")
-            {
-                var topThemes = _db.MissionThemes
-                  .GroupBy(t => t.Title)
-                  .OrderByDescending(g => g.Count())
-                  .Select(g => g.Key)
-                  .Take(5);
-
-                //Missions = Missions.OrderByDescending(m => topThemes.Count(t => m.Theme.ThemeName.Any(t => t == t)))
-                //                            .ToList();
-
-            }
-            return (Missions,totalmissions);
+            return (Missions, totalmissions);
         }
 
 
 
         public List<City> GetCitiesForCountry(long countryid)
         {
-            if(countryid !=0)
+            if (countryid != 0)
             {
                 var cities = _db.Cities
                  .Where(c => c.CountryId == countryid)
@@ -404,7 +413,7 @@ namespace CI_Platform.DataAccess.Repository
                                     where fm.UserId.Equals(user_id) && fm.MissionId.Equals(id)
                                     select fm).ToList();
 
-          
+
             return new VolunteeringMissionVM
             {
                 Missions = mission,
@@ -523,7 +532,7 @@ namespace CI_Platform.DataAccess.Repository
                     timesheet.Action = model.Actions;
                     timesheet.DateVolunteered = DateTime.Parse(model.Volunteered_date);
                     timesheet.Notes = model.Message;
-                    
+
                     Save();
                     return timesheet;
                 }
@@ -541,7 +550,7 @@ namespace CI_Platform.DataAccess.Repository
             if (timesheet is not null)
             {
                 Mission deleteTimesheetMission = _db.Missions.FirstOrDefault(mission => mission.MissionId == timesheet.MissionId);
-                if(deleteTimesheetMission.MissionType == "GO")
+                if (deleteTimesheetMission.MissionType == "GO")
                 {
                     deleteTimesheetMission.GoalAcheived = deleteTimesheetMission.GoalAcheived + timesheet.Action;
                 }

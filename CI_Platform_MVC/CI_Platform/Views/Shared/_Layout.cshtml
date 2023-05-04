@@ -44,8 +44,39 @@ var avatar = User.FindFirst("Avatar")?.Value;
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#" onclick="sortby('TopThemes')"> Top Themes</a></li>
                             <li><a class="dropdown-item" href="#" onclick="sortby('MostRanked')"> Most Ranked</a></li>
-                            <li><a class="dropdown-item" href="#"> Top Favorites</a></li>
-                            <li><a class="dropdown-item" href="#" @*onclick="sortby('Random')"*@> Random</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="sortby('TopFavorites')"> Top Favorites</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="sortby('Random')"> Random</a></li>
+                        </ul>
+                    </div>
+                         <div class="dropdown">
+                        <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <img src="~/images/bell.png" class="mx-2" />
+                        </button>
+                        <ul class="dropdown-menu" style="padding-left:0px;">
+                            <li><button class="btn dropdown-item">
+                              <div class="d-flex flex-row justify-content-between">
+                                <img style="height:21px; width:21px;" src="~/images/settings.png" alt="settings"/>
+                                <p>Notification</p>
+                                <p> Clear All </p>
+                              </div>  
+                            </button></li>
+                            <li>
+                                <button class="btn dropdown-item">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <img style="height:32px; width:32px" src="~/images/add.png" alt="add"/>
+                                        <p class="mx-2">New Mission - Plantation and Afforestation Programme</p>
+                                        <i class="bi bi-circle-fill text-warning"></i>
+                                    </div>
+                                </button></li>
+                           <li>
+                                <button class="btn dropdown-item">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <img style="height:32px; width:32px" src="~/images/add.png" alt="add"/>
+                                        <p>New Mission - Plantation and Afforestation Programme</p>
+                                        <i class="bi bi-circle-fill text-warning"></i>
+                                    </div>
+                                </button></li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -61,6 +92,7 @@ var avatar = User.FindFirst("Avatar")?.Value;
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="EditProfile">My Profile</a></li>
+                            <li><a class="dropdown-item" asp-controller="Mission" asp-action="Index">Dashboard</a></li>
                             <li><a class="dropdown-item" asp-controller="Mission" asp-action="Volunteering_Timesheet">Timesheet</a></li>
                             <li><a class="dropdown-item" asp-controller="UserAuthentication" asp-action="Logout">Logout</a></li>
                         </ul>

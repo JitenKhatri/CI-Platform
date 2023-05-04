@@ -50,6 +50,10 @@ body {
     display: flex;
     margin-left: 10px;
 }
+/* Hide the scrollbar */
+.dropdown-menu::-webkit-scrollbar {
+    display:none;
+}
 
 
 .dropdown-toggle {

@@ -47,6 +47,10 @@ public partial class CiPlatformContext : DbContext
 
     public virtual DbSet<MissionTheme> MissionThemes { get; set; }
 
+    public virtual DbSet<Notification> Notifications { get; set; }
+
+    public virtual DbSet<NotificationSetting> NotificationSettings { get; set; }
+
     public virtual DbSet<PasswordReset> PasswordResets { get; set; }
 
     public virtual DbSet<Skill> Skills { get; set; }
@@ -62,6 +66,8 @@ public partial class CiPlatformContext : DbContext
     public virtual DbSet<Timesheet> Timesheets { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<UserNotificationSetting> UserNotificationSettings { get; set; }
 
     public virtual DbSet<UserQuery> UserQueries { get; set; }
 
@@ -641,6 +647,66 @@ public partial class CiPlatformContext : DbContext
                 .HasColumnName("updated_at");
         });
 
+        modelBuilder.Entity<Notification>(entity =>
+        {
+            entity.HasKey(e => e.NotificationId).HasName("PK__notifica__E059842FBBCD2162");
+
+            entity.ToTable("notification");
+
+            entity.Property(e => e.NotificationId).HasColumnName("notification_id");
+            entity.Property(e => e.Message)
+                .IsUnicode(false)
+                .HasColumnName("message");
+            entity.Property(e => e.MissionId).HasColumnName("mission_id");
+            entity.Property(e => e.MissionStatus)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("mission_status");
+            entity.Property(e => e.NotificationSettingId).HasColumnName("notification_setting_id");
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("status");
+            entity.Property(e => e.StoryId).HasColumnName("story_id");
+            entity.Property(e => e.StoryStatus)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("story_status");
+            entity.Property(e => e.UserAvatar)
+                .IsUnicode(false)
+                .HasColumnName("user_avatar");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.Mission).WithMany(p => p.Notifications)
+                .HasForeignKey(d => d.MissionId)
+                .HasConstraintName("FK__notificat__missi__14B10FFA");
+
+            entity.HasOne(d => d.NotificationSetting).WithMany(p => p.Notifications)
+                .HasForeignKey(d => d.NotificationSettingId)
+                .HasConstraintName("FK__notificat__notif__1699586C");
+
+            entity.HasOne(d => d.Story).WithMany(p => p.Notifications)
+                .HasForeignKey(d => d.StoryId)
+                .HasConstraintName("FK__notificat__story__15A53433");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Notifications)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__notificat__user___13BCEBC1");
+        });
+
+        modelBuilder.Entity<NotificationSetting>(entity =>
+        {
+            entity.HasKey(e => e.NotificationSettingId).HasName("PK__notifica__2CEC4EFB7F8E80D0");
+
+            entity.ToTable("notification_setting");
+
+            entity.Property(e => e.NotificationSettingId).HasColumnName("notification_setting_id");
+            entity.Property(e => e.NotificationSettingName)
+                .HasMaxLength(256)
+                .IsUnicode(false)
+                .HasColumnName("notification_setting_name");
+        });
+
         modelBuilder.Entity<PasswordReset>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__password__3213E83F468D5C2C");
@@ -932,6 +998,25 @@ public partial class CiPlatformContext : DbContext
             entity.HasOne(d => d.Country).WithMany(p => p.Users)
                 .HasForeignKey(d => d.CountryId)
                 .HasConstraintName("FK__user__country_id__0F2D40CE");
+        });
+
+        modelBuilder.Entity<UserNotificationSetting>(entity =>
+        {
+            entity.HasKey(e => e.UserNotificationSettingId).HasName("PK__user_not__035D5A5C64CA26E4");
+
+            entity.ToTable("user_notification_setting");
+
+            entity.Property(e => e.UserNotificationSettingId).HasColumnName("user_notification_setting_id");
+            entity.Property(e => e.NotificationSettingId).HasColumnName("notification_setting_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.NotificationSetting).WithMany(p => p.UserNotificationSettings)
+                .HasForeignKey(d => d.NotificationSettingId)
+                .HasConstraintName("FK__user_noti__notif__0FEC5ADD");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserNotificationSettings)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__user_noti__user___10E07F16");
         });
 
         modelBuilder.Entity<UserQuery>(entity =>
