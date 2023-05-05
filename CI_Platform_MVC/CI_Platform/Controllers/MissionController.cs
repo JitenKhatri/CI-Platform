@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 namespace CI_Platform.Controllers
 {
     [ProfileCompletionFilter]
-    public class MissionController : Controller
+    public class MissionController :Controller
     {
         private readonly IAllRepository db;
         public MissionController(IAllRepository _db)
@@ -243,6 +243,13 @@ namespace CI_Platform.Controllers
             }
         }
 
+
+        [HttpPost]
+        public IActionResult SaveUserNotificationSetting(List<int> CheckedIds, long UserId)
+        {
+            bool success = db.MissionRepository.ChangeNotificationPreferenceUser(UserId,CheckedIds);
+            return Json(new { success = success });
+        }
     }
 
 }

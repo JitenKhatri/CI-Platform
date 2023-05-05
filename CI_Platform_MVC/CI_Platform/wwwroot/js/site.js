@@ -10,6 +10,10 @@ var count = 1;
 var co_workers = []
 var sortorder;
 var input = '';
+var checkedIds = $('#notification-setting-menu input[type=checkbox]:checked').map(function () {
+    return parseInt($(this).attr('id'));
+}).get();
+
 $(document).bind("ajaxSend", function () {
     $('.loader').addClass('d-block').removeClass('d-none');
 }).bind("ajaxComplete", function () {
@@ -33,7 +37,7 @@ $(document).on('click', '.btn-list', showList);
 
 
 // Dropdown item click event listener
-$('.form-check-input').on('change', function () {
+$('.navbar-nav .form-check-input').on('change', function () {
     const dropdown = $(this).closest('.dropdown');
     const dropdownTitle = dropdown.find('.dropdown-toggle').text();
     const value = $(this).data('value');
@@ -71,7 +75,41 @@ $('.form-check-input').on('change', function () {
         badge.remove();
     }  
 });
+function updateCheckedIds(checkbox) {
+    // check if the checkbox is checked or unchecked
+    if (checkbox.checked) {
+        // add the checkbox ID to the checked IDs array if it is not already present
+        if (!checkedIds.includes(parseInt(checkbox.id))) {
+            checkedIds.push(parseInt(checkbox.id));
+        }
+    } else {
+        // remove the checkbox ID from the checked IDs array
+        checkedIds.splice(checkedIds.indexOf(parseInt(checkbox.id)), 1);
+    }
+}
 
+function ShowSettings() {
+    $('.notifications').addClass("d-none")
+    $('.notification-dropdown-menu').removeClass("d-none").addClass("d-block");
+}
+function HideSettings() {
+    $('.notifications').removeClass("d-none");
+    $('.notification-dropdown-menu').removeClass("d-block").addClass("d-none");
+}
+function SaveNotificationSetting(userId) {
+    $.ajax(
+        {
+            url: '/Mission/SaveUserNotificationSetting',
+            type: 'POST',
+            data: { CheckedIds: checkedIds, UserId: userId },
+            success: function () {
+                location.reload();
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+}
 function search() {
     input = document.getElementById("search-input").value.toLowerCase();
     $('.missions').empty()

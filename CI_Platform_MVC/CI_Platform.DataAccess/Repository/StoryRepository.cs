@@ -309,7 +309,7 @@ namespace CI_Platform.DataAccess.Repository
                     ToUserId = to_user_id,
                     StoryId = story_id
                 });
-            
+
             _db.SaveChanges();
             return true;
         }

@@ -2,18 +2,21 @@
 using CI_Platform.Models;
 using CI_Platform.Models.InputModels;
 using CI_Platform.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace CI_Platform.DataAccess.Repository
 {
     public class MissionRepository : Repository<Mission>, IMissionRepository
     {
         private readonly CiPlatformContext _db;
-        public MissionRepository(CiPlatformContext db) : base(db)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public MissionRepository(CiPlatformContext db, IHttpContextAccessor httpContextAccessor) : base(db)
         {
             _db = db;
+            _httpContextAccessor = httpContextAccessor;
         }
-
         public (List<MissionViewModel>, int) GetAllMission(int page = 1, int pageSize = 3)
         {
             int skipCount = (page - 1) * pageSize;
@@ -320,6 +323,17 @@ namespace CI_Platform.DataAccess.Repository
                     ToUserId = user,
                     MissionId = mission_id
                 });
+                User recommenduser = _db.Users.FirstOrDefault(user => user.UserId == user_id);
+                Mission recommendmission = _db.Missions.FirstOrDefault(mission => mission.MissionId == mission_id);
+                _db.Notifications.Add(new Notification
+                {
+                    MissionId = mission_id,
+                    Message = recommenduser.FirstName + " " + recommenduser.LastName + " " + "Recommends this mission - " +recommendmission.Title,
+                    UserId = user,
+                    Status = "NOT SEEN",
+                    NotificationSettingId = 1,
+                    UserAvatar = recommenduser.Avatar
+                }); 
             }
             Save();
             return true;
@@ -561,6 +575,55 @@ namespace CI_Platform.DataAccess.Repository
             else
             {
                 return false;
+            }
+        }
+
+        public NotificationViewModel GetNotificationData(long userId)
+        {
+            var notificationdata = _db.NotificationSettings.ToList();
+            var usernotificationsetting = _db.UserNotificationSettings.Where(usernotificationsetting => usernotificationsetting.UserId == userId).ToList();
+            var usernotification = _db.Notifications.Where(noticationsetting => noticationsetting.UserId == userId).ToList();
+            return new NotificationViewModel
+            {
+                NotificationSettings = notificationdata,
+                UserNotificationSettings = usernotificationsetting
+            }; 
+        }
+
+        public bool ChangeNotificationPreferenceUser(long userId, List<int> CheckedIds)
+        {
+            if(CheckedIds.Count > 0)
+            {
+                var usernotificationsetting = _db.UserNotificationSettings.Where(usernotificationsetting => usernotificationsetting.UserId == userId).ToList();
+                if(usernotificationsetting is not null)
+                {
+                    foreach(var setting in usernotificationsetting)
+                    {
+                        _db.UserNotificationSettings.Remove(setting);
+                    }
+                }
+                foreach(var item in CheckedIds)
+                {
+                    UserNotificationSetting userNotificationSetting = new UserNotificationSetting();
+                    userNotificationSetting.UserId = userId;
+                    userNotificationSetting.NotificationSettingId = item;
+                    _db.UserNotificationSettings.Add(userNotificationSetting);
+                }
+                Save();
+                return true;
+            }
+            else
+            {
+                var usernotificationsetting = _db.UserNotificationSettings.Where(usernotificationsetting => usernotificationsetting.UserId == userId).ToList();
+                if (usernotificationsetting is not null)
+                {
+                    foreach (var setting in usernotificationsetting)
+                    {
+                        _db.UserNotificationSettings.Remove(setting);
+                    }
+                }
+                Save();
+                return true;
             }
         }
     }

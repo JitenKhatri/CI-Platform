@@ -30,6 +30,7 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         Timesheet AddTimeSheet(long user_id, TimesheetViewModel model, string type);
         Timesheet EditTimeSheet(long timesheet_id, Models.ViewModels.TimesheetViewModel model, string type);
         bool DeleteTimesheet(long timesheet_id);
-
+        NotificationViewModel GetNotificationData(long user_id);
+        bool ChangeNotificationPreferenceUser(long userId, List<int> CheckedIds);
     }
 }

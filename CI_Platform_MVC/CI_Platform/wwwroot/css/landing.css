@@ -43,17 +43,14 @@ body {
 }
 .dropdown-menu {
     max-height: 200px;
-    overflow: scroll;
+    overflow: auto;
     padding-left: 8px;
 }
 .dropdown {
     display: flex;
     margin-left: 10px;
 }
-/* Hide the scrollbar */
-.dropdown-menu::-webkit-scrollbar {
-    display:none;
-}
+
 
 
 .dropdown-toggle {
@@ -185,8 +182,8 @@ body {
 .form-check-input:active,
 .form-check-input:focus,
 .form-check-input:hover {
-    background-color: #E8E8E8 !important;
-    border-color: #E8E8E8 !important;
+    background-color: #F88634 !important;
+    border-color: #F88634 !important;
     box-shadow: none !important;
 }
 
@@ -901,7 +898,7 @@ label {
     border: 2px solid #F88634;
     border-radius: 24px;
     opacity: 1;
-    color: #F88634;
+    color: #F88634 !important;
 }
     .add-btn img {
         filter: invert(72%) sepia(35%) saturate(4855%) hue-rotate(336deg) brightness(99%) contrast(97%);
@@ -926,7 +923,12 @@ label {
     z-index: 10000;
     overflow: auto;
 }
-
+#notification-setting-menu{
+    max-height:400px !important;
+    overflow:auto;
+    padding:8px;
+    width:333px !important;
+}
 @media (max-width: 575.98px) {
     .list-view .card {
         flex-direction: column;

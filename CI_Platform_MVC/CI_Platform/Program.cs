@@ -21,6 +21,7 @@ builder.Services.AddAuthentication("AuthCookie").AddCookie("AuthCookie", options
     options.LogoutPath = "/Auth/LogOut";
 });
 builder.Services.AddDbContext<CiPlatformContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAllRepository, AllRepository>();
 builder.Services.AddSession();
 
