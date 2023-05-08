@@ -654,6 +654,13 @@ public partial class CiPlatformContext : DbContext
             entity.ToTable("notification");
 
             entity.Property(e => e.NotificationId).HasColumnName("notification_id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_at");
             entity.Property(e => e.Message)
                 .IsUnicode(false)
                 .HasColumnName("message");
@@ -672,6 +679,9 @@ public partial class CiPlatformContext : DbContext
                 .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasColumnName("story_status");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("updated_at");
             entity.Property(e => e.UserAvatar)
                 .IsUnicode(false)
                 .HasColumnName("user_avatar");

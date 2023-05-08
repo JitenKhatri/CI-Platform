@@ -1,15 +1,10 @@
 ﻿using CI_Platform.Models;
 using CI_Platform.Models.InputModels;
 using CI_Platform.Models.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CI_Platform.DataAccess.Repository.IRepository
 {
-   public interface IMissionRepository : IRepository<Mission>
+    public interface IMissionRepository : IRepository<Mission>
     {
         (List<MissionViewModel>, int) GetAllMission(int page , int pageSize);
         (List<MissionViewModel>, int) GetFilteredMissions(MissionInputModel model);
@@ -32,5 +27,6 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         bool DeleteTimesheet(long timesheet_id);
         NotificationViewModel GetNotificationData(long user_id);
         bool ChangeNotificationPreferenceUser(long userId, List<int> CheckedIds);
+        bool ReadNotification(long NotificationId,long UserId);
     }
 }

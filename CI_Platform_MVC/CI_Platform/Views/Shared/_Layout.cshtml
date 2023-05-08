@@ -55,41 +55,173 @@
                         </ul>
                     </div>
                     <div class="dropdown">
-                        <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <button class="dropdown-toggle notification-bell" type="button" data-bs-toggle="dropdown">
                             <img src="~/images/bell.png" class="mx-2" />
+                            @if (@notificationdata.Uncheckednotificationcount > 0)
+                            {
+                                <span class="badge">@notificationdata.Uncheckednotificationcount</span>
+                            }
+
+
                         </button>
-                        <ul class="dropdown-menu notifications" style="padding-left:0px;">
+                        <ul class="dropdown-menu notifications" style="padding-left:0px; width:550px">
                             <li>
                                 <div class="dropdown-item">
                                     <div class="d-flex flex-row justify-content-between">
 
-                                         <img style="height:21px; width:21px;" src="~/images/settings.png" onclick="ShowSettings()" alt="settings" />
+                                        <img style="height:21px; width:21px;cursor:pointer" src="~/images/settings.png" onclick="ShowSettings()" alt="settings" />
 
-                                        
+
                                         <p>Notification</p>
-                                        <p> Clear All </p>
+                                        <button type="button" class="add-btn" onclick="ClearNotifications(@userId)">Clear All</button>
                                     </div>
                                 </div>
                             </li>
-                            <li>
-                                <button class="btn dropdown-item">
-                                    <div class="d-flex flex-row justify-content-between">
-                                        <img style="height:32px; width:32px" src="~/images/add.png" alt="add" />
-                                        <p class="mx-2">New Mission - Plantation and Afforestation Programme</p>
-                                        <i class="bi bi-circle-fill text-warning"></i>
-                                    </div>
-                                </button>
-                            </li>
-                            <li>
-                                <button class="btn dropdown-item">
-                                    <div class="d-flex flex-row justify-content-between">
-                                        <img style="height:32px; width:32px" src="~/images/add.png" alt="add" />
-                                        <p>New Mission - Plantation and Afforestation Programme</p>
-                                        <i class="bi bi-circle-fill text-warning"></i>
-                                    </div>
-                                </button>
-                            </li>
+                            @if (notificationdata.Notifications.Count() > 0)
+                            {
 
+
+                                var yesterday = DateTime.Now.AddDays(-1).Date; // get yesterday's date
+                                var oldNotifications = notificationdata.Notifications.Where(n => n.CreatedAt.Date < yesterday).ToList(); // filter notifications older than yesterday
+                                var newNotifications = notificationdata.Notifications.Except(oldNotifications).ToList(); // remove old notifications from the new notifications list
+
+                                @foreach (var notification in newNotifications)
+                                {
+                                    @if (notification.MissionId != null)
+                                    {
+                                        <li style="border: 1px solid #E8E8E8;">
+                                            <a class="dropdown-item" href="/volunteering_mission/@notification.MissionId" onmousedown="ReadNotification(@notification.NotificationId)">
+                                                <div class="d-flex flex-row justify-content-between">
+                                                    <img style="height:32px; width:32px" src=@notification.UserAvatar alt="add" />
+                                                    <p class="mx-2 text-start" style="white-space:break-spaces;">@notification.Message</p>
+                                                    @if (@notification.Status == "SEEN")
+                                                    {
+                                                        <i id="notification-@notification.NotificationId" class="bi bi-check-circle"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i id="notification-@notification.NotificationId" class="bi bi-circle-fill text-warning"></i>
+                                                    }
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                    }
+                                    else if (notification.StoryId != null)
+                                    {
+                                        <li style="border: 1px solid #E8E8E8;">
+                                            <a class="dropdown-item" href="/Story/StoryDetail/@notification.StoryId" onmousedown="ReadNotification(@notification.NotificationId)">
+                                                <div class="d-flex flex-row justify-content-between">
+                                                    <img style="height:32px; width:32px" src=@notification.UserAvatar alt="add" />
+                                                    <p class="mx-2 text-start" style="white-space:break-spaces;">@notification.Message</p>
+                                                    @if (@notification.Status == "SEEN")
+                                                    {
+                                                        <i id="notification-@notification.NotificationId" class="bi bi-check-circle"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i id="notification-@notification.NotificationId" class="bi bi-circle-fill text-warning"></i>
+                                                    }
+                                                </div>
+                                            </a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li style="border: 1px solid #E8E8E8;">
+                                            <a class="dropdown-item" onmousedown="ReadNotification(@notification.NotificationId)">
+                                                <div class="d-flex flex-row justify-content-between">
+                                                    <img style="height:32px; width:32px" src=@notification.UserAvatar alt="add" />
+                                                    <p class="mx-2 text-start" style="white-space:break-spaces;">@notification.Message</p>
+                                                    @if (@notification.Status == "SEEN")
+                                                    {
+                                                        <i id="notification-@notification.NotificationId" class="bi bi-check-circle"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i id="notification-@notification.NotificationId" class="bi bi-circle-fill text-warning"></i>
+                                                    }
+                                                </div>
+                                            </a>
+                                        </li>
+                                    }
+
+                                }
+                                @if (oldNotifications.Any())
+                                {
+                                    <li style="border:1px solid #E8E8E8; text-align:center;">Older Notifications</li>
+                                    @foreach (var notification in oldNotifications)
+                                    {
+                                        @if (notification.MissionId != null)
+                                        {
+                                            <li style="border: 1px solid #E8E8E8;">
+                                                <a class="dropdown-item" href="/volunteering_mission/@notification.MissionId" onmousedown="ReadNotification(@notification.NotificationId)">
+                                                    <div class="d-flex flex-row justify-content-between">
+                                                        <img style="height:32px; width:32px" src=@notification.UserAvatar alt="add" />
+                                                        <p class="mx-2 text-start" style="white-space:break-spaces;">@notification.Message</p>
+                                                        @if (@notification.Status == "SEEN")
+                                                        {
+                                                            <i id="notification-@notification.NotificationId" class="bi bi-check-circle"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i id="notification-@notification.NotificationId" class="bi bi-circle-fill text-warning"></i>
+                                                        }
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                        }
+                                        else if (notification.StoryId != null)
+                                        {
+                                            <li style="border: 1px solid #E8E8E8;">
+                                                <a class="dropdown-item" href="/Story/StoryDetail/@notification.StoryId" onmousedown="ReadNotification(@notification.NotificationId)">
+                                                    <div class="d-flex flex-row justify-content-between">
+                                                        <img style="height:32px; width:32px" src=@notification.UserAvatar alt="add" />
+                                                        <p class="mx-2 text-start" style="white-space:break-spaces;">@notification.Message</p>
+                                                        @if (@notification.Status == "SEEN")
+                                                        {
+                                                            <i id="notification-@notification.NotificationId" class="bi bi-check-circle"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i id="notification-@notification.NotificationId" class="bi bi-circle-fill text-warning"></i>
+                                                        }
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li style="border: 1px solid #E8E8E8;">
+                                                <a class="dropdown-item" onmousedown="ReadNotification(@notification.NotificationId)">
+                                                    <div class="d-flex flex-row justify-content-between">
+                                                        <img style="height:32px; width:32px" src=@notification.UserAvatar alt="add" />
+                                                        <p class="mx-2 text-start" style="white-space:break-spaces;">@notification.Message</p>
+                                                        @if (@notification.Status == "SEEN")
+                                                        {
+                                                            <i id="notification-@notification.NotificationId" class="bi bi-check-circle"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i id="notification-@notification.NotificationId" class="bi bi-circle-fill text-warning"></i>
+                                                        }
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <li>
+                                    <div class="dropdown-item d-flex flex-column justify-content-center align-items-center">
+                                        <img src="~/images/bell-big.png" style="height:80px; width:80px" alt="notification-bell" />
+                                        <p>You do not have any new notifications</p>
+                                    </div>
+                                </li>
+                            }
                         </ul>
                         <ul class="dropdown-menu notification-dropdown-menu d-none" id="notification-setting-menu" aria-labelledby="">
                             <li class="d-flex justify-content-center" style="border-bottom: 1px solid #aea8a8; padding-bottom: 10px;">

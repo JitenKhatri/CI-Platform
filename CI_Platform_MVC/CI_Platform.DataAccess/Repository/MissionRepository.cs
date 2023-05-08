@@ -4,7 +4,6 @@ using CI_Platform.Models.InputModels;
 using CI_Platform.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace CI_Platform.DataAccess.Repository
 {
@@ -328,12 +327,12 @@ namespace CI_Platform.DataAccess.Repository
                 _db.Notifications.Add(new Notification
                 {
                     MissionId = mission_id,
-                    Message = recommenduser.FirstName + " " + recommenduser.LastName + " " + "Recommends this mission - " +recommendmission.Title,
+                    Message = recommenduser.FirstName + " " + recommenduser.LastName + " " + "Recommends this mission - " + recommendmission.Title,
                     UserId = user,
                     Status = "NOT SEEN",
                     NotificationSettingId = 1,
                     UserAvatar = recommenduser.Avatar
-                }); 
+                });
             }
             Save();
             return true;
@@ -580,29 +579,37 @@ namespace CI_Platform.DataAccess.Repository
 
         public NotificationViewModel GetNotificationData(long userId)
         {
-            var notificationdata = _db.NotificationSettings.ToList();
-            var usernotificationsetting = _db.UserNotificationSettings.Where(usernotificationsetting => usernotificationsetting.UserId == userId).ToList();
-            var usernotification = _db.Notifications.Where(noticationsetting => noticationsetting.UserId == userId).ToList();
+            var notificationsettingsdata = _db.NotificationSettings.ToList();
+            var usernotificationsetting = _db.UserNotificationSettings.Where(usernotificationsetting => usernotificationsetting.UserId == userId);
+            var usernotification = from notifications in _db.Notifications.Where(notification => notification.UserId == userId).
+                                   OrderByDescending(notification => notification.CreatedAt)
+                                   join usernotificationsettings in usernotificationsetting
+                                   on notifications.NotificationSettingId equals usernotificationsettings.NotificationSettingId
+                                   select notifications;
+
+            int uncheckednotificationcount = usernotification.Where(notification => notification.Status == "NOT SEEN").ToList().Count();
             return new NotificationViewModel
             {
-                NotificationSettings = notificationdata,
-                UserNotificationSettings = usernotificationsetting
-            }; 
+                NotificationSettings = notificationsettingsdata,
+                UserNotificationSettings = usernotificationsetting.ToList(),
+                Notifications = usernotification.ToList(),
+                Uncheckednotificationcount = uncheckednotificationcount
+            };
         }
 
         public bool ChangeNotificationPreferenceUser(long userId, List<int> CheckedIds)
         {
-            if(CheckedIds.Count > 0)
+            if (CheckedIds.Count > 0)
             {
                 var usernotificationsetting = _db.UserNotificationSettings.Where(usernotificationsetting => usernotificationsetting.UserId == userId).ToList();
-                if(usernotificationsetting is not null)
+                if (usernotificationsetting is not null)
                 {
-                    foreach(var setting in usernotificationsetting)
+                    foreach (var setting in usernotificationsetting)
                     {
                         _db.UserNotificationSettings.Remove(setting);
                     }
                 }
-                foreach(var item in CheckedIds)
+                foreach (var item in CheckedIds)
                 {
                     UserNotificationSetting userNotificationSetting = new UserNotificationSetting();
                     userNotificationSetting.UserId = userId;
@@ -625,6 +632,28 @@ namespace CI_Platform.DataAccess.Repository
                 Save();
                 return true;
             }
+        }
+
+        public bool ReadNotification(long NotificationId, long UserId)
+        {
+            if (NotificationId != null && NotificationId != 0)
+            {
+                var notification = _db.Notifications.FirstOrDefault(Notification => Notification.NotificationId == NotificationId);
+                notification.Status = "SEEN";
+                Save();
+                return true;
+            }
+            else
+            {
+                var usernotifications = _db.Notifications.Where(Notification => Notification.UserId == UserId).ToList();
+                foreach (var notification in usernotifications)
+                {
+                    notification.Status = "SEEN";
+                    Save();
+                }
+                return true;
+            }
+
         }
     }
 }

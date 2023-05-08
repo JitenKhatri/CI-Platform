@@ -43,7 +43,8 @@ body {
 }
 .dropdown-menu {
     max-height: 200px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x:hidden;
     padding-left: 8px;
 }
 .dropdown {
@@ -929,6 +930,22 @@ label {
     padding:8px;
     width:333px !important;
 }
+
+.notification-bell {
+    position: relative;
+}
+
+
+
+    .notification-bell .badge {
+        position: absolute;
+        top: -6px;
+        right: 0px;
+        padding: 2px 5px;
+        border-radius: 50%;
+        background: #f96363;
+        color: white;
+    }
 @media (max-width: 575.98px) {
     .list-view .card {
         flex-direction: column;

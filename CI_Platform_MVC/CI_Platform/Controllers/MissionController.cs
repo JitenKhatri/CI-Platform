@@ -250,6 +250,13 @@ namespace CI_Platform.Controllers
             bool success = db.MissionRepository.ChangeNotificationPreferenceUser(UserId,CheckedIds);
             return Json(new { success = success });
         }
+
+        [HttpPost]
+        public IActionResult ReadNotification(long NotificationId,long UserId)
+        {
+            bool success = db.MissionRepository.ReadNotification(NotificationId,UserId);
+            return Json(new { success = success });
+        }
     }
 
 }

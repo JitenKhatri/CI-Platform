@@ -394,9 +394,21 @@ namespace CI_Platform.DataAccess.Repository
         public bool ApproveMissionApplication(int MissionApplicationId)
         {
             MissionApplication missionapplication = _db.MissionApplications.FirstOrDefault(ma => ma.MissionApplicationId == MissionApplicationId);
-            if(missionapplication != null)
+            var missiontitle = _db.Missions.Where(mission => mission.MissionId == missionapplication.MissionId).Select(mission => mission.Title).ToList();
+            if (missionapplication != null)
             {
                 missionapplication.ApprovalStatus = "APPROVE";
+                _db.Notifications.Add(
+                    new Notification
+                    {
+                        UserId = missionapplication.UserId,
+                        MissionId = missionapplication.MissionId,
+                        Message = "Your mission application for " + @missiontitle.FirstOrDefault() + " has been approved!!",
+                        UserAvatar = "/images/right.png",
+                        Status = "NOT SEEN",
+                        MissionStatus = "APPROVE",
+                        NotificationSettingId = 9
+                    });
                 Save();
                 return true;
             }
@@ -408,9 +420,21 @@ namespace CI_Platform.DataAccess.Repository
         public bool DeclineMissionApplication(int MissionApplicationId)
         {
             MissionApplication missionapplication = _db.MissionApplications.FirstOrDefault(ma => ma.MissionApplicationId == MissionApplicationId);
+            var missiontitle = _db.Missions.Where(mission => mission.MissionId == missionapplication.MissionId).Select(mission => mission.Title);
             if (missionapplication != null)
             {
                 missionapplication.ApprovalStatus = "DECLINE";
+                _db.Notifications.Add(
+                    new Notification
+                    {
+                        UserId = missionapplication.UserId,
+                        MissionId = missionapplication.MissionId,
+                        Message = "Your mission application for " + @missiontitle.FirstOrDefault() + " has been declined!!",
+                        UserAvatar = "/images/cancel1.png",
+                        Status = "NOT SEEN",
+                        MissionStatus = "DECLINE",
+                        NotificationSettingId = 9
+                    });
                 Save();
                 return true;
             }
@@ -426,6 +450,17 @@ namespace CI_Platform.DataAccess.Repository
             if(story != null)
             {
                 story.Status = "PUBLISHED";
+                _db.Notifications.Add(
+                    new Notification
+                    {
+                      UserId = story.UserId,
+                      StoryId = story.StoryId,
+                      Message = "Your story with title " +@story.Title + " has been approved!!",
+                      UserAvatar = "/images/right.png",
+                      Status = "NOT SEEN",
+                      StoryStatus = "PUBLISHED",
+                      NotificationSettingId = 5
+                    });
                 Save();
                 return true;
             }
@@ -441,6 +476,17 @@ namespace CI_Platform.DataAccess.Repository
             if (story != null)
             {
                 story.Status = "DECLINED";
+                _db.Notifications.Add(
+                   new Notification
+                   {
+                       UserId = story.UserId,
+                       StoryId = story.StoryId,
+                       Message = "Your story with title " + @story.Title + " has been declined!!",
+                       UserAvatar = "/images/cross.png",
+                       Status = "NOT SEEN",
+                       StoryStatus = "DECLINED",
+                       NotificationSettingId = 5
+                   });
                 Save();
                 return true;
             }
@@ -632,6 +678,22 @@ namespace CI_Platform.DataAccess.Repository
                             });
                         }
                     }
+                    //Notifying Users
+                    var NotifyingUserIds = _db.Users.Where(User => User.DeletedAt == null).Select(User => User.UserId).ToList();
+                    foreach(var userid in NotifyingUserIds)
+                    {
+                       _db.Notifications.Add(
+                                    new Notification
+                                    {
+                                        UserId = userid,
+                                        MissionId = NewMission.MissionId,
+                                        Message = "New Mission - " + NewMission.Title,
+                                        UserAvatar = "/images/add.png",
+                                        Status = "NOT SEEN",
+                                        NotificationSettingId = 7
+                                    });
+                    }
+                    
                     Save();
                     return true;
                 }
@@ -756,9 +818,25 @@ namespace CI_Platform.DataAccess.Repository
                             });
                         }
                     }
+                    //Notifying Users
+                    var NotifyingUserIds = _db.Users.Where(User => User.DeletedAt == null).Select(User => User.UserId).ToList();
+                    foreach (var userid in NotifyingUserIds)
+                    {
+                        _db.Notifications.Add(
+                                     new Notification
+                                     {
+                                         UserId = userid,
+                                         MissionId = NewMission.MissionId,
+                                         Message = "New Mission - " + NewMission.Title,
+                                         UserAvatar = "/images/add.png",
+                                         Status = "NOT SEEN",
+                                         NotificationSettingId = 7
+                                     });
+                    }
                     Save();
                     return true;
                 }
+
                 else
                 {
                     return false;

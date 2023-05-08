@@ -25,6 +25,12 @@ public partial class Notification
 
     public long? NotificationSettingId { get; set; }
 
+    public DateTime CreatedAt { get; set; }
+
+    public DateTime? UpdatedAt { get; set; }
+
+    public DateTime? DeletedAt { get; set; }
+
     public virtual Mission? Mission { get; set; }
 
     public virtual NotificationSetting? NotificationSetting { get; set; }

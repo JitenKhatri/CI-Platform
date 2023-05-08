@@ -669,4 +669,33 @@ function contactUs() {
     })
 }
 
+function ReadNotification(NotificationId) {
+    $.ajax({
+        url: '/Mission/ReadNotification',
+        type: 'POST',
+        data: { NotificationId: NotificationId },
+        success: function () {
+            $('#notification-' + NotificationId).addClass('bi-check-circle');
+            $('#notification-' + NotificationId).removeClass('bi-circle-fill');
+            $('#notification-' + NotificationId).removeClass('text-warning');
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+}
+
+function ClearNotifications(userId) {
+    $.ajax({
+        url: '/Mission/ReadNotification',
+        type: 'POST',
+        data: { UserId: userId },
+        success: function () {
+            location.reload();
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+}
 
