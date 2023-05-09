@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "DafV2zfCocTOyRYIqByvscK/JsQbh7gIaRhFOjI6jRvqLAuyXijmc8TmbVBv9poqwEG8OswNA0tGLsk0v5Y9fA==",
+  "dgSpecHash": "xrvfqija/0CuvVplbwQ7QhV31lWr64YVEqAUcJpKn/ymz2Xvc6kBKmn4DehC6hQFUWxKDCoA/YswizSweENjBg==",
   "success": true,
   "projectFilePath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\CI_Platform.csproj",
   "expectedPackageFiles": [
@@ -34,6 +34,7 @@
     "C:\\Users\\pca19\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\6.0.14\\microsoft.aspnetcore.jsonpatch.6.0.14.nupkg.sha512",
     "C:\\Users\\pca19\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\6.0.14\\microsoft.aspnetcore.mvc.newtonsoftjson.6.0.14.nupkg.sha512",
     "C:\\Users\\pca19\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.0\\microsoft.aspnetcore.razor.language.6.0.0.nupkg.sha512",
+    "C:\\Users\\pca19\\.nuget\\packages\\microsoft.aspnetcore.routing.abstractions\\2.2.0\\microsoft.aspnetcore.routing.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\pca19\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
     "C:\\Users\\pca19\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\pca19\\.nuget\\packages\\microsoft.build\\17.3.2\\microsoft.build.17.3.2.nupkg.sha512",

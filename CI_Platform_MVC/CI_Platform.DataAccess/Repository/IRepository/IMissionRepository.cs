@@ -10,7 +10,6 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         (List<MissionViewModel>, int) GetFilteredMissions(MissionInputModel model);
         List<City> GetCitiesForCountry(long countryid);
 
-        List<MissionSkill> MissionSkillList(int id);
         VolunteeringMissionVM GetMissionById(int id, long user_id);
         IEnumerable<CommentViewModel> comment(long user_id, long mission_id, string comment);
         bool add_to_favourite(long user_id, long mission_id);
@@ -28,5 +27,6 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         NotificationViewModel GetNotificationData(long user_id);
         bool ChangeNotificationPreferenceUser(long userId, List<int> CheckedIds);
         bool ReadNotification(long NotificationId,long UserId);
+        bool SendEmail(string Receiveremail, string emailSubject, string emailBody);
     }
 }

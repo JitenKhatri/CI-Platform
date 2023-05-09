@@ -8,9 +8,9 @@ namespace CI_Platform.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IAllRepository db;
+        private readonly IUnitOfWork db;
 
-        public HomeController(ILogger<HomeController> logger, IAllRepository _db)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork _db)
         {
             _logger = logger;
             db = _db;

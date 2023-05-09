@@ -25,10 +25,10 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         Skill EditSkill(int skillid, int Status, string SkillName);
         bool DeleteSkill(int skill_id);
         CrudViewModel GetAllMissionApplications();
-        bool ApproveMissionApplication(int MissionApplicationId);
-        bool DeclineMissionApplication(int MissionApplicationId);
-        bool PublishStory(int StoryId);
-        bool DeclineStory(int StoryId);
+        bool ApproveMissionApplication(int MissionApplicationId,string MissionLink);
+        bool DeclineMissionApplication(int MissionApplicationId, string MissionLink);
+        bool PublishStory(int StoryId,string StoryLink);
+        bool DeclineStory(int StoryId,string StoryLink);
         bool DeleteStory(int StoryId);
         StoryViewModel GetStoryDetail(int StoryId);
         AddUserViewModel GetCitiesForCountries(int CountryId);
@@ -43,7 +43,7 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         bool DeleteCMSPage(long CMSPageId);
         List<MissionTheme> GetAllMissionThemes();
         List<Skill> GetAllMissionSkills();
-        bool AddMission(AddMissionViewModel addMissionViewModel);
+        long AddMission(AddMissionViewModel addMissionViewModel);
         AddMissionViewModel GetMissionById(long MissionId);
         bool DeleteMission(long MissionId);
 
@@ -53,5 +53,6 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         AddBannerViewModel GetBannerById(int BannerId);
         bool DeleteBanner(int BannerId);
         IEnumerable<AddBannerViewModel> GetBanners();
+        bool NotifyuserEmail(long userid);
     }
 }

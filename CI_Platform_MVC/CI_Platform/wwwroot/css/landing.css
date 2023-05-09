@@ -44,8 +44,9 @@ body {
 .dropdown-menu {
     max-height: 200px;
     overflow-y: auto;
-    overflow-x:hidden;
+    overflow-x: hidden;
     padding-left: 8px;
+    --bs-dropdown-link-active-bg: #f88364;
 }
 .dropdown {
     display: flex;
@@ -181,7 +182,6 @@ body {
 
 .form-check-input:checked,
 .form-check-input:active,
-.form-check-input:focus,
 .form-check-input:hover {
     background-color: #F88634 !important;
     border-color: #F88634 !important;
@@ -515,25 +515,26 @@ volunteers #img {
 }
 
 
-/*.other-image {
+.other-image {
     margin-right: 1.15%;
     width: 24.1%;
     cursor: pointer;
-}*/
-
-.carousel-item img {
-    width: 100%;
-    height: 162px;
-    /*Set initial width to 100% */
+    height: 140px;
 }
 
+/*.carousel-item img {
+    width: 100%;
+    height: 162px;*/
+    /*Set initial width to 100% */
+/*}
+
     .carousel-item img:nth-child(2n) {
-        width: 50%;  /*Set width to 50% for every other image */
-    }
+        width: 50%;*/  /*Set width to 50% for every other image */
+    /*}
 
     .carousel-item img:nth-child(4n) {
-        width: 25%;  /*Set width to 25% for every fourth image*/ 
-    }
+        width: 25%;*/  /*Set width to 25% for every fourth image*/ 
+    /*}*/
 .left {
     width: 2%;
     opacity: 50%;

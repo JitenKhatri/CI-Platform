@@ -1,7 +1,7 @@
 ﻿@using System.Security.Claims
 @using CI_Platform.DataAccess.Repository.IRepository
 
-@inject IAllRepository MissionRepo
+@inject IUnitOfWork MissionRepo
 @{
     var avatar = User.FindFirst("Avatar")?.Value;
     long userId = long.Parse(User.FindFirst(ClaimTypes.Sid)?.Value);

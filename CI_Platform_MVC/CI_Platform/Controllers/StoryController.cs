@@ -14,8 +14,8 @@ namespace CI_Platform.Controllers
     [ProfileCompletionFilter]
     public class StoryController : Controller
     {
-        private readonly IAllRepository db;
-        public StoryController(IAllRepository _db)
+        private readonly IUnitOfWork db;
+        public StoryController(IUnitOfWork _db)
         {
             db = _db;
         }
@@ -116,39 +116,18 @@ namespace CI_Platform.Controllers
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
             bool success = db.StoryRepository.Recommend(user_id, story_id, to_user_id);
-            var InvitedMissionLink = Url.Action("StoryDetail", "Story", new { id = story_id }, Request.Scheme);
-
-            var senderEmail = new MailAddress("jitenkhatri81@gmail.com", "Jiten Khatri");
-            Console.WriteLine(email);
-            // Validate the email address
-            var regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
-            if (!regex.IsMatch(email))
-            {
-                // Handle the invalid email address
-                return Json(new { success = false, error = "Invalid email address" });
-            }
-            var receiverEmail = new MailAddress(email, "Receiver");
-            var password = "evat odzv mxso djdr";
+            var InvitedStoryLink = Url.Action("StoryDetail", "Story", new { id = story_id }, Request.Scheme);
+            var body = "Follow this link and see the story " + InvitedStoryLink;
             var sub = "You have been recommended a story!!";
-            var body = "Follow this link and see the story " + InvitedMissionLink;
-            var smtp = new SmtpClient
+            bool emailsent = db.MissionRepository.SendEmail(email, sub, body);
+            if (emailsent)
             {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(senderEmail.Address, password)
-            };
-            using (var mess = new MailMessage(senderEmail, receiverEmail)
-            {
-                Subject = sub,
-                Body = body
-            })
-            {
-                smtp.Send(mess);
+                return Json(new { success = success });
             }
-            return Json(new { success = success });
+            else
+            {
+                return Json(new { success = false });
+            }
         }
 
     }

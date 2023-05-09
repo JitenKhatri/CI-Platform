@@ -5,23 +5,20 @@ using CI_Platform.Models.ViewModels;
 using Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Net;
-using System.Net.Mail;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
 
 namespace CI_Platform.Controllers
 {
     [ProfileCompletionFilter]
-    public class MissionController :Controller
+    public class MissionController : Controller
     {
-        private readonly IAllRepository db;
-        public MissionController(IAllRepository _db)
+        private readonly IUnitOfWork db;
+        public MissionController(IUnitOfWork _db)
         {
             db = _db;
         }
 
-        
+
         public IActionResult Index(int page = 1, int pageSize = 3)
         {
             List<City> cities = new List<City>();
@@ -39,7 +36,7 @@ namespace CI_Platform.Controllers
                 ViewData["CountryList"] = new SelectList(countries, "CountryId", "Name");
                 ViewData["ThemeList"] = new SelectList(themes, "MissionThemeId", "Title");
                 ViewData["SkillList"] = new SelectList(skills, "SkillId", "SkillName");
-            } 
+            }
 
             if (User.Identity.IsAuthenticated)
             {
@@ -61,7 +58,7 @@ namespace CI_Platform.Controllers
 
         [HttpPost]
         public IActionResult Index(MissionInputModel model)
-       {
+        {
             var result = db.MissionRepository.GetFilteredMissions(model);
             List<MissionViewModel> missions = result.Item1;
             int totalitemcount = result.Item2;
@@ -93,13 +90,13 @@ namespace CI_Platform.Controllers
                 HttpContext.Session.SetString("Missionid", missionid);
                 return RedirectToAction("login", "UserAuthentication");
             }
-            
+
         }
-    
+
 
         [HttpPost]
         [Route("volunteering_mission/{id}")]
-        public IActionResult volunteering_mission(long User_id, long Mission_id, string comment, string request_for,int rating,int count, List<long> co_workers,string email)
+        public IActionResult volunteering_mission(long User_id, long Mission_id, string comment, string request_for, int rating, int count, List<long> co_workers, string email)
         {
             if (request_for == "add_to_favourite")
             {
@@ -118,46 +115,20 @@ namespace CI_Platform.Controllers
             }
             else if (request_for == "next_volunteers")
             {
-              VolunteeringMissionVM mission = db.MissionRepository.Next_Volunteers(count, User_id, Mission_id);
+                VolunteeringMissionVM mission = db.MissionRepository.Next_Volunteers(count, User_id, Mission_id);
                 var recent_volunteers = this.RenderViewAsync("_recent_volunteers", mission, true);
                 return Json(new { recent_volunteers = recent_volunteers, Total_volunteers = mission.Total_volunteers });
             }
             else if (request_for == "recommend")
             {
-                bool success = db.MissionRepository.Recommend(User_id, Mission_id, co_workers);
-               var InvitedMissionLink = Url.Action("volunteering_mission", "Mission", new { id = Mission_id}, Request.Scheme);
-
-                var senderEmail = new MailAddress("jitenkhatri81@gmail.com", "Jiten Khatri");
-                Console.WriteLine(email);
-                // Validate the email address
-                var regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
-                if (!regex.IsMatch(email))
-                {
-                    // Handle the invalid email address
-                    return Json(new { success = false, error = "Invalid email address" });
-                }
-                var receiverEmail = new MailAddress(email, "Receiver");
-                var password = "evat odzv mxso djdr";
                 var sub = "You have been invited to a mission";
+                var InvitedMissionLink = Url.Action("volunteering_mission", "Mission", new { id = Mission_id }, Request.Scheme);
                 var body = "Follow this link and Apply to the mission " + InvitedMissionLink;
-                var smtp = new SmtpClient
-                {
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(senderEmail.Address, password)
-                };
-                using (var mess = new MailMessage(senderEmail, receiverEmail)
-                {
-                    Subject = sub,
-                    Body = body
-                })
-                {
-                    smtp.Send(mess);
-                }
-                return Json(new { success = success }); 
+                bool emailsent = db.MissionRepository.SendEmail(email, sub, body);
+                bool success = db.MissionRepository.Recommend(User_id, Mission_id, co_workers);
+                return Json(new { success = success });
+
+
             }
             else
             {
@@ -165,8 +136,8 @@ namespace CI_Platform.Controllers
                 var new_comment = this.RenderViewAsync("_Comment", comments, true);
                 return Json(new { comments = new_comment, success = true });
             }
-           
-            
+
+
         }
 
         public IActionResult Volunteering_Timesheet()
@@ -247,14 +218,14 @@ namespace CI_Platform.Controllers
         [HttpPost]
         public IActionResult SaveUserNotificationSetting(List<int> CheckedIds, long UserId)
         {
-            bool success = db.MissionRepository.ChangeNotificationPreferenceUser(UserId,CheckedIds);
+            bool success = db.MissionRepository.ChangeNotificationPreferenceUser(UserId, CheckedIds);
             return Json(new { success = success });
         }
 
         [HttpPost]
-        public IActionResult ReadNotification(long NotificationId,long UserId)
+        public IActionResult ReadNotification(long NotificationId, long UserId)
         {
-            bool success = db.MissionRepository.ReadNotification(NotificationId,UserId);
+            bool success = db.MissionRepository.ReadNotification(NotificationId, UserId);
             return Json(new { success = success });
         }
     }

@@ -2,16 +2,25 @@
 using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
 using CI_Platform.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using System.Web.Mvc;
 
 namespace CI_Platform.DataAccess.Repository
 {
     public class AdminRepository : Repository<Admin>, IAdminRepository
     {
         private readonly CiPlatformContext _db;
-        public AdminRepository(CiPlatformContext db) : base(db)
+        private readonly IMissionRepository repository;
+        private readonly LinkGenerator _urlHelper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public AdminRepository(CiPlatformContext db, IMissionRepository _repository, LinkGenerator urlHelper, IHttpContextAccessor httpContextAccessor) : base(db)
         {
             _db = db;
-        }
+            repository = _repository;
+            _urlHelper = urlHelper;
+            _httpContextAccessor = httpContextAccessor;
+        }   
 
         public CrudViewModel GetAllUsers()
         {
@@ -391,7 +400,7 @@ namespace CI_Platform.DataAccess.Repository
             };
         }
 
-        public bool ApproveMissionApplication(int MissionApplicationId)
+        public bool ApproveMissionApplication(int MissionApplicationId, string MissionLink)
         {
             MissionApplication missionapplication = _db.MissionApplications.FirstOrDefault(ma => ma.MissionApplicationId == MissionApplicationId);
             var missiontitle = _db.Missions.Where(mission => mission.MissionId == missionapplication.MissionId).Select(mission => mission.Title).ToList();
@@ -410,6 +419,16 @@ namespace CI_Platform.DataAccess.Repository
                         NotificationSettingId = 9
                     });
                 Save();
+                var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == missionapplication.UserId
+                                                               && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
+                if (emailnotification != null && emailnotification != 0)
+                {
+                    var email = _db.Users.Where(User => User.UserId == missionapplication.UserId).Select(User => User.Email).FirstOrDefault();
+                    var subject = "Mission Application Approved";
+                    
+                    var body = "Follow this link to see the mission " + MissionLink;
+                    bool sentemailnotification = repository.SendEmail(email, subject, body);
+                }
                 return true;
             }
             else
@@ -417,7 +436,7 @@ namespace CI_Platform.DataAccess.Repository
                 return false;
             }
         }
-        public bool DeclineMissionApplication(int MissionApplicationId)
+        public bool DeclineMissionApplication(int MissionApplicationId,string MissionLink)
         {
             MissionApplication missionapplication = _db.MissionApplications.FirstOrDefault(ma => ma.MissionApplicationId == MissionApplicationId);
             var missiontitle = _db.Missions.Where(mission => mission.MissionId == missionapplication.MissionId).Select(mission => mission.Title);
@@ -436,6 +455,16 @@ namespace CI_Platform.DataAccess.Repository
                         NotificationSettingId = 9
                     });
                 Save();
+                var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == missionapplication.UserId
+                                                               && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
+                if (emailnotification != null && emailnotification != 0)
+                {
+                    var email = _db.Users.Where(User => User.UserId == missionapplication.UserId).Select(User => User.Email).FirstOrDefault();
+                    var subject = "Mission Application Declined";
+
+                    var body = "Follow this link to see the mission " + MissionLink;
+                    bool sentemailnotification = repository.SendEmail(email, subject, body);
+                }
                 return true;
             }
             else
@@ -444,7 +473,7 @@ namespace CI_Platform.DataAccess.Repository
             }
         }
 
-        public bool PublishStory(int StoryId)
+        public bool PublishStory(int StoryId,string StoryLink)
         {
             Story story = _db.Stories.FirstOrDefault(s => s.StoryId == StoryId);
             if(story != null)
@@ -462,6 +491,16 @@ namespace CI_Platform.DataAccess.Repository
                       NotificationSettingId = 5
                     });
                 Save();
+                var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == story.UserId
+                                               && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
+                if (emailnotification != null && emailnotification != 0)
+                {
+                    var email = _db.Users.Where(User => User.UserId == story.UserId).Select(User => User.Email).FirstOrDefault();
+                    var subject = "Your story has been approved!!";
+
+                    var body = "Follow this link to see the story " + StoryLink;
+                    bool sentemailnotification = repository.SendEmail(email, subject, body);
+                }
                 return true;
             }
             else
@@ -470,7 +509,7 @@ namespace CI_Platform.DataAccess.Repository
             }
         }
 
-        public bool DeclineStory(int StoryId)
+        public bool DeclineStory(int StoryId, string StoryLink)
         {
             Story story = _db.Stories.FirstOrDefault(s => s.StoryId == StoryId);
             if (story != null)
@@ -488,6 +527,16 @@ namespace CI_Platform.DataAccess.Repository
                        NotificationSettingId = 5
                    });
                 Save();
+                var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == story.UserId
+                                              && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
+                if (emailnotification != null && emailnotification != 0)
+                {
+                    var email = _db.Users.Where(User => User.UserId == story.UserId).Select(User => User.Email).FirstOrDefault();
+                    var subject = "Your story has been declined it doesn't meet our policies!!";
+
+                    var body = "Follow this link to see our privacy policy " + StoryLink;
+                    bool sentemailnotification = repository.SendEmail(email, subject, body);
+                }
                 return true;
             }
             else
@@ -555,7 +604,7 @@ namespace CI_Platform.DataAccess.Repository
             }
         }
 
-        public bool AddMission(AddMissionViewModel addMissionViewModel)
+        public long AddMission(AddMissionViewModel addMissionViewModel)
         {
             if (addMissionViewModel.MissionId == 0) //Add Mission
             {
@@ -692,10 +741,11 @@ namespace CI_Platform.DataAccess.Repository
                                         Status = "NOT SEEN",
                                         NotificationSettingId = 7
                                     });
+                        
                     }
-                    
+      
                     Save();
-                    return true;
+                    return NewMissionId;
                 }
             
             else if (addMissionViewModel.MissionType == "Go" || addMissionViewModel.MissionType == "GO")
@@ -834,12 +884,12 @@ namespace CI_Platform.DataAccess.Repository
                                      });
                     }
                     Save();
-                    return true;
+                    return NewMissionId;
                 }
 
                 else
                 {
-                    return false;
+                    return 0;
                 }
             }
             else
@@ -981,7 +1031,7 @@ namespace CI_Platform.DataAccess.Repository
                         }
                     }
                     Save();
-                    return true;
+                    return 0;
                 }
                 else if (addMissionViewModel.MissionType == "Go" || addMissionViewModel.MissionType == "GO")
                 {
@@ -1121,11 +1171,11 @@ namespace CI_Platform.DataAccess.Repository
                         }
                     }
                     Save();
-                    return true;
+                    return 0;
                 }
                 else
                 {
-                    return false;
+                    return 0;
                 }
             }
             
@@ -1308,6 +1358,20 @@ namespace CI_Platform.DataAccess.Repository
                                                     }).ToList();
 
             return displaybanners;
+        }
+        
+        public bool NotifyuserEmail(long userid)
+        {
+            var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == userid
+                                                  && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
+            if(emailnotification != null && emailnotification !=0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public void Save()
         {

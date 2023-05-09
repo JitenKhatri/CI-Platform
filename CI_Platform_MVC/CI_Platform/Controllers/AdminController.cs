@@ -10,8 +10,8 @@ namespace CI_Platform.Controllers
     [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
-        private readonly IAllRepository db;
-        public AdminController(IAllRepository _db)
+        private readonly IUnitOfWork db;
+        public AdminController(IUnitOfWork _db)
         {
             db = _db;
         }
@@ -203,7 +203,8 @@ namespace CI_Platform.Controllers
         {
             if (Action == 1)
             {
-                bool success = db.AdminRepository.PublishStory(StoryId);
+                var StoryLink = Url.Action("StoryDetail", "Story", new { id = StoryId }, Request.Scheme);
+                bool success = db.AdminRepository.PublishStory(StoryId,StoryLink);
                 return Json(new { success = success });
             }
             else if (Action == 3)
@@ -213,7 +214,8 @@ namespace CI_Platform.Controllers
             }
             else
             {
-                bool success = db.AdminRepository.DeclineStory(StoryId);
+                var PolicyLink = Url.Action("Privacy", "Home",null, Request.Scheme);
+                bool success = db.AdminRepository.DeclineStory(StoryId, PolicyLink);
                 return Json(new { success = success });
             }
         }
@@ -238,12 +240,14 @@ namespace CI_Platform.Controllers
         {
             if (Action == 1)
             {
-                bool success = db.AdminRepository.ApproveMissionApplication(MissionApplicationId);
+                var MissionLink = Url.Action("volunteering_mission", "Mission", new { id = MissionApplicationId }, Request.Scheme);
+                bool success = db.AdminRepository.ApproveMissionApplication(MissionApplicationId, MissionLink);
                 return Json(new { success = success });
             }
             else
             {
-                bool success = db.AdminRepository.DeclineMissionApplication(MissionApplicationId);
+                var MissionLink = Url.Action("volunteering_mission", "Mission", new { id = MissionApplicationId }, Request.Scheme);
+                bool success = db.AdminRepository.DeclineMissionApplication(MissionApplicationId, MissionLink);
                 return Json(new { success = success });
             }
         }
@@ -381,7 +385,23 @@ namespace CI_Platform.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool success = db.AdminRepository.AddMission(model);
+                    long success = db.AdminRepository.AddMission(model);
+                    if(success != 0)
+                    {
+                        var users = db.AdminRepository.GetAllUsers();
+                        foreach(var user in users.Users)
+                        {
+                            bool isemailenabled = db.AdminRepository.NotifyuserEmail(user.UserId);
+                            if(isemailenabled)
+                            {
+                                var email = user.Email;
+                                var subject = "New Mission Added yay!!";
+                                var MissionLink = Url.Action("volunteering_mission", "Mission", new { id = success }, Request.Scheme);
+                                var body = "Follow this link to see the newly added mission " + MissionLink;
+                                bool sentemailnotification = db.MissionRepository.SendEmail(email, subject, body);
+                            }
+                        }
+                    }
                     return Json(new { success });
                 }
                 else

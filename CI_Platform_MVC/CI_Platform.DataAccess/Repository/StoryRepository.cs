@@ -21,27 +21,27 @@ namespace CI_Platform.DataAccess.Repository
             var storiesQuery = _db.Stories.Where(story => story.DeletedAt == null && (story.UserId == user_id || story.Status == "PUBLISHED"));
             int totalStories = storiesQuery.Count();
             var storyQuery = storiesQuery
-                .OrderByDescending(s => s.Status == "DRAFT")
+                .OrderByDescending(story => story.Status == "DRAFT")
                 .Skip(skipCount)
                 .Take(pageSize)
-                .Select(s => new StoryViewModel
+                .Select(story => new StoryViewModel
                 {
-                    Stories = s,
-                    Image = s.StoryMedia.FirstOrDefault(),
+                    Stories = story,
+                    Image = story.StoryMedia.FirstOrDefault(),
                     Countries = _db.Countries.ToList(),
                     Cities = _db.Cities.ToList(),
-                    Story_city = s.Mission.City.Name,
-                    Story_theme = s.Mission.Theme.Title,
-                    User_firstname = s.User.FirstName, // include fields from User table
-                    User_lastname = s.User.LastName,
-                    User_avatar = s.User.Avatar,
-                    User_id = s.User.UserId,
-                    Images = s.StoryMedia.Where(sm => sm.Type == "img").ToList(),
-                    MissionId = s.Mission.MissionId,
-                    Missiontitle = s.Mission.Title,
-                    Vidmedia = s.StoryMedia.Where(sm => sm.Type == "vid").ToList()
+                    Story_city = story.Mission.City.Name,
+                    Story_theme = story.Mission.Theme.Title,
+                    User_firstname = story.User.FirstName, // include fields from User table
+                    User_lastname = story.User.LastName,
+                    User_avatar = story.User.Avatar,
+                    User_id = story.User.UserId,
+                    Images = story.StoryMedia.Where(sm => sm.Type == "img").ToList(),
+                    MissionId = story.Mission.MissionId,
+                    Missiontitle = story.Mission.Title,
+                    Vidmedia = story.StoryMedia.Where(sm => sm.Type == "vid").ToList()
 
-                }) ; ;
+                }) ; 
 
             var stories = storyQuery.ToList();
             
@@ -57,53 +57,53 @@ namespace CI_Platform.DataAccess.Repository
 
             if (!string.IsNullOrEmpty(model.SearchText))
             {
-                storiesQuery = storiesQuery.Where(s => s.Title.ToLower().Replace(" ", "").Contains(model.SearchText.ToLower().Replace(" ", ""))
-                                                       || s.Description.ToLower().Replace(" ", "").Contains(model.SearchText.ToLower().Replace(" ", "")));
+                storiesQuery = storiesQuery.Where(story => story.Title.ToLower().Replace(" ", "").Contains(model.SearchText.ToLower().Replace(" ", ""))
+                                                       || story.Description.ToLower().Replace(" ", "").Contains(model.SearchText.ToLower().Replace(" ", "")));
             }
 
             var cityQuery = _db.Cities.AsQueryable();
 
             if (model.Countries.Count > 0)
             {
-                cityQuery = cityQuery.Where(c => model.Countries.Contains(c.Country.Name));
+                cityQuery = cityQuery.Where(city => model.Countries.Contains(city.Country.Name));
             }
 
 
             var storyQuery = storiesQuery
-                .Where(s => model.Cities.Count == 0 || model.Cities.Contains(s.Mission.City.Name))
-                .Where(s => model.Countries.Count == 0 || model.Countries.Contains(s.Mission.Country.Name))
-                .Where(s => model.Themes.Count == 0 || model.Themes.Contains(s.Mission.Theme.Title));
+                .Where(story => model.Cities.Count == 0 || model.Cities.Contains(story.Mission.City.Name))
+                .Where(story => model.Countries.Count == 0 || model.Countries.Contains(story.Mission.Country.Name))
+                .Where(story => model.Themes.Count == 0 || model.Themes.Contains(story.Mission.Theme.Title));
 
             if (model.Skills.Count > 0)
             {
                 var missionIds = _db.MissionSkills
-                    .Where(ms => model.Skills.Contains(ms.Skill.SkillName))
-                    .Select(ms => ms.MissionId)
+                    .Where(missionskill => model.Skills.Contains(missionskill.Skill.SkillName))
+                    .Select(missionskill => missionskill.MissionId)
                     .Distinct();
-                storyQuery = storyQuery.Where(s => missionIds.Contains(s.MissionId));
+                storyQuery = storyQuery.Where(story => missionIds.Contains(story.MissionId));
             }
 
             int totalcount = storyQuery.Count();
             var stories = storyQuery
-                .OrderBy(s => s.Status)
+                .OrderBy(story => story.Status)
                 .Skip(skipCount)
                 .Take(model.PageSize)
-                .Select(s => new StoryViewModel
+                .Select(story => new StoryViewModel
                 {
-                    Stories = s,
-                    Image = s.StoryMedia.FirstOrDefault(),
+                    Stories = story,
+                    Image = story.StoryMedia.FirstOrDefault(),
                     Countries = _db.Countries.ToList(),
                     Cities = cityQuery.ToList(),
-                    Story_city = s.Mission.City.Name,
-                    Story_theme = s.Mission.Theme.Title,
-                    User_avatar = s.User.Avatar,
-                    User_id = s.User.UserId,
-                    User_firstname = s.User.FirstName,
-                    User_lastname = s.User.LastName,
-                    Images = s.StoryMedia.Where(sm => sm.Type == "img").ToList(),
-                    MissionId = s.Mission.MissionId,
-                    Missiontitle = s.Mission.Title,
-                    Vidmedia = s.StoryMedia.Where(sm => sm.Type == "vid").ToList()
+                    Story_city = story.Mission.City.Name,
+                    Story_theme = story.Mission.Theme.Title,
+                    User_avatar = story.User.Avatar,
+                    User_id = story.User.UserId,
+                    User_firstname = story.User.FirstName,
+                    User_lastname = story.User.LastName,
+                    Images = story.StoryMedia.Where(storymedia => storymedia.Type == "img").ToList(),
+                    MissionId = story.Mission.MissionId,
+                    Missiontitle = story.Mission.Title,
+                    Vidmedia = story.StoryMedia.Where(storymedia => storymedia.Type == "vid").ToList()
 
                 })
                 .ToList();
@@ -116,7 +116,7 @@ namespace CI_Platform.DataAccess.Repository
             if (countryid != 0)
             {
                 var cities = _db.Cities
-                 .Where(c => c.CountryId == countryid)
+                 .Where(city => city.CountryId == countryid)
                  .ToList();
 
                 return cities;
@@ -131,8 +131,8 @@ namespace CI_Platform.DataAccess.Repository
         {
 
             List<Mission> missions = _db.MissionApplications
-                                        .Where(ma => ma.UserId == user_id)
-                                        .Select(ma => ma.Mission)
+                                        .Where(MissionApplication => MissionApplication.UserId == user_id)
+                                        .Select(MissionApplication => MissionApplication.Mission)
                                                            .ToList();
             return missions;
         }
@@ -141,7 +141,7 @@ namespace CI_Platform.DataAccess.Repository
         {
             List<Story> stories = _db.Stories.ToList();
             List<StoryMedium> Storymedia = _db.StoryMedia.ToList();
-            var existingstory = _db.Stories.FirstOrDefault(s => s.StoryId == model.StoryId);
+            var existingstory = _db.Stories.FirstOrDefault(story => story.StoryId == model.StoryId);
             if (existingstory == null)
             {
                 var status = model.Type == "PUBLISHED" ? "PUBLISHED" : "DRAFT";
@@ -215,7 +215,7 @@ namespace CI_Platform.DataAccess.Repository
                 existingstory.PublishedAt = DateTime.Parse(model.PublishedDate);
                 existingstory.Status = model.Type == "PUBLISHED" ? "PUBLISHED" : "DRAFT";
                 // Delete old media records related to the story
-                var existingMedia = _db.StoryMedia.Where(sm => sm.StoryId == model.StoryId);
+                var existingMedia = _db.StoryMedia.Where(storymedia => storymedia.StoryId == model.StoryId);
                 foreach (var medium in existingMedia)
                 {
                     string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", medium.Path);
@@ -278,8 +278,8 @@ namespace CI_Platform.DataAccess.Repository
 
         public StoryViewModel GetStoryDetail(long user_id, long id)
         {
-            var storyQuery = _db.Stories.Where(c => c.StoryId == id);
-            var storyMediaQuery = _db.StoryMedia.Where(sm => sm.StoryId == id);
+            var storyQuery = _db.Stories.Where(story => story.StoryId == id);
+            var storyMediaQuery = _db.StoryMedia.Where(storymedia => storymedia.StoryId == id);
             var userQuery = _db.Users.Where(User => User.DeletedAt == null);
 
             var story = storyQuery.FirstOrDefault();
@@ -293,7 +293,7 @@ namespace CI_Platform.DataAccess.Repository
         public void Add_View(long user_id, long story_id)
         {
             List<StoryView> storyviews = _db.StoryViews.ToList();
-            var view_exist = _db.StoryViews.FirstOrDefault(c => c.UserId.Equals(user_id) && c.StoryId.Equals(story_id));
+            var view_exist = _db.StoryViews.FirstOrDefault(storyview => storyview.UserId.Equals(user_id) && storyview.StoryId.Equals(story_id));
             if (view_exist is null)
             {
                 _db.StoryViews.Add(new StoryView { StoryId = story_id, UserId = user_id });

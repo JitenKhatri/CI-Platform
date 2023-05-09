@@ -15,8 +15,8 @@ namespace CI_Platform.Controllers
     [Route("UserAuthentication")]
     public class UserAuthenticationController : Controller
     {
-        private readonly IAllRepository db;
-        public UserAuthenticationController(IAllRepository _db)
+        private readonly IUnitOfWork db;
+        public UserAuthenticationController(IUnitOfWork _db)
         {
             db = _db;
         }
