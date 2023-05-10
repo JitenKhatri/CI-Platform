@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "1YB64I8nPTcfXgVC06/7ZqkLDKD58zqgZVB3EJb/D7aVSalD7E8rNcesiWCZr9RGRcUtzCCx3z4v6uMzUqhufA==",
+  "dgSpecHash": "A/bs4b82DggHmWLOo8XgQllfiX0dGbV9F3MDXfZ94zjV2W9WD/UZ7LdAWla8Xkrvj1IvtY4vifiAWP/2M8hT3g==",
   "success": true,
   "projectFilePath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform.DataAccess\\CI_Platform.DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pca19\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\pca19\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\pca19\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
+    "C:\\Users\\pca19\\.nuget\\packages\\dapper.fluentmap\\2.0.0\\dapper.fluentmap.2.0.0.nupkg.sha512",
     "C:\\Users\\pca19\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\pca19\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\pca19\\.nuget\\packages\\microsoft.aspnet.mvc\\5.2.9\\microsoft.aspnet.mvc.5.2.9.nupkg.sha512",

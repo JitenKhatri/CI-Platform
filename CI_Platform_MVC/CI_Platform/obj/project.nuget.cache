@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "xrvfqija/0CuvVplbwQ7QhV31lWr64YVEqAUcJpKn/ymz2Xvc6kBKmn4DehC6hQFUWxKDCoA/YswizSweENjBg==",
+  "dgSpecHash": "O7Cycjx5TZAtepCHcAlv2u1S7YHNDyWxVar/YEpZKyWPIUTm8UpEp5dJRaY1lnW0OTRnZw4DjiufZNEw4HWCEA==",
   "success": true,
   "projectFilePath": "C:\\Users\\pca19\\source\\repos\\CI-Platform\\CI_Platform_MVC\\CI_Platform\\CI_Platform.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pca19\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\pca19\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\pca19\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
+    "C:\\Users\\pca19\\.nuget\\packages\\dapper.fluentmap\\2.0.0\\dapper.fluentmap.2.0.0.nupkg.sha512",
     "C:\\Users\\pca19\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\pca19\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\pca19\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

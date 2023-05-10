@@ -4,8 +4,11 @@ using CI_Platform.Models.InputModels;
 using CI_Platform.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 using System.Net;
 using System.Net.Mail;
+using System.Data;
+using Dapper;
 
 namespace CI_Platform.DataAccess.Repository
 {
@@ -578,6 +581,27 @@ namespace CI_Platform.DataAccess.Repository
 
         public NotificationViewModel GetNotificationData(long userId)
         {
+            var connection = new SqlConnection("Server=PCA19\\SQL2017;Database=CI_Platform;Trusted_Connection=True;MultipleActiveResultSets=true;User ID=sa;Password=tatva123;Integrated Security=False;Encrypt=False;");
+            var procedure = "GetUserNotificationData";
+            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+            var objDetails = SqlMapper.QueryMultiple(connection,
+            procedure, param: new { userId = userId }, commandType: CommandType.StoredProcedure);
+            List <Notification> noti = objDetails.Read<Notification>().ToList();
+            
+            List<NotificationSetting> notisetting = objDetails.Read<NotificationSetting>().ToList();
+            List<UserNotificationSetting> usernotisetting = objDetails.Read<UserNotificationSetting>().ToList();
+
+            //var noti = objDetails.
+            //var connection = new SqlConnection("Server=PCA19\\SQL2017;Database=CI_Platform;Trusted_Connection=True;MultipleActiveResultSets=true;User ID=sa;Password=tatva123;Integrated Security=False;Encrypt=False;");
+            //var parameters = new SqlParameter[]
+            //{
+            //new SqlParameter("@userId", userId)       //example of string value              //example of numeric value
+            //};
+            //var dataSet = GetDataSet(connection, "GetUserNotificationData", parameters);
+
+            //var firstTable = dataSet?.Tables?[0];   //use as any other data table...            //var notification = _db.Notifications.FromSqlRaw("exec GetUserNotificationData @userId", UserId).ToList();
+            //var UserId = new SqlParameter("@userId", userId);
+            //var notificationsetting = _db.NotificationSettings.FromSqlRaw("exec GetUserNotificationData @userId", UserId).ToList();
             var notificationsettingsdata = _db.NotificationSettings.ToList();
             var usernotificationsetting = _db.UserNotificationSettings.Where(usernotificationsetting => usernotificationsetting.UserId == userId);
             var usernotification = from notifications in _db.Notifications.Where(notification => notification.UserId == userId && notification.Status == "NOT SEEN").
@@ -682,6 +706,17 @@ namespace CI_Platform.DataAccess.Repository
                 smtp.Send(mess);
             }
             return true;
+        }
+        public DataSet GetDataSet(SqlConnection connection, string storedProcName, params SqlParameter[] parameters)
+        {
+            var command = new SqlCommand(storedProcName, connection) { CommandType = CommandType.StoredProcedure };
+            command.Parameters.AddRange(parameters);
+
+            var result = new DataSet();
+            var dataAdapter = new SqlDataAdapter(command);
+            dataAdapter.Fill(result);
+
+            return result;
         }
     }
 }

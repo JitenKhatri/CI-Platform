@@ -34,7 +34,7 @@ builder.Services.AddScoped<IUrlHelper>(x =>
     var factory = x.GetRequiredService<IUrlHelperFactory>();
     return factory.GetUrlHelper(actionContext);
 });
-
+Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
