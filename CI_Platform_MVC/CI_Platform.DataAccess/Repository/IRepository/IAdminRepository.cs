@@ -54,5 +54,13 @@ namespace CI_Platform.DataAccess.Repository.IRepository
         bool DeleteBanner(int BannerId);
         IEnumerable<AddBannerViewModel> GetBanners();
         bool NotifyuserEmail(long userid);
+        CrudViewModel GetAllTimesheets();
+        bool ApproveTimesheet(int TimesheetId, string MissionLink);
+        bool DeclineTimesheet(int TimesheetId, string MissionLink);
+        long Getmissionidbytimesheetid(int timesheetid);
+        long GetMissionidbymissionapplicationid(int missionapplicationid);
+        CrudViewModel GetAllComments();
+        bool PublishComment(int CommentId, string MissionLink);
+        bool DeclineComment(int CommentId, string PolicyLink);
     }
 }

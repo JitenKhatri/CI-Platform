@@ -21,10 +21,10 @@ namespace CI_Platform.Controllers
         }
         public IActionResult Story(int page = 1, int pageSize = 3)
         {
-            List<City> cities = new List<City>();
-            List<Skill> skills = new List<Skill>();
-            List<Country> countries = new List<Country>();
-            List<MissionTheme> themes = new List<MissionTheme>();
+            List<City> cities = new();
+            List<Skill> skills = new();
+            List<Country> countries = new();
+            List<MissionTheme> themes = new();
             using (var dbContext = new CiPlatformContext())
             {
                 cities = dbContext.Cities.ToList();

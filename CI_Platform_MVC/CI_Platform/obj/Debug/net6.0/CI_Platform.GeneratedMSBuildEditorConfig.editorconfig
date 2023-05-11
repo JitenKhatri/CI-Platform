@@ -23,6 +23,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ01TQ3J1ZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/CommentCrud.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ29tbWVudENydWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -49,6 +53,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/StoryDetail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU3RvcnlEZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/TimesheetCrud.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVGltZXNoZWV0Q3J1ZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pca19/source/repos/CI-Platform/CI_Platform_MVC/CI_Platform/Views/Admin/_AddBanner.cshtml]

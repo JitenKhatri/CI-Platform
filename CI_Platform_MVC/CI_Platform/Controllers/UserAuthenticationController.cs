@@ -237,7 +237,7 @@ namespace CI_Platform.Controllers
         [Route("resetPassword", Name = "UserResetPassword")]
         public IActionResult resetPassword(string email, string token)
         {
-            CiPlatformContext context = new CiPlatformContext();
+            CiPlatformContext context = new();
             PasswordReset ResetPasswordData = context.PasswordResets.Where(p => p.Token == token && p.CreatedAt.AddHours(1) >= DateTime.Now).FirstOrDefault();
             if(ResetPasswordData != null)
             {
@@ -264,7 +264,7 @@ namespace CI_Platform.Controllers
         public IActionResult resetPassword(ResetPasswordViewModel model)
         {
             ViewBag.banners = db.AdminRepository.GetBanners();
-            CiPlatformContext context = new CiPlatformContext();
+            CiPlatformContext context = new();
             if (ModelState.IsValid)
             {
                 //var ResetPasswordData = context.PasswordResets.Any(e => e.Email == model.Email && e.Token == model.token);

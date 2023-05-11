@@ -18,5 +18,9 @@ namespace CI_Platform.Areas.Admin.ViewModels
         public List<CmsPage> CmsPages { get; set; } = new List<CmsPage>();
 
         public List<Banner> Banners { get; set; } = new List<Banner>();
+
+        public List<Timesheet> Timesheets { get; set; } = new List<Timesheet>();
+
+        public List<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

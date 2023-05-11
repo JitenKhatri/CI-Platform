@@ -24,6 +24,9 @@ $(window).on('popstate', function (event) {
 });
 var MissionThemeTable
 var MissionApplicationTable
+var VolunteeringTimeTable
+var VolunteeringGoalTable
+var CommentsTable
 $(document).ready(function () {
 
     var Usertable = $('#Users-table').DataTable({
@@ -147,6 +150,55 @@ $(document).ready(function () {
     });
     $('#banner-search-input').on('keyup', function () {
         BannerTable.search($(this).val()).draw();
+    });
+
+    VolunteeringTimeTable = $('#VolunteeringHours-table').DataTable({
+        "pagingType": "full_numbers",
+        lengthChange: false,
+        searchDelay: 500,
+        "ordering": false,
+        dom: 'lrtip',
+        lengthMenu: [[5, 10, 15, -1], [5, "5+5", "5+5", "All"]],
+        pageLength: 5,
+        initComplete: function () {
+            // Hide default search bar
+            $(this.api().table().container()).find('.dataTables_filter').hide();
+        }
+    });
+    $('#volunteering-hour-search-input').on('keyup', function () {
+        VolunteeringTimeTable.search($(this).val()).draw();
+    });
+
+    VolunteeringGoalTable = $('#VolunteeringGoals-table').DataTable({
+        "pagingType": "full_numbers",
+        lengthChange: false,
+        searchDelay: 500,
+        "ordering": false,
+        dom: 'lrtip',
+        lengthMenu: [[5, 10, 15, -1], [5, "5+5", "5+5", "All"]],
+        pageLength: 5,
+        initComplete: function () {
+            // Hide default search bar
+            $(this.api().table().container()).find('.dataTables_filter').hide();
+        }
+    });
+    $('#volunteering-goal-search-input').on('keyup', function () {
+        VolunteeringGoalTable.search($(this).val()).draw();
+    });
+
+    CommentsTable = $('#Comments-table').DataTable({
+        "pagingType": "full_numbers",
+        lengthChange: false,
+        searchDelay: 500,
+        "ordering": false,
+        dom: 'lrtip',
+        initComplete: function () {
+            // Hide default search bar
+            $(this.api().table().container()).find('.dataTables_filter').hide();
+        }
+    });
+    $('#comment-search-input').on('keyup', function () {
+        CommentsTable.search($(this).val()).draw();
     });
 });
 
@@ -1012,4 +1064,89 @@ function DeleteBanner(id) {
 
 function Reload() {
     window.location.reload();
+}
+
+function Timesheetstatuschange(id, Action) {
+    $.ajax({
+        url: '/Admin/TimesheetCrud',
+        type: 'POST',
+        data: {
+            TimesheetId: id,
+            Action: Action
+        },
+        success: function (result) {
+            if (Action == 1) {
+                toastr.success('Timesheet Approved Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+                $('.TA-approve-' + id).addClass("bi-check-circle-fill");
+                $('.TA-approve-' + id).removeClass("bi-check-circle");
+                $('.TA-decline-' + id).removeClass("bi-x-circle-fill");
+                $('.TA-decline-' + id).addClass("bi-x-circle");
+            }
+            else {
+                toastr.error('Timesheet Declined Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+                $('.TA-decline-' + id).addClass("bi-x-circle-fill");
+                $('.TA-decline-' + id).removeClass("bi-x-circle");
+                $('.TA-approve-' + id).removeClass("bi-check-circle-fill");
+                $('.TA-approve-' + id).addClass("bi-check-circle");
+            }
+
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    });
+
+}
+
+function ChangeCommentStatus(id, Action,MissionId) {
+    $.ajax({
+        url: '/Admin/CommentCrud',
+        type: 'POST',
+        data: {
+            CommentId: id,
+            Action: Action,
+            MissionId : MissionId
+        },
+        success: function (result) {
+            if (Action == 1) {
+                toastr.success('Comment Published Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+                $('.COM-approve-' + id).addClass("bi-check-circle-fill");
+                $('.COM-approve-' + id).removeClass("bi-check-circle");
+                $('.COM-decline-' + id).removeClass("bi-x-circle-fill");
+                $('.COM-decline-' + id).addClass("bi-x-circle");
+            }
+            else {
+                toastr.error('Comment Declined Successfully!', {
+                    "positionClass": "toast-top-center",
+                    progressBar: true,
+                    timeOut: 3000,
+                    closeButton: true,
+                });
+                $('.COM-decline-' + id).addClass("bi-x-circle-fill");
+                $('.COM-decline-' + id).removeClass("bi-x-circle");
+                $('.COM-approve-' + id).removeClass("bi-check-circle-fill");
+                $('.COM-approve-' + id).addClass("bi-check-circle");
+            }
+
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    });
+
 }

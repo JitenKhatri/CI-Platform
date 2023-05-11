@@ -145,7 +145,7 @@ namespace CI_Platform.DataAccess.Repository
             if (existingstory == null)
             {
                 var status = model.Type == "PUBLISHED" ? "PUBLISHED" : "DRAFT";
-                Story story = new Story();
+                Story story = new();
                 story.UserId = model.UserId;
                 story.Title = model.Title;
                 story.Status = status;
@@ -164,8 +164,8 @@ namespace CI_Platform.DataAccess.Repository
                     {
                         // Get the uploaded file name
                         string fileName = Path.GetFileName(item.FileName);
-                        Random random = new Random();
-                        string randomString = new string(
+                        Random random = new();
+                        string randomString = new(
                             Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                                       .Select(s => s[random.Next(s.Length)])
                                       .ToArray()
@@ -233,8 +233,8 @@ namespace CI_Platform.DataAccess.Repository
                     {
                         // Get the uploaded file name
                         string fileName = Path.GetFileName(item.FileName);
-                        Random random = new Random();
-                        string randomString = new string(
+                        Random random = new();
+                        string randomString = new(
                             Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                                       .Select(s => s[random.Next(s.Length)])
                                       .ToArray()

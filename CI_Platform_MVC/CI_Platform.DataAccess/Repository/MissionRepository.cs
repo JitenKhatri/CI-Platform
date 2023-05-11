@@ -197,7 +197,7 @@ namespace CI_Platform.DataAccess.Repository
 
             List<Comment> comments = _db.Comments.ToList();
             List<User> users = _db.Users.ToList();
-            Comment mycomment = new Comment()
+            Comment mycomment = new()
             {
                 UserId = user_id,
                 MissionId = mission_id,
@@ -353,8 +353,8 @@ namespace CI_Platform.DataAccess.Repository
             List<Mission> related_mission = _db.Missions.Where(Mission => Mission.DeletedAt == null).ToList();
             List<MissionApplication> missionApplications = _db.MissionApplications.ToList();
             List<User> all_volunteers = _db.Users.Where(user => user.DeletedAt == null).ToList();
-            List<User> already_recommended = new List<User>();
-            List<MissionInvite> already_recommended_users = new List<MissionInvite>();
+            List<User> already_recommended = new();
+            List<MissionInvite> already_recommended_users = new();
 
             decimal avg_ratings = 0;
             int rating_count = 0;
@@ -488,7 +488,7 @@ namespace CI_Platform.DataAccess.Repository
             List<Mission> missions = _db.Missions.ToList();
             if (type == "goal")
             {
-                Timesheet timesheet = new Timesheet
+                Timesheet timesheet = new()
                 {
                     MissionId = model.Mission_id,
                     Action = model.Actions,
@@ -497,7 +497,7 @@ namespace CI_Platform.DataAccess.Repository
                     Notes = model.Message
                 };
                 Mission GoalMission = _db.Missions.FirstOrDefault(Mission => Mission.MissionId == model.Mission_id);
-                GoalMission.GoalAcheived = GoalMission.GoalAcheived - model.Actions;
+                GoalMission.GoalAcheived -= model.Actions;
                 _db.Timesheets.Add(timesheet);
                 Save();
                 return timesheet;
@@ -507,7 +507,7 @@ namespace CI_Platform.DataAccess.Repository
                 TimeSpan hours = TimeSpan.FromHours(model.Hours);
                 TimeSpan minutes = TimeSpan.FromMinutes(model.Minutes);
                 TimeSpan time = hours.Add(minutes);
-                Timesheet timesheet = new Timesheet
+                Timesheet timesheet = new()
                 {
                     MissionId = model.Mission_id,
                     Time = time,
@@ -634,7 +634,7 @@ namespace CI_Platform.DataAccess.Repository
                 }
                 foreach (var item in CheckedIds)
                 {
-                    UserNotificationSetting userNotificationSetting = new UserNotificationSetting();
+                    UserNotificationSetting userNotificationSetting = new();
                     userNotificationSetting.UserId = userId;
                     userNotificationSetting.NotificationSettingId = item;
                     _db.UserNotificationSettings.Add(userNotificationSetting);

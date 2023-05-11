@@ -36,7 +36,7 @@ namespace Controllers
                     return $"A view with the name {viewName} could not be found";
                 }
 
-                ViewContext viewContext = new ViewContext(
+                ViewContext viewContext = new(
                     controller.ControllerContext,
                     viewResult.View,
                     controller.ViewData,

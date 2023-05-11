@@ -1,0 +1,79 @@
+﻿@using CI_Platform.Areas.Admin.ViewModels
+@model CrudViewModel
+@{
+    Layout = "AdminLayout";
+}
+
+
+<div class="crud-container mt-4 px-4">
+    <h3 class="ms-2 mt-4">Comments</h3>
+
+    <div class="d-flex justify-content-between mt-4">
+        <div class="search-bar">
+            <form class="d-flex my-2 my-lg-0">
+                <button type="button" class="btn">
+                    <img src="~/images/search.png" alt="search" />
+                </button>
+                <input id="comment-search-input"
+                       class="form-control"
+                       type="text"
+                       placeholder="Search"
+                       aria-label="Search" />
+            </form>
+        </div>
+
+    </div>
+
+    <div class=" ms-2 mt-4 row table-responsive">
+        <table id="Comments-table" class="table">
+
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Mission</th>
+                    <th>Comment</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody class="comments">
+                @foreach (var item in Model.Comments)
+                {
+                    <tr>
+                        <td>@item.User.FirstName @item.User.LastName</td>
+                        <td>@item.Mission.Title</td>
+                        <td>@item.CommentText</td>
+                        <td>
+
+                            @if (item.ApprovalStatus == "PUBLISHED")
+                            {
+                                <i class="bi bi-check-circle-fill fs-5 text-success COM-approve-@item.CommentId "></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-check-circle text-success fs-5 COM-approve-@item.CommentId " onclick="ChangeCommentStatus(@item.CommentId,1,@item.MissionId)"></i>
+                            }
+                            &nbsp;
+                            @if (item.ApprovalStatus == "DECLINED")
+                            {
+                                <i class="bi bi-x-circle-fill text-danger fs-5 COM-decline-@item.CommentId"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle text-danger fs-5 COM-decline-@item.CommentId" onclick="ChangeCommentStatus(@item.CommentId,2,@item.MissionId)"></i>
+                            }
+
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+

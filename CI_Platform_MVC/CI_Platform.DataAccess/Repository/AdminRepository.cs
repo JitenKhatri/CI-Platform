@@ -4,6 +4,7 @@ using CI_Platform.Models;
 using CI_Platform.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using System.Data.Entity;
 using System.Web.Mvc;
 
 namespace CI_Platform.DataAccess.Repository
@@ -102,7 +103,7 @@ namespace CI_Platform.DataAccess.Repository
         
         public MissionTheme AddTheme(string ThemeName, int status)
         {
-            MissionTheme NewTheme = new MissionTheme
+            MissionTheme NewTheme = new()
             {
                 Title = ThemeName,
                 Status = status
@@ -209,8 +210,8 @@ namespace CI_Platform.DataAccess.Repository
                     // Get the uploaded file name
                     string fileName = Path.GetFileName(model.Avatar.FileName);
 
-                    Random random = new Random();
-                    string randomString = new string(
+                    Random random = new();
+                    string randomString = new(
                         Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                                   .Select(s => s[random.Next(s.Length)])
                                   .ToArray()
@@ -255,8 +256,8 @@ namespace CI_Platform.DataAccess.Repository
                         // Get the uploaded file name
                         string fileName = Path.GetFileName(model.Avatar.FileName);
 
-                        Random random = new Random();
-                        string randomString = new string(
+                        Random random = new();
+                        string randomString = new(
                             Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                                       .Select(s => s[random.Next(s.Length)])
                                       .ToArray()
@@ -298,7 +299,7 @@ namespace CI_Platform.DataAccess.Repository
         }
         public Skill AddSkill(string SkillName,int Status)
         {
-            Skill NewSkill = new Skill
+            Skill NewSkill = new()
             {
                 SkillName = SkillName,
                 Status = (byte)Status
@@ -557,7 +558,7 @@ namespace CI_Platform.DataAccess.Repository
         {
             if(addCMSViewModel.CMSPageId == 0)
             {
-                CmsPage newcmsPage = new CmsPage
+                CmsPage newcmsPage = new()
                 {
                     Title = addCMSViewModel.Title,
                     Description = addCMSViewModel.Description,
@@ -610,7 +611,7 @@ namespace CI_Platform.DataAccess.Repository
             {
                 if (addMissionViewModel.MissionType == "Time" || addMissionViewModel.MissionType == "TIME")
                 {
-                    Mission NewMission = new Mission
+                    Mission NewMission = new()
                     {
                         MissionType = "TIME",
                         Title = addMissionViewModel.Title,
@@ -636,8 +637,8 @@ namespace CI_Platform.DataAccess.Repository
                         // Get the uploaded file name
                         string fileName = Path.GetFileName(item.FileName);
 
-                        Random random = new Random();
-                        string randomString = new string(
+                        Random random = new();
+                        string randomString = new(
                             Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                                       .Select(s => s[random.Next(s.Length)])
                                       .ToArray()
@@ -700,8 +701,8 @@ namespace CI_Platform.DataAccess.Repository
                             string fileName = Path.GetFileName(item.FileName);
                             string filetype = Path.GetExtension(item.FileName);
 
-                            Random random = new Random();
-                            string randomString = new string(
+                            Random random = new();
+                            string randomString = new(
                                 Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                                           .Select(s => s[random.Next(s.Length)])
                                           .ToArray()
@@ -750,7 +751,7 @@ namespace CI_Platform.DataAccess.Repository
             
             else if (addMissionViewModel.MissionType == "Go" || addMissionViewModel.MissionType == "GO")
             {
-                Mission NewMission = new Mission
+                Mission NewMission = new()
                 {
                     MissionType = "GO",
                     Title = addMissionViewModel.Title,
@@ -777,8 +778,8 @@ namespace CI_Platform.DataAccess.Repository
                     // Get the uploaded file name
                     string fileName = Path.GetFileName(item.FileName);
 
-                    Random random = new Random();
-                    string randomString = new string(
+                    Random random = new();
+                    string randomString = new(
                         Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                                   .Select(s => s[random.Next(s.Length)])
                                   .ToArray()
@@ -841,8 +842,8 @@ namespace CI_Platform.DataAccess.Repository
                             string fileName = Path.GetFileName(item.FileName);
                             string filetype = Path.GetExtension(item.FileName);
 
-                            Random random = new Random();
-                            string randomString = new string(
+                            Random random = new();
+                            string randomString = new(
                                 Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                                           .Select(s => s[random.Next(s.Length)])
                                           .ToArray()
@@ -940,8 +941,8 @@ namespace CI_Platform.DataAccess.Repository
                         string uniqueFileName = null;
                         // Get the uploaded file name
                         string fileName = Path.GetFileName(item.FileName);
-                        Random random = new Random();
-                        string randomString = new string(
+                        Random random = new();
+                        string randomString = new(
                             Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                                       .Select(s => s[random.Next(s.Length)])
                                       .ToArray()
@@ -1003,8 +1004,8 @@ namespace CI_Platform.DataAccess.Repository
                             string fileName = Path.GetFileName(item.FileName);
                             string filetype = Path.GetExtension(item.FileName);
 
-                            Random random = new Random();
-                            string randomString = new string(
+                            Random random = new();
+                            string randomString = new(
                                 Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                                           .Select(s => s[random.Next(s.Length)])
                                           .ToArray()
@@ -1080,8 +1081,8 @@ namespace CI_Platform.DataAccess.Repository
                         // Get the uploaded file name
                         string fileName = Path.GetFileName(item.FileName);
 
-                        Random random = new Random();
-                        string randomString = new string(
+                        Random random = new();
+                        string randomString = new(
                             Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                                       .Select(s => s[random.Next(s.Length)])
                                       .ToArray()
@@ -1143,8 +1144,8 @@ namespace CI_Platform.DataAccess.Repository
                             string fileName = Path.GetFileName(item.FileName);
                             string filetype = Path.GetExtension(item.FileName);
 
-                            Random random = new Random();
-                            string randomString = new string(
+                            Random random = new();
+                            string randomString = new(
                                 Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                                           .Select(s => s[random.Next(s.Length)])
                                           .ToArray()
@@ -1262,8 +1263,8 @@ namespace CI_Platform.DataAccess.Repository
                 // Get the uploaded file name
                 string fileName = Path.GetFileName(addBannerViewModel.BannerImage.FileName);
 
-                Random random = new Random();
-                string randomString = new string(
+                Random random = new();
+                string randomString = new(
                     Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                               .Select(s => s[random.Next(s.Length)])
                               .ToArray()
@@ -1279,7 +1280,7 @@ namespace CI_Platform.DataAccess.Repository
                 {
                     addBannerViewModel.BannerImage.CopyTo(fileStream);
                 }
-                Banner NewBanner = new Banner
+                Banner NewBanner = new()
                 {
                     SortOrder = addBannerViewModel.SortOrder,
                     Text = addBannerViewModel.BannerText,
@@ -1298,8 +1299,8 @@ namespace CI_Platform.DataAccess.Repository
                 // Get the uploaded file name
                 string fileName = Path.GetFileName(addBannerViewModel.BannerImage.FileName);
 
-                Random random = new Random();
-                string randomString = new string(
+                Random random = new();
+                string randomString = new(
                     Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                               .Select(s => s[random.Next(s.Length)])
                               .ToArray()
@@ -1366,6 +1367,268 @@ namespace CI_Platform.DataAccess.Repository
                                                   && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
             if(emailnotification != null && emailnotification !=0)
             {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public CrudViewModel GetAllTimesheets()
+        {
+            List<Timesheet> timesheets = _db.Timesheets.Select(timesheet => new Timesheet()
+            {
+                MissionId = timesheet.MissionId,
+                Action = timesheet.Action,
+                Mission = timesheet.Mission,
+                DateVolunteered = timesheet.DateVolunteered,
+                CreatedAt = timesheet.CreatedAt,
+                User = timesheet.User,
+                Notes = timesheet.Notes,
+                Status = timesheet.Status,
+                Time = timesheet.Time,
+                TimesheetId = timesheet.TimesheetId
+
+            }).ToList();
+            return new CrudViewModel
+            {
+                Timesheets = timesheets
+            };
+        }
+
+        public bool ApproveTimesheet(int TimesheetId, string MissionLink)
+        {
+            Timesheet timesheet = _db.Timesheets.FirstOrDefault(ma => ma.TimesheetId == TimesheetId);
+            var missiontitle = _db.Missions.Where(mission => mission.MissionId == timesheet.MissionId).Select(mission => mission.Title).ToList();
+            if (timesheet != null)
+            {
+                timesheet.Status = "APPROVED";
+                if (timesheet.Time != null)
+                {
+                    _db.Notifications.Add(
+                        new Notification
+                        {
+                            UserId = timesheet.UserId,
+                            MissionId = timesheet.MissionId,
+                            Message = "Your Volunteering Hours for " + @missiontitle.FirstOrDefault() + " has been approved!!",
+                            UserAvatar = "/images/right.png",
+                            Status = "NOT SEEN",
+                            MissionStatus = "APPROVE",
+                            NotificationSettingId = 11
+                        });
+                    Save();
+                    var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == timesheet.UserId
+                                                                   && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
+                    if (emailnotification != null && emailnotification != 0)
+                    {
+                        var email = _db.Users.Where(User => User.UserId == timesheet.UserId).Select(User => User.Email).FirstOrDefault();
+                        var subject = "Volunteering Hours Approved";
+
+                        var body = "Follow this link to see the mission " + MissionLink;
+                        bool sentemailnotification = repository.SendEmail(email, subject, body);
+                    }
+                }
+                else
+                {
+                    _db.Notifications.Add(
+                        new Notification
+                        {
+                            UserId = timesheet.UserId,
+                            MissionId = timesheet.MissionId,
+                            Message = "Your Volunteering Goal Action for " + @missiontitle.FirstOrDefault() + " has been approved!!",
+                            UserAvatar = "/images/right.png",
+                            Status = "NOT SEEN",
+                            MissionStatus = "APPROVE",
+                            NotificationSettingId = 12
+                        });
+                    Save();
+                    var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == timesheet.UserId
+                                                                   && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
+                    if (emailnotification != null && emailnotification != 0)
+                    {
+                        var email = _db.Users.Where(User => User.UserId == timesheet.UserId).Select(User => User.Email).FirstOrDefault();
+                        var subject = "Volunteering Goals Approved";
+
+                        var body = "Follow this link to see the mission " + MissionLink;
+                        bool sentemailnotification = repository.SendEmail(email, subject, body);
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool DeclineTimesheet(int TimesheetId, string MissionLink)
+        {
+            Timesheet timesheet = _db.Timesheets.FirstOrDefault(ma => ma.TimesheetId == TimesheetId);
+            var missiontitle = _db.Missions.Where(mission => mission.MissionId == timesheet.MissionId).Select(mission => mission.Title).ToList();
+            if (timesheet != null)
+            {
+                timesheet.Status = "DECLINED";
+                if (timesheet.Time != null)
+                {
+                    _db.Notifications.Add(
+                        new Notification
+                        {
+                            UserId = timesheet.UserId,
+                            MissionId = timesheet.MissionId,
+                            Message = "Your Volunteering Hours for " + @missiontitle.FirstOrDefault() + " has been declined!!",
+                            UserAvatar = "/images/cross.png",
+                            Status = "NOT SEEN",
+                            MissionStatus = "Decline",
+                            NotificationSettingId = 11
+                        });
+                    Save();
+                    var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == timesheet.UserId
+                                                                   && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
+                    if (emailnotification != null && emailnotification != 0)
+                    {
+                        var email = _db.Users.Where(User => User.UserId == timesheet.UserId).Select(User => User.Email).FirstOrDefault();
+                        var subject = "Volunteering Hours declined";
+
+                        var body = "Follow this link to see the mission " + MissionLink;
+                        bool sentemailnotification = repository.SendEmail(email, subject, body);
+                    }
+                }
+                else
+                {
+                    _db.Notifications.Add(
+                        new Notification
+                        {
+                            UserId = timesheet.UserId,
+                            MissionId = timesheet.MissionId,
+                            Message = "Your Volunteering Goal Action for " + @missiontitle.FirstOrDefault() + " has been declined!!",
+                            UserAvatar = "/images/cross.png",
+                            Status = "NOT SEEN",
+                            MissionStatus = "DECLINE",
+                            NotificationSettingId = 12
+                        });
+                    Save();
+                    var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == timesheet.UserId
+                                                                   && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
+                    if (emailnotification != null && emailnotification != 0)
+                    {
+                        var email = _db.Users.Where(User => User.UserId == timesheet.UserId).Select(User => User.Email).FirstOrDefault();
+                        var subject = "Volunteering Goals declined";
+
+                        var body = "Follow this link to see the mission " + MissionLink;
+                        bool sentemailnotification = repository.SendEmail(email, subject, body);
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public long Getmissionidbytimesheetid(int timesheetid)
+        {
+            return _db.Timesheets.Where(timesheet => timesheet.TimesheetId == timesheetid).Select(timesheet => timesheet.MissionId).FirstOrDefault();
+        }
+
+        public long GetMissionidbymissionapplicationid(int missionapplicationid)
+        {
+            return _db.MissionApplications.Where(missionapplication => missionapplication.MissionApplicationId == missionapplicationid).Select(missionapplication => missionapplication.MissionId).FirstOrDefault();
+        }
+
+        public CrudViewModel GetAllComments()
+        {
+            List<Comment> comments = _db.Comments.Select(comment => new Comment()
+            {
+                ApprovalStatus = comment.ApprovalStatus,
+                CommentId = comment.CommentId,
+                CommentText = comment.CommentText,
+                CreatedAt = comment.CreatedAt,
+                Mission = comment.Mission,
+                UserId = comment.UserId,
+                MissionId = comment.MissionId,
+                User = comment.User
+            }).ToList();
+            return new CrudViewModel
+            {
+                Comments = comments
+            };
+        }
+
+
+        public bool PublishComment(int CommentId, string MissionLink)
+        {
+            Comment comment = _db.Comments.FirstOrDefault(ma => ma.CommentId == CommentId);
+            var missiontitle = _db.Missions.Where(mission => mission.MissionId == comment.MissionId).Select(mission => mission.Title).ToList();
+            if (comment != null)
+            {
+                comment.ApprovalStatus = "PUBLISHED";
+
+                    _db.Notifications.Add(
+                        new Notification
+                        {
+                            UserId = comment.UserId,
+                            MissionId = comment.MissionId,
+                            Message = "Your Comment " + "<" + comment.CommentText + ">" + "has been published!!",
+                            UserAvatar = "/images/right.png",
+                            Status = "NOT SEEN",
+                            MissionStatus = "APPROVE",
+                            NotificationSettingId = 13
+                        });
+                    Save();
+                    var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == comment.UserId
+                                                                   && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
+                    if (emailnotification != null && emailnotification != 0)
+                    {
+                        var email = _db.Users.Where(User => User.UserId == comment.UserId).Select(User => User.Email).FirstOrDefault();
+                        var subject = "Comment Approved";
+
+                        var body = "Follow this link to see the mission and comment " + MissionLink;
+                        bool sentemailnotification = repository.SendEmail(email, subject, body);
+                    }
+                
+                
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool DeclineComment(int CommentId, string PolicyLink)
+        {
+            Comment comment = _db.Comments.FirstOrDefault(ma => ma.CommentId == CommentId);
+            var missiontitle = _db.Missions.Where(mission => mission.MissionId == comment.MissionId).Select(mission => mission.Title).ToList();
+            if (comment != null)
+            {
+                comment.ApprovalStatus = "DECLINED";
+
+                _db.Notifications.Add(
+                    new Notification
+                    {
+                        UserId = comment.UserId,
+                        MissionId = comment.MissionId,
+                        Message = "Your Comment " + "<" + comment.CommentText + ">" + " has been declined!!",
+                        UserAvatar = "/images/cancel1.png",
+                        Status = "NOT SEEN",
+                        MissionStatus = "decline",
+                        NotificationSettingId = 13
+                    });
+                Save();
+                var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == comment.UserId
+                                                               && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
+                if (emailnotification != null && emailnotification != 0)
+                {
+                    var email = _db.Users.Where(User => User.UserId == comment.UserId).Select(User => User.Email).FirstOrDefault();
+                    var subject = "Your comment " + "<" + comment.CommentText + ">" + " Declined as it doesn't meet our policies";
+
+                    var body = "Follow this link to see our privacy policy " + PolicyLink + " Make sure to understand it correctly as doing inappropriate comments can get you banned";
+                    bool sentemailnotification = repository.SendEmail(email, subject, body);
+                }
+
+
                 return true;
             }
             else

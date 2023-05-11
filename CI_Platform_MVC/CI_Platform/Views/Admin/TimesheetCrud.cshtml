@@ -1,0 +1,151 @@
+﻿@using CI_Platform.Areas.Admin.ViewModels
+@model CrudViewModel
+@{
+    Layout = "AdminLayout";
+}
+
+
+<div class="crud-container mt-4 px-4">
+    <h3 class="ms-2 mt-4">Volunteering Hours</h3>
+
+    <div class="d-flex justify-content-between mt-4">
+        <div class="search-bar">
+            <form class="d-flex my-2 my-lg-0">
+                <button type="button" class="btn">
+                    <img src="~/images/search.png" alt="search" />
+                </button>
+                <input id="volunteering-hour-search-input"
+                       class="form-control"
+                       type="text"
+                       placeholder="Search"
+                       aria-label="Search" />
+            </form>
+        </div>
+
+    </div>
+
+    <div class=" ms-2 mt-4 row table-responsive">
+        <table id="VolunteeringHours-table" class="table">
+
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Mission Title</th>
+                    <th>time</th>
+                    <th>Date Volunteered</th>
+                    <th>Notes</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="timesheets">
+                @foreach (var item in Model.Timesheets.Where(timesheet => timesheet.Mission.MissionType == "TIME"))
+                {
+                    <tr>
+                        <td>@item.User.FirstName @item.User.LastName</td>
+                         <td>@item.Mission.Title</td>
+                        <td>@item.Time</td>
+                        <td> @item.DateVolunteered</td>
+                        <td>@item.Notes.ToString().Substring(0,10)</td>
+                        <td>
+
+                            @if (item.Status == "APPROVED")
+                            {
+                                <i class="bi bi-check-circle-fill fs-5 text-success TA-approve-@item.TimesheetId "></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-check-circle text-success fs-5 TA-approve-@item.TimesheetId " onclick="Timesheetstatuschange(@item.TimesheetId,1)"></i>
+                            }
+                            &nbsp;
+                            @if (item.Status == "DECLINED")
+                            {
+                                <i class="bi bi-x-circle-fill text-danger fs-5 TA-decline-@item.TimesheetId"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle text-danger fs-5 TA-decline-@item.TimesheetId" onclick="Timesheetstatuschange(@item.TimesheetId,2)"></i>
+                            }
+
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+         
+    </div>
+
+    <h3 class="ms-2 mt-4">Volunteering Goals</h3>
+
+    <div class="d-flex justify-content-between mt-4">
+        <div class="search-bar">
+            <form class="d-flex my-2 my-lg-0">
+                <button type="button" class="btn">
+                    <img src="~/images/search.png" alt="search" />
+                </button>
+                <input id="volunteering-goal-search-input"
+                       class="form-control"
+                       type="text"
+                       placeholder="Search"
+                       aria-label="Search" />
+            </form>
+        </div>
+
+    </div>
+    <div class=" ms-2 mt-4 row table-responsive">
+    <table id="VolunteeringGoals-table" class="table">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Mission Title</th>
+                    <th>Actions</th>
+                    <th>Date Volunteered</th>
+                    <th>Notes</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="timesheets">
+                @foreach (var item in Model.Timesheets.Where(timesheet => timesheet.Mission.MissionType == "GO"))
+                {
+                    <tr>
+                        <td>@item.User.FirstName @item.User.LastName</td>
+                         <td>@item.Mission.Title</td>
+                        <td>@item.Action</td>
+                        <td> @item.DateVolunteered</td>
+                        <td>@item.Notes.ToString().Substring(0,10)</td>
+                        <td>
+
+                            @if (item.Status == "APPROVED")
+                            {
+                                <i class="bi bi-check-circle-fill fs-5 text-success TA-approve-@item.TimesheetId "></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-check-circle text-success fs-5 TA-approve-@item.TimesheetId " onclick="Timesheetstatuschange(@item.TimesheetId,1)"></i>
+                            }
+                            &nbsp;
+                            @if (item.Status == "DECLINED")
+                            {
+                                <i class="bi bi-x-circle-fill text-danger fs-5 TA-decline-@item.TimesheetId"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle text-danger fs-5 TA-decline-@item.TimesheetId" onclick="Timesheetstatuschange(@item.TimesheetId,2)"></i>
+                            }
+
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+        </div>
+</div>
+
+
+

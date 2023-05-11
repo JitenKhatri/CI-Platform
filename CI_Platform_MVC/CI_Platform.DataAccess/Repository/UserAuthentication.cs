@@ -120,8 +120,8 @@ namespace CI_Platform.DataAccess.Repository
                 {
                     // Get the uploaded file name
                     string fileName = Path.GetFileName(model.Avatar.FileName);
-                    Random random = new Random();
-                    string randomString = new string(
+                    Random random = new();
+                    string randomString = new(
                         Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                                   .Select(s => s[random.Next(s.Length)])
                                   .ToArray()
