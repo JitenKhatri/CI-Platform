@@ -112,9 +112,15 @@ namespace CI_Platform.DataAccess.Repository
                                .Select(mission => mission.Mission);
                     break;
                 case "TopThemes":
+                    var topThemes = _db.MissionThemes
+                               .OrderByDescending(theme => _db.Missions.Count(m => m.ThemeId == theme.MissionThemeId))
+                               .Take(10);
                     missions = missions
-                                .OrderByDescending(mission => _db.Missions.Count(mission => mission.ThemeId == mission.ThemeId))
-                                .ThenBy(mission => mission.MissionId);
+                               .Where(mission => topThemes.Any(theme => theme.MissionThemeId == mission.ThemeId))
+                        .OrderByDescending(mission => _db.Missions.Count(m => m.ThemeId == mission.ThemeId))
+                        .ThenBy(mission => mission.MissionId);
+     
+
                     break;
 
 
@@ -195,7 +201,6 @@ namespace CI_Platform.DataAccess.Repository
         public IEnumerable<CommentViewModel> comment(long user_id, long mission_id, string comment)
         {
 
-            List<Comment> comments = _db.Comments.ToList();
             List<User> users = _db.Users.ToList();
             Comment mycomment = new()
             {
@@ -205,9 +210,8 @@ namespace CI_Platform.DataAccess.Repository
             };
             _db.Comments.Add(mycomment);
             Save();
-            comments = _db.Comments.OrderByDescending(comment => comment.CreatedAt).Take(5).ToList();
+           List<Comment> comments = _db.Comments.Where(comment => comment.MissionId == mission_id && (comment.ApprovalStatus == "PUBLISHED" || comment.UserId == user_id)).OrderByDescending(comment => comment.CreatedAt).Take(5).ToList();
             IEnumerable<CommentViewModel> mission_comments = (from Comment in comments
-                                                              where Comment.MissionId.Equals(mission_id)
                                                               select new CommentViewModel { User_Comment = Comment, user = Comment.User });
             return mission_comments;
         }
@@ -379,7 +383,7 @@ namespace CI_Platform.DataAccess.Repository
 
             MissionTheme theme = _db.MissionThemes.FirstOrDefault(missiontheme => missiontheme.MissionThemeId == mission.ThemeId);
             List<Skill> skills = _db.MissionSkills.Where(missionskill => missionskill.MissionId == id).Select(missionskill => missionskill.Skill).ToList();
-            List<Comment> comments = _db.Comments.Where(comment => comment.MissionId == id).OrderByDescending(comment => comment.CreatedAt).Take(15).ToList();
+            List<Comment> comments = _db.Comments.Where(comment => comment.MissionId == id && (comment.ApprovalStatus == "PUBLISHED" || comment.UserId == user_id)).OrderByDescending(comment => comment.CreatedAt).Take(5).ToList();
             List<MissionDocument> missiondocuments = _db.MissionDocuments.Where(missiondocument => missiondocument.MissionId == id).ToList();
             City city = _db.Cities.FirstOrDefault(city => city.CityId == mission.CityId);
 
@@ -581,15 +585,17 @@ namespace CI_Platform.DataAccess.Repository
 
         public NotificationViewModel GetNotificationData(long userId)
         {
-            var connection = new SqlConnection("Server=PCA19\\SQL2017;Database=CI_Platform;Trusted_Connection=True;MultipleActiveResultSets=true;User ID=sa;Password=tatva123;Integrated Security=False;Encrypt=False;");
-            var procedure = "GetUserNotificationData";
-            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
-            var objDetails = SqlMapper.QueryMultiple(connection,
-            procedure, param: new { userId = userId }, commandType: CommandType.StoredProcedure);
-            List <Notification> noti = objDetails.Read<Notification>().ToList();
-            
-            List<NotificationSetting> notisetting = objDetails.Read<NotificationSetting>().ToList();
-            List<UserNotificationSetting> usernotisetting = objDetails.Read<UserNotificationSetting>().ToList();
+            //var connection = new SqlConnection("Server=PCA19\\SQL2017;Database=CI_Platform;Trusted_Connection=True;MultipleActiveResultSets=true;User ID=sa;Password=tatva123;Integrated Security=False;Encrypt=False;");
+            //// Create a new SqlConnection object.
+
+            //var procedure = "GetUserNotificationData";
+            //Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+            //var objDetails = SqlMapper.QueryMultiple(connection,
+            //procedure, param: new { userId = userId }, commandType: CommandType.StoredProcedure);
+            //List<Notification> noti = objDetails.Read<Notification>().ToList();
+
+            //List<NotificationSetting> notisetting = objDetails.Read<NotificationSetting>().ToList();
+            //List<UserNotificationSetting> usernotisetting = objDetails.Read<UserNotificationSetting>().ToList();
 
             //var noti = objDetails.
             //var connection = new SqlConnection("Server=PCA19\\SQL2017;Database=CI_Platform;Trusted_Connection=True;MultipleActiveResultSets=true;User ID=sa;Password=tatva123;Integrated Security=False;Encrypt=False;");

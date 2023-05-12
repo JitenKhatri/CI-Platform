@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CI_Platform.Controllers
 {
+    
     [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
@@ -204,7 +205,7 @@ namespace CI_Platform.Controllers
             if (Action == 1)
             {
                 var StoryLink = Url.Action("StoryDetail", "Story", new { id = StoryId }, Request.Scheme);
-                bool success = db.AdminRepository.PublishStory(StoryId,StoryLink);
+                bool success = db.AdminRepository.PublishStory(StoryId, StoryLink);
                 return Json(new { success = success });
             }
             else if (Action == 3)
@@ -214,7 +215,7 @@ namespace CI_Platform.Controllers
             }
             else
             {
-                var PolicyLink = Url.Action("Privacy", "Home",null, Request.Scheme);
+                var PolicyLink = Url.Action("Privacy", "Home", null, Request.Scheme);
                 bool success = db.AdminRepository.DeclineStory(StoryId, PolicyLink);
                 return Json(new { success = success });
             }
@@ -308,7 +309,7 @@ namespace CI_Platform.Controllers
         [HttpPost]
         public IActionResult AddMissionPartial(int countryId, int MissionId)
         {
-            if(MissionId == 0)
+            if (MissionId == 0)
             {
                 if (countryId == 0)
                 {
@@ -348,7 +349,7 @@ namespace CI_Platform.Controllers
                         EndDate = Mission.EndDate,
                         CityId = Mission.CityId,
                         CountryId = Mission.CountryId,
-                        SeatsLeft = Mission.SeatsLeft ,
+                        SeatsLeft = Mission.SeatsLeft,
                         ThemeId = Mission.ThemeId,
                         Availability = Mission.Availability,
                         OrganizationName = Mission.OrganizationName,
@@ -372,11 +373,11 @@ namespace CI_Platform.Controllers
                     return Json(new { cities = cities });
                 }
             }
-            
+
         }
 
         [HttpPost]
-        public IActionResult MissionCrud(AddMissionViewModel model,string Action)
+        public IActionResult MissionCrud(AddMissionViewModel model, string Action)
         {
             if (Action == "Delete")
             {
@@ -388,13 +389,13 @@ namespace CI_Platform.Controllers
                 if (ModelState.IsValid)
                 {
                     long success = db.AdminRepository.AddMission(model);
-                    if(success != 0)
+                    if (success != 0)
                     {
                         var users = db.AdminRepository.GetAllUsers();
-                        foreach(var user in users.Users)
+                        foreach (var user in users.Users)
                         {
                             bool isemailenabled = db.AdminRepository.NotifyuserEmail(user.UserId);
-                            if(isemailenabled)
+                            if (isemailenabled)
                             {
                                 var email = user.Email;
                                 var subject = "New Mission Added yay!!";
@@ -411,8 +412,8 @@ namespace CI_Platform.Controllers
                     return View(model);
                 }
             }
-            
-                
+
+
         }
 
         public IActionResult BannerCrud()
@@ -424,7 +425,7 @@ namespace CI_Platform.Controllers
         [HttpPost]
         public IActionResult AddBannerPartial(int BannerId)
         {
-            if(BannerId == 0)
+            if (BannerId == 0)
             {
                 AddBannerViewModel model = new();
                 return View("_AddBanner", model);
@@ -437,7 +438,7 @@ namespace CI_Platform.Controllers
         }
 
         [HttpPost]
-        public IActionResult BannerCrud(AddBannerViewModel addBannerViewModel,string Action)
+        public IActionResult BannerCrud(AddBannerViewModel addBannerViewModel, string Action)
         {
             if (Action == "Delete")
             {
@@ -456,7 +457,7 @@ namespace CI_Platform.Controllers
                     return BadRequest();
                 }
             }
-            
+
         }
 
         public IActionResult TimesheetCrud()
@@ -471,7 +472,7 @@ namespace CI_Platform.Controllers
             var missionid = db.AdminRepository.Getmissionidbytimesheetid(TimesheetId);
             if (Action == 1)
             {
-                
+
                 var MissionLink = Url.Action("volunteering_mission", "Mission", new { id = missionid }, Request.Scheme);
                 bool success = db.AdminRepository.ApproveTimesheet(TimesheetId, MissionLink);
                 return Json(new { success = success });
@@ -491,7 +492,7 @@ namespace CI_Platform.Controllers
         }
 
         [HttpPost]
-        public IActionResult CommentCrud(int CommentId, int Action,int MissionId)
+        public IActionResult CommentCrud(int CommentId, int Action, int MissionId)
         {
             if (Action == 1)
             {
@@ -510,10 +511,10 @@ namespace CI_Platform.Controllers
 
     }
 }
-            
-            
 
-        
-    
+
+
+
+
 
 

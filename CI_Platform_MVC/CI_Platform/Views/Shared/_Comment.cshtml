@@ -8,7 +8,17 @@
             <img id="img" class="rounded-circle img-fluid" src=@item.user?.Avatar alt="" />
             <div>
                 <p style="font-size: 15px; margin-bottom:0;margin-left: 15px;
-                    margin-top: 15px;"> @item.user?.FirstName @item.user?.LastName</p>
+                    margin-top: 15px;"> @item.user?.FirstName @item.user?.LastName
+                
+                @if(item.User_Comment.ApprovalStatus == "PENDING")
+                                            {
+                                                <span class="text-warning"> (Submitted for approval)</span>
+                                            }
+                                            @if(item.User_Comment.ApprovalStatus == "DECLINED")
+                                            {
+                                                <span class="text-danger"> (Declined)</span>
+                                            }
+                </p>
                 <p style="font-size: 15px;margin-left: 15px;">
                     @item.User_Comment?.CreatedAt.ToString("dddd, MMMM dd, yyyy")
 

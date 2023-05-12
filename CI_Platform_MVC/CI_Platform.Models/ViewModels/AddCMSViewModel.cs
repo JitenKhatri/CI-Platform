@@ -13,7 +13,7 @@ namespace CI_Platform.Models.ViewModels
 
         [Required]
         [MinLength(3, ErrorMessage = "Title has to have at least 3 characters")]
-        [MaxLength(15, ErrorMessage = "Title can only have 15 characters")]
+        [MaxLength(30, ErrorMessage = "Title can only have 30 characters")]
         public string Title { get; set; } = string.Empty;
 
         [Required]

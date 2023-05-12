@@ -13,7 +13,6 @@ var input = '';
 var checkedIds = $('#notification-setting-menu input[type=checkbox]:checked').map(function () {
     return parseInt($(this).attr('id'));
 }).get();
-
 $(document).bind("ajaxSend", function () {
     $('.loader').addClass('d-block').removeClass('d-none');
 }).bind("ajaxComplete", function () {

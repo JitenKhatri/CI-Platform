@@ -384,9 +384,12 @@ body {
     height: 253px;
     object-fit: cover;
 }
-    .grid-container .list-view .card-img, .card-img-bottom, .card-img-top{
-        height:323px;
-    }
+ .list-view .card-img, .card-img-bottom, .card-img-top {
+    height: 323px;
+}
+ .list-view .card-img-top {
+     width:600px;
+ }
     /*Volunteering mission page css */
     .related_mission_heading {
         text-align: center;
@@ -986,6 +989,9 @@ label {
         padding-left: 1%;
         padding-bottom: 13px;
     }
+    .list-view .card-img-top {
+        width: 439px;
+    }
 }
 
 
@@ -1077,7 +1083,10 @@ label {
         padding-right: 7%;
         padding-left: 7%;
     }
-}
+    .list-view .card-img-top {
+        width: 305px;
+        height: 316px;
+    }
 @media (max-width:1440px)
 {
     .story-container {
@@ -1122,14 +1131,28 @@ label {
     .story-container {
         padding: 13px 1rem;
     }
-}
+    .list-view .card-img-top {
+        width: 398px;
+        height: 316px;
+    }
 
 @media (min-width: 320px) {
     #selected-items-row {
         display: block;
     }
 }
-
+    @media (max-width:375px) {
+        .list-view .card-img-top {
+            width: 346px;
+            height: 316px;
+        }
+    }
+    @media (max-width:320px) {
+        .list-view .card-img-top {
+            width: 292px;
+            height: 316px;
+        }
+    }
 @media only screen and (min-width:1024px) and (max-width:1440px) {
     .CSR_heading {
         font-size: 32px;

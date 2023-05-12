@@ -37,7 +37,7 @@
     color: #FFFFFF;
 }
 .default {
-    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(178deg) brightness(105%) contrast(103%);
+    filter: invert(14%) sepia(97%) saturate(3792%) hue-rotate(353deg) brightness(81%) contrast(104%);
 }
 
 .sidebar-open .sidebar {

@@ -493,7 +493,16 @@
                                     <img id="img" class="rounded-circle img-fluid" src=@item.User.Avatar alt="" />
                                     <div>
                                         <p style="font-size: 15px; margin-bottom:0;margin-left: 15px;
-                    margin-top: 15px;"> @item.User.FirstName @item.User.LastName</p>
+                    margin-top: 15px;"> @item.User.FirstName @item.User.LastName
+                      @if(item.ApprovalStatus == "PENDING")
+                                            {
+                                                <span class="text-warning"> (Submitted for approval)</span>
+                                            }
+                                            @if(item.ApprovalStatus == "DECLINED")
+                                            {
+                                                <span class="text-danger"> (Declined)</span>
+                                            }
+                                        </p> 
                                         <p style="font-size: 15px;margin-left: 15px;">
                                             @item.CreatedAt.ToString("dddd, MMMM dd, yyyy")
                                         </p>

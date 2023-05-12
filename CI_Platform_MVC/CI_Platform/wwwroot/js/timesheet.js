@@ -309,6 +309,7 @@ const deletetimesheet = (id) => {
                 Type: "time-delete"
             },
             success: function (result) {
+                location.reload();
             },
             error: function () {
                 console.log("Error updating variable");
