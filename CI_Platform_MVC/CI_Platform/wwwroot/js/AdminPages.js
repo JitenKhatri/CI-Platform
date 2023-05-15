@@ -22,6 +22,11 @@ $(document).bind("ajaxSend", function () {
 $(window).on('popstate', function (event) {
     window.location.reload();
 });
+toastr.options = {
+    "closeButton": true,
+    "progressBar": true,
+    "timeOut": 3000,
+}
 var MissionThemeTable
 var MissionApplicationTable
 var VolunteeringTimeTable
@@ -639,12 +644,6 @@ function DeleteStory(StoryId,Action) {
                     $('#Story-table').DataTable().row(row).remove().draw();
                 }
                 else {
-                    toastr.error('Stored Deleted Successfully!', {
-                        "positionClass": "toast-top-center",
-                        progressBar: true,
-                        timeOut: 3000,
-                        closeButton: true,
-                    });
                     $('.delete-btn').prop('disabled', true).text('Deleted...');
                     window.location.href = 'https://localhost:7064/Admin/StoryCrud';
                 }
@@ -703,15 +702,10 @@ function AddUser(form, e) {
                 }
             }
             else {
-                toastr.success('User Saved Successfully!', {
-                    "positionClass": "toast-top-center",
-                    progressBar: true,
-                    timeOut: 3000,
-                    closeButton: true,
-                });
                 $("#AddUserForm")[0].reset();
                 if (formData.UserId != 0) {
-                        window.location.reload()
+                    window.location.reload()
+
                 }
             }
             
@@ -849,15 +843,18 @@ function AddCMS(form, e) {
             processData: false,
             contentType: false,
             success: function () {
-                toastr.success('CMS Page Saved Successfully!', {
-                    "positionClass": "toast-top-center",
-                    progressBar: true,
-                    timeOut: 3000,
-                    closeButton: true,
-                });
+                
                 $("#cmsform")[0].reset();
                 if (formData.CMSPageId != 0) {
                     window.location.reload();
+                }
+                else {
+                    toastr.success('CMS Page Saved Successfully!', {
+                        "positionClass": "toast-top-center",
+                        progressBar: true,
+                        timeOut: 3000,
+                        closeButton: true,
+                    });
                 }
             },
             error: function (error) {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace CI_Platform.Models;
 
+
 public partial class MissionDocument
 {
     public long MissionDocumentId { get; set; }

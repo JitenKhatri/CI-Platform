@@ -384,10 +384,14 @@ body {
     height: 253px;
     object-fit: cover;
 }
- .list-view .card-img, .card-img-bottom, .card-img-top {
+ .list-view .card-img{
     height: 323px;
 }
+ .list-view .card-img-bottom {
+     height:323px;
+ }
  .list-view .card-img-top {
+     height:323px;
      width:600px;
  }
     /*Volunteering mission page css */
@@ -455,7 +459,7 @@ body {
     width: 28px;
 }
 .apply-btn{
-    width: 30%;
+    width: auto;
     border: 2px solid #F88634;
     border-radius: 30px;
     color: #F88634;
@@ -939,7 +943,10 @@ label {
     position: relative;
 }
 
-
+.notifications {
+    padding-left: 0px !important;
+    width: 550px !important;
+}
 
     .notification-bell .badge {
         position: absolute;
@@ -991,6 +998,9 @@ label {
     }
     .list-view .card-img-top {
         width: 439px;
+    }
+    .notifications{
+        width:400px !important;
     }
 }
 
@@ -1087,6 +1097,10 @@ label {
         width: 305px;
         height: 316px;
     }
+    .notifications {
+        padding-left: 0px !important;
+        width: 297px !important;
+    }
 @media (max-width:1440px)
 {
     .story-container {
@@ -1117,7 +1131,7 @@ label {
     .apply-btn {
         margin-left: 0px;
         margin-right: 0px;
-        width: 52%;
+        width: auto;
     }
 
     .mission-badge {

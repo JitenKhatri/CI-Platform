@@ -10,6 +10,11 @@ var count = 1;
 var co_workers = []
 var sortorder;
 var input = '';
+toastr.options = {
+    "closeButton": true,
+    "progressBar": true,
+    "timeOut": 3000,
+}
 var checkedIds = $('#notification-setting-menu input[type=checkbox]:checked').map(function () {
     return parseInt($(this).attr('id'));
 }).get();
@@ -445,22 +450,15 @@ function add_to_favourite(user_id, mission_id) {
         data: { request_for: "add_to_favourite", mission_id: mission_id, user_id: user_id },
         success: function (result) {
             if (result.success) {
-            /*    $('.heart-image').removeAttr('src').attr('src', '/images/red-heart-png.png')*/
                icon.removeAttr('src').attr('src', '/images/red-heart-png.png')
                 $('.favorite-text').html('Added to favorite')
-                Swal.fire({
-                    title: 'Mission added to favorites!',
-                    icon: 'success'
-                });
+                toastr.success('Mission added to favorites!');
             }
             else {
                /* $('.heart-image').removeAttr('src').attr('src', '/images/heart1.png')*/
                 icon.removeAttr('src').attr('src', '/images/heart1.png')
                 $('.favorite-text').html('Add to favorite')
-                Swal.fire({
-                    title: 'Mission removed from favorites!',
-                    icon: 'success'
-                });
+                toastr.success('Mission removed from favorites!');
             }
         },
         error: function () {
@@ -651,21 +649,51 @@ function showAlert(message) {
     }, 3000);
 }
 function contactUs() {
+    validateContactUs();
     var subject = $('#contact-subject').val();
     var message = $('#contact-message').val();
-    $.ajax({
-        url: '/UserAuthentication/ContactUs',
-        type: 'POST',
-        data: { Subject: subject, Message: message },
-        success: function (result) {
-            $("#contact-us-model").modal('hide')
-            ClearModal();
-            showAlert("Your concern has been saved!!")
-        },
-        error: function () {
-            console.log("Error updating variable");
-        }
-    })
+    if (subject.trim().length > 5 && message.trim().length > 20 && subject.trim().length <30 && message.trim().length < 80) {
+        $.ajax({
+            url: '/UserAuthentication/ContactUs',
+            type: 'POST',
+            data: { Subject: subject, Message: message },
+            success: function (result) {
+                $("#contact-us-model").modal('hide')
+                showAlert("Your concern has been saved!!")
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+}
+function validateContactUs() {
+    var subject = $('#contact-subject').val();
+    var message = $('#contact-message').val();
+    if (subject.trim().length < 5) {
+        $(".contact-subject-short").addClass("d-block").removeClass("d-none")
+    }
+    else {
+        $(".contact-subject-short").addClass("d-none").removeClass("d-block")
+    }
+    if (subject.trim().length > 30) {
+        $(".contact-subject-big").addClass("d-block").removeClass("d-none")
+    }
+    else {
+        $(".contact-subject-big").addClass("d-none").removeClass("d-block")
+    }
+    if (message.trim().length < 20) {
+        $(".contact-message-short").addClass("d-block").removeClass("d-none")
+    }
+    else {
+        $(".contact-message-short").addClass("d-none").removeClass("d-block")
+    }
+    if (message.trim().length > 80) {
+        $(".contact-message-big").addClass("d-block").removeClass("d-none")
+    }
+    else {
+        $(".contact-message-big").addClass("d-none").removeClass("d-block")
+    }
 }
 
 function ReadNotification(NotificationId) {

@@ -586,28 +586,12 @@ namespace CI_Platform.DataAccess.Repository
         public NotificationViewModel GetNotificationData(long userId)
         {
             //var connection = new SqlConnection("Server=PCA19\\SQL2017;Database=CI_Platform;Trusted_Connection=True;MultipleActiveResultSets=true;User ID=sa;Password=tatva123;Integrated Security=False;Encrypt=False;");
-            //// Create a new SqlConnection object.
-
-            //var procedure = "GetUserNotificationData";
-            //Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
-            //var objDetails = SqlMapper.QueryMultiple(connection,
-            //procedure, param: new { userId = userId }, commandType: CommandType.StoredProcedure);
-            //List<Notification> noti = objDetails.Read<Notification>().ToList();
-
-            //List<NotificationSetting> notisetting = objDetails.Read<NotificationSetting>().ToList();
-            //List<UserNotificationSetting> usernotisetting = objDetails.Read<UserNotificationSetting>().ToList();
-
-            //var noti = objDetails.
-            //var connection = new SqlConnection("Server=PCA19\\SQL2017;Database=CI_Platform;Trusted_Connection=True;MultipleActiveResultSets=true;User ID=sa;Password=tatva123;Integrated Security=False;Encrypt=False;");
-            //var parameters = new SqlParameter[]
-            //{
-            //new SqlParameter("@userId", userId)       //example of string value              //example of numeric value
-            //};
-            //var dataSet = GetDataSet(connection, "GetUserNotificationData", parameters);
-
-            //var firstTable = dataSet?.Tables?[0];   //use as any other data table...            //var notification = _db.Notifications.FromSqlRaw("exec GetUserNotificationData @userId", UserId).ToList();
+           
             //var UserId = new SqlParameter("@userId", userId);
             //var notificationsetting = _db.NotificationSettings.FromSqlRaw("exec GetUserNotificationData @userId", UserId).ToList();
+            //var usernoti = _db.UserNotificationSettings.FromSqlRaw("exec GetUserNotificationData @userId", UserId).ToList();
+         
+
             var notificationsettingsdata = _db.NotificationSettings.ToList();
             var usernotificationsetting = _db.UserNotificationSettings.Where(usernotificationsetting => usernotificationsetting.UserId == userId);
             var usernotification = from notifications in _db.Notifications.Where(notification => notification.UserId == userId && notification.Status == "NOT SEEN").

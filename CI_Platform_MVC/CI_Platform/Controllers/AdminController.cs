@@ -113,6 +113,7 @@ namespace CI_Platform.Controllers
                     if (ModelState.IsValid)
                     {
                         bool success = db.AdminRepository.AddUser(model);
+                        TempData["ToastrSuccess"] = "User Edited Successfully";
                         return Json(new { success = true });
                     }
                     else
@@ -211,6 +212,7 @@ namespace CI_Platform.Controllers
             else if (Action == 3)
             {
                 bool success = db.AdminRepository.DeleteStory(StoryId);
+                TempData["ToastrError"] = "Stored Deleted Successfully!";
                 return Json(new { success = success });
             }
             else
@@ -274,6 +276,7 @@ namespace CI_Platform.Controllers
                 if (ModelState.IsValid)
                 {
                     bool success = db.AdminRepository.AddCmsPage(addCMSViewModel);
+                    TempData["ToastrSuccess"] = "CMS Page Saved Successfully!";
                     return Json(new { success });
                 }
                 else

@@ -438,7 +438,7 @@ function editstory(type,storyId,missionId) {
         });
 
         // Manually process queue to upload files
-        showAlert("Story edited successfully")
+        toastr.success('Story Edited Successfully!');
     }
 }
 function validateEdit(storyId) {
@@ -465,7 +465,7 @@ function validateEdit(storyId) {
     // Loop through validation conditions and display alert if test fails
     conditions.forEach(condition => {
         if (condition.test) {
-            showAlert(condition.message);
+            toastr.error(condition.message);
         }
     });
 }
@@ -588,8 +588,6 @@ function sharestory(type) {
             processData: false,
             contentType: false,
             success: function () {
-                showAlert("Story added !!")
-
                 window.location.href = "https://localhost:7064/Story/Story";
             },
             error: function () {
