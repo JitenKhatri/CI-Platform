@@ -24,7 +24,7 @@ namespace CI_Platform.Controllers
         [Route("login")]
         public IActionResult login()
         {
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "user")
                 {
@@ -35,22 +35,24 @@ namespace CI_Platform.Controllers
                     return RedirectToAction("Index", "Admin");
                 }
             }
-            
-             else {
-                    ViewBag.banners = db.AdminRepository.GetBanners();
-                    return View(); }
+
+            else
+            {
+                ViewBag.banners = db.AdminRepository.GetBanners();
+                return View();
+            }
         }
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult>  login(LoginViewModel model)
+        public async Task<IActionResult> login(LoginViewModel model)
         {
             ViewBag.banners = db.AdminRepository.GetBanners();
             if (ModelState.IsValid)
             {
                 // Check if a user with the provided email and password exists in the database
-               User userExists = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(model.Email.ToLower()) &&
-    c.Password.Equals(model.Password) && c.DeletedAt == null);
+                User userExists = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(model.Email.ToLower()) &&
+     c.Password.Equals(model.Password) && c.DeletedAt == null);
 
                 if (userExists != null && (userExists.Password.Equals(model.Password, StringComparison.Ordinal)))
                 {
@@ -97,8 +99,8 @@ namespace CI_Platform.Controllers
                     // User does not exist, adding a model error
                     ViewBag.LoginErrorMessage = "Invalid email or password";
 
-                    
-                    
+
+
                 }
             }
 
@@ -124,7 +126,7 @@ namespace CI_Platform.Controllers
 
         [HttpPost]
         [Route("registration")]
-        public  IActionResult registration(RegistrationViewModel model)
+        public IActionResult registration(RegistrationViewModel model)
         {
             ViewBag.banners = db.AdminRepository.GetBanners();
             if (ModelState.IsValid)
@@ -151,14 +153,14 @@ namespace CI_Platform.Controllers
                 else
                 {
                     return Json(new { success = true, message = "Email exists" });
-                }   
+                }
             }
             else
             {
                 return BadRequest();
             }
 
-            
+
         }
 
 
@@ -239,7 +241,7 @@ namespace CI_Platform.Controllers
         {
             CiPlatformContext context = new();
             PasswordReset ResetPasswordData = context.PasswordResets.Where(p => p.Token == token && p.CreatedAt.AddHours(1) >= DateTime.Now).FirstOrDefault();
-            if(ResetPasswordData != null)
+            if (ResetPasswordData != null)
             {
                 ViewBag.banners = db.AdminRepository.GetBanners();
                 return View(new ResetPasswordViewModel
@@ -251,9 +253,9 @@ namespace CI_Platform.Controllers
             else
             {
                 return RedirectToAction("Error", "Home");
-               
+
             }
-           
+
         }
 
 
@@ -299,17 +301,17 @@ namespace CI_Platform.Controllers
         [Route("EditProfile")]
         public IActionResult EditProfile()
         {
-          long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-          var user = db.UserAuthentication.GetUser(user_id,0);
-           return View(user);
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            var user = db.UserAuthentication.GetUser(user_id, 0);
+            return View(user);
         }
 
         [Route("EditProfile")]
         [HttpPost]
-        public IActionResult EditProfile(int country,EditProfileViewModel model)
+        public IActionResult EditProfile(int country, EditProfileViewModel model)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-            if (country!=0)
+            if (country != 0)
             {
                 EditProfileViewModel details = db.UserAuthentication.GetUser(user_id, country);
                 var cities = this.RenderViewAsync("_SelectCityPartial", details, true);
@@ -336,7 +338,7 @@ namespace CI_Platform.Controllers
             return Json(new { success = true });
         }
 
-      
+
         [Route("ContactUs")]
         [HttpPost]
         public IActionResult ContactUs(string Subject, string Message)

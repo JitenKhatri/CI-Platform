@@ -4,8 +4,6 @@ using CI_Platform.Models;
 using CI_Platform.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using System.Data.Entity;
-using System.Web.Mvc;
 
 namespace CI_Platform.DataAccess.Repository
 {
@@ -21,11 +19,11 @@ namespace CI_Platform.DataAccess.Repository
             repository = _repository;
             _urlHelper = urlHelper;
             _httpContextAccessor = httpContextAccessor;
-        }   
+        }
 
         public CrudViewModel GetAllUsers()
         {
-            var users = _db.Users.Where(User=>User.DeletedAt == null).ToList();
+            var users = _db.Users.Where(User => User.DeletedAt == null).ToList();
             return new CrudViewModel
             {
                 Users = users
@@ -35,42 +33,42 @@ namespace CI_Platform.DataAccess.Repository
         public bool DeleteUser(int UserId)
         {
             User User = _db.Users.FirstOrDefault(User => User.UserId == UserId);
-            if(User !=null)
+            if (User != null)
             {
                 User.DeletedAt = DateTime.Now;
                 //comment
                 List<Comment> DeletedUserComments = _db.Comments.Where(Comment => Comment.UserId == UserId).ToList();
-                foreach(var Comment in DeletedUserComments)
+                foreach (var Comment in DeletedUserComments)
                 {
                     Comment.DeletedAt = DateTime.Now;
                 }
                 //favoritemission
                 List<FavoriteMission> DeletedUserFM = _db.FavoriteMissions.Where(FavoriteMission => FavoriteMission.UserId == UserId).ToList();
-                foreach(var FavoriteMission in DeletedUserFM)
+                foreach (var FavoriteMission in DeletedUserFM)
                 {
                     FavoriteMission.DeletedAt = DateTime.Now;
                 }
                 //missionapplication
                 List<MissionApplication> DeletedUserMA = _db.MissionApplications.Where(MissionApplication => MissionApplication.UserId == UserId).ToList();
-                foreach(var MissionApplication in DeletedUserMA)
+                foreach (var MissionApplication in DeletedUserMA)
                 {
                     MissionApplication.DeletedAt = DateTime.Now;
                 }
                 //missionrating
                 List<MissionRating> DeletedUserMR = _db.MissionRatings.Where(MissionRating => MissionRating.UserId == UserId).ToList();
-                foreach(var MissionRating in DeletedUserMR)
+                foreach (var MissionRating in DeletedUserMR)
                 {
                     MissionRating.DeletedAt = DateTime.Now;
                 }
                 //story
                 List<Story> DeletedUserStories = _db.Stories.Where(Story => Story.UserId == UserId).ToList();
-                foreach(var Story in DeletedUserStories)
+                foreach (var Story in DeletedUserStories)
                 {
                     Story.DeletedAt = DateTime.Now;
                 }
                 //timesheets
                 List<Timesheet> DeletedUserTS = _db.Timesheets.Where(Timesheet => Timesheet.UserId == UserId).ToList();
-                foreach(var timesheet in DeletedUserTS)
+                foreach (var timesheet in DeletedUserTS)
                 {
                     timesheet.DeletedAt = DateTime.Now;
                 }
@@ -81,7 +79,7 @@ namespace CI_Platform.DataAccess.Repository
             {
                 return false;
             }
-           
+
         }
         public CrudViewModel GetAllMissions()
         {
@@ -100,7 +98,7 @@ namespace CI_Platform.DataAccess.Repository
                 MissionThemes = missionThemes
             };
         }
-        
+
         public MissionTheme AddTheme(string ThemeName, int status)
         {
             MissionTheme NewTheme = new()
@@ -115,7 +113,7 @@ namespace CI_Platform.DataAccess.Repository
 
         public bool DeleteTheme(int theme_id)
         {
-            MissionTheme deletetheme = _db.MissionThemes.FirstOrDefault(t => t.MissionThemeId == theme_id );
+            MissionTheme deletetheme = _db.MissionThemes.FirstOrDefault(t => t.MissionThemeId == theme_id);
             if (deletetheme is not null)
             {
                 deletetheme.DeletedAt = DateTime.Now;
@@ -128,10 +126,10 @@ namespace CI_Platform.DataAccess.Repository
             }
         }
 
-        public MissionTheme EditTheme(int theme_id,int Status,string ThemeName)
+        public MissionTheme EditTheme(int theme_id, int Status, string ThemeName)
         {
             MissionTheme edittheme = _db.MissionThemes.FirstOrDefault(t => t.MissionThemeId == theme_id);
-            if(edittheme is not null)
+            if (edittheme is not null)
             {
                 edittheme.Status = Status;
                 edittheme.Title = ThemeName;
@@ -288,7 +286,7 @@ namespace CI_Platform.DataAccess.Repository
         public bool UserExists(string email)
         {
             User UserExists = _db.Users.FirstOrDefault(User => User.Email == email);
-            if(UserExists == null)
+            if (UserExists == null)
             {
                 return false;
             }
@@ -297,7 +295,7 @@ namespace CI_Platform.DataAccess.Repository
                 return true;
             }
         }
-        public Skill AddSkill(string SkillName,int Status)
+        public Skill AddSkill(string SkillName, int Status)
         {
             Skill NewSkill = new()
             {
@@ -373,7 +371,7 @@ namespace CI_Platform.DataAccess.Repository
         public bool DeleteStory(int StoryId)
         {
             Story deletestory = _db.Stories.FirstOrDefault(s => s.StoryId == StoryId);
-            if(deletestory is not null)
+            if (deletestory is not null)
             {
                 deletestory.DeletedAt = DateTime.Now;
                 Save();
@@ -426,7 +424,7 @@ namespace CI_Platform.DataAccess.Repository
                 {
                     var email = _db.Users.Where(User => User.UserId == missionapplication.UserId).Select(User => User.Email).FirstOrDefault();
                     var subject = "Mission Application Approved";
-                    
+
                     var body = "Follow this link to see the mission " + MissionLink;
                     bool sentemailnotification = repository.SendEmail(email, subject, body);
                 }
@@ -437,7 +435,7 @@ namespace CI_Platform.DataAccess.Repository
                 return false;
             }
         }
-        public bool DeclineMissionApplication(int MissionApplicationId,string MissionLink)
+        public bool DeclineMissionApplication(int MissionApplicationId, string MissionLink)
         {
             MissionApplication missionapplication = _db.MissionApplications.FirstOrDefault(ma => ma.MissionApplicationId == MissionApplicationId);
             var missiontitle = _db.Missions.Where(mission => mission.MissionId == missionapplication.MissionId).Select(mission => mission.Title);
@@ -474,22 +472,22 @@ namespace CI_Platform.DataAccess.Repository
             }
         }
 
-        public bool PublishStory(int StoryId,string StoryLink)
+        public bool PublishStory(int StoryId, string StoryLink)
         {
             Story story = _db.Stories.FirstOrDefault(s => s.StoryId == StoryId);
-            if(story != null)
+            if (story != null)
             {
                 story.Status = "PUBLISHED";
                 _db.Notifications.Add(
                     new Notification
                     {
-                      UserId = story.UserId,
-                      StoryId = story.StoryId,
-                      Message = "Your story with title " +@story.Title + " has been approved!!",
-                      UserAvatar = "/images/right.png",
-                      Status = "NOT SEEN",
-                      StoryStatus = "PUBLISHED",
-                      NotificationSettingId = 5
+                        UserId = story.UserId,
+                        StoryId = story.StoryId,
+                        Message = "Your story with title " + @story.Title + " has been approved!!",
+                        UserAvatar = "/images/right.png",
+                        Status = "NOT SEEN",
+                        StoryStatus = "PUBLISHED",
+                        NotificationSettingId = 5
                     });
                 Save();
                 var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == story.UserId
@@ -556,7 +554,7 @@ namespace CI_Platform.DataAccess.Repository
         }
         public bool AddCmsPage(AddCMSViewModel addCMSViewModel)
         {
-            if(addCMSViewModel.CMSPageId == 0)
+            if (addCMSViewModel.CMSPageId == 0)
             {
                 CmsPage newcmsPage = new()
                 {
@@ -581,7 +579,7 @@ namespace CI_Platform.DataAccess.Repository
                 return true;
 
             }
-            
+
         }
 
         public CmsPage GetCmsPageById(long CMSPageId)
@@ -730,88 +728,88 @@ namespace CI_Platform.DataAccess.Repository
                     }
                     //Notifying Users
                     var NotifyingUserIds = _db.Users.Where(User => User.DeletedAt == null).Select(User => User.UserId).ToList();
-                    foreach(var userid in NotifyingUserIds)
+                    foreach (var userid in NotifyingUserIds)
                     {
-                       _db.Notifications.Add(
-                                    new Notification
-                                    {
-                                        UserId = userid,
-                                        MissionId = NewMission.MissionId,
-                                        Message = "New Mission - " + NewMission.Title,
-                                        UserAvatar = "/images/add.png",
-                                        Status = "NOT SEEN",
-                                        NotificationSettingId = 7
-                                    });
-                        
+                        _db.Notifications.Add(
+                                     new Notification
+                                     {
+                                         UserId = userid,
+                                         MissionId = NewMission.MissionId,
+                                         Message = "New Mission - " + NewMission.Title,
+                                         UserAvatar = "/images/add.png",
+                                         Status = "NOT SEEN",
+                                         NotificationSettingId = 7
+                                     });
+
                     }
-      
+
                     Save();
                     return NewMissionId;
                 }
-            
-            else if (addMissionViewModel.MissionType == "Go" || addMissionViewModel.MissionType == "GO")
-            {
-                Mission NewMission = new()
+
+                else if (addMissionViewModel.MissionType == "Go" || addMissionViewModel.MissionType == "GO")
                 {
-                    MissionType = "GO",
-                    Title = addMissionViewModel.Title,
-                    ShortDescription = addMissionViewModel.ShortDescription,
-                    Description = addMissionViewModel.Description,
-                    Deadline = addMissionViewModel.Deadline,
-                    CityId = addMissionViewModel.CityId,
-                    CountryId = addMissionViewModel.CountryId,
-                    ThemeId = addMissionViewModel.ThemeId,
-                    Availability = addMissionViewModel.Availability,
-                    OrganizationName = addMissionViewModel.OrganizationName,
-                    OrganizationDetail = addMissionViewModel.OrganizationDetail,
-                    GoalMotto = addMissionViewModel.Goal_Motto,
-                    StartDate = addMissionViewModel.StartDate,
-                    EndDate = addMissionViewModel.EndDate,
-                    GoalAcheived = addMissionViewModel.Goal_Achieved
-                };
-                _db.Missions.Add(NewMission);
-                Save();
-                long NewMissionId = NewMission.MissionId;
-                foreach (var item in addMissionViewModel.Media)
-                {
-                    string uniqueFileName = null;
-                    // Get the uploaded file name
-                    string fileName = Path.GetFileName(item.FileName);
-
-                    Random random = new();
-                    string randomString = new(
-                        Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
-                                  .Select(s => s[random.Next(s.Length)])
-                                  .ToArray()
-                    );
-                    // Create a unique file name to avoid overwriting existing files
-                    uniqueFileName = randomString + "_" + fileName;
-
-                    // Set the file path where the uploaded file will be saved
-                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
-
-                    // Save the uploaded file to the specified directory
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    Mission NewMission = new()
                     {
-                        item.CopyTo(fileStream);
+                        MissionType = "GO",
+                        Title = addMissionViewModel.Title,
+                        ShortDescription = addMissionViewModel.ShortDescription,
+                        Description = addMissionViewModel.Description,
+                        Deadline = addMissionViewModel.Deadline,
+                        CityId = addMissionViewModel.CityId,
+                        CountryId = addMissionViewModel.CountryId,
+                        ThemeId = addMissionViewModel.ThemeId,
+                        Availability = addMissionViewModel.Availability,
+                        OrganizationName = addMissionViewModel.OrganizationName,
+                        OrganizationDetail = addMissionViewModel.OrganizationDetail,
+                        GoalMotto = addMissionViewModel.Goal_Motto,
+                        StartDate = addMissionViewModel.StartDate,
+                        EndDate = addMissionViewModel.EndDate,
+                        GoalAcheived = addMissionViewModel.Goal_Achieved
+                    };
+                    _db.Missions.Add(NewMission);
+                    Save();
+                    long NewMissionId = NewMission.MissionId;
+                    foreach (var item in addMissionViewModel.Media)
+                    {
+                        string uniqueFileName = null;
+                        // Get the uploaded file name
+                        string fileName = Path.GetFileName(item.FileName);
+
+                        Random random = new();
+                        string randomString = new(
+                            Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
+                                      .Select(s => s[random.Next(s.Length)])
+                                      .ToArray()
+                        );
+                        // Create a unique file name to avoid overwriting existing files
+                        uniqueFileName = randomString + "_" + fileName;
+
+                        // Set the file path where the uploaded file will be saved
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", uniqueFileName);
+
+                        // Save the uploaded file to the specified directory
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            item.CopyTo(fileStream);
+                        }
+                        _db.MissionMedia.Add(new MissionMedium
+                        {
+                            MissionId = NewMissionId,
+                            MediaType = "img",
+                            MediaPath = "/images/" + uniqueFileName, // Save the unique file name in the database
+                            MediaName = fileName,
+                            // set the first instance of item in Media as default and for remaining set default as 0
+                        });
+
                     }
                     _db.MissionMedia.Add(new MissionMedium
                     {
                         MissionId = NewMissionId,
-                        MediaType = "img",
-                        MediaPath = "/images/" + uniqueFileName, // Save the unique file name in the database
-                        MediaName = fileName,
-                        // set the first instance of item in Media as default and for remaining set default as 0
+                        MediaType = "vid",
+                        MediaPath = addMissionViewModel.YoutubeUrl,
+                        MediaName = "youtubevideo"
                     });
-
-                }
-                _db.MissionMedia.Add(new MissionMedium
-                {
-                    MissionId = NewMissionId,
-                    MediaType = "vid",
-                    MediaPath = addMissionViewModel.YoutubeUrl,
-                    MediaName = "youtubevideo"
-                });
                     if (addMissionViewModel.Selected_Skills != null && addMissionViewModel.Selected_Skills != "")
                     {
                         List<MissionSkill> mission_skills = _db.MissionSkills.Where(c => c.MissionId == NewMissionId).ToList();
@@ -1179,7 +1177,7 @@ namespace CI_Platform.DataAccess.Repository
                     return 0;
                 }
             }
-            
+
         }
 
 
@@ -1226,19 +1224,19 @@ namespace CI_Platform.DataAccess.Repository
             DeleteMission.DeletedAt = DateTime.Now;  // soft delete mission
             //missionapplication
             List<MissionApplication> DeleteMisssionApplications = _db.MissionApplications.Where(MissionApplication => MissionApplication.MissionId == MissionId).ToList();
-            foreach(var MissionApplication in DeleteMisssionApplications)
+            foreach (var MissionApplication in DeleteMisssionApplications)
             {
                 MissionApplication.DeletedAt = DateTime.Now;
             }
             //relatedstories
             List<Story> DeleteMissionStory = _db.Stories.Where(Story => Story.MissionId == MissionId).ToList();
-            foreach(var Story in DeleteMissionStory)
+            foreach (var Story in DeleteMissionStory)
             {
                 Story.DeletedAt = DateTime.Now;
             }
             //timesheets
             List<Timesheet> DeleteMissionTimesheets = _db.Timesheets.Where(Timesheet => Timesheet.MissionId == MissionId).ToList();
-            foreach(var timesheet in DeleteMissionTimesheets)
+            foreach (var timesheet in DeleteMissionTimesheets)
             {
                 timesheet.DeletedAt = DateTime.Now;
             }
@@ -1257,7 +1255,7 @@ namespace CI_Platform.DataAccess.Repository
 
         public bool Addbanner(AddBannerViewModel addBannerViewModel)
         {
-            if(addBannerViewModel.BannerId == 0)
+            if (addBannerViewModel.BannerId == 0)
             {
                 string uniqueFileName = null;
                 // Get the uploaded file name
@@ -1321,7 +1319,7 @@ namespace CI_Platform.DataAccess.Repository
                 Save();
                 return true;
             }
-            
+
         }
 
         public AddBannerViewModel GetBannerById(int BannerId)
@@ -1348,24 +1346,24 @@ namespace CI_Platform.DataAccess.Repository
         {
             List<Banner> banners = _db.Banners.ToList();
             List<AddBannerViewModel> displaybanners = (from b in banners
-                                                    orderby b.SortOrder
-                                                    where b.DeletedAt == null
-                                                    select new AddBannerViewModel
-                                                    {
-                                                        BannerId = (int)b.BannerId,
-                                                        BannerImagePath = b.Image,
-                                                        BannerText = b.Text,
-                                                        SortOrder = b.SortOrder
-                                                    }).ToList();
+                                                       orderby b.SortOrder
+                                                       where b.DeletedAt == null
+                                                       select new AddBannerViewModel
+                                                       {
+                                                           BannerId = (int)b.BannerId,
+                                                           BannerImagePath = b.Image,
+                                                           BannerText = b.Text,
+                                                           SortOrder = b.SortOrder
+                                                       }).ToList();
 
             return displaybanners;
         }
-        
+
         public bool NotifyuserEmail(long userid)
         {
             var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == userid
                                                   && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
-            if(emailnotification != null && emailnotification !=0)
+            if (emailnotification != null && emailnotification != 0)
             {
                 return true;
             }
@@ -1565,30 +1563,30 @@ namespace CI_Platform.DataAccess.Repository
             {
                 comment.ApprovalStatus = "PUBLISHED";
 
-                    _db.Notifications.Add(
-                        new Notification
-                        {
-                            UserId = comment.UserId,
-                            MissionId = comment.MissionId,
-                            Message = "Your Comment " + "<" + comment.CommentText + ">" + "has been published!!",
-                            UserAvatar = "/images/right.png",
-                            Status = "NOT SEEN",
-                            MissionStatus = "APPROVE",
-                            NotificationSettingId = 13
-                        });
-                    Save();
-                    var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == comment.UserId
-                                                                   && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
-                    if (emailnotification != null && emailnotification != 0)
+                _db.Notifications.Add(
+                    new Notification
                     {
-                        var email = _db.Users.Where(User => User.UserId == comment.UserId).Select(User => User.Email).FirstOrDefault();
-                        var subject = "Comment Approved";
+                        UserId = comment.UserId,
+                        MissionId = comment.MissionId,
+                        Message = "Your Comment " + "<" + comment.CommentText + ">" + "has been published!!",
+                        UserAvatar = "/images/right.png",
+                        Status = "NOT SEEN",
+                        MissionStatus = "APPROVE",
+                        NotificationSettingId = 13
+                    });
+                Save();
+                var emailnotification = _db.UserNotificationSettings.Where(UserNotificationSetting => UserNotificationSetting.UserId == comment.UserId
+                                                               && UserNotificationSetting.NotificationSettingId == 10).Select(UserNotificationSetting => UserNotificationSetting.UserNotificationSettingId).FirstOrDefault();
+                if (emailnotification != null && emailnotification != 0)
+                {
+                    var email = _db.Users.Where(User => User.UserId == comment.UserId).Select(User => User.Email).FirstOrDefault();
+                    var subject = "Comment Approved";
 
-                        var body = "Follow this link to see the mission and comment " + MissionLink;
-                        bool sentemailnotification = repository.SendEmail(email, subject, body);
-                    }
-                
-                
+                    var body = "Follow this link to see the mission and comment " + MissionLink;
+                    bool sentemailnotification = repository.SendEmail(email, subject, body);
+                }
+
+
                 return true;
             }
             else

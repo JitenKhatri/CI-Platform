@@ -1,12 +1,7 @@
 ﻿using CI_Platform.DataAccess.Repository.IRepository;
 using CI_Platform.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CI_Platform.DataAccess.Repository
 {

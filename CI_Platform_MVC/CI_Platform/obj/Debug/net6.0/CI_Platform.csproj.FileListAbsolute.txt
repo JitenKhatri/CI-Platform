@@ -103,10 +103,8 @@ C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\ne
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\obj\Debug\net6.0\CI_Platform.csproj.CopyComplete
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\CI_Platform.DataAccess.dll
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\CI_Platform.Models.dll
-C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\CI_Platform.Utility.dll
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\CI_Platform.DataAccess.pdb
 C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\CI_Platform.Models.pdb
-C:\Users\pca19\source\repos\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\CI_Platform.Utility.pdb
 E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\appsettings.Development.json
 E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\appsettings.json
 E:\Tatvasoft Training\CI-Platform\CI_Platform_MVC\CI_Platform\bin\Debug\net6.0\CI_Platform.staticwebassets.runtime.json

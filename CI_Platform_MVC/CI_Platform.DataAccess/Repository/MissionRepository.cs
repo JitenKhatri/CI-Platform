@@ -3,12 +3,12 @@ using CI_Platform.Models;
 using CI_Platform.Models.InputModels;
 using CI_Platform.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Data;
 using System.Net;
 using System.Net.Mail;
-using System.Data;
-using Dapper;
 
 namespace CI_Platform.DataAccess.Repository
 {
@@ -119,7 +119,7 @@ namespace CI_Platform.DataAccess.Repository
                                .Where(mission => topThemes.Any(theme => theme.MissionThemeId == mission.ThemeId))
                         .OrderByDescending(mission => _db.Missions.Count(m => m.ThemeId == mission.ThemeId))
                         .ThenBy(mission => mission.MissionId);
-     
+
 
                     break;
 
@@ -210,7 +210,7 @@ namespace CI_Platform.DataAccess.Repository
             };
             _db.Comments.Add(mycomment);
             Save();
-           List<Comment> comments = _db.Comments.Where(comment => comment.MissionId == mission_id && (comment.ApprovalStatus == "PUBLISHED" || comment.UserId == user_id)).OrderByDescending(comment => comment.CreatedAt).Take(5).ToList();
+            List<Comment> comments = _db.Comments.Where(comment => comment.MissionId == mission_id && (comment.ApprovalStatus == "PUBLISHED" || comment.UserId == user_id)).OrderByDescending(comment => comment.CreatedAt).Take(5).ToList();
             IEnumerable<CommentViewModel> mission_comments = (from Comment in comments
                                                               select new CommentViewModel { User_Comment = Comment, user = Comment.User });
             return mission_comments;
@@ -561,7 +561,6 @@ namespace CI_Platform.DataAccess.Repository
                 return null;
             }
         }
-
         public bool DeleteTimesheet(long timesheet_id)
         {
             List<Timesheet> timesheets = _db.Timesheets.ToList();
@@ -585,26 +584,49 @@ namespace CI_Platform.DataAccess.Repository
 
         public NotificationViewModel GetNotificationData(long userId)
         {
-            //var connection = new SqlConnection("Server=PCA19\\SQL2017;Database=CI_Platform;Trusted_Connection=True;MultipleActiveResultSets=true;User ID=sa;Password=tatva123;Integrated Security=False;Encrypt=False;");
-           
-            //var UserId = new SqlParameter("@userId", userId);
-            //var notificationsetting = _db.NotificationSettings.FromSqlRaw("exec GetUserNotificationData @userId", UserId).ToList();
-            //var usernoti = _db.UserNotificationSettings.FromSqlRaw("exec GetUserNotificationData @userId", UserId).ToList();
-         
 
-            var notificationsettingsdata = _db.NotificationSettings.ToList();
-            var usernotificationsetting = _db.UserNotificationSettings.Where(usernotificationsetting => usernotificationsetting.UserId == userId);
-            var usernotification = from notifications in _db.Notifications.Where(notification => notification.UserId == userId && notification.Status == "NOT SEEN").
-                                   OrderByDescending(notification => notification.CreatedAt)
-                                   join usernotificationsettings in usernotificationsetting
-                                   on notifications.NotificationSettingId equals usernotificationsettings.NotificationSettingId
-                                   select notifications;
+            var UserId = new SqlParameter("@userId", userId);
+            var Notification = new SqlParameter
+            {
+                ParameterName = "Notification",
+                SqlDbType = SqlDbType.VarChar,
+                Size = -1,
+                Direction = ParameterDirection.Output,
+            };
+            var NotificationSetting = new SqlParameter
+            {
+                ParameterName = "NotificationSetting",
+                SqlDbType = SqlDbType.VarChar,
+                Size = -1,
+                Direction = ParameterDirection.Output,
+            };
+            var UserNotificationSetting = new SqlParameter
+            {
+                ParameterName = "UserNotificationSetting",
+                SqlDbType = SqlDbType.VarChar,
+                Size = -1,
+                Direction = ParameterDirection.Output,
+            };
+            //getting data with stored procedure.
+            _db.Database
+                           .ExecuteSqlRaw("exec GetUserNotificationData @userId, @Notification output,@NotificationSetting output, @UserNotificationSetting output", UserId, Notification, NotificationSetting, UserNotificationSetting);
+            //stored procedure returned data in string format as json object value type.
+            var notification = Notification.Value.ToString();
+            // deserializing to fit the needs of the model.
+            var usernotification = JsonConvert.DeserializeObject<List<Notification>>(notification);
+
+            var notificationsetting = NotificationSetting.Value.ToString();
+            var notificationsettingsdata = JsonConvert.DeserializeObject<List<NotificationSetting>>(notificationsetting);
+
+            var usernotificationsetting = UserNotificationSetting.Value.ToString();
+            var usernotificationsettingdata = JsonConvert.DeserializeObject<List<UserNotificationSetting>>(usernotificationsetting);
+
 
             int uncheckednotificationcount = usernotification.Where(notification => notification.Status == "NOT SEEN").ToList().Count();
             return new NotificationViewModel
             {
                 NotificationSettings = notificationsettingsdata,
-                UserNotificationSettings = usernotificationsetting.ToList(),
+                UserNotificationSettings = usernotificationsettingdata,
                 Notifications = usernotification.ToList(),
                 Uncheckednotificationcount = uncheckednotificationcount
             };
@@ -669,14 +691,14 @@ namespace CI_Platform.DataAccess.Repository
 
         }
 
-        public bool SendEmail(string Receiveremail, string emailSubject,string emailBody)
+        public bool SendEmail(string Receiveremail, string emailSubject, string emailBody)
         {
             var senderEmail = new MailAddress("jitenkhatri81@gmail.com", "Jiten Khatri");
             Console.WriteLine(Receiveremail);
-            
+
             var receiverEmail = new MailAddress(Receiveremail, "Receiver");
             var password = "evat odzv mxso djdr";
- 
+
             var body = emailBody;
             var smtp = new SmtpClient
             {
